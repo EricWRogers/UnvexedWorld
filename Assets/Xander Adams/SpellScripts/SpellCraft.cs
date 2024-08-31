@@ -49,7 +49,7 @@ public class SpellCraft : MonoBehaviour
         {
             casting = true;
         }
-        else if (Input.GetKeyDown(KeyCode.V) && casting)
+        else if (Input.GetKeyDown(KeyCode.V) && casting && mainAspect != Aspect.none)
         {
             CastSpell(castType,mainAspect,modAspect);
             casting = false;
