@@ -17,7 +17,8 @@ public class SpellCraft : MonoBehaviour
         none,
         loft,
         weight,
-        launch
+        launch,
+        magnet
     }
 
     public CastType castType = CastType.ranged;
@@ -80,6 +81,14 @@ public class SpellCraft : MonoBehaviour
         {
             modAspect = Aspect.weight;
         }
+        if (Input.GetKeyDown(KeyCode.J) && casting && mainAspect == Aspect.none)
+        {
+            mainAspect = Aspect.magnet;
+        }
+        else if (Input.GetKeyDown(KeyCode.J) && casting && mainAspect != Aspect.none && modAspect == Aspect.none)
+        {
+            modAspect = Aspect.magnet;
+        }
 
     }
 
@@ -113,5 +122,290 @@ public class SpellCraft : MonoBehaviour
     public void CastSpell(CastType castType, Aspect mainAspect, Aspect modAspect)
     {
         Debug.Log("Casting a " + mainAspect.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
+        if (castType == CastType.ranged)
+        {
+            if(mainAspect == Aspect.loft)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("Shoot projectile that launches target into the air and then makes them floaty")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("Shoot a projectile that launches the target further up and makes them floaty")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("Shoot a projectile that launches the target into the air and then draws objects towards the floating target")
+                }
+            }
+            if(mainAspect == Aspect.launch)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("Shoot projectile that launches the target backwards")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("Shoot projectile that launches the target backwards and up and makes them floaty")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("Shoot projectile that launches the target exceptionally far")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("Shoot projectile that launches the target backwards and downwards and prones them")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("Shoot projectile that launches a target backwards and draws objects towards the target as it flies")
+                }
+            }
+            if(mainAspect == Aspect.weight)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("Shoot projectile that slams a target into the ground and prones them")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("Slams target into the ground creating a shockwave that launches nearby objects")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.magnet)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+        }
+        if (castType == CastType.melee)
+        {
+            if(mainAspect == Aspect.loft)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.launch)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.weight)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.magnet)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+        }
+        if (castType == CastType.self)
+        {
+            if(mainAspect == Aspect.loft)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.launch)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.weight)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+            if(mainAspect == Aspect.magnet)
+            {
+                if(modAspect == Aspect.none)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.loft)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.launch)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.weight)
+                {
+                    Debug.Log("")
+                }
+                else if(modAspect == Aspect.magnet)
+                {
+                    Debug.Log("")
+                }
+            }
+        }
     }
 }
