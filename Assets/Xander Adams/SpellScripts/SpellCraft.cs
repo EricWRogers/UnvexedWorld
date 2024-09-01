@@ -128,92 +128,92 @@ public class SpellCraft : MonoBehaviour
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("Shoot projectile that launches target into the air and then makes them floaty")
+                    Debug.Log("Shoot projectile that launches target into the air and then makes them floaty");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???")
+                    Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("Shoot a projectile that launches the target further up and makes them floaty")
+                    Debug.Log("Shoot a projectile that launches the target further up and makes them floaty");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground")
+                    Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("Shoot a projectile that launches the target into the air and then draws objects towards the floating target")
+                    Debug.Log("Shoot a projectile that launches the target into the air and then draws objects towards the floating target");
                 }
             }
             if(mainAspect == Aspect.launch)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards")
+                    Debug.Log("Shoot projectile that launches the target backwards");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards and up and makes them floaty")
+                    Debug.Log("Shoot projectile that launches the target backwards and up and makes them floaty");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("Shoot projectile that launches the target exceptionally far")
+                    Debug.Log("Shoot projectile that launches the target exceptionally far");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards and downwards and prones them")
+                    Debug.Log("Shoot projectile that launches the target backwards and downwards and prones them");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("Shoot projectile that launches a target backwards and draws objects towards the target as it flies")
+                    Debug.Log("Shoot projectile that launches a target backwards and draws objects towards the target as it flies");
                 }
             }
             if(mainAspect == Aspect.weight)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("Shoot projectile that slams a target into the ground and prones them")
+                    Debug.Log("Shoot projectile that slams a target into the ground and prones them");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards")
+                    Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("Slams target into the ground creating a shockwave that launches nearby objects")
+                    Debug.Log("Shoot projectile that slams a target into the ground creating a shockwave that launches nearby objects");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot projectile that slams a target into the ground, knocks them prone, and applies a few seconds of slowness");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot projectile that slams a target into the ground and draws things towards the prone target");
                 }
             }
             if(mainAspect == Aspect.magnet)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot a homing projectile. Target becomes magnetized");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot a homing projectile. Target becomes floaty and magnetized");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot a homing projectile. Target is knocked back and magnetized");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot a homing projectile. Target is magetized and attracted objects are slammed to the ground");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("Shoot a homing projectile. Target becomes heavily magnetized");
                 }
             }
         }
@@ -223,92 +223,92 @@ public class SpellCraft : MonoBehaviour
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("An uppercut that launches the target and user into the air and makes them floaty");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("An uppercut that launches the target and user into the air and suspends them there for a longer duration");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("An uppercut that launches the target and user into the air and away from each other");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("An uppercut that launches the target and user into the air then slams both into the ground");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("An uppercut that launches the target and user into the air and makes them floaty. Target is magnetized");
                 }
             }
             if(mainAspect == Aspect.launch)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("A rush punch that bounces the user off of the enemy");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("A rush punch uppercut");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
             if(mainAspect == Aspect.weight)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
             if(mainAspect == Aspect.magnet)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
         }
@@ -318,92 +318,92 @@ public class SpellCraft : MonoBehaviour
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
             if(mainAspect == Aspect.launch)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
             if(mainAspect == Aspect.weight)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
             if(mainAspect == Aspect.magnet)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.launch)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("")
+                    Debug.Log("");
                 }
             }
         }
