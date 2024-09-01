@@ -7,45 +7,51 @@ using UnityEngine.AI;
 
 public class MeleeStateMachine : SimpleStateMachine
 {
-    // private MeleeState melee;
-    // private InRangeState inRange;
+    public RandomMovementState randomMovement;
+    public InRangeState inRange;
+    public AttackState melee;
+    public FleeState flee;
 
-    // public bool LOS;
-    // public bool isAlive;
-    // public float radius;
-    // public int dmg;
-    // private Health health;
-    // private Transform target;
+    public bool LOS;
+    public bool isAlive;
+    public float radius;
+    public float ranMinFlee;
+    public float ranMaxFlee;
+    public int dmg;
+    private Health health;
+    public Transform target;
 
-    // void Awake()
-    // {
-    //     states.Add(moveInRange);
-    //     states.Add(Charge);
+    void Awake()
+    {
+        states.Add(randomMovement);
+        states.Add(inRange);
+        states.Add(melee);
+        states.Add(flee);
 
-    //     foreach (SimpleState s in states)
-    //     {
-    //         s.stateMachine = this;
-    //     }
-    // }
+        foreach (SimpleState s in states)
+        {
+            s.stateMachine = this;
+        }
+    }
 
-    // void Start()
-    // {
-    //     health = GameObject.GetComponent<Health>();
+    void Start()
+    {
+        health = gameObject.GetComponent<Health>();
         
-    //     target = GameObject.FindGameObjectWithTag("Player").transform;
+        target = GameObject.FindGameObjectWithTag("Player").transform;
 
-    //     ChangeState(nameof(InRangeState));
-    // }
+        ChangeState(nameof(InRangeState));
+    }
 
-    // void Update()
-    // {
-    //     if(health.currentHealth > 0)
-    //     {
-    //         isAlive = true;
-    //     }else
-    //     {
-    //         isAlive = false;
-    //     }
-    //     //LOS
-    // }
+    void Update()
+    {
+        if(health.currentHealth > 0)
+        {
+            isAlive = true;
+        }else
+        {
+            isAlive = false;
+        }
+        LOS = gameObject.GetComponent<LOS>().targetsInSight;
+    }
 }
