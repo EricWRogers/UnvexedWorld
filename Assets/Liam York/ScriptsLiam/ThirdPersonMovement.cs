@@ -14,7 +14,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float dashTime = 0.75f;
 
+    public float dashCoolDown = 10.0f;
+
     public float turnSmoothTime = 0.1f;
+
+    public bool dashing = false;
 
     public bool isGrounded = false;
 
@@ -70,25 +74,37 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && (isGrounded))
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing))
         {
 
-
+            dashing = true;
             StartCoroutine(Dash());
+           
         }
 
         IEnumerator Dash()
         {
             float startTime = Time.time;
 
+            float bruh = 5.0f;
+
             while (Time.time < startTime + dashTime)
             {
                controller.Move( moveDir * dashSpeed *Time.deltaTime);
 
                 yield return null;
+
+
             }
+            if(Time.time <= startTime + dashCoolDown)
+            {
+                dashing = false;
+            }
+           
 
         }
+
+     
 
 
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
