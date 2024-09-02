@@ -10,9 +10,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float speed = 6f;
 
+    public float dashSpeed = 10f;
+
+    public float dashTime = 0.75f;
+
     public float turnSmoothTime = 0.1f;
 
-    public bool isGrounded;
+    public bool isGrounded = false;
 
     public bool isJumping;
 
@@ -27,6 +31,10 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector3 velocity;
 
     public Transform cam;
+
+    public Vector3 moveDir;
+
+
 
     // Update is called once per frame
     void Update()
@@ -56,10 +64,32 @@ public class ThirdPersonMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
+            
+
 
         }
+        if (Input.GetKeyDown(KeyCode.LeftShift) && (isGrounded))
+        {
+
+
+            StartCoroutine(Dash());
+        }
+
+        IEnumerator Dash()
+        {
+            float startTime = Time.time;
+
+            while (Time.time < startTime + dashTime)
+            {
+               controller.Move( moveDir * dashSpeed *Time.deltaTime);
+
+                yield return null;
+            }
+
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
@@ -72,6 +102,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
+        
+
+
+
+
+
+        
         
 
 
