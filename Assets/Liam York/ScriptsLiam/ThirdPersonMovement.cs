@@ -15,6 +15,7 @@ public class ThirdPersonMovement : MonoBehaviour
     public float dashTime = 0.75f;
 
     public float dashCoolDown = 3.0f;
+   
     public float currectDashCoolDown = 0.0f;
 
     public float turnSmoothTime = 0.1f;
@@ -22,6 +23,10 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool dashing = false;
 
     public bool isGrounded = false;
+
+    public float groundCheckDistance;
+
+    private float bufferCheckDistance = 0.1f;
 
     public bool isJumping;
 
@@ -57,7 +62,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
             
         }
-         isGrounded = controller.isGrounded;
+        
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -101,8 +106,8 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
-     
 
+        groundCheckDistance = (controller.height / 2) + bufferCheckDistance;
 
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
@@ -115,13 +120,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
-
-        if (controller.isGrounded)
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-transform.up, out hit, groundCheckDistance))
         {
-           
-            print("CharacterController is grounded");
+            isGrounded = true;
             jumpCount = 0;
+            Debug.Log("ouch");
         }
+        else
+        {
+            isGrounded = false;
+        }
+
+
+       
 
 
 
