@@ -14,7 +14,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float dashTime = 0.75f;
 
-    public float dashCoolDown = 10.0f;
+    public float dashCoolDown = 3.0f;
+    public float currectDashCoolDown = 0.0f;
 
     public float turnSmoothTime = 0.1f;
 
@@ -38,6 +39,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Vector3 moveDir;
 
+    private float dashStartTime;
+
 
 
     // Update is called once per frame
@@ -54,7 +57,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
             
         }
-        
+         isGrounded = controller.isGrounded;
 
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -74,34 +77,28 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing))
+
+        currectDashCoolDown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && (isGrounded) && currectDashCoolDown <= 0.0f)
         {
 
             dashing = true;
-            StartCoroutine(Dash());
+            dashStartTime = Time.time;
            
         }
 
-        IEnumerator Dash()
+        if (dashing)
         {
-            float startTime = Time.time;
-
-            float bruh = 5.0f;
-
-            while (Time.time < startTime + dashTime)
+            if (Time.time < dashStartTime + dashTime)
             {
-               controller.Move( moveDir * dashSpeed *Time.deltaTime);
-
-                yield return null;
-
-
+                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
             }
-            if(Time.time <= startTime + dashCoolDown)
+            else
             {
                 dashing = false;
+                currectDashCoolDown = dashCoolDown;
             }
-           
-
         }
 
      
@@ -118,24 +115,21 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
-        
 
-
-
-
-
-        
-        
-
-
-    }
-    private void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        if(hit.transform.CompareTag("Ground")&& !isGrounded)
+        if (controller.isGrounded)
         {
-            isGrounded = true;
-            Debug.Log("Ouch");
+           
+            print("CharacterController is grounded");
             jumpCount = 0;
         }
+
+
+
+
+
+
+
+
     }
+   
 }
