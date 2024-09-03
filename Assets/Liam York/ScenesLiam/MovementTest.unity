@@ -683,7 +683,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939381918}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.086049825, y: 0.0000000085712815, z: -7.403031e-10, w: 0.99629086}
+  m_LocalRotation: {x: 0.086049825, y: -0.000000008571281, z: 7.4030304e-10, w: 0.99629086}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1125,7 +1125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501430159}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.12218325, y: 0.000000004269366, z: -5.2558286e-10, w: 0.9925076}
+  m_LocalRotation: {x: 0.12218325, y: -0.000000004269366, z: 5.2558286e-10, w: 0.9925076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1309,7 +1309,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911871769}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10410984, y: 0.00000000427822, z: -4.4783843e-10, w: 0.99456584}
+  m_LocalRotation: {x: 0.10410984, y: -0.000000004278219, z: 4.4783835e-10, w: 0.99456584}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1403,7 +1403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2013781140}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.10410984, y: 0.000000004278221, z: -4.478385e-10, w: 0.99456584}
+  m_LocalRotation: {x: 0.10410984, y: -0.0000000042782204, z: 4.4783843e-10, w: 0.99456584}
   m_LocalPosition: {x: 0, y: 5.7, z: -12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1455,6 +1455,7 @@ GameObject:
   - component: {fileID: 2099207704}
   - component: {fileID: 2099207705}
   - component: {fileID: 2099207706}
+  - component: {fileID: 2099207707}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1526,12 +1527,39 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   dashing: 0
   isGrounded: 0
+  groundCheckDistance: 0
   isJumping: 0
   jumpCount: 0
   jumpMax: 2
   jumpForce: 8
   cam: {fileID: 2013781143}
   moveDir: {x: 0, y: 0, z: 0}
+--- !u!114 &2099207707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099207703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604dfbbf654f92618bc36972daaa4968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  healed:
+    m_PersistentCalls:
+      m_Calls: []
+  hurt:
+    m_PersistentCalls:
+      m_Calls: []
+  outOfHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
