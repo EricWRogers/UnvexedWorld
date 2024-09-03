@@ -14,7 +14,6 @@ public class MeleeStateMachine : SimpleStateMachine
 
     public bool LOS;
     public bool isAlive;
-    public float radius;
     public float ranMinFlee;
     public float ranMaxFlee;
     public int dmg;
@@ -40,7 +39,7 @@ public class MeleeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        ChangeState(nameof(InRangeState));
+        ChangeState(nameof(RandomMovementState));
     }
 
     void Update()

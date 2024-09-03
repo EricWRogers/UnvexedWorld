@@ -11,16 +11,15 @@ public class RandomMovementState : SimpleState
     private NavMeshAgent agent;
     private Transform agentTransform;
     public float range; 
+    private float moveDelay = 2.0f; 
+    private float moveTimer = 0f;
+    private float minDelay = 1.5f; 
+    private float maxDelay = 3.0f; 
 
     public override void OnStart()
     {
-        Debug.Log("Move State");
+        Debug.Log("Wonder State");
         base.OnStart();
-
-        // if (stateMachine is RangedStateMachine)
-        // {
-        //     agent = ((RangedStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-        // }
 
         if (stateMachine is MeleeStateMachine)
         {
@@ -28,32 +27,21 @@ public class RandomMovementState : SimpleState
             agentTransform = ((MeleeStateMachine)stateMachine).transform;
         }
 
-        // if (stateMachine is RangedStateMachine)
-        // {
-        //     if(((RangedStateMachine)stateMachine).isAlive == true)
-        //         agent.SetDestination(((RangedStateMachine)stateMachine).target.position);
-        // }
-
-        if (stateMachine is MeleeStateMachine)
-        {
-            if (((MeleeStateMachine)stateMachine).isAlive == true)
-            {
-                agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
-            }
-        }
-        
+        MoveToRandomPoint();
         
     }
     
     public override void UpdateState(float dt)
     {
-        if(agent.remainingDistance <= agent.stoppingDistance) //done with path
-        {
-            Vector3 point;
-            if (RandomPoint(agentTransform.position, range, out point)) //pass in our centre point and radius of area
+        if (((MeleeStateMachine)stateMachine).isAlive == true)
+        { 
+            moveTimer += dt; 
+
+            if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
             {
-                //Debug.DrawRay(point, Vector3.up, Color.blue, 1.0f); //so you can see with gizmos
-                agent.SetDestination(point);
+                moveTimer = 0f; 
+                moveDelay = Random.Range(minDelay, maxDelay);
+                MoveToRandomPoint();
             }
         }
 
@@ -64,12 +52,27 @@ public class RandomMovementState : SimpleState
         base.OnExit();
     }
 
-    bool RandomPoint(Vector3 center, float range, out Vector3 result)
+    private void MoveToRandomPoint()
     {
-        Vector3 randomPoint = center + Random.insideUnitSphere * range; //random point in a sphere 
+        Vector3 point;
+        if (GetRandomPoint(agentTransform.position, range, out point))
+        {
+            agent.SetDestination(point);
+            if (((MeleeStateMachine)stateMachine).LOS)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
+    }
+
+    bool GetRandomPoint(Vector3 center, float range, out Vector3 result)
+    {
+        Vector3 randomDirection = Random.insideUnitSphere * range;
+        randomDirection += center;
+
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas)) 
-        { 
+        if (NavMesh.SamplePosition(randomDirection, out hit, range, NavMesh.AllAreas))
+        {
             result = hit.position;
             return true;
         }
@@ -77,5 +80,4 @@ public class RandomMovementState : SimpleState
         result = Vector3.zero;
         return false;
     }
-    
 }
