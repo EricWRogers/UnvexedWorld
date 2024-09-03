@@ -63,7 +63,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
         }
         
-
+        //Movement
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
@@ -82,7 +82,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         }
-
+        //Dash
         currectDashCoolDown -= Time.deltaTime;
 
         if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && (isGrounded) && currectDashCoolDown <= 0.0f)
@@ -108,7 +108,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         groundCheckDistance = (controller.height / 2) + bufferCheckDistance;
-
+        //Jump
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
             isJumping = true;
@@ -119,7 +119,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
 
         }
-
+        // Ground Check
         RaycastHit hit;
         if(Physics.Raycast(transform.position,-transform.up, out hit, groundCheckDistance))
         {
