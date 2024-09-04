@@ -48,7 +48,8 @@ public class AttackState : SimpleState
             if (!((MeleeStateMachine)stateMachine).LOS)
             {
                 stopAttacking.Invoke();
-                stateMachine.ChangeState(nameof(RandomMovementState));
+                ((MeleeStateMachine)stateMachine).isSearching = true;
+                stateMachine.ChangeState(nameof(SearchingState));
             }
         }
     }

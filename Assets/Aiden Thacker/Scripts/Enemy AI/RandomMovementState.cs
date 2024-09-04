@@ -60,6 +60,7 @@ public class RandomMovementState : SimpleState
             agent.SetDestination(point);
             if (((MeleeStateMachine)stateMachine).LOS)
             {
+                ((MeleeStateMachine)stateMachine).isSearching = false;
                 stateMachine.ChangeState(nameof(InRangeState));
             }
         }

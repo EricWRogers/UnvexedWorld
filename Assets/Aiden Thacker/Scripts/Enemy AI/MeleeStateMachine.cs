@@ -9,20 +9,27 @@ public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public InRangeState inRange;
+    public SearchingState searching;
     public AttackState melee;
     public FleeState flee;
 
     public bool LOS;
     public bool isAlive;
+    public bool isSearching;
+
     public float ranMinFlee;
     public float ranMaxFlee;
-    private Health health;
+
     public Transform target;
+    private Health health;
+    [HideInInspector]
+    public Vector3 lastKnownPlayerPosition;
 
     void Awake()
     {
         states.Add(randomMovement);
         states.Add(inRange);
+        states.Add(searching);
         states.Add(melee);
         states.Add(flee);
 
@@ -54,6 +61,14 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        LOS = gameObject.GetComponent<LOS>().targetsInSight;
+
+        bool currentLOS = gameObject.GetComponent<LOS>().targetsInSight;
+        if (currentLOS)
+        {
+            // Update last known position if LOS is true
+            lastKnownPlayerPosition = target.position;
+        }
+
+        LOS = currentLOS;
     }
 }
