@@ -17,7 +17,7 @@ public class SpellCraft : MonoBehaviour
         none,
         loft,
         weight,
-        launch,
+        pierce,
         magnet
     }
 
@@ -67,11 +67,11 @@ public class SpellCraft : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.U) && casting && mainAspect == Aspect.none)
         {
-            mainAspect = Aspect.launch;
+            mainAspect = Aspect.pierce;
         }
         else if (Input.GetKeyDown(KeyCode.U) && casting && mainAspect != Aspect.none && modAspect == Aspect.none)
         {
-            modAspect = Aspect.launch;
+            modAspect = Aspect.pierce;
         }
         if (Input.GetKeyDown(KeyCode.K) && casting && mainAspect == Aspect.none)
         {
@@ -134,7 +134,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("Shoot a projectile that launches the target further up and makes them floaty");
                 }
@@ -147,27 +147,27 @@ public class SpellCraft : MonoBehaviour
                     Debug.Log("Shoot a projectile that launches the target into the air and then draws objects towards the floating target");
                 }
             }
-            if(mainAspect == Aspect.launch)
+            if(mainAspect == Aspect.pierce)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards");
+                    Debug.Log("Shoot a piercing projectile that launches the target backwards");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards and up and makes them floaty");
+                    Debug.Log("Shoot a piercing projectile that launches the target backwards and up and makes them floaty");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("Shoot projectile that launches the target exceptionally far");
+                    Debug.Log("Shoot a piercing projectile that launches the target exceptionally far");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("Shoot projectile that launches the target backwards and downwards and prones them");
+                    Debug.Log("Shoot a piercing projectile that launches the target backwards and downwards and prones them");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("Shoot projectile that launches a target backwards and draws objects towards the target as it flies");
+                    Debug.Log("Shoot a piercing projectile that launches a target backwards and draws objects towards the target as it flies");
                 }
             }
             if(mainAspect == Aspect.weight)
@@ -180,7 +180,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("Shoot projectile that slams a target into the ground creating a shockwave that launches nearby objects");
                 }
@@ -203,7 +203,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("Shoot a homing projectile. Target becomes floaty and magnetized");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("Shoot a homing projectile. Target is knocked back and magnetized");
                 }
@@ -229,7 +229,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("An uppercut that launches the target and user into the air and suspends them there for a longer duration");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("An uppercut that launches the target and user into the air and away from each other");
                 }
@@ -242,7 +242,7 @@ public class SpellCraft : MonoBehaviour
                     Debug.Log("An uppercut that launches the target and user into the air and makes them floaty. Target is magnetized");
                 }
             }
-            if(mainAspect == Aspect.launch)
+            if(mainAspect == Aspect.pierce)
             {
                 if(modAspect == Aspect.none)
                 {
@@ -252,7 +252,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("A rush punch uppercut");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -275,7 +275,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -298,7 +298,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -324,7 +324,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -337,7 +337,7 @@ public class SpellCraft : MonoBehaviour
                     Debug.Log("");
                 }
             }
-            if(mainAspect == Aspect.launch)
+            if(mainAspect == Aspect.pierce)
             {
                 if(modAspect == Aspect.none)
                 {
@@ -347,7 +347,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -370,7 +370,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
@@ -393,7 +393,7 @@ public class SpellCraft : MonoBehaviour
                 {
                     Debug.Log("");
                 }
-                else if(modAspect == Aspect.launch)
+                else if(modAspect == Aspect.pierce)
                 {
                     Debug.Log("");
                 }
