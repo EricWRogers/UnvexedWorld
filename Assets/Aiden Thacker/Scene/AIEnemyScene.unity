@@ -1928,6 +1928,8 @@ GameObject:
   - component: {fileID: 561953086}
   - component: {fileID: 561953088}
   - component: {fileID: 561953089}
+  - component: {fileID: 561953091}
+  - component: {fileID: 561953090}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: Untagged
@@ -2084,8 +2086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8cd4f47b63c5320468c2680d898bc420, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 1
-  viewAngle: 120
+  viewRadius: 10
+  viewAngle: 180
   targetMask:
     serializedVersion: 2
     m_Bits: 512
@@ -2133,10 +2135,22 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    time: {fileID: 0}
+    time: {fileID: 561953091}
     attack:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 561953090}
+          m_TargetAssemblyTypeName: MeleeDamage, Assembly-CSharp
+          m_MethodName: DealDamage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
     stopAttacking:
       m_PersistentCalls:
         m_Calls: []
@@ -2151,10 +2165,58 @@ MonoBehaviour:
     stateMachine: {fileID: 0}
   LOS: 0
   isAlive: 0
-  ranMinFlee: 3
-  ranMaxFlee: 8
-  dmg: 5
+  ranMinFlee: 5
+  ranMaxFlee: 15
   target: {fileID: 0}
+--- !u!114 &561953090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561953080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6f790ed1bc67448b32e2a35a28fad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 5
+  playerHealth: {fileID: 923075406}
+  attackState:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    time: {fileID: 0}
+    attack:
+      m_PersistentCalls:
+        m_Calls: []
+    stopAttacking:
+      m_PersistentCalls:
+        m_Calls: []
+    isAttacking: 0
+--- !u!114 &561953091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561953080}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad54517dc19258185960ef6d2f3a1b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeout:
+    m_PersistentCalls:
+      m_Calls: []
+  autoStart: 0
+  autoRestart: 0
+  countDownTime: 1
+  timeScale: 1
 --- !u!1 &600934544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3156,7 +3218,19 @@ MonoBehaviour:
       m_Calls: []
   outOfHealth:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 923075406}
+        m_TargetAssemblyTypeName: SuperPupSystems.Helper.Health, Assembly-CSharp
+        m_MethodName: DestroyGameObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   maxHealth: 100
   currentHealth: 1
 --- !u!136 &923075407
@@ -3241,7 +3315,7 @@ Transform:
   m_GameObject: {fileID: 923075405}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.037, y: 1.5, z: 4.3}
+  m_LocalPosition: {x: 0.037, y: 1.5, z: -2.53}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

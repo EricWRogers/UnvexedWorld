@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
+    private float attackRange = 1.0f;
 
     public override void OnStart()
     {
@@ -25,11 +26,10 @@ public class InRangeState : SimpleState
 
     public override void UpdateState(float dt)
     {
-        if (((MeleeStateMachine)stateMachine).isAlive)
+        if (((MeleeStateMachine)stateMachine).isAlive && ((MeleeStateMachine)stateMachine).LOS)
         {
             agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
-
-            if (((MeleeStateMachine)stateMachine).LOS)
+            if(Vector3.Distance(agent.transform.position, ((MeleeStateMachine)stateMachine).target.position) < attackRange)
             {
                 stateMachine.ChangeState(nameof(AttackState));
             }

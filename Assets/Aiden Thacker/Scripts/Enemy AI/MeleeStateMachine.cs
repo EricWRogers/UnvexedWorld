@@ -16,7 +16,6 @@ public class MeleeStateMachine : SimpleStateMachine
     public bool isAlive;
     public float ranMinFlee;
     public float ranMaxFlee;
-    public int dmg;
     private Health health;
     public Transform target;
 
@@ -44,6 +43,10 @@ public class MeleeStateMachine : SimpleStateMachine
 
     void Update()
     {
+        if(health.currentHealth < 25)
+        {
+            ChangeState(nameof(FleeState));
+        }
         if(health.currentHealth > 0)
         {
             isAlive = true;
