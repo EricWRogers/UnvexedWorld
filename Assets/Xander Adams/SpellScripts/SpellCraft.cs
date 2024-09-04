@@ -250,65 +250,65 @@ public class SpellCraft : MonoBehaviour
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("A rush punch uppercut");
+                    Debug.Log("A rush punch uppercut that makes enemies floaty");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("A piercing punch that goes through enemies and then happens again (choose next direction?)");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("A rush haymaker that grounds targets");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("A rush punch that magnetizes the target");
                 }
             }
             if(mainAspect == Aspect.weight)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("A haymaker that grounds targets");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("A haymaker that grounds targets then makes them slowly float");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("A haymaker that grounds targets and ???");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("A haymaker that grounds targets and creates a grounding shockwave");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("A haymaker that grounds targets and magnetizes them");
                 }
             }
             if(mainAspect == Aspect.magnet)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("create a magnetized field and punch as you get pulled in");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("create a magnetized field and punch as you get pulled in and makes hit targets floaty");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("create a magnetized field and punch as you get pulled in and ???");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("create a magnetized field and punch as you get pulled in grounding hit targets");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("create a magnetized field and punch as you get pulled in strongly magnetizing targets");
                 }
             }
         }
@@ -318,92 +318,92 @@ public class SpellCraft : MonoBehaviour
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("make self floaty");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("increase jump height and make self floaty");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("launch self upwards???");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("Launch self upwards then slam down causing a grounding shockwave");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("make self floaty && ???");
                 }
             }
             if(mainAspect == Aspect.pierce)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("Dash the direction you are looking");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("Dash the direction you are looking and become floaty");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("big dash??? double dash??? Liam input please???");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("Dash the direction you are looking then slam down");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("Dash the direction you are looking and become magnetized?");
                 }
             }
             if(mainAspect == Aspect.weight)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("slam down causing a grounding shockwave");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("slam down causing a grounding shockwave && ??? (Loft)");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("slam down causing a grounding shockwave && ??? (Pierce)");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("bigger shockwave");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("slam down causing a grounding shockwave and magnitize self???");
                 }
             }
             if(mainAspect == Aspect.magnet)
             {
                 if(modAspect == Aspect.none)
                 {
-                    Debug.Log("");
+                    Debug.Log("Self magnet is wacky");
                 }
                 else if(modAspect == Aspect.loft)
                 {
-                    Debug.Log("");
+                    Debug.Log("Self magnet is wacky and I don't kow how to modify it (Floaty)");
                 }
                 else if(modAspect == Aspect.pierce)
                 {
-                    Debug.Log("");
+                    Debug.Log("Self magnet is wacky and I don't kow how to modify it (Pierce)");
                 }
                 else if(modAspect == Aspect.weight)
                 {
-                    Debug.Log("");
+                    Debug.Log("Self magnet is wacky and I don't kow how to modify it (Weight)");
                 }
                 else if(modAspect == Aspect.magnet)
                 {
-                    Debug.Log("");
+                    Debug.Log("Self magnet is wacky but make it bigger");
                 }
             }
         }
