@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8423083024635871786}
   - component: {fileID: 2408908693889748742}
   - component: {fileID: 7060320185052712906}
+  - component: {fileID: 8836706426513764780}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -73,9 +74,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
+  gravity: -3.5
   speed: 6
+  dashSpeed: 10
+  dashTime: 0.75
+  dashCoolDown: 3
+  currectDashCoolDown: 0
   turnSmoothTime: 0.1
+  dashing: 0
+  isGrounded: 0
+  groundCheckDistance: 0
+  isJumping: 0
+  jumpCount: 0
+  jumpMax: 2
+  jumpForce: 5
   cam: {fileID: 0}
+  moveDir: {x: 0, y: 0, z: 0}
+--- !u!114 &8836706426513764780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604dfbbf654f92618bc36972daaa4968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  healed:
+    m_PersistentCalls:
+      m_Calls: []
+  hurt:
+    m_PersistentCalls:
+      m_Calls: []
+  outOfHealth:
+    m_PersistentCalls:
+      m_Calls: []
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &3858560424104786522
 GameObject:
   m_ObjectHideFlags: 0
