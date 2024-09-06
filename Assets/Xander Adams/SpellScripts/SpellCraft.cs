@@ -29,11 +29,11 @@ public class SpellCraft : MonoBehaviour
     void Update()
     {
         casting = Input.GetKey(KeyCode.F);
-        if (Input.GetKeyDown(KeyCode.Q)&&casting)
+        if (Input.GetKeyDown(KeyCode.Q) && casting && mainAspect != Aspect.none)
         {
             CastSpell(CastType.melee,mainAspect,modAspect);
         }
-        else if (Input.GetKeyDown(KeyCode.E)&&casting)
+        else if (Input.GetKeyDown(KeyCode.E) && casting && mainAspect != Aspect.none)
         {
             CastSpell(CastType.ranged,mainAspect,modAspect);
         }
