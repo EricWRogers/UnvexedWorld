@@ -16,6 +16,7 @@ public class SpellCraft : MonoBehaviour
         splendor,
         sunder,
     }
+    public SpellShot spellShot;
     public Aspect mainAspect = Aspect.none;
     public Aspect modAspect = Aspect.none;
     public bool casting = false;
@@ -100,63 +101,64 @@ public class SpellCraft : MonoBehaviour
         Debug.Log("Casting a " + mainAspect.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
         if (castType == CastType.ranged)
         {
-            if(mainAspect == Aspect.scavenge)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("Shoot projectile that launches target into the air and then makes them floaty");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("Shoot a projectile that launches the target further up and makes them floaty");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground");
-                }
-            }
-            // if(mainAspect == Aspect.sunder)
+            spellShot.ShootSpellPrefab(mainAspect, modAspect);
+            // if(mainAspect == Aspect.scavenge)
             // {
             //     if(modAspect == Aspect.none)
             //     {
-            //         Debug.Log("Shoot a piercing projectile that launches the target backwards");
+            //         Debug.Log("Shoot projectile that launches target into the air and then makes them floaty");
             //     }
             //     else if(modAspect == Aspect.scavenge)
             //     {
-            //         Debug.Log("Shoot a piercing projectile that launches the target backwards and up and makes them floaty");
+            //         Debug.Log("Shoot a projectile that launches the target into the air and suspends them there longer???");
             //     }
             //     else if(modAspect == Aspect.sunder)
             //     {
-            //         Debug.Log("Shoot a piercing projectile that launches the target exceptionally far");
+            //         Debug.Log("Shoot a projectile that launches the target further up and makes them floaty");
             //     }
             //     else if(modAspect == Aspect.splendor)
             //     {
-            //         Debug.Log("Shoot a piercing projectile that launches the target backwards and downwards and prones them");
+            //         Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground");
             //     }
             // }
-            if(mainAspect == Aspect.splendor)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("Shoot projectile that slams a target into the ground and prones them");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("Shoot projectile that slams a target into the ground creating a shockwave that launches nearby objects");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("Shoot projectile that slams a target into the ground, knocks them prone, and applies a few seconds of slowness");
-                }
-            }
+            // // if(mainAspect == Aspect.sunder)
+            // // {
+            // //     if(modAspect == Aspect.none)
+            // //     {
+            // //         Debug.Log("Shoot a piercing projectile that launches the target backwards");
+            // //     }
+            // //     else if(modAspect == Aspect.scavenge)
+            // //     {
+            // //         Debug.Log("Shoot a piercing projectile that launches the target backwards and up and makes them floaty");
+            // //     }
+            // //     else if(modAspect == Aspect.sunder)
+            // //     {
+            // //         Debug.Log("Shoot a piercing projectile that launches the target exceptionally far");
+            // //     }
+            // //     else if(modAspect == Aspect.splendor)
+            // //     {
+            // //         Debug.Log("Shoot a piercing projectile that launches the target backwards and downwards and prones them");
+            // //     }
+            // // }
+            // if(mainAspect == Aspect.splendor)
+            // {
+            //     if(modAspect == Aspect.none)
+            //     {
+            //         Debug.Log("Shoot projectile that slams a target into the ground and prones them");
+            //     }
+            //     else if(modAspect == Aspect.scavenge)
+            //     {
+            //         Debug.Log("Shoot projectile that slams a target into the ground and then causes them to float upwards");
+            //     }
+            //     else if(modAspect == Aspect.sunder)
+            //     {
+            //         Debug.Log("Shoot projectile that slams a target into the ground creating a shockwave that launches nearby objects");
+            //     }
+            //     else if(modAspect == Aspect.splendor)
+            //     {
+            //         Debug.Log("Shoot projectile that slams a target into the ground, knocks them prone, and applies a few seconds of slowness");
+            //     }
+            // }
         }
         if (castType == CastType.melee)
         {
