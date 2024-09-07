@@ -125,7 +125,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             isGrounded = true;
             jumpCount = 0;
-            Debug.Log("ouch");
+            //Debug.Log("ouch");
         }
         else
         {
