@@ -30,7 +30,7 @@ public class MeleeRangedAttack : MonoBehaviour
         }
         else if (Input.GetMouseButtonDown(1)||Input.GetKeyDown(KeyCode.E))
         {
-            if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
+            if (spellCraft.casting /*&& spellCraft.mainAspect!=SpellCraft.Aspect.none*/)
             {
                 spellCraft.CastSpell(SpellCraft.CastType.ranged, spellCraft.mainAspect, spellCraft.modAspect);
             }
