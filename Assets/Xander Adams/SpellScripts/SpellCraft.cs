@@ -31,11 +31,11 @@ public class SpellCraft : MonoBehaviour
         casting = Input.GetKey(KeyCode.F);
         if (Input.GetKeyDown(KeyCode.Q) && casting && mainAspect != Aspect.none)
         {
-            CastSpell(CastType.melee,mainAspect,modAspect);
+            //CastSpell(CastType.melee,mainAspect,modAspect);
         }
         else if (Input.GetKeyDown(KeyCode.E) && casting && mainAspect != Aspect.none)
         {
-            CastSpell(CastType.ranged,mainAspect,modAspect);
+            //CastSpell(CastType.ranged,mainAspect,modAspect);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1) && mainAspect == Aspect.none)
         {
@@ -45,14 +45,14 @@ public class SpellCraft : MonoBehaviour
         {
             modAspect = Aspect.scavenge;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect == Aspect.none)
-        {
-            mainAspect = Aspect.sunder;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.sunder;
-        }
+        // if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect == Aspect.none)
+        // {
+        //     mainAspect = Aspect.sunder;
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect != Aspect.none && modAspect == Aspect.none)
+        // {
+        //     modAspect = Aspect.sunder;
+        // }
         if (Input.GetKeyDown(KeyCode.Alpha2) && mainAspect == Aspect.none)
         {
             mainAspect = Aspect.splendor;
@@ -119,25 +119,25 @@ public class SpellCraft : MonoBehaviour
                     Debug.Log("Shoot a projectile that launches a target into the air and then slams them to the ground");
                 }
             }
-            if(mainAspect == Aspect.sunder)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("Shoot a piercing projectile that launches the target backwards");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("Shoot a piercing projectile that launches the target backwards and up and makes them floaty");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("Shoot a piercing projectile that launches the target exceptionally far");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("Shoot a piercing projectile that launches the target backwards and downwards and prones them");
-                }
-            }
+            // if(mainAspect == Aspect.sunder)
+            // {
+            //     if(modAspect == Aspect.none)
+            //     {
+            //         Debug.Log("Shoot a piercing projectile that launches the target backwards");
+            //     }
+            //     else if(modAspect == Aspect.scavenge)
+            //     {
+            //         Debug.Log("Shoot a piercing projectile that launches the target backwards and up and makes them floaty");
+            //     }
+            //     else if(modAspect == Aspect.sunder)
+            //     {
+            //         Debug.Log("Shoot a piercing projectile that launches the target exceptionally far");
+            //     }
+            //     else if(modAspect == Aspect.splendor)
+            //     {
+            //         Debug.Log("Shoot a piercing projectile that launches the target backwards and downwards and prones them");
+            //     }
+            // }
             if(mainAspect == Aspect.splendor)
             {
                 if(modAspect == Aspect.none)
