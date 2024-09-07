@@ -11,7 +11,6 @@ public class Spell : MonoBehaviour
     public int DOTDamage;
     public int DOTDuration;
     public GameObject AOEPrefab;
-    
     public int AOEDuration;
     
     // Start is called before the first frame update
@@ -31,7 +30,7 @@ public class Spell : MonoBehaviour
 
     }
 
-    public void ApplyDOT(int damage, int duration, Health)
+    public void ApplyDOT(int damage, int duration, Health health)
     {
 
     }
