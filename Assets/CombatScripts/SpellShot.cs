@@ -31,8 +31,6 @@ public class SpellShot : MonoBehaviour
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
-
-        Invoke("Delay", .08f);
     }
 
 
