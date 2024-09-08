@@ -392,13 +392,14 @@ GameObject:
   m_Component:
   - component: {fileID: 7465625658951947599}
   - component: {fileID: 6489890642396419465}
-  m_Layer: 9
+  - component: {fileID: 4871539203587178172}
+  m_Layer: 10
   m_Name: hitboxMelee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7465625658951947599
 Transform:
   m_ObjectHideFlags: 0
@@ -429,12 +430,25 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.8460369, y: 1.8912238, z: 0.9465815}
-  m_Center: {x: -0.13874471, y: 0.12372507, z: 0.36834764}
+  m_Size: {x: 1.8460369, y: 1.8912238, z: 1.1324065}
+  m_Center: {x: -0.13874471, y: 0.12372507, z: 0.97273004}
+--- !u!114 &4871539203587178172
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4071883632964246969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 5
 --- !u!1 &4456641640549151788
 GameObject:
   m_ObjectHideFlags: 0
