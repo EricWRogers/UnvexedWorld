@@ -12,7 +12,7 @@ public class PunchScript : MonoBehaviour
 
     public GameObject enemy;
 
-    public UnityEvent punchTarget;
+    public UnityEvent<GameObject> punchTarget;
     
     // Start is called before the first frame update
     void Start()
@@ -34,7 +34,7 @@ public class PunchScript : MonoBehaviour
         {   
             enemy = other.gameObject;
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
-            punchTarget.Invoke();
+            punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
         }
         
