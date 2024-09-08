@@ -162,63 +162,66 @@ public class SpellCraft : MonoBehaviour
         }
         if (castType == CastType.melee)
         {
-            if(mainAspect == Aspect.scavenge)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("An uppercut that launches the target and user into the air and makes them floaty");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("An uppercut that launches the target and user into the air and suspends them there for a longer duration");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("An uppercut that launches the target and user into the air and away from each other");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("An uppercut that launches the target and user into the air then slams both into the ground");
-                }
-            }
-            if(mainAspect == Aspect.sunder)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("A rush punch that bounces the user off of the enemy");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("A rush punch uppercut that makes enemies floaty");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("A piercing punch that goes through enemies and then happens again (choose next direction?)");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("A rush haymaker that grounds targets");
-                }
-            }
-            if(mainAspect == Aspect.splendor)
-            {
-                if(modAspect == Aspect.none)
-                {
-                    Debug.Log("A haymaker that grounds targets");
-                }
-                else if(modAspect == Aspect.scavenge)
-                {
-                    Debug.Log("A haymaker that grounds targets then makes them slowly float");
-                }
-                else if(modAspect == Aspect.sunder)
-                {
-                    Debug.Log("A haymaker that grounds targets and ???");
-                }
-                else if(modAspect == Aspect.splendor)
-                {
-                    Debug.Log("A haymaker that grounds targets and creates a grounding shockwave");
-                }
-            }
+            GetComponentInChildren<Spell>().mainAspect = mainAspect;
+            GetComponentInChildren<Spell>().modAspect = modAspect;
+            GetComponent<Animator>().Play("meleeSpell");
+        //     if(mainAspect == Aspect.scavenge)
+        //     {
+        //         if(modAspect == Aspect.none)
+        //         {
+        //             Debug.Log("An uppercut that launches the target and user into the air and makes them floaty");
+        //         }
+        //         else if(modAspect == Aspect.scavenge)
+        //         {
+        //             Debug.Log("An uppercut that launches the target and user into the air and suspends them there for a longer duration");
+        //         }
+        //         else if(modAspect == Aspect.sunder)
+        //         {
+        //             Debug.Log("An uppercut that launches the target and user into the air and away from each other");
+        //         }
+        //         else if(modAspect == Aspect.splendor)
+        //         {
+        //             Debug.Log("An uppercut that launches the target and user into the air then slams both into the ground");
+        //         }
+        //     }
+        //     if(mainAspect == Aspect.sunder)
+        //     {
+        //         if(modAspect == Aspect.none)
+        //         {
+        //             Debug.Log("A rush punch that bounces the user off of the enemy");
+        //         }
+        //         else if(modAspect == Aspect.scavenge)
+        //         {
+        //             Debug.Log("A rush punch uppercut that makes enemies floaty");
+        //         }
+        //         else if(modAspect == Aspect.sunder)
+        //         {
+        //             Debug.Log("A piercing punch that goes through enemies and then happens again (choose next direction?)");
+        //         }
+        //         else if(modAspect == Aspect.splendor)
+        //         {
+        //             Debug.Log("A rush haymaker that grounds targets");
+        //         }
+        //     }
+        //     if(mainAspect == Aspect.splendor)
+        //     {
+        //         if(modAspect == Aspect.none)
+        //         {
+        //             Debug.Log("A haymaker that grounds targets");
+        //         }
+        //         else if(modAspect == Aspect.scavenge)
+        //         {
+        //             Debug.Log("A haymaker that grounds targets then makes them slowly float");
+        //         }
+        //         else if(modAspect == Aspect.sunder)
+        //         {
+        //             Debug.Log("A haymaker that grounds targets and ???");
+        //         }
+        //         else if(modAspect == Aspect.splendor)
+        //         {
+        //             Debug.Log("A haymaker that grounds targets and creates a grounding shockwave");
+        //         }
+        //     } 
         }
     }
 }
