@@ -85,7 +85,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //Dash
         currectDashCoolDown -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && (isGrounded) && currectDashCoolDown <= 0.0f)
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
         {
 
             dashing = true;
@@ -125,7 +125,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             isGrounded = true;
             jumpCount = 0;
-            Debug.Log("ouch");
+            //Debug.Log("ouch");
         }
         else
         {
