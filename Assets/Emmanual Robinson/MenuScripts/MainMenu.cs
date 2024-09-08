@@ -6,7 +6,7 @@ public class MainMenu : MonoBehaviour
 {
     public Button startButton;
     public Button quitButton;
-    public string gameSceneName = "MenuScene"; // Set to your correct scene name
+    public string MenuScene = "MenuScene"; // Set to your correct scene name
 
     void Start()
     {
@@ -32,7 +32,7 @@ public class MainMenu : MonoBehaviour
     void StartGame()
     {
         Debug.Log("Starting Game...");
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.LoadScene(MenuScene);
     }
 
     void QuitGame()
