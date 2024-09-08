@@ -30,8 +30,11 @@ public class Spell : MonoBehaviour
 
     }
 
-    public void ApplyDOT(int damage, int duration, Health health)
+    public void ApplyDOT(GameObject target)
     {
-
+        if(target.GetComponent<DOT>() == null)
+        {
+            target.AddComponent<DOT>();
+        }
     }
 }
