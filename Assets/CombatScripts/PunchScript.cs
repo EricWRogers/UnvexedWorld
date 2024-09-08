@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 
 
@@ -8,6 +9,10 @@ public class PunchScript : MonoBehaviour
 {
     
     public int damage = 1;
+
+    public GameObject enemy;
+
+    public UnityEvent punchTarget;
     
     // Start is called before the first frame update
     void Start()
@@ -26,10 +31,19 @@ public class PunchScript : MonoBehaviour
     {
         Debug.Log("Hit" + other.gameObject.name);
         if (other.gameObject.tag == "Enemy")
-        {
+        {   
+            enemy = other.gameObject;
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            punchTarget.Invoke();
             Debug.Log(" Enemy Hit");
         }
+        
 
     }
+    public void Punch(GameObject enemy)
+    {
+        
+           
+    }
+   
 }
