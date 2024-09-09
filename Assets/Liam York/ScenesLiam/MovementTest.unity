@@ -910,7 +910,7 @@ PrefabInstance:
     - target: {fileID: 4071883632964246969, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6489890642396419465, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
@@ -920,7 +920,7 @@ PrefabInstance:
     - target: {fileID: 6489890642396419465, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6489890642396419465, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
@@ -1342,6 +1342,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  enemy: {fileID: 0}
+  punchTarget:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1911871769
 GameObject:
   m_ObjectHideFlags: 3
