@@ -13,6 +13,7 @@ public class Spell : MonoBehaviour
     public GameObject AOEPrefab;
     public int AOEDuration;
     public bool lifeSteal = false;
+    public float lifeStealRatio = 1f;
     
     // Start is called before the first frame update
     void Start()
@@ -48,10 +49,10 @@ public class Spell : MonoBehaviour
         }
         else
         {
-            if (mainAspect == SpellCraft.Aspect.scavenge)
-            {
-                lifeSteal = true;
-            }
+            // if (mainAspect == SpellCraft.Aspect.scavenge)
+            // {
+            //     lifeSteal = true;
+            // }
             if (modAspect == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);
@@ -61,7 +62,17 @@ public class Spell : MonoBehaviour
                 Burst(target);
             }
         }
-        lifeSteal = false;
+        //lifeSteal = false;
         
+    }
+
+    public void LifeSteal(HealthChangedObject healthChangedObject)
+    {
+        int change = healthChangedObject.delta*-1;
+        Debug.Log("Heal" + change*lifeStealRatio);
+        if(change>0)
+        {
+            GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+        }
     }
 }
