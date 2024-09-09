@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7629248628707518033}
   - component: {fileID: 1008793146613672118}
   - component: {fileID: 7479456626132621844}
+  - component: {fileID: 8952156061528147896}
   m_Layer: 0
   m_Name: AOE
   m_TagString: Untagged
@@ -100,7 +101,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -126,3 +127,33 @@ MonoBehaviour:
   AOEPrefab: {fileID: 0}
   AOEDuration: 0
   lifeSteal: 0
+--- !u!114 &8952156061528147896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 728351024207828348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71d4fd78e4e5c4345a8656790cba1daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7479456626132621844}
+        m_TargetAssemblyTypeName: Spell, Assembly-CSharp
+        m_MethodName: SpellEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  duration: 10
+  timer: {fileID: 0}
+  spell: {fileID: 0}

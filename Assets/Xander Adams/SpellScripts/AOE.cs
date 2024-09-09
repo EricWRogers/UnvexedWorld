@@ -21,6 +21,7 @@ public class AOE : MonoBehaviour
         }
     void Start()
     {
+        timer = gameObject.AddComponent<Timer>();
         if (timer.timeout == null)
                 timer.timeout = new UnityEvent();
         timer.countDownTime = duration;
@@ -44,7 +45,10 @@ public class AOE : MonoBehaviour
 
     public void OnTriggerEnter(Collider target)
     {
-        
+        if(target.gameObject.tag == "Enemy")
+        {
+            hitTarget.Invoke(target.gameObject);
+        }
     }
 
 }
