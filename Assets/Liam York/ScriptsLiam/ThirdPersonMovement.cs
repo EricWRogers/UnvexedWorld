@@ -46,6 +46,11 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float dashStartTime;
 
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
 
 
     // Update is called once per frame
@@ -91,6 +96,10 @@ public class ThirdPersonMovement : MonoBehaviour
             dashing = true;
             dashStartTime = Time.time;
            
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
         }
 
         if (dashing)
