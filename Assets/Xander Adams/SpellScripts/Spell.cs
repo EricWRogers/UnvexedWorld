@@ -26,9 +26,9 @@ public class Spell : MonoBehaviour
         
     }
 
-    public void Burst()
+    public void Burst(GameObject target)
     {
-
+        target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
     }
 
     public void ApplyDOT(GameObject target)
@@ -55,6 +55,10 @@ public class Spell : MonoBehaviour
             if (modAspect == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);
+            }
+            if (modAspect == SpellCraft.Aspect.splendor)
+            {
+                Burst(target);
             }
         }
         lifeSteal = false;

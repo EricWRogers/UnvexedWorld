@@ -37,7 +37,7 @@ public class DOT : MonoBehaviour
 
         if (damageTimer > damageRate)
         {
-            health.currentHealth -= tickDamage;
+            health.Damage(tickDamage);
             damageTimer -= damageRate;
         }
     }
