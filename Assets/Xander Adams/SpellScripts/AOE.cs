@@ -8,7 +8,8 @@ using SuperPupSystems.Helper;
 public class AOE : MonoBehaviour
 {
     public UnityEvent<GameObject> hitTarget;
-    public int duration = 10;
+    public float duration = 10f;
+    public int damage = 5;
     public Timer timer;
     public Spell spell;
     // Start is called before the first frame update
@@ -29,7 +30,6 @@ public class AOE : MonoBehaviour
         timer.autoStart = true;
         timer.timeout.AddListener(EndAOE);
         spell = gameObject.GetComponent<Spell>();
-        hitTarget.AddListener(spell.SpellEffect);
     }
 
     // Update is called once per frame
@@ -47,7 +47,9 @@ public class AOE : MonoBehaviour
     {
         if(target.gameObject.tag == "Enemy")
         {
+            Debug.Log("AOE Hit" + target.gameObject.name + "");
             hitTarget.Invoke(target.gameObject);
+            target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
         }
     }
 
