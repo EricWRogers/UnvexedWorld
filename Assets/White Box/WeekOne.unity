@@ -17960,6 +17960,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 6081782571847116660, guid: 081bf28be0c0ed747865bc1f1959e546,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundEnemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19635,7 +19640,6 @@ GameObject:
   - component: {fileID: 242102682}
   - component: {fileID: 242102688}
   - component: {fileID: 242102687}
-  - component: {fileID: 242102689}
   m_Layer: 6
   m_Name: Winning Door
   m_TagString: Ground
@@ -19777,20 +19781,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &242102689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242102681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fd95402297e3c3d479c8cb9b7552b860, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 242102681}
-  enemyArea: {fileID: 1023436124}
 --- !u!1 &302254612
 GameObject:
   m_ObjectHideFlags: 0
@@ -20216,6 +20206,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6081782571847116660, guid: 081bf28be0c0ed747865bc1f1959e546,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21155,6 +21150,55 @@ Transform:
   - {fileID: 1798888575}
   - {fileID: 31113636}
   - {fileID: 1888484386}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &610750223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 610750225}
+  - component: {fileID: 610750224}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &610750224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610750223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2062f2a4033d9fef985ea7982655be7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundEnemies: []
+  doorOne: {fileID: 968781777}
+  doorTwo: {fileID: 242102681}
+  enemyAreaOne: {fileID: 705479533}
+  enemyAreaTwo: {fileID: 1023436124}
+--- !u!4 &610750225
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 610750223}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 127.34407, y: 17.60532, z: -282.41168}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!43 &617415602
@@ -26096,7 +26140,6 @@ GameObject:
   - component: {fileID: 968781779}
   - component: {fileID: 968781778}
   - component: {fileID: 968781783}
-  - component: {fileID: 968781782}
   m_Layer: 6
   m_Name: Door
   m_TagString: Ground
@@ -26190,21 +26233,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &968781782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968781777}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 443e18ffb0edd710cb2a15890ee22c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  door: {fileID: 968781777}
-  enemyArea: {fileID: 705479533}
-  enemyAreaTwo: {fileID: 1023436124}
 --- !u!95 &968781783
 Animator:
   serializedVersion: 5
@@ -28564,6 +28592,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6081782571847116660, guid: 081bf28be0c0ed747865bc1f1959e546,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -32228,6 +32261,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: MeleeEnemy (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6081782571847116660, guid: 081bf28be0c0ed747865bc1f1959e546,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundEnemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -53108,6 +53146,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MeleeEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 6081782571847116660, guid: 081bf28be0c0ed747865bc1f1959e546,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundEnemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -53749,3 +53792,4 @@ SceneRoots:
   - {fileID: 968781781}
   - {fileID: 242102685}
   - {fileID: 1128834142}
+  - {fileID: 610750225}
