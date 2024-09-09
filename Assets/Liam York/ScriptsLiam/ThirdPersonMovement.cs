@@ -143,7 +143,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Vector3 back = -transform.forward * 0.5f;
         Vector3 forward = transform.forward * 0.5f;
         isGrounded = false;
-        if(Physics.Raycast(transform.position + left, groundCheck.transform.position+left, out hit, groundCheckDistance))
+        if(Physics.Raycast(transform.position + left,-transform.up, out hit, groundCheckDistance))
         {
             isGrounded = true;
             jumpCount = 0;
