@@ -164,6 +164,14 @@ public class SpellCraft : MonoBehaviour
         {
             GetComponentInChildren<Spell>().mainAspect = mainAspect;
             GetComponentInChildren<Spell>().modAspect = modAspect;
+            if (mainAspect == Aspect.scavenge)
+            {
+                GetComponentInChildren<Spell>().lifeSteal = true;
+            }
+            else
+            {
+                GetComponentInChildren<Spell>().lifeSteal = false;
+            }
             GetComponent<Animator>().Play("meleeSpell");
         //     if(mainAspect == Aspect.scavenge)
         //     {
