@@ -33,7 +33,7 @@ public class InRangeState : SimpleState
             {
                 stateMachine.ChangeState(nameof(AttackState));
             }
-        } 
+        }
 
     }
 
