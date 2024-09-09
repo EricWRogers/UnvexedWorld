@@ -58,6 +58,7 @@ public class LeaveLevel : MonoBehaviour
             OpenDoor();
             Destroy(enemyArea);
             enemyAreaTwo.SetActive(true);
+            //anim.SetBool("areAllEnemiesDead", false);
         }
     }
 
