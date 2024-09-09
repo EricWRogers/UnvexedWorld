@@ -9,8 +9,6 @@ public class WinMenuScript : MonoBehaviour
 {
     public bool didWin = false;
 
-    public Health playerHealth;
-
     public GameObject winSection;
     
     void Start()
@@ -24,7 +22,7 @@ public class WinMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winSection.SetActive(true);
-       Time.timeScale = 0.0f;
+        Time.timeScale = 0.0f;
     }
 
      public void Retry()
@@ -43,16 +41,4 @@ public class WinMenuScript : MonoBehaviour
         Application.Quit();
         #endif
     }
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Exit")
-        {
-            Debug.Log("Baller");
-            Win();
-            
-        }
-
-    }
-    
-   
 }

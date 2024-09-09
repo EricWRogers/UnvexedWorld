@@ -9,7 +9,7 @@ using UnityEngine.AI;
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
-    private float attackRange = 1.0f;
+    private float attackRange;
 
     public override void OnStart()
     {
@@ -19,6 +19,7 @@ public class InRangeState : SimpleState
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange;
         }
         
         
