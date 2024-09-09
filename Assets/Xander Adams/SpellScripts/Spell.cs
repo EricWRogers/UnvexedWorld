@@ -37,4 +37,12 @@ public class Spell : MonoBehaviour
             target.AddComponent<DOT>();
         }
     }
+
+    public void SpellEffect(GameObject target)
+    {
+        if (modAspect == SpellCraft.Aspect.scavenge)
+        {
+            ApplyDOT(target);
+        }
+    }
 }
