@@ -28,7 +28,6 @@ public class DOT : MonoBehaviour
         timer.autoRestart = true;
         timer.autoStart = true;
         timer.timeout.AddListener(RemoveDOT);
-        //timer.StartTimerFromEvent();
     }
 
     // Update is called once per frame
