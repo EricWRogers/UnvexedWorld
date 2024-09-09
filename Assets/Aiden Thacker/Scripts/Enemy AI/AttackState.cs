@@ -44,6 +44,10 @@ public class AttackState : SimpleState
                 lastAttackTime = Time.time;
                 attack.Invoke();
             }
+            if(Vector3.Distance(agent.transform.position, ((MeleeStateMachine)stateMachine).target.position) > ((MeleeStateMachine)stateMachine).inAttackRange)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
 
             if (!((MeleeStateMachine)stateMachine).LOS /*&& !((MeleeStateMachine)stateMachine).isClose*/)
             {

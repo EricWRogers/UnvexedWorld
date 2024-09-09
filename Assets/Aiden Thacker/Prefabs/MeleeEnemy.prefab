@@ -118,12 +118,12 @@ GameObject:
   - component: {fileID: 1813499150184163638}
   - component: {fileID: 1922334855197361320}
   - component: {fileID: 7511902738150280469}
+  - component: {fileID: 4573716806557751908}
   - component: {fileID: 6947525862659754007}
   - component: {fileID: 8222426218046473639}
   - component: {fileID: 780554987024075741}
   - component: {fileID: 2622489867113047157}
   - component: {fileID: 2204447463185351013}
-  - component: {fileID: 4573716806557751908}
   m_Layer: 0
   m_Name: MeleeEnemy
   m_TagString: GroundEnemy
@@ -242,6 +242,33 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &4573716806557751908
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081782571847116660}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 3
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 32
+  m_CollisionDetection: 0
 --- !u!114 &6947525862659754007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +403,7 @@ MonoBehaviour:
   isSearching: 0
   ranMinFlee: 5
   ranMaxFlee: 15
+  inAttackRange: 1
   target: {fileID: 0}
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2622489867113047157
@@ -427,30 +455,3 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     isAttacking: 0
---- !u!54 &4573716806557751908
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081782571847116660}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
