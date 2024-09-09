@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
@@ -13,11 +14,12 @@ public class LevelManager : MonoBehaviour
     public GameObject enemyAreaTwo;
 
     private bool areaOneCleared = false;
+    private bool isAreaTwoActivated = false;  // New flag for area two
 
     void Start()
     {
         UpdateGroundEnemies(enemyAreaOne);  // Start with the first area
-        AddHealthListeners();
+        AddHealthListeners();               // Add health listeners for the first area
     }
 
     void Update()
@@ -28,7 +30,7 @@ public class LevelManager : MonoBehaviour
     // Update the list of ground enemies in the given area
     private void UpdateGroundEnemies(GameObject enemyArea)
     {
-        groundEnemies.Clear();
+        groundEnemies.Clear();  // Clear the current list of enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("GroundEnemy");
 
         foreach (GameObject enemy in enemies)
@@ -38,6 +40,8 @@ public class LevelManager : MonoBehaviour
                 groundEnemies.Add(enemy);
             }
         }
+
+        Debug.Log("Total enemies in " + enemyArea.name + ": " + groundEnemies.Count);
     }
 
     // Check if all ground enemies have been destroyed
@@ -52,15 +56,29 @@ public class LevelManager : MonoBehaviour
                 // First area cleared, open first door and activate second area
                 areaOneCleared = true;
                 OpenDoor(doorOne, "isAreaOneCleared");
-                enemyAreaTwo.SetActive(true);  // Activate second area
-                UpdateGroundEnemies(enemyAreaTwo);  // Update with new enemies
+
+                // Activate second area and delay the update of ground enemies
+                enemyAreaTwo.SetActive(true);
+                Debug.Log("The First Area is Over");
+                StartCoroutine(DelayedActivateSecondArea());
             }
-            else
+            else if (isAreaTwoActivated)  // Only check if area two has been activated
             {
+                Debug.Log("The Second Area is Over");
                 // Second area cleared, open second door (final escape)
                 OpenDoor(doorTwo, "isAreaTwoCleared");
             }
         }
+    }
+
+    // Coroutine to delay the enemy update for the second area
+    private IEnumerator DelayedActivateSecondArea()
+    {
+        yield return new WaitForSeconds(1.0f);  // Delay to ensure enemies are fully activated
+        UpdateGroundEnemies(enemyAreaTwo);  // Update with enemies from the second area
+        AddHealthListeners();               // Add health listeners for the second area's enemies
+        isAreaTwoActivated = true;          // Mark area two as activated
+        Debug.Log("Second Area Activated");
     }
 
     // Remove a specific enemy from the list when they die
@@ -95,10 +113,11 @@ public class LevelManager : MonoBehaviour
             if (doorAnim != null)
             {
                 doorAnim.SetBool(animatorParameter, true);
+                Debug.Log("Opened " + door.name + " with parameter: " + animatorParameter);
             }
             else
             {
-                Debug.Log("Animator component is missing on the door.");
+                Debug.Log("Animator component is missing on " + door.name);
             }
         }
         else
