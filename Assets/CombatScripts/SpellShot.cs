@@ -38,6 +38,14 @@ public class SpellShot : MonoBehaviour
     {
         nextFireTime = Time.time + fireRate;
         GameObject bullet = Instantiate(spellPrefab, firePoint.position, transform.rotation);
+        if (mainAspect == SpellCraft.Aspect.scavenge)
+            {
+                bullet.GetComponent<Spell>().lifeSteal = true;
+            }
+            else
+            {
+                bullet.GetComponent<Spell>().lifeSteal = false;
+            }
         bullet.GetComponent<Spell>().mainAspect = mainAspect;
         bullet.GetComponent<Spell>().modAspect = modAspect;
         

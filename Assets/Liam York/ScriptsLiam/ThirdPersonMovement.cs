@@ -46,6 +46,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float dashStartTime;
 
+    public GameObject groundCheck;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -56,6 +58,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CollisionCheck();
         if (!isGrounded)
         {
             
@@ -128,29 +131,41 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
 
         }
-        // Ground Check
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position,-transform.up, out hit, groundCheckDistance))
-        {
-            isGrounded = true;
-            jumpCount = 0;
-            //Debug.Log("ouch");
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-
-       
-
-
-
-
-
-
+        
 
 
     }
-   
+
+     private void CollisionCheck(){
+        RaycastHit hit;
+        Vector3 left = -transform.right * 0.5f;
+        Vector3 right = transform.right * 0.5f;
+        Vector3 back = -transform.forward * 0.5f;
+        Vector3 forward = transform.forward * 0.5f;
+        isGrounded = false;
+        if(Physics.Raycast(transform.position + left,-transform.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+        if(Physics.Raycast(transform.position + right,-transform.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+        if(Physics.Raycast(transform.position + back,-transform.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+        if(Physics.Raycast(transform.position + forward,-transform.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+            jumpCount = 0;
+        }
+     }
+    public void StopMoving()
+    {
+        Destroy(this);
+    }
 }

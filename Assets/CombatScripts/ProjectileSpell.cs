@@ -60,9 +60,17 @@ using SuperPupSystems.Helper;
             {
                 if (tags.Contains(m_info.transform.tag))
                 {
+                    if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
+                    {
+                        m_info.transform.gameObject.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
+                    }
                     m_info.transform.GetComponent<Health>()?.Damage(damage);
 
                     hitTarget.Invoke(m_info.transform.gameObject);
+                    if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
+                    {
+                        m_info.transform.gameObject.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
+                    }
                 }
 
                 if (destroyOnImpact)
