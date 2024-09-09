@@ -45,11 +45,10 @@ public class AttackState : SimpleState
                 attack.Invoke();
             }
 
-            if (!((MeleeStateMachine)stateMachine).LOS)
+            if (!((MeleeStateMachine)stateMachine).LOS /*&& !((MeleeStateMachine)stateMachine).isClose*/)
             {
+
                 stopAttacking.Invoke();
-                ((MeleeStateMachine)stateMachine).isSearching = true;
-                stateMachine.ChangeState(nameof(SearchingState));
             }
         }
     }

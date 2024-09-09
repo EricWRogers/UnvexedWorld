@@ -8,13 +8,13 @@ using UnityEngine.AI;
 public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
+    public AlertState alert;
     public InRangeState inRange;
-    public SearchingState searching;
     public AttackState melee;
-    public FleeState flee;
-
+    
     public bool LOS;
     public bool isAlive;
+    public bool isClose;
     public bool isSearching;
 
     public float ranMinFlee;
@@ -28,10 +28,9 @@ public class MeleeStateMachine : SimpleStateMachine
     void Awake()
     {
         states.Add(randomMovement);
+        states.Add(alert);
         states.Add(inRange);
-        states.Add(searching);
         states.Add(melee);
-        states.Add(flee);
 
         foreach (SimpleState s in states)
         {
@@ -50,10 +49,6 @@ public class MeleeStateMachine : SimpleStateMachine
 
     void Update()
     {
-        if(health.currentHealth < 25)
-        {
-            ChangeState(nameof(FleeState));
-        }
         if(health.currentHealth > 0)
         {
             isAlive = true;

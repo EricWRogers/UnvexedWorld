@@ -34,12 +34,6 @@ public class InRangeState : SimpleState
                 stateMachine.ChangeState(nameof(AttackState));
             }
         }
-        
-        if (((MeleeStateMachine)stateMachine).isAlive && !((MeleeStateMachine)stateMachine).LOS)
-        {
-            ((MeleeStateMachine)stateMachine).isSearching = true;
-            stateMachine.ChangeState(nameof(AttackState));
-        } 
 
     }
 
