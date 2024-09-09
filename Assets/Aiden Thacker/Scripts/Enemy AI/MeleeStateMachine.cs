@@ -8,23 +8,29 @@ using UnityEngine.AI;
 public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
+    public AlertState alert;
     public InRangeState inRange;
     public AttackState melee;
-    public FleeState flee;
-
+    
     public bool LOS;
     public bool isAlive;
+    public bool isClose;
+    public bool isSearching;
+
     public float ranMinFlee;
     public float ranMaxFlee;
-    private Health health;
+
     public Transform target;
+    private Health health;
+    [HideInInspector]
+    public Vector3 lastKnownPlayerPosition;
 
     void Awake()
     {
         states.Add(randomMovement);
+        states.Add(alert);
         states.Add(inRange);
         states.Add(melee);
-        states.Add(flee);
 
         foreach (SimpleState s in states)
         {
@@ -43,10 +49,6 @@ public class MeleeStateMachine : SimpleStateMachine
 
     void Update()
     {
-        if(health.currentHealth < 25)
-        {
-            ChangeState(nameof(FleeState));
-        }
         if(health.currentHealth > 0)
         {
             isAlive = true;
@@ -54,6 +56,14 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        LOS = gameObject.GetComponent<LOS>().targetsInSight;
+
+        bool currentLOS = gameObject.GetComponent<LOS>().targetsInSight;
+        if (currentLOS)
+        {
+            // Update last known position if LOS is true
+            lastKnownPlayerPosition = target.position;
+        }
+
+        LOS = currentLOS;
     }
 }
