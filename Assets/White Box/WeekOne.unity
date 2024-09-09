@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18029143, g: 0.22572419, b: 0.30693057, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19633,6 +19633,9 @@ GameObject:
   - component: {fileID: 242102684}
   - component: {fileID: 242102683}
   - component: {fileID: 242102682}
+  - component: {fileID: 242102688}
+  - component: {fileID: 242102687}
+  - component: {fileID: 242102689}
   m_Layer: 0
   m_Name: Winning Door
   m_TagString: Untagged
@@ -19655,12 +19658,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.3135681, y: 1, z: 1.2095562}
+  m_Center: {x: -0.15678406, y: 0, z: -0.019271048}
 --- !u!23 &242102683
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19720,12 +19723,74 @@ Transform:
   m_GameObject: {fileID: 242102681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 294.74, y: -3.0299997, z: -285.726}
+  m_LocalPosition: {x: 294.74, y: -3.16, z: -285.726}
   m_LocalScale: {x: 1, y: 15, z: 4.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &242102687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242102681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 076ca8cae9d3f6e40a07e586cccbbcdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  winGame:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1468474224}
+        m_TargetAssemblyTypeName: WinMenuScript, Assembly-CSharp
+        m_MethodName: Win
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!95 &242102688
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242102681}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6d0827280cf44e948a91fabbbf731e3e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &242102689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 242102681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd95402297e3c3d479c8cb9b7552b860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  door: {fileID: 242102681}
+  enemyArea: {fileID: 1023436124}
 --- !u!1 &302254612
 GameObject:
   m_ObjectHideFlags: 0
@@ -24004,7 +24069,11 @@ PrefabInstance:
     - {fileID: 8558133349851704059, guid: 1bb923267bdb967448530422388441f8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3428488077517617266, guid: 1bb923267bdb967448530422388441f8,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1056446527}
   m_SourcePrefab: {fileID: 100100000, guid: 1bb923267bdb967448530422388441f8, type: 3}
 --- !u!43 &789311139
 Mesh:
@@ -26924,6 +26993,25 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!1 &1056446523 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3428488077517617266, guid: 1bb923267bdb967448530422388441f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 782955665}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1056446527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1056446523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72bae80bebdad641b753dab4950458c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundEnemies: []
 --- !u!1 &1072479469
 GameObject:
   m_ObjectHideFlags: 0
@@ -31624,6 +31712,18 @@ MonoBehaviour:
   m_SelectedFaces: 
   m_SelectedEdges: []
   m_SelectedVertices: 
+--- !u!114 &1468474224 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3601648441269915796, guid: 1bb923267bdb967448530422388441f8,
+    type: 3}
+  m_PrefabInstance: {fileID: 782955665}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc752d567c0337f458c68977edd194e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1497724361
 PrefabInstance:
   m_ObjectHideFlags: 0

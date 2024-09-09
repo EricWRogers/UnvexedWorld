@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class LeaveLevel : MonoBehaviour
 {
-    // Store references to all ground enemies
+    
     private List<GameObject> groundEnemies = new List<GameObject>();
     private Animator anim;
 
-    // Reference to the door GameObject
     public GameObject door;
     public GameObject enemyArea;
     public GameObject enemyAreaTwo;
@@ -16,7 +15,6 @@ public class LeaveLevel : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        // Optionally, you can initialize groundEnemies here if needed
         UpdateGroundEnemies();
     }
 
@@ -58,7 +56,6 @@ public class LeaveLevel : MonoBehaviour
             OpenDoor();
             Destroy(enemyArea);
             enemyAreaTwo.SetActive(true);
-            //anim.SetBool("areAllEnemiesDead", false);
         }
     }
 
