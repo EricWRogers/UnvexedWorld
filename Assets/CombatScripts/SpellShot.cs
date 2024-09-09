@@ -63,7 +63,7 @@ public class SpellShot : MonoBehaviour
 
         if (Physics.Raycast(firePoint.position, firePoint.forward, out hit, weaponRange))
         {
-            if (hit.transform.CompareTag("Enemy"))
+            if (hit.transform.CompareTag("GroundEnemy"))
             {
                 Debug.Log("Hit!");
             }

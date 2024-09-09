@@ -19,6 +19,7 @@ public class MeleeStateMachine : SimpleStateMachine
 
     public float ranMinFlee;
     public float ranMaxFlee;
+    public float inAttackRange = 1.0f;
 
     public Transform target;
     private Health health;
