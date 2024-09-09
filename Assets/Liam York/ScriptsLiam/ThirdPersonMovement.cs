@@ -164,5 +164,8 @@ public class ThirdPersonMovement : MonoBehaviour
             jumpCount = 0;
         }
      }
-   
+    public void StopMoving()
+    {
+        Destroy(this);
+    }
 }
