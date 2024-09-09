@@ -12,6 +12,7 @@ public class Spell : MonoBehaviour
     public int DOTDuration;
     public GameObject AOEPrefab;
     public int AOEDuration;
+    public bool lifeSteal = false;
     
     // Start is called before the first frame update
     void Start()
@@ -25,9 +26,9 @@ public class Spell : MonoBehaviour
         
     }
 
-    public void Burst()
+    public void Burst(GameObject target)
     {
-
+        target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
     }
 
     public void ApplyDOT(GameObject target)
@@ -40,9 +41,27 @@ public class Spell : MonoBehaviour
 
     public void SpellEffect(GameObject target)
     {
-        if (modAspect == SpellCraft.Aspect.scavenge)
+        if (mainAspect == SpellCraft.Aspect.splendor)
         {
-            ApplyDOT(target);
+            GameObject AOE = Instantiate(AOEPrefab, gameObject.transform.position, transform.rotation);
+            AOE.GetComponent<Spell>().modAspect = modAspect;
         }
+        else
+        {
+            if (mainAspect == SpellCraft.Aspect.scavenge)
+            {
+                lifeSteal = true;
+            }
+            if (modAspect == SpellCraft.Aspect.scavenge)
+            {
+                ApplyDOT(target);
+            }
+            if (modAspect == SpellCraft.Aspect.splendor)
+            {
+                Burst(target);
+            }
+        }
+        lifeSteal = false;
+        
     }
 }
