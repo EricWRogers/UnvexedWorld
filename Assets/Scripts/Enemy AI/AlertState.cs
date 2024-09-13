@@ -8,6 +8,7 @@ using SuperPupSystems.StateMachine;
 public class AlertState : SimpleState
 {
     private NavMeshAgent agent;
+    private ParticleSystem dustPS;
 
     public override void OnStart()
     {
@@ -17,6 +18,7 @@ public class AlertState : SimpleState
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
             AlertNearbyEnemies();
         }
     }
@@ -26,6 +28,7 @@ public class AlertState : SimpleState
         if (((MeleeStateMachine)stateMachine).isAlive && ((MeleeStateMachine)stateMachine).LOS)
         {
             agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
+            dustPS.Play();
 
             // Check if the AI is close enough to the player
             if (agent.remainingDistance <= agent.stoppingDistance)
