@@ -7,6 +7,7 @@ public class SpellShot : MonoBehaviour
     public Transform firePoint;
     public GameObject bulletPrefab;
     public GameObject spellPrefab;
+    public GameObject camera;
     public float bulletSpeed = 10f;
 
     public float fireRate = 0.2f;
@@ -18,6 +19,12 @@ public class SpellShot : MonoBehaviour
 
     private void Start()
     {
+
+    }
+
+    private void Awake()
+    {
+        camera = GameObject.Find("MainCamera");
     }
     // Update is called once per frame
     void Update()
@@ -28,7 +35,7 @@ public class SpellShot : MonoBehaviour
     {
         nextFireTime = Time.time + fireRate;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, camera.transform.rotation);
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
@@ -37,7 +44,7 @@ public class SpellShot : MonoBehaviour
     public void ShootSpellPrefab(SpellCraft.Aspect mainAspect, SpellCraft.Aspect modAspect)
     {
         nextFireTime = Time.time + fireRate;
-        GameObject bullet = Instantiate(spellPrefab, firePoint.position, transform.rotation);
+        GameObject bullet = Instantiate(spellPrefab, firePoint.position, (camera.transform.rotation+transform.rotation)/2);
         if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 bullet.GetComponent<Spell>().lifeSteal = true;
