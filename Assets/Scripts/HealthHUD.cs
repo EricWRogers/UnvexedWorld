@@ -5,7 +5,7 @@ using SuperPupSystems.Helper;
 public class HealthHUD : MonoBehaviour
 {
     public Health playerHealth; // Reference to the player's health script
-    public Text healthText; // Reference to the UI Text element
+    public Image healthBar; // Reference to the health bar UI image
 
     void Start()
     {
@@ -13,8 +13,8 @@ public class HealthHUD : MonoBehaviour
         {
             // Subscribe to the health changed event
             playerHealth.healthChanged.AddListener(OnHealthChanged);
-            // Initialize the health text
-            UpdateHealthText(playerHealth.currentHealth, playerHealth.maxHealth);
+            // Initialize the health bar
+            UpdateHealthBar(playerHealth.currentHealth, playerHealth.maxHealth);
         }
         else
         {
@@ -33,13 +33,14 @@ public class HealthHUD : MonoBehaviour
 
     void OnHealthChanged(HealthChangedObject healthChangedObject)
     {
-        // Update the health text when the health changes
-        UpdateHealthText(healthChangedObject.currentHealth, healthChangedObject.maxHealth);
+        // Update the health bar when the health changes
+        UpdateHealthBar(healthChangedObject.currentHealth, healthChangedObject.maxHealth);
     }
 
-    void UpdateHealthText(int currentHealth, int maxHealth)
+    void UpdateHealthBar(int currentHealth, int maxHealth)
     {
-        // Update the UI text to display current and max health
-        healthText.text = $"Health: {currentHealth} / {maxHealth}";
+        // Update the fill amount of the health bar image
+        float fillAmount = (float)currentHealth / (float)maxHealth;
+        healthBar.fillAmount = fillAmount;
     }
 }
