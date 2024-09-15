@@ -4903,6 +4903,7 @@ GameObject:
   - component: {fileID: 7057109975730642617}
   - component: {fileID: 2949362573268268003}
   - component: {fileID: 6029361685217524699}
+  - component: {fileID: 8708334631014018568}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -4919,8 +4920,8 @@ Transform:
   m_GameObject: {fileID: 4822990231026914859}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.477, y: 0.185, z: 0.425}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 1}
+  m_LocalPosition: {x: -0.477, y: 0.185, z: 0.728}
+  m_LocalScale: {x: 0.25, y: 0.25, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2838965134027731655}
@@ -4996,6 +4997,36 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8708334631014018568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4822990231026914859}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6f790ed1bc67448b32e2a35a28fad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 0
+  playerHealth: {fileID: 0}
+  attackState:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    time: {fileID: 0}
+    attack:
+      m_PersistentCalls:
+        m_Calls: []
+    stopAttacking:
+      m_PersistentCalls:
+        m_Calls: []
+    isAttacking: 0
 --- !u!1 &6081782571847116660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5014,8 +5045,8 @@ GameObject:
   - component: {fileID: 8222426218046473639}
   - component: {fileID: 780554987024075741}
   - component: {fileID: 2622489867113047157}
-  - component: {fileID: 2204447463185351013}
   - component: {fileID: 817973545046678325}
+  - component: {fileID: 6745599246623091446}
   m_Layer: 10
   m_Name: MeleeEnemy
   m_TagString: GroundEnemy
@@ -5183,19 +5214,7 @@ MonoBehaviour:
       m_Calls: []
   hurt:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 817973545046678325}
-        m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
-        m_MethodName: Hurt
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   outOfHealth:
     m_PersistentCalls:
       m_Calls:
@@ -5275,7 +5294,6 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    dustPS: {fileID: 5088428177765275014}
   melee:
     stateStart:
       m_PersistentCalls:
@@ -5288,7 +5306,19 @@ MonoBehaviour:
     attack:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2204447463185351013}
+        - m_Target: {fileID: 6745599246623091446}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: MeleeEnemyAttack
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 8708334631014018568}
           m_TargetAssemblyTypeName: MeleeDamage, Assembly-CSharp
           m_MethodName: DealDamage
           m_Mode: 1
@@ -5332,36 +5362,6 @@ MonoBehaviour:
   autoRestart: 0
   countDownTime: 1
   timeScale: 1
---- !u!114 &2204447463185351013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081782571847116660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c6f790ed1bc67448b32e2a35a28fad3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 5
-  playerHealth: {fileID: 0}
-  attackState:
-    stateStart:
-      m_PersistentCalls:
-        m_Calls: []
-    stateExited:
-      m_PersistentCalls:
-        m_Calls: []
-    stateMachine: {fileID: 0}
-    time: {fileID: 0}
-    attack:
-      m_PersistentCalls:
-        m_Calls: []
-    stopAttacking:
-      m_PersistentCalls:
-        m_Calls: []
-    isAttacking: 0
 --- !u!114 &817973545046678325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5378,3 +5378,24 @@ MonoBehaviour:
   hurtMaterial: {fileID: 2100000, guid: 1755fdc7a4e30344a91d2e7b3719d248, type: 2}
   targetRenderer: {fileID: 1813499150184163638}
   timer: {fileID: 4370211555340675385}
+--- !u!95 &6745599246623091446
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6081782571847116660}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bd9b12516994d1f4e889b913171e5c36, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

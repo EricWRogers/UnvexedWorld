@@ -10,13 +10,15 @@ public class MeleeDamage : MonoBehaviour
 
     public AttackState attackState;
 
-
-    public void DealDamage()
+    private void Start()
     {
         if (playerHealth == null)
         {
             playerHealth = GameObject.Find("Player").GetComponent<Health>();
         }
+    }
+    public void DealDamage()
+    {
         Debug.Log("Enemy attacking");
         playerHealth.Damage(dmg);
     }
