@@ -8,11 +8,13 @@ public class SpellShot : MonoBehaviour
     public GameObject bulletPrefab;
     public GameObject spellPrefab;
     public GameObject targetCamera;
+    public Vector3 aimRotation;
     public float bulletSpeed = 10f;
 
     public float fireRate = 0.2f;
     public float weaponRange = 50f;
     public int damagePerShot = 20;
+    public int aimOffset = 10;
 
     private float nextFireTime;
 
@@ -29,14 +31,16 @@ public class SpellShot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //testRotation = targetCamera.transform.rotation;
+        //aimRotation = targetCamera.transform.rotation;
     }
 
     public void ShootPrefab()
     {
+        aimRotation = targetCamera.transform.rotation.eulerAngles;
+        aimRotation.x -= aimOffset;
         nextFireTime = Time.time + fireRate;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, targetCamera.transform.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(aimRotation));
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
@@ -44,9 +48,11 @@ public class SpellShot : MonoBehaviour
 
     public void ShootSpellPrefab(SpellCraft.Aspect mainAspect, SpellCraft.Aspect modAspect)
     {
+        aimRotation = targetCamera.transform.rotation.eulerAngles;
+        aimRotation.x -= aimOffset;
         nextFireTime = Time.time + fireRate;
 
-        GameObject bullet = Instantiate(spellPrefab, firePoint.position, targetCamera.transform.rotation);
+        GameObject bullet = Instantiate(spellPrefab, firePoint.position, Quaternion.Euler(aimRotation));
         if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 bullet.GetComponent<Spell>().lifeSteal = true;
