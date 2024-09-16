@@ -14,7 +14,7 @@ public class SpellShot : MonoBehaviour
     public float fireRate = 0.2f;
     public float weaponRange = 50f;
     public int damagePerShot = 20;
-    public int aimOffset = 10;
+    public int aimOffset = 8;
 
     private float nextFireTime;
 
