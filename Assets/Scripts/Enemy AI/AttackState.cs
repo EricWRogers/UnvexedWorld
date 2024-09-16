@@ -13,10 +13,9 @@ public class AttackState : SimpleState
     public UnityEvent attack;  
     public UnityEvent stopAttacking;
     private NavMeshAgent agent;
+    private float attackRange;
     private bool playerInRange;
     public bool isAttacking;
-    private float attackCooldown = 2f;  // Cooldown time in seconds
-    private float lastAttackTime;
 
     public override void OnStart()
     {
@@ -27,9 +26,14 @@ public class AttackState : SimpleState
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.SetDestination(((MeleeStateMachine)stateMachine).transform.position);
+            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 3.0f;
         }
 
-        lastAttackTime = -attackCooldown;  // Ensures the AI can attack immediately when first entering this state
+        time.StartTimer(2, true);
+        if (attack == null)
+        {
+            attack = new UnityEvent();
+        }
     }
 
     public override void UpdateState(float dt)
@@ -38,21 +42,22 @@ public class AttackState : SimpleState
         {
             ((MeleeStateMachine)stateMachine).transform.LookAt(((MeleeStateMachine)stateMachine).target);
             
-            if (((MeleeStateMachine)stateMachine).LOS && Time.time >= lastAttackTime + attackCooldown)
+            if (((MeleeStateMachine)stateMachine).LOS && !isAttacking)
             {
                 Debug.Log("Attacking");
-                lastAttackTime = Time.time;
+                isAttacking = true;
                 attack.Invoke();
             }
+
             if(Vector3.Distance(agent.transform.position, ((MeleeStateMachine)stateMachine).target.position) > ((MeleeStateMachine)stateMachine).inAttackRange)
             {
-                stateMachine.ChangeState(nameof(InRangeState));
-            }
-
-            if (!((MeleeStateMachine)stateMachine).LOS /*&& !((MeleeStateMachine)stateMachine).isClose*/)
-            {
-
-                stopAttacking.Invoke();
+                time.autoRestart = false;
+                if (time.timeLeft <= 0)
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
             }
         }
     }
