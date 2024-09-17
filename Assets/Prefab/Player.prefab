@@ -1123,6 +1123,7 @@ GameObject:
   - component: {fileID: 2639349014840673274}
   - component: {fileID: 1919406391244116265}
   - component: {fileID: 8892828267072295871}
+  - component: {fileID: 3391070927310749301}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1232,6 +1233,18 @@ MonoBehaviour:
       - m_Target: {fileID: 8892828267072295871}
         m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
         m_MethodName: Hurt
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CameraShake, Assembly-CSharp
+        m_MethodName: DoShake
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1361,6 +1374,19 @@ MonoBehaviour:
   hurtMaterial: {fileID: 2100000, guid: 33d52d14f53d8514e81b2bd8c073233a, type: 2}
   targetRenderer: {fileID: 9060243414928063243}
   timer: {fileID: 5439102912443727434}
+--- !u!114 &3391070927310749301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72bae80bebdad641b753dab4950458c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundEnemies: []
 --- !u!1 &3604528583040285055
 GameObject:
   m_ObjectHideFlags: 0

@@ -115,7 +115,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
-                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+                controller.Move(cam.forward.normalized * dashSpeed * Time.deltaTime);
             }
             else
             {
