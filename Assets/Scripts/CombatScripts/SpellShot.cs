@@ -26,7 +26,7 @@ public class SpellShot : MonoBehaviour
 
     void Awake() 
     {
-        targetCamera = GameObject.Find("MainCamera");
+        targetCamera = GameObject.FindWithTag("MainCamera");
     }
     // Update is called once per frame
     void Update()
