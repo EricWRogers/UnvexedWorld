@@ -39,11 +39,13 @@ public class MeleeRangedAttack : MonoBehaviour
     private void Melee()
     {
         GetComponent<Animator>().SetTrigger("Melee");
+        //GetComponent<AnimationForce>().melee = true;
     }
 
     private void Range()
     {
         GetComponent<Animator>().SetTrigger("Ranged");
+        //GetComponent<AnimationForce>().ranged = true;
         //spellShot.ShootPrefab();
     }
 
