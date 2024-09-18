@@ -7,32 +7,30 @@ using SuperPupSystems.Helper;
 public class HealthManager : MonoBehaviour
 {
     public Health playerHealth; // Reference to the player's health script
-    public Image healthBar; // Reference to the health bar UI image
+    public Slider healthSlider; // Reference to the health bar UI slider
 
     // Start is called before the first frame update
     void Start()
     {
-        if (playerHealth != null)
+        if (playerHealth != null && healthSlider != null)
         {
-            // Initialize the health bar at the start
-            UpdateHealthBar(playerHealth.currentHealth, playerHealth.maxHealth);
+            // Initialize the health slider at the start
+            healthSlider.maxValue = playerHealth.maxHealth;
+            healthSlider.value = playerHealth.currentHealth;
         }
         else
         {
-            Debug.LogError("Player Health is not assigned in the HealthManager script.");
+            Debug.LogError("Player Health or Health Slider is not assigned in the HealthManager script.");
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Update the health slider when health changes
+    public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
-        // Health bar is updated when health changes, no need for constant update in this script
-    }
+        // Ensure the slider's max value matches the health system
+        healthSlider.maxValue = maxHealth;
 
-    void UpdateHealthBar(int currentHealth, int maxHealth)
-    {
-        // Update the health bar fill amount
-        float fillAmount = (float)currentHealth / (float)maxHealth;
-        healthBar.fillAmount = fillAmount;
+        // Update the slider's value to represent current health
+        healthSlider.value = currentHealth;
     }
 }
