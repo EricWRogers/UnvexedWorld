@@ -30,6 +30,7 @@ public class SpellCraft : MonoBehaviour
     void Update()
     {
         casting = Input.GetKey(KeyCode.F);
+        GetComponent<Animator>().SetBool("Casting", casting);
         if (Input.GetKeyDown(KeyCode.Q) && casting && mainAspect != Aspect.none)
         {
             //CastSpell(CastType.melee,mainAspect,modAspect);

@@ -19,25 +19,20 @@ public class MeleeRangedAttack : MonoBehaviour
         
         if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Q))
         {
-            if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
-            {
-                spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
-            }
-            else
-            {
-                Melee();
-            }
+            // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
+            // {
+            //     spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+            // }
+            Melee();
         }
         else if (Input.GetMouseButtonDown(1)||Input.GetKeyDown(KeyCode.E))
         {
-            if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
-            {
-                spellCraft.CastSpell(SpellCraft.CastType.ranged, spellCraft.mainAspect, spellCraft.modAspect);
-            }
-            else
-            {
-                Range();
-            }
+            // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
+            // {
+            //     spellCraft.CastSpell(SpellCraft.CastType.ranged, spellCraft.mainAspect, spellCraft.modAspect);
+            // }
+            
+            Range();
         }
     }
 
@@ -48,8 +43,8 @@ public class MeleeRangedAttack : MonoBehaviour
 
     private void Range()
     {
-        GetComponent<Animator>().Play("range1");
-        spellShot.ShootPrefab();
+        GetComponent<Animator>().SetTrigger("Ranged");
+        //spellShot.ShootPrefab();
     }
 
     private void Damage()

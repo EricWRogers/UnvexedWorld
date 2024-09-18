@@ -9,6 +9,7 @@ public class SpellShot : MonoBehaviour
     public GameObject spellPrefab;
     public GameObject targetCamera;
     public Vector3 aimRotation;
+    private SpellCraft spellCraft;
     public float bulletSpeed = 10f;
 
     public float fireRate = 0.2f;
@@ -27,6 +28,7 @@ public class SpellShot : MonoBehaviour
     void Awake() 
     {
         targetCamera = GameObject.FindWithTag("MainCamera");
+        spellCraft = GetComponent<SpellCraft>();
     }
     // Update is called once per frame
     void Update()
@@ -44,6 +46,18 @@ public class SpellShot : MonoBehaviour
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
+    }
+
+    public void ShootSpellPrefab()
+    {
+        if (spellCraft.mainAspect != SpellCraft.Aspect.none)
+        {
+        ShootSpellPrefab(spellCraft.mainAspect, spellCraft.modAspect);
+        }
+        else
+        {
+            ShootPrefab();
+        }
     }
 
     public void ShootSpellPrefab(SpellCraft.Aspect mainAspect, SpellCraft.Aspect modAspect)
