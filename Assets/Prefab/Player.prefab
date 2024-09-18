@@ -1610,7 +1610,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.0001
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7060320185052712906
@@ -1626,7 +1626,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
-  gravity: -6.5
+  gravity: -15.8
   speed: 15
   dashSpeed: 20
   dashTime: 0.5
@@ -1639,10 +1639,11 @@ MonoBehaviour:
   isJumping: 0
   jumpCount: 0
   jumpMax: 2
-  jumpForce: 6
+  jumpForce: 9
   cam: {fileID: 0}
   moveDir: {x: 0, y: 0, z: 0}
   groundCheck: {fileID: 470950492452831367}
+  m_MaxDistance: 0.6
 --- !u!114 &8836706426513764780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1773,10 +1774,13 @@ MonoBehaviour:
     type: 3}
   spellPrefab: {fileID: 4458892491116159961, guid: 4ec424c222a43f74da087a839133aebd,
     type: 3}
+  targetCamera: {fileID: 0}
+  aimRotation: {x: 0, y: 0, z: 0}
   bulletSpeed: 10
   fireRate: 0.2
   weaponRange: 50
   damagePerShot: 20
+  aimOffset: 8
 --- !u!114 &8892828267072295871
 MonoBehaviour:
   m_ObjectHideFlags: 0

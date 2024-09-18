@@ -8,6 +8,9 @@ using SuperPupSystems.StateMachine;
 public class AlertState : SimpleState
 {
     private NavMeshAgent agent;
+    private ParticleSystem dustPS;
+    private float alertTime = 5f; 
+    private float alertTimer = 0f; 
 
     public override void OnStart()
     {
@@ -17,20 +20,27 @@ public class AlertState : SimpleState
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
             AlertNearbyEnemies();
         }
     }
 
     public override void UpdateState(float dt)
     {
+        alertTimer += dt; 
+        
         if (((MeleeStateMachine)stateMachine).isAlive && ((MeleeStateMachine)stateMachine).LOS)
         {
             agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
+            dustPS.Play();
 
-            // Check if the AI is close enough to the player
             if (agent.remainingDistance <= agent.stoppingDistance)
             {
-                stateMachine.ChangeState(nameof(InRangeState)); // Only switch to InRangeState if in range
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if (alertTimer >= alertTime)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }
@@ -38,6 +48,7 @@ public class AlertState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+        alertTimer = 0f; 
     }
 
     public void AlertNearbyEnemies()
@@ -53,14 +64,12 @@ public class AlertState : SimpleState
 
                 if (enemyStateMachine != null && enemyStateMachine.isAlive)
                 {
-                    // Set the target position for the alerted enemy to move toward the player
                     NavMeshAgent enemyAgent = enemy.GetComponent<NavMeshAgent>();
                     if (enemyAgent != null)
                     {
                         enemyAgent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
                     }
 
-                    // Change the state of the enemy to InRangeState after setting the destination
                     enemyStateMachine.ChangeState(nameof(InRangeState));
                 }
             }
