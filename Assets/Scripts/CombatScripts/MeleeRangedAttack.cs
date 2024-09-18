@@ -43,7 +43,7 @@ public class MeleeRangedAttack : MonoBehaviour
 
     private void Melee()
     {
-        GetComponent<Animator>().Play("melee1");
+        GetComponent<Animator>().SetTrigger("Melee");
     }
 
     private void Range()
