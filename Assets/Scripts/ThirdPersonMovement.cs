@@ -104,6 +104,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             dashing = true;
             dashStartTime = Time.time;
+            
            
         }
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -115,7 +116,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
-                controller.Move(cam.forward.normalized * dashSpeed * Time.deltaTime);
+                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
             }
             else
             {
