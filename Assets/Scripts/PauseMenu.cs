@@ -40,6 +40,8 @@ public class PauseMenu : MonoBehaviour
     {
         // Show the pause menu and freeze the game
         pauseMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         Time.timeScale = 0f; // Freeze time
         isPaused = true;
     }
@@ -48,6 +50,8 @@ public class PauseMenu : MonoBehaviour
     {
         // Hide the pause menu and unfreeze the game
         pauseMenuUI.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         Time.timeScale = 1f; // Unfreeze time
         isPaused = false;
     }
