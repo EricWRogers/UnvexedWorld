@@ -15,7 +15,7 @@ public class LOS : MonoBehaviour
     [HideInInspector]
     public bool targetsInSight;
 
-    void FixedUpdate()
+    void Update()
     {
         FindVisibleTargets();
     }
