@@ -6,6 +6,7 @@ public class AnimationForce : MonoBehaviour
 {
     public Animator animator;
     public string currentAnim;
+    public bool inTrans = false;
     public bool melee = false;
     public bool ranged = false;
     // Start is called before the first frame update
@@ -23,19 +24,25 @@ public class AnimationForce : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == currentAnim)
+        
+        if(animator.GetCurrentAnimatorClipInfo(0).Length != 0)
         {
-            animator.SetBool("Melee", melee);
-            animator.SetBool("Ranged", ranged);
+            if(animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == currentAnim)
+            {
+                animator.SetBool("Melee", melee);
+                animator.SetBool("Ranged", ranged);
+            }
+            else
+            {
+                currentAnim = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+                melee = false;
+                ranged = false;
+                animator.SetBool("Melee", melee);
+                animator.SetBool("Ranged", ranged);
+            }
         }
-        else
-        {
-            currentAnim = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-            melee = false;
-            ranged = false;
-            animator.SetBool("Melee", melee);
-            animator.SetBool("Ranged", ranged);
-        }
+        inTrans = animator.IsInTransition(0);
+        
         
         
     }
