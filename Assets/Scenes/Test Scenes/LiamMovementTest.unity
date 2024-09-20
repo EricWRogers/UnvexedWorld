@@ -524,18 +524,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 69.831, y: 83.925, z: -3.955}
---- !u!114 &760155337 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8892828267072295871, guid: 1bb923267bdb967448530422388441f8,
-    type: 3}
-  m_PrefabInstance: {fileID: 1196400978}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f62ce3eaabffe6398d2f2380e96881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &768976498
 GameObject:
   m_ObjectHideFlags: 3
@@ -752,7 +740,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939381918}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.08604983, y: -0.0000000042856403, z: 3.7015155e-10, w: 0.99629086}
+  m_LocalRotation: {x: 0.08604983, y: 0.00000000428564, z: -3.701515e-10, w: 0.99629086}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1116,36 +1104,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2408908693889748742, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: m_SkinWidth
-      value: 0.0001
-      objectReference: {fileID: 0}
     - target: {fileID: 3428488077517617266, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3601648441269915796, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: didWin
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7060320185052712906, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 2013781143}
-    - target: {fileID: 7060320185052712906, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: gravity
-      value: -15.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 7060320185052712906, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: m_MaxDistance
-      value: 0.6
-      objectReference: {fileID: 0}
     - target: {fileID: 8423083024635871786, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1195,41 +1163,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 760155337}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Hurt
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 8836706426513764780, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: hurt.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

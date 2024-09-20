@@ -8,7 +8,15 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float gravity = -3.5f;
 
+    public float gravityFirstJump = -5.0f;
+
+    public float gravitySecondJump = -15.0f;
+
+    public float baseSpeed = 6f;
+
     public float speed = 6f;
+
+    public float airSpeed = 3f;
 
     public float dashSpeed = 10f;
 
@@ -67,16 +75,37 @@ public class ThirdPersonMovement : MonoBehaviour
     void Update()
     {
          UpdateSlopeSliding();
-        if (!isGrounded)
+        
+        if (!isGrounded && jumpCount == 0)
         {
             
-            if (jumpCount < jumpMax)
+            if (jumpCount < jumpMax || isGrounded)
             {
                 isJumping = false;
             }
             velocity.y += gravity * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
+             speed = baseSpeed;
             
+        }
+
+        if (jumpCount == 1)
+        {
+            velocity.y += gravityFirstJump * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            Debug.Log(velocity.y);
+            speed = airSpeed;
+        }
+        else
+        {
+            speed = baseSpeed;
+        }
+        if (jumpCount == jumpMax)
+        {
+            velocity.y += gravitySecondJump * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            Debug.Log("second jump"+ velocity.y);
+            speed = airSpeed;
         }
         
         //Movement
@@ -130,7 +159,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
 
-       
+       //Jump
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
             isJumping = true;
@@ -142,7 +171,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
         
-
+        //GroundCheck
         if(controller.collisionFlags == CollisionFlags.Below)
         {
             jumpCount = 0;
@@ -159,6 +188,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
     }
+
+    // Sliding down slopes
     void UpdateSlopeSliding()
     {
        

@@ -1193,7 +1193,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
   gravity: -15.8
+  gravityFirstJump: -15
+  gravitySecondJump: -20
+  baseSpeed: 15
   speed: 15
+  airSpeed: 10
   dashSpeed: 20
   dashTime: 0.5
   dashCoolDown: 0.7
@@ -1244,9 +1248,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CameraShake, Assembly-CSharp
-        m_MethodName: DoShake
+      - m_Target: {fileID: 8892828267072295871}
+        m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
+        m_MethodName: Hurt
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
