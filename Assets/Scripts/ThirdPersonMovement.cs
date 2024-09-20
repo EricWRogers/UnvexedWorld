@@ -26,9 +26,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float groundCheckDistance;
 
-    private float bufferCheckDistance = 0.1f;
-
-    public bool isJumping;
+     public bool isJumping;
 
     public int jumpCount = 0;
 
@@ -48,9 +46,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public GameObject groundCheck;
 
-     public float m_MaxDistance;
-
     bool m_HitDetect;
+
+    public bool isSliding;
+
+    private Vector3 slopSlideSpeed;
+
+    public float slopeSpeed = 10.0f;
 
     void Start()
     {
@@ -64,7 +66,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+         UpdateSlopeSliding();
         if (!isGrounded)
         {
             
@@ -96,6 +98,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
         }
+
+        
         //Dash
         currectDashCoolDown -= Time.deltaTime;
 
@@ -126,8 +130,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
 
-        groundCheckDistance = (controller.height / 2) + bufferCheckDistance;
-        //Jump
+       
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
             isJumping = true;
@@ -155,6 +158,36 @@ public class ThirdPersonMovement : MonoBehaviour
         
 
 
+    }
+    void UpdateSlopeSliding()
+    {
+       
+        
+            var sphereCastVericalOffset = controller.height/2 - controller.radius;
+            var castOrgin = transform.position - new Vector3(0,sphereCastVericalOffset,0);
+
+            if(Physics.SphereCast(castOrgin, controller.radius - .01f, Vector3.down, out var hit, .05f, ~LayerMask.GetMask("Player"),QueryTriggerInteraction.Ignore))
+            {
+
+                var collider = hit.collider;
+                var angle = Vector3.Angle(Vector3.up, hit.normal);
+
+                if( angle > controller.slopeLimit)
+                {
+                    Debug.Log("Big Slope");
+                    velocity.x += slopeSpeed * Time.deltaTime;
+                    controller.Move(velocity * Time.deltaTime);
+                }
+                else
+                {
+                    velocity.x = 0 *Time.deltaTime;
+                    controller.Move(velocity * Time.deltaTime);
+                } 
+            
+
+
+           
+            }
     }
     
     
