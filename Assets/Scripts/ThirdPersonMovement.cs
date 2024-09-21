@@ -6,6 +6,8 @@ public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
 
+    public CameraManager cameraManager;
+
     public float gravity = -3.5f;
 
     public float gravityFirstJump = -5.0f;
@@ -32,9 +34,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public bool isGrounded = false;
 
-    public float groundCheckDistance;
-
-     public bool isJumping;
+    public bool isJumping;
 
     public int jumpCount = 0;
 
@@ -181,6 +181,15 @@ public class ThirdPersonMovement : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            cameraManager.SwitchCamera(cameraManager.meleeCam);
+        }
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            cameraManager.SwitchCamera(cameraManager.rangeCam);
         }
 
  
