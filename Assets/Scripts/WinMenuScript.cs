@@ -10,6 +10,8 @@ public class WinMenuScript : MonoBehaviour
     public bool didWin = false;
 
     public GameObject winSection;
+    public GameObject powerSystem;
+    public GameObject healthBar;
     
     void Start()
     {
@@ -22,6 +24,8 @@ public class WinMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winSection.SetActive(true);
+        powerSystem.SetActive(false);
+        healthBar.SetActive(false);
         Time.timeScale = 0.0f;
     }
 
