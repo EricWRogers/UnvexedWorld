@@ -1782,8 +1782,8 @@ GameObject:
   - component: {fileID: 2639349014840673274}
   - component: {fileID: 1919406391244116265}
   - component: {fileID: 8892828267072295871}
-  - component: {fileID: 3391070927310749301}
   - component: {fileID: 9208766189387090613}
+  - component: {fileID: 7646706070096529230}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1851,7 +1851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
-  cameraManager: {fileID: 0}
+  cameraManager: {fileID: 7646706070096529230}
   gravity: -15.8
   gravityFirstJump: -15
   gravitySecondJump: -20
@@ -2051,19 +2051,6 @@ MonoBehaviour:
   hurtMaterial: {fileID: 2100000, guid: 33d52d14f53d8514e81b2bd8c073233a, type: 2}
   targetRenderer: {fileID: 9060243414928063243}
   timer: {fileID: 5439102912443727434}
---- !u!114 &3391070927310749301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3428488077517617266}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b72bae80bebdad641b753dab4950458c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundEnemies: []
 --- !u!114 &9208766189387090613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2077,6 +2064,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundEnemies: []
+--- !u!114 &7646706070096529230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d00f0d1a228801438f92b65b4d6e476, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameras:
+  - {fileID: 0}
+  - {fileID: 0}
+  mainCam: {fileID: 0}
+  dashCam: {fileID: 0}
+  startCamera: {fileID: 0}
 --- !u!1 &3604528583040285055
 GameObject:
   m_ObjectHideFlags: 0
@@ -4377,10 +4382,6 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   burstDamage: 30
-  AOEPrefab: {fileID: 728351024207828348, guid: ef7574950242d0b47a8dc265035494e0,
-    type: 3}
-  DOTParticle: {fileID: 2098617173877162754, guid: 0490e9eed19eb494287a8fa32fec4426,
-    type: 3}
   AOEDuration: 0
   lifeSteal: 0
   lifeStealRatio: 1

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
 
     public CameraManager cameraManager;
-
     public float gravity = -3.5f;
 
     public float gravityFirstJump = -5.0f;
@@ -74,6 +74,8 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+        
          UpdateSlopeSliding();
         
         if (!isGrounded && jumpCount == 0)
@@ -137,6 +139,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
             dashing = true;
             dashStartTime = Time.time;
+            cameraManager.SwitchCamera(cameraManager.dashCam);
+           
             
            
         }
@@ -155,6 +159,7 @@ public class ThirdPersonMovement : MonoBehaviour
             {
                 dashing = false;
                 currectDashCoolDown = dashCoolDown;
+                cameraManager.SwitchCamera(cameraManager.mainCam);
             }
         }
 
@@ -183,20 +188,7 @@ public class ThirdPersonMovement : MonoBehaviour
             isGrounded = false;
         }
 
-        if(Input.GetKeyDown(KeyCode.K))
-        {
-            cameraManager.SwitchCamera(cameraManager.meleeCam);
-        }
-        if(Input.GetKeyDown(KeyCode.L))
-        {
-            cameraManager.SwitchCamera(cameraManager.rangeCam);
-        }
-
- 
-        
-
-
-    }
+       }
 
     // Sliding down slopes
     void UpdateSlopeSliding()
