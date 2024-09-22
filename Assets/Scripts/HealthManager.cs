@@ -10,27 +10,14 @@ public class HealthManager : MonoBehaviour
     public Slider healthSlider; // Reference to the health bar UI slider
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
-        if (playerHealth != null && healthSlider != null)
-        {
-            // Initialize the health slider at the start
-            healthSlider.maxValue = playerHealth.maxHealth;
-            healthSlider.value = playerHealth.currentHealth;
-        }
-        else
-        {
-            Debug.LogError("Player Health or Health Slider is not assigned in the HealthManager script.");
-        }
+        healthSlider.maxValue = playerHealth.maxHealth;
+        SetHealth();
     }
 
-    // Update the health slider when health changes
-    public void UpdateHealthBar(int currentHealth, int maxHealth)
+    public void SetHealth()
     {
-        // Ensure the slider's max value matches the health system
-        healthSlider.maxValue = maxHealth;
-
-        // Update the slider's value to represent current health
-        healthSlider.value = currentHealth;
+        healthSlider.value = playerHealth.currentHealth;
     }
 }

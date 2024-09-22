@@ -9,6 +9,8 @@ public class PlayerHUD : MonoBehaviour
     public Image meleeWeaponImage;    // Image for melee weapon indicator
     public Image rangedWeaponImage;   // Image for ranged weapon indicator
 
+    public GameObject spellReady;
+
     private int currentIndex = 0; // Tracks which power box to fill next
     private bool isMelee = false;
 
@@ -19,6 +21,11 @@ public class PlayerHUD : MonoBehaviour
     private Color highlightColor = Color.yellow; // Color for highlighting selected weapons
     private Color green = Color.green; // Color for combining spells
     private Color purple = new Color(0.5f, 0, 0.5f); // Purple for reset
+
+    void Start()
+    {
+        spellReady.SetActive(false);
+    }
 
     // Update is called once per frame
     void Update()
@@ -40,11 +47,11 @@ public class PlayerHUD : MonoBehaviour
         // Check if F key is held down for combining spells
         if (Input.GetKey(KeyCode.F))
         {
-            powerSystemImages[2].color = green; // Turn the third box green while F is held
+            spellReady.SetActive(true); // Turn on the Game Object to let you know spell is ready
         }
         else if (Input.GetKeyUp(KeyCode.F)) // Return to default color when F is released
         {
-            powerSystemImages[2].color = defaultColor;
+            spellReady.SetActive(false);
         }
 
         // Detect mouse clicks for melee and ranged weapon highlights
@@ -61,7 +68,7 @@ public class PlayerHUD : MonoBehaviour
     // Method to fill the next available box with heading spell color (either blue or red)
     private void SetNextAvailablePowerBoxColor(Color color)
     {
-        if (currentIndex < powerSystemImages.Length - 1) // Only fill first two boxes
+        if (currentIndex < powerSystemImages.Length) // Only fill first two boxes
         {
             powerSystemImages[currentIndex].color = color;
             currentIndex++; // Move to the next box
@@ -72,22 +79,13 @@ public class PlayerHUD : MonoBehaviour
     private void ResetPowerSystem()
     {
         // Reset the first two boxes to default color
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < Mathf.Min(2, powerSystemImages.Length); i++)
         {
-            powerSystemImages[i].color = defaultColor;
+            Color resetColor = defaultColor; // Start with default color
+            resetColor.a = 0f; // Set alpha to 0
+            powerSystemImages[i].color = resetColor; // Apply the color with zero alpha
         }
         currentIndex = 0; // Reset index to fill from the beginning again
-
-        // Set third box to purple to show the reset state and start the coroutine
-        powerSystemImages[2].color = purple;
-        StartCoroutine(RevertThirdBoxColorAfterDelay(1f)); // Revert color after 1 second
-    }
-
-    // Coroutine to revert the third box to default color after a delay
-    private IEnumerator RevertThirdBoxColorAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        powerSystemImages[2].color = defaultColor;
     }
 
     // Highlight the melee weapon box
