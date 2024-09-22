@@ -8,8 +8,8 @@ public class Spell : MonoBehaviour
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     public int burstDamage;
-    public GameObject AOEPrefab;
-    public GameObject DOTParticle;
+    //public GameObject AOEPrefab;
+    //public GameObject DOTParticle;
     public int AOEDuration;
     public bool lifeSteal = false;
     public float lifeStealRatio = 1f;
@@ -36,7 +36,7 @@ public class Spell : MonoBehaviour
         if(target.GetComponent<DOT>() == null)
         {
             target.AddComponent<DOT>();
-            target.GetComponent<DOT>().particle = DOTParticle;
+            target.GetComponent<DOT>().particle = ParticleManager.Instance.DOTParticle;
         }
     }
 
@@ -44,7 +44,7 @@ public class Spell : MonoBehaviour
     {
         if (mainAspect == SpellCraft.Aspect.splendor)
         {
-            GameObject AOE = Instantiate(AOEPrefab, gameObject.transform.position, transform.rotation);
+            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation);
             AOE.GetComponent<Spell>().modAspect = modAspect;
         }
         else
