@@ -8,9 +8,8 @@ public class Spell : MonoBehaviour
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     public int burstDamage;
-    public int DOTDamage;
-    public int DOTDuration;
     public GameObject AOEPrefab;
+    public GameObject DOTParticle;
     public int AOEDuration;
     public bool lifeSteal = false;
     public float lifeStealRatio = 1f;
@@ -37,6 +36,7 @@ public class Spell : MonoBehaviour
         if(target.GetComponent<DOT>() == null)
         {
             target.AddComponent<DOT>();
+            target.GetComponent<DOT>().particle = DOTParticle;
         }
     }
 
