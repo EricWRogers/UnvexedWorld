@@ -1851,6 +1851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
+  cameraManager: {fileID: 0}
   gravity: -15.8
   gravityFirstJump: -15
   gravitySecondJump: -20
@@ -1864,7 +1865,6 @@ MonoBehaviour:
   turnSmoothTime: 0.1
   dashing: 0
   isGrounded: 0
-  groundCheckDistance: 0
   isJumping: 0
   jumpCount: 0
   jumpMax: 2
@@ -4377,9 +4377,9 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   burstDamage: 30
-  DOTDamage: 0
-  DOTDuration: 0
   AOEPrefab: {fileID: 728351024207828348, guid: ef7574950242d0b47a8dc265035494e0,
+    type: 3}
+  DOTParticle: {fileID: 2098617173877162754, guid: 0490e9eed19eb494287a8fa32fec4426,
     type: 3}
   AOEDuration: 0
   lifeSteal: 0
