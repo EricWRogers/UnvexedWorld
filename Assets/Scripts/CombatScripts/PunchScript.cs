@@ -30,7 +30,7 @@ public class PunchScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Hit" + other.gameObject.name);
-        if (other.gameObject.tag == "GroundEnemy")
+        if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
         {   
             enemy = other.gameObject;
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
