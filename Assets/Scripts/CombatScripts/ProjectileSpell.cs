@@ -16,6 +16,7 @@ using SuperPupSystems.Helper;
         public UnityEvent<GameObject> hitTarget;
         public LayerMask mask;
         public List<string> tags;
+        public GameObject particle;
 
         private Vector3 m_lastPosition;
         private RaycastHit m_info;
@@ -38,6 +39,8 @@ using SuperPupSystems.Helper;
 
             // set init position
             m_lastPosition = transform.position;
+            
+            StartParticle();
         }
 
         private void FixedUpdate()
@@ -83,5 +86,26 @@ using SuperPupSystems.Helper;
         private void DestroyBullet()
         {
             Destroy(gameObject);
+        }
+        public void StartParticle()
+        {
+            if(gameObject.GetComponent<Spell>() != null)
+            {
+                if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge)
+                {
+                    particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                    particle.transform.parent = gameObject.transform;
+                }
+                else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+                {
+                    particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                    particle.transform.parent = gameObject.transform;
+                }
+            }
+            else
+            {
+                //default particle
+                particle = null;
+            }
         }
     }

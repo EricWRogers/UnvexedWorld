@@ -10,7 +10,7 @@ public class ParticleManager : MonoBehaviour
     public GameObject DOTParticle;
     public GameObject LifeStealParticle;
     public GameObject BurstParticle;
-    public GameObject ScavnegeParticle;
+    public GameObject ScavengeParticle;
     public GameObject SplendorParticle;
     
     // Start is called before the first frame update
