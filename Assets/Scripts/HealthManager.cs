@@ -2,51 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SuperPupSystems.Helper;
 
 public class HealthManager : MonoBehaviour
 {
-    public Image healthBar;
-    public float healthAmount = 100f;
+    public Health playerHealth; // Reference to the player's health script
+    public Slider healthSlider; // Reference to the health bar UI slider
 
     // Start is called before the first frame update
     void Start()
     {
-        // Initialize the health bar to the correct value at the start
-        healthBar.fillAmount = healthAmount / 100f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (healthAmount <= 0)
+        if (playerHealth != null && healthSlider != null)
         {
-            // Restart the level using the new SceneManager approach
-            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+            // Initialize the health slider at the start
+            healthSlider.maxValue = playerHealth.maxHealth;
+            healthSlider.value = playerHealth.currentHealth;
         }
-
-        if (Input.GetKeyDown(KeyCode.Return))
+        else
         {
-            TakeDamage(10);
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Heal(5);
+            Debug.LogError("Player Health or Health Slider is not assigned in the HealthManager script.");
         }
     }
 
-    public void TakeDamage(float damage)
+    // Update the health slider when health changes
+    public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
-        healthAmount -= damage;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100); // Ensure health doesn't go below 0
-        healthBar.fillAmount = healthAmount / 100f;
-    }
+        // Ensure the slider's max value matches the health system
+        healthSlider.maxValue = maxHealth;
 
-    public void Heal(float healingAmount)
-    {
-        healthAmount += healingAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100);
-
-        healthBar.fillAmount = healthAmount / 100f;
+        // Update the slider's value to represent current health
+        healthSlider.value = currentHealth;
     }
 }
