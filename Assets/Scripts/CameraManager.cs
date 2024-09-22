@@ -5,8 +5,8 @@ public class CameraManager : MonoBehaviour
 {
     public CinemachineFreeLook[] cameras;
 
-    public CinemachineFreeLook meleeCam;
-    public CinemachineFreeLook rangeCam;
+    public CinemachineFreeLook mainCam;
+    public CinemachineFreeLook dashCam;
 
     public CinemachineFreeLook startCamera;
     private CinemachineFreeLook currentCam;
