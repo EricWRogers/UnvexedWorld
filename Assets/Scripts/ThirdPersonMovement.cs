@@ -163,6 +163,16 @@ public class ThirdPersonMovement : MonoBehaviour
             }
         }
 
+        if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            cameraManager.SwitchCamera(cameraManager.aimCam);
+        }
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            cameraManager.SwitchCamera(cameraManager.mainCam);
+        }
+        
+
 
        //Jump
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
