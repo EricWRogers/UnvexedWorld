@@ -45,7 +45,7 @@ public class AOE : MonoBehaviour
 
     public void OnTriggerEnter(Collider target)
     {
-        if(target.gameObject.tag == "Enemy")
+        if(target.gameObject.tag == "Enemy" || target.gameObject.tag =="GroundEnemy")
         {
             Debug.Log("AOE Hit" + target.gameObject.name + "");
             hitTarget.Invoke(target.gameObject);
