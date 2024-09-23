@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 7291917922340637181}
   - component: {fileID: 8381568949655428612}
   - component: {fileID: -8601964472333354999}
+  - component: {fileID: 4147772869820690133}
+  - component: {fileID: 8748604938092682638}
   m_Layer: 0
   m_Name: bullet
   m_TagString: Untagged
@@ -152,3 +154,30 @@ MonoBehaviour:
   - Enemy
   - GroundEnemy
   particle: {fileID: 0}
+--- !u!114 &4147772869820690133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458892491116159961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bde28c3007e5d8d591343d26ad96800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 5
+  targetTag: GroundEnemy
+  targetPriority: 0
+--- !u!114 &8748604938092682638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4458892491116159961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 17ddd3d325fc25b589f99e2c6e12d487, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
