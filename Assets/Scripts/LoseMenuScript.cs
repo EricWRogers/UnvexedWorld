@@ -13,6 +13,8 @@ public class LoseMenuScript : MonoBehaviour
     public Health playerHealth;
 
     public GameObject loseSection;
+    public GameObject powerSystem;
+    public GameObject healthBar;
 
     void Start()
     {
@@ -25,6 +27,8 @@ public class LoseMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loseSection.SetActive(true);
+        powerSystem.SetActive(false);
+        healthBar.SetActive(false);
         Time.timeScale = 0.0f;
     }
 
