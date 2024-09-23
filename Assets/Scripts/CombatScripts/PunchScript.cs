@@ -13,6 +13,7 @@ public class PunchScript : MonoBehaviour
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
+    public GameObject particle;
     
     // Start is called before the first frame update
     void Start()
@@ -56,8 +57,10 @@ public class PunchScript : MonoBehaviour
 
     public void StartParticle()
     {
+        Debug.Log("Null???");
         if(gameObject.GetComponent<Spell>() != null)
         {
+            Debug.Log("StartParticle notNull");
             if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
@@ -71,9 +74,17 @@ public class PunchScript : MonoBehaviour
         }
         else
         {
+            Debug.Log("Null");
             //default particle
             particle = null;
         }
     }
-    
+
+    public void EndParticle()
+    {
+        if (particle != null)
+        {
+            Destroy(particle);
+        }
+    }
 }
