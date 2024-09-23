@@ -57,24 +57,25 @@ public class PunchScript : MonoBehaviour
 
     public void StartParticle()
     {
-        Debug.Log("Null???");
+        if (particle!= null);
+        {
+            EndParticle();
+        }
         if(gameObject.GetComponent<Spell>() != null)
         {
-            Debug.Log("StartParticle notNull");
             if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge)
             {
-                particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle = Instantiate(ParticleManager.Instance.ScavengeParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
             else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
             {
-                particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle = Instantiate(ParticleManager.Instance.SplendorParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
         }
         else
         {
-            Debug.Log("Null");
             //default particle
             particle = null;
         }
