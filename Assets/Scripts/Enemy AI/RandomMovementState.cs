@@ -19,7 +19,7 @@ public class RandomMovementState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Wander State");
+        //Debug.Log("Wander State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine)

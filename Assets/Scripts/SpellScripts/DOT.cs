@@ -13,10 +13,13 @@ public class DOT : MonoBehaviour
     public float damageRate = .25f;
     public int tickDamage = 1;
     public int duration = 10;
+    public GameObject particle;
     public Health health;
     private void Start()
     {
         gameObject.TryGetComponent<Health>(out health);
+        particle = Instantiate(particle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+        particle.transform.parent = gameObject.transform;
         if(health == null)
         {
             Destroy(gameObject.GetComponent<DOT>());
@@ -45,6 +48,7 @@ public class DOT : MonoBehaviour
     public void RemoveDOT()
     {
         Destroy(timer);
+        Destroy(particle);
         Destroy(gameObject.GetComponent<DOT>());
     }
 }

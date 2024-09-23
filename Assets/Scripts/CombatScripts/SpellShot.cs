@@ -9,6 +9,7 @@ public class SpellShot : MonoBehaviour
     public GameObject spellPrefab;
     public GameObject targetCamera;
     public Vector3 aimRotation;
+    private SpellCraft spellCraft;
     public float bulletSpeed = 10f;
 
     public float fireRate = 0.2f;
@@ -26,7 +27,8 @@ public class SpellShot : MonoBehaviour
 
     void Awake() 
     {
-        targetCamera = GameObject.Find("MainCamera");
+        targetCamera = GameObject.FindWithTag("MainCamera");
+        spellCraft = GetComponent<SpellCraft>();
     }
     // Update is called once per frame
     void Update()
@@ -41,9 +43,23 @@ public class SpellShot : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(aimRotation));
+        Vector3 dir = (transform.position - targetCamera.transform.position).normalized;
+        transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
+    }
+
+    public void ShootSpellPrefab()
+    {
+        if (spellCraft.mainAspect != SpellCraft.Aspect.none)
+        {
+            ShootSpellPrefab(spellCraft.mainAspect, spellCraft.modAspect);
+        }
+        else
+        {
+            ShootPrefab();
+        }
     }
 
     public void ShootSpellPrefab(SpellCraft.Aspect mainAspect, SpellCraft.Aspect modAspect)
@@ -53,6 +69,8 @@ public class SpellShot : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         GameObject bullet = Instantiate(spellPrefab, firePoint.position, Quaternion.Euler(aimRotation));
+        Vector3 dir = (transform.position - targetCamera.transform.position).normalized;
+        transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 bullet.GetComponent<Spell>().lifeSteal = true;
