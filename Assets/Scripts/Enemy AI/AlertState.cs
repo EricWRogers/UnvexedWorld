@@ -14,7 +14,7 @@ public class AlertState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Alert State");
+        //Debug.Log("Alert State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine)
