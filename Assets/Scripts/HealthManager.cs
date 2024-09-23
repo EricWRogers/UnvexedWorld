@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using SuperPupSystems.Helper;
+using SuperPupSystems.Helper; // If this is a custom namespace you're using
 
 public class HealthManager : MonoBehaviour
 {
@@ -14,23 +14,43 @@ public class HealthManager : MonoBehaviour
     {
         if (playerHealth != null && healthSlider != null)
         {
-            // Initialize the health slider at the start
+            // Initialize the slider's values at the start
             healthSlider.maxValue = playerHealth.maxHealth;
             healthSlider.value = playerHealth.currentHealth;
         }
         else
         {
-            Debug.LogError("Player Health or Health Slider is not assigned in the HealthManager script.");
+            if (playerHealth == null)
+                Debug.LogError("Player Health is not assigned in the HealthManager script.");
+            if (healthSlider == null)
+                Debug.LogError("Health Slider is not assigned in the HealthManager script.");
         }
     }
 
-    // Update the health slider when health changes
+    // This method can be called whenever health changes
     public void UpdateHealthBar(int currentHealth, int maxHealth)
     {
-        // Ensure the slider's max value matches the health system
-        healthSlider.maxValue = maxHealth;
+        if (healthSlider != null)
+        {
+            // Ensure the slider's max value matches the player's max health
+            healthSlider.maxValue = maxHealth;
 
-        // Update the slider's value to represent current health
-        healthSlider.value = currentHealth;
+            // Update the slider's value to reflect current health
+            healthSlider.value = currentHealth;
+        }
+        else
+        {
+            Debug.LogError("Health Slider is not assigned in the HealthManager script.");
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (playerHealth != null)
+        {
+            // Continuously update the health bar to reflect the player's health
+            UpdateHealthBar(playerHealth.currentHealth, playerHealth.maxHealth);
+        }
     }
 }
