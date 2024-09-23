@@ -8,6 +8,8 @@ public class CameraManager : MonoBehaviour
     public CinemachineFreeLook mainCam;
     public CinemachineFreeLook dashCam;
 
+    public CinemachineFreeLook aimCam;
+
     public CinemachineFreeLook startCamera;
     private CinemachineFreeLook currentCam;
 
