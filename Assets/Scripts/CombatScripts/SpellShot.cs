@@ -43,6 +43,8 @@ public class SpellShot : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.Euler(aimRotation));
+        Vector3 dir = (transform.position - targetCamera.transform.position).normalized;
+        transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);
         Destroy(bullet, 3f);
@@ -52,7 +54,7 @@ public class SpellShot : MonoBehaviour
     {
         if (spellCraft.mainAspect != SpellCraft.Aspect.none)
         {
-        ShootSpellPrefab(spellCraft.mainAspect, spellCraft.modAspect);
+            ShootSpellPrefab(spellCraft.mainAspect, spellCraft.modAspect);
         }
         else
         {
@@ -67,6 +69,8 @@ public class SpellShot : MonoBehaviour
         nextFireTime = Time.time + fireRate;
 
         GameObject bullet = Instantiate(spellPrefab, firePoint.position, Quaternion.Euler(aimRotation));
+        Vector3 dir = (transform.position - targetCamera.transform.position).normalized;
+        transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 bullet.GetComponent<Spell>().lifeSteal = true;

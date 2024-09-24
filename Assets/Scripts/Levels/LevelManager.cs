@@ -40,8 +40,6 @@ public class LevelManager : MonoBehaviour
                 groundEnemies.Add(enemy);
             }
         }
-
-        Debug.Log("Total enemies in " + enemyArea.name + ": " + groundEnemies.Count);
     }
 
     // Check if all ground enemies have been destroyed
@@ -78,7 +76,6 @@ public class LevelManager : MonoBehaviour
         UpdateGroundEnemies(enemyAreaTwo);  // Update with enemies from the second area
         AddHealthListeners();               // Add health listeners for the second area's enemies
         isAreaTwoActivated = true;          // Mark area two as activated
-        Debug.Log("Second Area Activated");
     }
 
     // Remove a specific enemy from the list when they die
