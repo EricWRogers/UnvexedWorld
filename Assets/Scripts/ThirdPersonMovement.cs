@@ -64,19 +64,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-         
-        
+        Cursor.lockState = CursorLockMode.Locked;    
     }
-
-
 
     // Update is called once per frame
     void Update()
     {
-       
-        
-         UpdateSlopeSliding();
+        UpdateSlopeSliding();
         
         if (!isGrounded && jumpCount == 0)
         {
@@ -95,7 +89,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             velocity.y += gravityFirstJump * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
-            Debug.Log(velocity.y);
             speed = airSpeed;
         }
         else
@@ -106,7 +99,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             velocity.y += gravitySecondJump * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
-            Debug.Log("second jump"+ velocity.y);
             speed = airSpeed;
         }
         
@@ -123,11 +115,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
-            
-
-
+        
         }
 
         
@@ -140,9 +130,8 @@ public class ThirdPersonMovement : MonoBehaviour
             dashing = true;
             dashStartTime = Time.time;
             cameraManager.SwitchCamera(cameraManager.dashCam);
-           
-            
-           
+            Vector3 dir = (transform.position - cam.transform.position).normalized;
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -191,52 +180,40 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             jumpCount = 0;
             isGrounded = true;
-            Debug.Log("ouch");
         }
         else
         {
             isGrounded = false;
         }
-
-       }
+    }
 
     // Sliding down slopes
     void UpdateSlopeSliding()
-    {
-       
-        
-            var sphereCastVericalOffset = controller.height/2 - controller.radius;
-            var castOrgin = transform.position - new Vector3(0,sphereCastVericalOffset,0);
+    {    
+        var sphereCastVericalOffset = controller.height/2 - controller.radius;
+        var castOrgin = transform.position - new Vector3(0,sphereCastVericalOffset,0);
 
-            if(Physics.SphereCast(castOrgin, controller.radius - .01f, Vector3.down, out var hit, .05f, ~LayerMask.GetMask("Player"),QueryTriggerInteraction.Ignore))
+        if(Physics.SphereCast(castOrgin, controller.radius - .01f, Vector3.down, out var hit, .05f, ~LayerMask.GetMask("Player"),QueryTriggerInteraction.Ignore))
+        {
+
+            var collider = hit.collider;
+            var angle = Vector3.Angle(Vector3.up, hit.normal);
+
+            if( angle > controller.slopeLimit)
             {
-
-                var collider = hit.collider;
-                var angle = Vector3.Angle(Vector3.up, hit.normal);
-
-                if( angle > controller.slopeLimit)
-                {
-                    Debug.Log("Big Slope");
-                    velocity.x += slopeSpeed * Time.deltaTime;
-                    controller.Move(velocity * Time.deltaTime);
-                }
-                else
-                {
-                    velocity.x = 0 *Time.deltaTime;
-                    controller.Move(velocity * Time.deltaTime);
-                } 
-            
-
-
-           
+                velocity.x += slopeSpeed * Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
             }
+            else
+            {
+                velocity.x = 0 *Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
+            }            
+        }
     }
-    
     
     public void StopMoving()
     {
         Destroy(this);
-    }
-
-  
+    }  
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class LOS : MonoBehaviour
 {
     public float viewRadius;
-    [Range(0,180)]
+    [Range(0,360)]
     public float viewAngle;
 
     public LayerMask targetMask;
@@ -15,7 +15,7 @@ public class LOS : MonoBehaviour
     [HideInInspector]
     public bool targetsInSight;
 
-    void FixedUpdate()
+    void Update()
     {
         FindVisibleTargets();
     }
@@ -35,7 +35,6 @@ public class LOS : MonoBehaviour
                 if(!Physics.Raycast (transform.position, dirToTarget, dstToTarget, obstacleMask))
                 {
                     visibleTargets.Add (target);
-                 
                 }
             }
         }
