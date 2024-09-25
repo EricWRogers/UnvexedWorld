@@ -20,9 +20,11 @@ public class SpellCraft : MonoBehaviour
     public Aspect mainAspect = Aspect.none;
     public Aspect modAspect = Aspect.none;
     public bool casting = false;
+    public Spell[] spells;
     // Start is called before the first frame update
     void Start()
     {
+        spells = GetComponentsInChildren<Spell>();
         
     }
 
@@ -163,8 +165,12 @@ public class SpellCraft : MonoBehaviour
         }
         if (castType == CastType.melee)
         {
-            GetComponentInChildren<Spell>().mainAspect = mainAspect;
-            GetComponentInChildren<Spell>().modAspect = modAspect;
+            for(int i = 0; i<spells.Length; i++)
+            {
+                spells[i].mainAspect = mainAspect;
+                spells[i].modAspect = modAspect;
+            }
+            //GetComponentsInChildren<Spell>().modAspect = modAspect;
             if (mainAspect == Aspect.scavenge)
             {
                 GetComponentInChildren<Spell>().lifeSteal = true;
