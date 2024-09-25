@@ -58,13 +58,6 @@ public class MeleeStateMachine : SimpleStateMachine
             isAlive = false;
         }
 
-        bool currentLOS = gameObject.GetComponent<LOS>().targetsInSight;
-        if (currentLOS)
-        {
-            // Update last known position if LOS is true
-            lastKnownPlayerPosition = target.position;
-        }
-
-        LOS = currentLOS;
+        LOS = gameObject.GetComponent<LOS>().targetsInSight;
     }
 }

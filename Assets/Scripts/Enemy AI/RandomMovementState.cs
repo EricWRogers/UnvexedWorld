@@ -8,6 +8,7 @@ using SuperPupSystems.StateMachine;
 public class RandomMovementState : SimpleState
 {
     private NavMeshAgent agent;
+    private ParticleSystem dustPS;
     private float moveDelay = 2.0f; 
     private float moveTimer = 0f;
     private float minDelay = 1.5f; 
@@ -18,12 +19,13 @@ public class RandomMovementState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Wander State");
+        //Debug.Log("Wander State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
         }
 
         MoveToRandomPoint();
@@ -56,9 +58,11 @@ public class RandomMovementState : SimpleState
         if (GetRandomPoint(circleCenterObject.position, range, out point))
         {
             agent.SetDestination(point);
+            dustPS.Play();
 
             if (((MeleeStateMachine)stateMachine).LOS)
             {
+                dustPS.Stop();
                 stateMachine.ChangeState(nameof(AlertState));
             }
         }

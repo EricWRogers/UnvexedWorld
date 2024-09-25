@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
+    private ParticleSystem dustPS;
     private float attackRange;
 
     public override void OnStart()
@@ -19,7 +20,8 @@ public class InRangeState : SimpleState
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange;
+            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 1.0f;
         }
         
         
@@ -30,8 +32,13 @@ public class InRangeState : SimpleState
         if (((MeleeStateMachine)stateMachine).isAlive && ((MeleeStateMachine)stateMachine).LOS)
         {
             agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
+            if (!dustPS.isPlaying)
+            {
+                dustPS.Play();
+            }
             if(Vector3.Distance(agent.transform.position, ((MeleeStateMachine)stateMachine).target.position) < attackRange)
             {
+                dustPS.Stop();
                 stateMachine.ChangeState(nameof(AttackState));
             }
         }
