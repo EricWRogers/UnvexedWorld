@@ -25,7 +25,11 @@ public class SpellCraft : MonoBehaviour
      PlayerGamepad gamepad;
  
      void Awake()
+    public Spell[] spells;
+    // Start is called before the first frame update
     {
+        spells = GetComponentsInChildren<Spell>();
+        
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
         gamepad.GamePlay.Splendor.performed += ctx => Splendor();
@@ -147,8 +151,12 @@ public class SpellCraft : MonoBehaviour
         }
         if (castType == CastType.melee)
         {
-            GetComponentInChildren<Spell>().mainAspect = mainAspect;
-            GetComponentInChildren<Spell>().modAspect = modAspect;
+            for(int i = 0; i<spells.Length; i++)
+            {
+                spells[i].mainAspect = mainAspect;
+                spells[i].modAspect = modAspect;
+            }
+            //GetComponentsInChildren<Spell>().modAspect = modAspect;
             if (mainAspect == Aspect.scavenge)
             {
                 GetComponentInChildren<Spell>().lifeSteal = true;
