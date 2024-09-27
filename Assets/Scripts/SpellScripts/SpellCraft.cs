@@ -24,8 +24,9 @@ public class SpellCraft : MonoBehaviour
 
      PlayerGamepad gamepad;
  
-     void Awake()
+     
     public Spell[] spells;
+     void Awake()
     // Start is called before the first frame update
     {
         spells = GetComponentsInChildren<Spell>();
