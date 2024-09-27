@@ -62,6 +62,60 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Melee"",
+                    ""type"": ""Button"",
+                    ""id"": ""05d97a3c-d0df-4188-9104-cb397909786f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""470bdd1a-d8ce-4211-ac17-2916dd98f918"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Splendor"",
+                    ""type"": ""Button"",
+                    ""id"": ""41d9605c-ea9d-4280-98fe-27fa7e0a7b9e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scavange"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ef3549e-78b7-4616-a0e9-60a458845442"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Clear"",
+                    ""type"": ""Button"",
+                    ""id"": ""59f2e419-0f6f-471b-9345-403172e29ce8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Casting"",
+                    ""type"": ""Button"",
+                    ""id"": ""11adc182-2268-4110-bc48-4adb5419ce83"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -108,6 +162,72 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""LookingRightStick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bad0894d-7cf2-4069-8c2e-fa641821d3b1"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Melee"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60c52be3-2605-4238-9e0f-9b73b32550a2"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""383b3b16-a300-4736-9836-74f06b01d3ca"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Splendor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e75925d-4526-4527-9d77-4f5eb213088d"",
+                    ""path"": ""<Gamepad>/dpad/left"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scavange"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2845efc-47da-42b0-b782-d6dcc1de3bf0"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clear"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b857cdb1-09b7-418d-a9cd-34ec9eea299c"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Casting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +240,12 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Jump = m_GamePlay.FindAction("Jump", throwIfNotFound: true);
         m_GamePlay_Dash = m_GamePlay.FindAction("Dash", throwIfNotFound: true);
         m_GamePlay_LookingRightStick = m_GamePlay.FindAction("LookingRightStick", throwIfNotFound: true);
+        m_GamePlay_Melee = m_GamePlay.FindAction("Melee", throwIfNotFound: true);
+        m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
+        m_GamePlay_Splendor = m_GamePlay.FindAction("Splendor", throwIfNotFound: true);
+        m_GamePlay_Scavange = m_GamePlay.FindAction("Scavange", throwIfNotFound: true);
+        m_GamePlay_Clear = m_GamePlay.FindAction("Clear", throwIfNotFound: true);
+        m_GamePlay_Casting = m_GamePlay.FindAction("Casting", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -185,6 +311,12 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Jump;
     private readonly InputAction m_GamePlay_Dash;
     private readonly InputAction m_GamePlay_LookingRightStick;
+    private readonly InputAction m_GamePlay_Melee;
+    private readonly InputAction m_GamePlay_Shoot;
+    private readonly InputAction m_GamePlay_Splendor;
+    private readonly InputAction m_GamePlay_Scavange;
+    private readonly InputAction m_GamePlay_Clear;
+    private readonly InputAction m_GamePlay_Casting;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -193,6 +325,12 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_GamePlay_Jump;
         public InputAction @Dash => m_Wrapper.m_GamePlay_Dash;
         public InputAction @LookingRightStick => m_Wrapper.m_GamePlay_LookingRightStick;
+        public InputAction @Melee => m_Wrapper.m_GamePlay_Melee;
+        public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
+        public InputAction @Splendor => m_Wrapper.m_GamePlay_Splendor;
+        public InputAction @Scavange => m_Wrapper.m_GamePlay_Scavange;
+        public InputAction @Clear => m_Wrapper.m_GamePlay_Clear;
+        public InputAction @Casting => m_Wrapper.m_GamePlay_Casting;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +352,24 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LookingRightStick.started += instance.OnLookingRightStick;
             @LookingRightStick.performed += instance.OnLookingRightStick;
             @LookingRightStick.canceled += instance.OnLookingRightStick;
+            @Melee.started += instance.OnMelee;
+            @Melee.performed += instance.OnMelee;
+            @Melee.canceled += instance.OnMelee;
+            @Shoot.started += instance.OnShoot;
+            @Shoot.performed += instance.OnShoot;
+            @Shoot.canceled += instance.OnShoot;
+            @Splendor.started += instance.OnSplendor;
+            @Splendor.performed += instance.OnSplendor;
+            @Splendor.canceled += instance.OnSplendor;
+            @Scavange.started += instance.OnScavange;
+            @Scavange.performed += instance.OnScavange;
+            @Scavange.canceled += instance.OnScavange;
+            @Clear.started += instance.OnClear;
+            @Clear.performed += instance.OnClear;
+            @Clear.canceled += instance.OnClear;
+            @Casting.started += instance.OnCasting;
+            @Casting.performed += instance.OnCasting;
+            @Casting.canceled += instance.OnCasting;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -230,6 +386,24 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LookingRightStick.started -= instance.OnLookingRightStick;
             @LookingRightStick.performed -= instance.OnLookingRightStick;
             @LookingRightStick.canceled -= instance.OnLookingRightStick;
+            @Melee.started -= instance.OnMelee;
+            @Melee.performed -= instance.OnMelee;
+            @Melee.canceled -= instance.OnMelee;
+            @Shoot.started -= instance.OnShoot;
+            @Shoot.performed -= instance.OnShoot;
+            @Shoot.canceled -= instance.OnShoot;
+            @Splendor.started -= instance.OnSplendor;
+            @Splendor.performed -= instance.OnSplendor;
+            @Splendor.canceled -= instance.OnSplendor;
+            @Scavange.started -= instance.OnScavange;
+            @Scavange.performed -= instance.OnScavange;
+            @Scavange.canceled -= instance.OnScavange;
+            @Clear.started -= instance.OnClear;
+            @Clear.performed -= instance.OnClear;
+            @Clear.canceled -= instance.OnClear;
+            @Casting.started -= instance.OnCasting;
+            @Casting.performed -= instance.OnCasting;
+            @Casting.canceled -= instance.OnCasting;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -253,5 +427,11 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnLookingRightStick(InputAction.CallbackContext context);
+        void OnMelee(InputAction.CallbackContext context);
+        void OnShoot(InputAction.CallbackContext context);
+        void OnSplendor(InputAction.CallbackContext context);
+        void OnScavange(InputAction.CallbackContext context);
+        void OnClear(InputAction.CallbackContext context);
+        void OnCasting(InputAction.CallbackContext context);
     }
 }
