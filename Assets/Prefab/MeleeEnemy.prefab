@@ -4903,7 +4903,6 @@ GameObject:
   - component: {fileID: 7057109975730642617}
   - component: {fileID: 2949362573268268003}
   - component: {fileID: 6029361685217524699}
-  - component: {fileID: 8708334631014018568}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -4923,7 +4922,8 @@ Transform:
   m_LocalPosition: {x: -0.477, y: 0.185, z: 0.728}
   m_LocalScale: {x: 0.25, y: 0.25, z: 1.2}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8153758126925201816}
   m_Father: {fileID: 2838965134027731655}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7057109975730642617
@@ -4991,42 +4991,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8708334631014018568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4822990231026914859}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c6f790ed1bc67448b32e2a35a28fad3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dmg: 5
-  playerHealth: {fileID: 0}
-  attackState:
-    stateStart:
-      m_PersistentCalls:
-        m_Calls: []
-    stateExited:
-      m_PersistentCalls:
-        m_Calls: []
-    stateMachine: {fileID: 0}
-    time: {fileID: 0}
-    attack:
-      m_PersistentCalls:
-        m_Calls: []
-    stopAttacking:
-      m_PersistentCalls:
-        m_Calls: []
-    isAttacking: 0
 --- !u!1 &6081782571847116660
 GameObject:
   m_ObjectHideFlags: 0
@@ -5036,8 +5006,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2838965134027731655}
-  - component: {fileID: 1539412806370484818}
-  - component: {fileID: 1813499150184163638}
+  - component: {fileID: 5507930466715366691}
+  - component: {fileID: 6073569315875115553}
   - component: {fileID: 1922334855197361320}
   - component: {fileID: 7511902738150280469}
   - component: {fileID: 4573716806557751908}
@@ -5075,7 +5045,7 @@ Transform:
   - {fileID: 8252026528217606020}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
---- !u!33 &1539412806370484818
+--- !u!33 &5507930466715366691
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5083,7 +5053,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6081782571847116660}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &1813499150184163638
+--- !u!23 &6073569315875115553
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5334,6 +5304,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
+    enteredAlert: 0
   inRange:
     stateStart:
       m_PersistentCalls:
@@ -5364,18 +5335,6 @@ MonoBehaviour:
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: MeleeEnemyAttack
-            m_BoolArgument: 0
-          m_CallState: 2
-        - m_Target: {fileID: 8708334631014018568}
-          m_TargetAssemblyTypeName: MeleeDamage, Assembly-CSharp
-          m_MethodName: DealDamage
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
     stopAttacking:
@@ -5424,7 +5383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultMaterial: {fileID: 2100000, guid: f29990fa0873de348abd0176ed7bdae3, type: 2}
   hurtMaterial: {fileID: 2100000, guid: 1755fdc7a4e30344a91d2e7b3719d248, type: 2}
-  targetRenderer: {fileID: 1813499150184163638}
+  targetRenderer: {fileID: 6073569315875115553}
   timer: {fileID: 4370211555340675385}
 --- !u!114 &2975168457193762620
 MonoBehaviour:
@@ -5475,3 +5434,87 @@ MonoBehaviour:
   aiMask:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!1 &9160457795140931292
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8153758126925201816}
+  - component: {fileID: 988484373840782784}
+  - component: {fileID: 5878016800599976389}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8153758126925201816
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9160457795140931292}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.44, y: 0, z: 0.694}
+  m_LocalScale: {x: 4.689898, y: 2.2778888, z: 1.1565}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8328559370041719840}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &988484373840782784
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9160457795140931292}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5878016800599976389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9160457795140931292}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c6f790ed1bc67448b32e2a35a28fad3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dmg: 5
+  playerHealth: {fileID: 0}
+  attackState:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    time: {fileID: 0}
+    attack:
+      m_PersistentCalls:
+        m_Calls: []
+    stopAttacking:
+      m_PersistentCalls:
+        m_Calls: []
+    isAttacking: 0

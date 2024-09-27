@@ -58,6 +58,11 @@ public class MeleeStateMachine : SimpleStateMachine
             isAlive = false;
         }
 
+        if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
+        {
+            ChangeState(nameof(AlertState));
+        }
+
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
     }
 }
