@@ -1,4 +1,4 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
@@ -7,8 +7,6 @@ public class MeleeDamage : MonoBehaviour
 {
     public int dmg;
     public Health playerHealth;
-
-    public AttackState attackState;
 
     private void Start()
     {
@@ -22,13 +20,18 @@ public class MeleeDamage : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Player"))
         {
-            col.gameObject.GetComponent<Health>().Damage(dmg);
-        }
-    }
+            // Calculate the hit direction
+            Vector3 hitDir = col.gameObject.transform.position - gameObject.transform.position;
 
-    public void DealDamage()
-    {
-        Debug.Log("Enemy attacking");
-        playerHealth.Damage(dmg);
+            // Apply damage to the player
+            col.gameObject.GetComponent<Health>().Damage(dmg);
+
+            // Apply knockback to the player
+            PlayerKnockback playerKnockback = col.gameObject.GetComponent<PlayerKnockback>();
+            if (playerKnockback != null)
+            {
+                playerKnockback.ApplyKnockback(hitDir);
+            }
+        }
     }
 }

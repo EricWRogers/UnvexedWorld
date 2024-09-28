@@ -39,6 +39,7 @@ public class PunchScript : MonoBehaviour
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            other.GetComponent<Knockback>().OnHurt();
             punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
