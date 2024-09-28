@@ -50,15 +50,11 @@ public class PunchScript : MonoBehaviour
         
 
     }
-    public void Punch(GameObject enemy)
-    {
-        
-           
-    }
+   
 
     public void StartParticle()
     {
-        if (particle!= null);
+        if (particle!= null)
         {
             EndParticle();
         }

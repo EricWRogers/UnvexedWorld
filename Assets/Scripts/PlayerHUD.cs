@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerHUD : MonoBehaviour
 {
@@ -11,12 +12,12 @@ public class PlayerHUD : MonoBehaviour
 
     public GameObject spellReady;
 
-    private int currentIndex = 0; // Tracks which power box to fill next
-    private bool isMelee = false;
+    public SpellCraft spellCraft;
+
+    public List<Color> colors = new List<Color>();
 
     // Colors for key indicators
-    private Color blue = Color.blue;
-    private Color red = Color.red;
+    
     private Color defaultColor = Color.white; // Default color for empty slots
     private Color highlightColor = Color.yellow; // Color for highlighting selected weapons
     private Color green = Color.green; // Color for combining spells
@@ -24,35 +25,37 @@ public class PlayerHUD : MonoBehaviour
 
     void Start()
     {
+        colors.Add(Color.clear);
+        colors.Add(Color.blue);
+        colors.Add(Color.red);
+        colors.Add(Color.yellow);
         spellReady.SetActive(false);
+        spellCraft = gameObject.GetComponentInParent<SpellCraft>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        powerSystemImages[0].color = colors[(int)spellCraft.mainAspect];
+        powerSystemImages[1].color = colors[(int)spellCraft.modAspect];
         // Detect key presses for power inputs
-        if (Input.GetKeyDown(KeyCode.Alpha1)) // Key '1' pressed for blue spell
-        {
-            SetNextAvailablePowerBoxColor(blue); // Fill the next box with blue
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2)) // Key '2' pressed for red spell
-        {
-            SetNextAvailablePowerBoxColor(red); // Fill the next box with red
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4)) // Key '4' pressed to reset
-        {
-            ResetPowerSystem(); // Reset the power system
-        }
+        // if (spellCraft.mainAspect == SpellCraft.Aspect.scavenge) // Key '1' pressed for blue spell
+        // {
+        //     SetNextAvailablePowerBoxColor(blue); // Fill the next box with blue
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha2)) // Key '2' pressed for red spell
+        // {
+        //     SetNextAvailablePowerBoxColor(red); // Fill the next box with red
+        // }
+        // else if (Input.GetKeyDown(KeyCode.Alpha4)) // Key '4' pressed to reset
+        // {
+        //     ResetPowerSystem(); // Reset the power system
+        // }
+
 
         // Check if F key is held down for combining spells
-        if (Input.GetKey(KeyCode.F))
-        {
-            spellReady.SetActive(true); // Turn on the Game Object to let you know spell is ready
-        }
-        else if (Input.GetKeyUp(KeyCode.F)) // Return to default color when F is released
-        {
-            spellReady.SetActive(false);
-        }
+        
+        spellReady.SetActive(spellCraft.casting); // Turn on the Game Object to let you know spell is ready
 
         // Detect mouse clicks for melee and ranged weapon highlights
         if (Input.GetMouseButtonDown(0)) // Left click for melee
@@ -66,28 +69,7 @@ public class PlayerHUD : MonoBehaviour
     }
 
     // Method to fill the next available box with heading spell color (either blue or red)
-    private void SetNextAvailablePowerBoxColor(Color color)
-    {
-        if (currentIndex < powerSystemImages.Length) // Only fill first two boxes
-        {
-            powerSystemImages[currentIndex].color = color;
-            currentIndex++; // Move to the next box
-        }
-    }
-
-    // Method to reset the power system and show the reset state in the third box
-    private void ResetPowerSystem()
-    {
-        // Reset the first two boxes to default color
-        for (int i = 0; i < Mathf.Min(2, powerSystemImages.Length); i++)
-        {
-            Color resetColor = defaultColor; // Start with default color
-            resetColor.a = 0f; // Set alpha to 0
-            powerSystemImages[i].color = resetColor; // Apply the color with zero alpha
-        }
-        currentIndex = 0; // Reset index to fill from the beginning again
-    }
-
+    
     // Highlight the melee weapon box
     private void HighlightMeleeWeapon()
     {
