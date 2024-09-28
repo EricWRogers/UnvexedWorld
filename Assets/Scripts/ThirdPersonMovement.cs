@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
+
+    PlayerGamepad gamepad;
+
+    Vector2 gamepadMove;
 
     public CameraManager cameraManager;
     public float gravity = -3.5f;
@@ -62,6 +67,118 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float slopeSpeed = 10.0f;
 
+    void Awake()
+    {
+        gamepad = new PlayerGamepad();
+
+        gamepad.GamePlay.Jump.performed += ctx => GamepadJump();
+
+        gamepad.GamePlay.Dash.performed += ctx => GamepadDash();
+
+        gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
+        gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
+        {
+            isJumping = true;
+            jumpCount++;
+            isGrounded = false;
+            velocity.y = 0;
+            velocity.y += jumpForce;
+            controller.Move(velocity * Time.deltaTime);
+
+        }
+    }
+
+    void GamepadJump()
+    {
+        if ((isGrounded || jumpCount < jumpMax))
+        {
+            isJumping = true;
+            jumpCount++;
+            isGrounded = false;
+            velocity.y = 0;
+            velocity.y += jumpForce;
+            controller.Move(velocity * Time.deltaTime);
+
+        }
+    }
+
+    void Dash()
+    {
+         currectDashCoolDown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
+        {
+
+            dashing = true;
+            dashStartTime = Time.time;
+            cameraManager.SwitchCamera(cameraManager.dashCam);
+            Vector3 dir = (transform.position - cam.transform.position).normalized;
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+        }
+        
+
+        if (dashing)
+        {
+            if (Time.time < dashStartTime + dashTime)
+            {
+                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+            }
+            else
+            {
+                dashing = false;
+                currectDashCoolDown = dashCoolDown;
+                cameraManager.SwitchCamera(cameraManager.mainCam);
+            }
+        }
+
+    }
+
+    void GamepadDash()
+    {
+         currectDashCoolDown -= Time.deltaTime;
+
+        if ( (!dashing) && currectDashCoolDown <= 0.0f)
+        {
+
+            dashing = true;
+            dashStartTime = Time.time;
+            cameraManager.SwitchCamera(cameraManager.dashCam);
+            Vector3 dir = (transform.position - cam.transform.position).normalized;
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+        }
+        
+
+        if (dashing)
+        {
+            if (Time.time < dashStartTime + dashTime)
+            {
+                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+            }
+            else
+            {
+                dashing = false;
+                currectDashCoolDown = dashCoolDown;
+                cameraManager.SwitchCamera(cameraManager.mainCam);
+            }
+        }
+
+    }
+
+    void OnEnable()
+    {
+        gamepad.GamePlay.Enable();
+    }
+
+    void OnDisable()
+    {
+        gamepad.GamePlay.Disable();
+    }
+    
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;    
@@ -120,36 +237,16 @@ public class ThirdPersonMovement : MonoBehaviour
         
         }
 
+        gamepadMove.x = moveDir.x;
+        gamepadMove.y = moveDir.y;
+
         
         //Dash
-        currectDashCoolDown -= Time.deltaTime;
+        Dash();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
-        {
-
-            dashing = true;
-            dashStartTime = Time.time;
-            cameraManager.SwitchCamera(cameraManager.dashCam);
-            Vector3 dir = (transform.position - cam.transform.position).normalized;
-            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
-        }
-
-        if (dashing)
-        {
-            if (Time.time < dashStartTime + dashTime)
-            {
-                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
-            }
-            else
-            {
-                dashing = false;
-                currectDashCoolDown = dashCoolDown;
-                cameraManager.SwitchCamera(cameraManager.mainCam);
-            }
         }
 
         if(Input.GetKeyDown(KeyCode.LeftControl))
@@ -164,16 +261,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
 
        //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
-        {
-            isJumping = true;
-            jumpCount++;
-            isGrounded = false;
-            velocity.y = 0;
-            velocity.y += jumpForce;
-            controller.Move(velocity * Time.deltaTime);
-
-        }
+        Jump();
         
         //GroundCheck
         if(controller.collisionFlags == CollisionFlags.Below)
@@ -216,4 +304,6 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Destroy(this);
     }  
+
+ 
 }
