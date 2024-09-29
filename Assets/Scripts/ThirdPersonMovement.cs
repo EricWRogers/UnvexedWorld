@@ -57,10 +57,6 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float dashStartTime;
 
-    public GameObject groundCheck;
-
-    bool m_HitDetect;
-
     public bool isSliding;
 
     private Vector3 slopSlideSpeed;
@@ -72,6 +68,8 @@ public class ThirdPersonMovement : MonoBehaviour
     public float groundedCheckDistence;
 
     private float bufferCheckDistance = 0.1f;
+
+    public Animator animator;
 
     void Awake()
     {
@@ -187,13 +185,14 @@ public class ThirdPersonMovement : MonoBehaviour
     
     void Start()
     {
+        animator = GetComponentsInChildren<Animator>()[1];
         Cursor.lockState = CursorLockMode.Locked;    
     }
 
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Animator>().SetBool("Grounded", rayGround);
+        animator.SetBool("Grounded", rayGround);
         
         UpdateSlopeSliding();
 
@@ -236,7 +235,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
-            GetComponent<Animator>().SetBool("Moving", true);
+            animator.SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
@@ -248,7 +247,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         else
         {
-            GetComponent<Animator>().SetBool("Moving", false);
+            animator.SetBool("Moving", false);
         }
 
         gamepadMove.x = moveDir.x;
