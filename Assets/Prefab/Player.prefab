@@ -859,19 +859,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1357691472247148494}
-        m_TargetAssemblyTypeName: PunchScript, Assembly-CSharp
-        m_MethodName: Punch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   particle: {fileID: 0}
 --- !u!1 &1517210709097364466
 GameObject:
@@ -1886,6 +1874,9 @@ GameObject:
   - component: {fileID: 8892828267072295871}
   - component: {fileID: 9208766189387090613}
   - component: {fileID: 8678946718278521828}
+  - component: {fileID: 8771430051349071788}
+  - component: {fileID: 4592016987764617268}
+  - component: {fileID: 2088814457685935502}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1906,12 +1897,14 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1987475542971134052}
   - {fileID: 9090155982644465829}
   - {fileID: 7756106815954976046}
   - {fileID: 3664396929940847429}
   - {fileID: 7225772065670162029}
   - {fileID: 34209237187893654}
   - {fileID: 7455555112761746012}
+  - {fileID: 7765232128652950886}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!143 &2408908693889748742
@@ -1976,6 +1969,8 @@ MonoBehaviour:
   groundCheck: {fileID: 470950492452831367}
   isSliding: 0
   slopeSpeed: 10
+  rayGround: 0
+  groundedCheckDistence: 0
 --- !u!114 &8836706426513764780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2021,9 +2016,33 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8892828267072295871}
-        m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
-        m_MethodName: Hurt
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CameraShake, Assembly-CSharp
+        m_MethodName: DoShake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CameraShake, Assembly-CSharp
+        m_MethodName: DoShake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: CameraShake, Assembly-CSharp
+        m_MethodName: DoShake
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2114,6 +2133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellCraft: {fileID: 1034932654391892717}
   spellShot: {fileID: 1919406391244116265}
+  attackRange: 5
 --- !u!114 &1919406391244116265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2187,6 +2207,48 @@ MonoBehaviour:
   dashCam: {fileID: 0}
   aimCam: {fileID: 0}
   startCamera: {fileID: 0}
+--- !u!114 &8771430051349071788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bde28c3007e5d8d591343d26ad96800, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  range: 300
+  targetTag: GroundEnemy
+  targetPriority: 0
+--- !u!114 &4592016987764617268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b72bae80bebdad641b753dab4950458c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundEnemies: []
+--- !u!114 &2088814457685935502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d806625a34685dea59ebaec38531d203, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockbackStrength: 2
+  knockbackDuration: 0.2
 --- !u!1 &3494920844570013469
 GameObject:
   m_ObjectHideFlags: 0
@@ -2424,7 +2486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4197576611423272874
 Transform:
   m_ObjectHideFlags: 0
@@ -2612,19 +2674,7 @@ MonoBehaviour:
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 4807682470508934147}
-        m_TargetAssemblyTypeName: PunchScript, Assembly-CSharp
-        m_MethodName: Punch
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   particle: {fileID: 0}
 --- !u!1 &4904544889362182957
 GameObject:
@@ -2865,7 +2915,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4197576611423272874}
   - {fileID: 5778317420356294063}
@@ -2887,7 +2937,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5072688189730731773}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3117,6 +3167,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &5344626808957306902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7765232128652950886}
+  m_Layer: 9
+  m_Name: DumbTarget
+  m_TagString: GroundEnemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7765232128652950886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5344626808957306902}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8423083024635871786}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5369175444876241635
 GameObject:
   m_ObjectHideFlags: 0
@@ -5144,3 +5225,107 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &2026152559540918159
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8423083024635871786}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.94499993
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_Name
+      value: Drift_Character_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d32c9e55d3348a444bccc631ed7d969e, type: 2}
+    - target: {fileID: 5866666021909216657, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: efe06c63b78a94147925fc6e57af42e4, type: 3}
+--- !u!4 &1987475542971134052 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: efe06c63b78a94147925fc6e57af42e4,
+    type: 3}
+  m_PrefabInstance: {fileID: 2026152559540918159}
+  m_PrefabAsset: {fileID: 0}

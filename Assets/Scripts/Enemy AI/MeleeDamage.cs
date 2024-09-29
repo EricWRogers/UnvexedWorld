@@ -8,8 +8,6 @@ public class MeleeDamage : MonoBehaviour
     public int dmg;
     public Health playerHealth;
 
-    public AttackState attackState;
-
     private void Start()
     {
         if (playerHealth == null)
@@ -17,9 +15,23 @@ public class MeleeDamage : MonoBehaviour
             playerHealth = GameObject.Find("Player").GetComponent<Health>();
         }
     }
-    public void DealDamage()
+
+    public void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Enemy attacking");
-        playerHealth.Damage(dmg);
+        if(col.gameObject.CompareTag("Player"))
+        {
+            // Calculate the hit direction
+            Vector3 hitDir = col.gameObject.transform.position - gameObject.transform.position;
+
+            // Apply damage to the player
+            col.gameObject.GetComponent<Health>().Damage(dmg);
+
+            // Apply knockback to the player
+            PlayerKnockback playerKnockback = col.gameObject.GetComponent<PlayerKnockback>();
+            if (playerKnockback != null)
+            {
+                playerKnockback.ApplyKnockback(hitDir);
+            }
+        }
     }
 }
