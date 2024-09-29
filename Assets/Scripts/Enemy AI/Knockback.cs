@@ -5,7 +5,7 @@ using UnityEngine;
 public class Knockback : MonoBehaviour
 {
     [SerializeField]
-    private float knockbackStrength = 5.0f;
+    public float knockbackStrength = 5.0f;
     private Rigidbody rb;
     private Transform player;
 

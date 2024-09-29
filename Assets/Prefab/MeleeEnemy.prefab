@@ -5221,6 +5221,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 780554987024075741}
+        m_TargetAssemblyTypeName: MeleeStateMachine, Assembly-CSharp
+        m_MethodName: TakenDamage
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   outOfHealth:
     m_PersistentCalls:
       m_Calls:
@@ -5284,6 +5296,16 @@ MonoBehaviour:
     stateMachine: {fileID: 0}
     range: 5
     circleCenterObject: {fileID: 0}
+  stunned:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    stunDuration: 10
+    stunCooldown: 15
   alert:
     stateStart:
       m_PersistentCalls:
@@ -5333,6 +5355,7 @@ MonoBehaviour:
   isAlive: 0
   isClose: 0
   isSearching: 0
+  isPunched: 0
   ranMinFlee: 5
   ranMaxFlee: 15
   inAttackRange: 1
