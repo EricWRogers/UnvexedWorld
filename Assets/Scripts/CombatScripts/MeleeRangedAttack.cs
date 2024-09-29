@@ -12,23 +12,35 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public float attackRange;
 
+    public ThirdPersonMovement speed;
+
+    public float resetSpeed = 15.0f;
+
+    private float lockUP = 0.0f;
+
+    public bool isAttacking;
+
+    public Animator animator;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
-         gamepad.GamePlay.Shoot.performed += ctx => Range();
+        gamepad.GamePlay.Shoot.performed += ctx => Range();
          
     }
     
     // Start is called before the first frame update
      void MeleeGamepad()
     {
+        isAttacking = true;
         
 
         
             
              if(Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
+               
              
                 
                 Debug.Log("Found"+target.name);
@@ -38,9 +50,11 @@ public class MeleeRangedAttack : MonoBehaviour
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
                 Melee();
+                
             }
             else
             {
+                isAttacking = true;                 
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
@@ -49,15 +63,21 @@ public class MeleeRangedAttack : MonoBehaviour
             }
             if(Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
+                
                 FindNewTarget();
             }
            
         }
+
+        void CancelLockUp()
+        {
+          isAttacking = false;
+        }
     void Start()
     {
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+        animator = GetComponentsInChildren<Animator>()[1];
 
-        
     }
     void OnEnable()
     {
@@ -72,11 +92,23 @@ public class MeleeRangedAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+         animator.SetBool("Lock", isAttacking);
+         if(isAttacking == true)
+         {
+            speed.baseSpeed = lockUP;
+            speed.turnSmoothTime = 10.0f;
+         }
+         else
+         {
+            speed.baseSpeed = resetSpeed;
+            speed.turnSmoothTime = 0.1f;
+         }
       
         
         if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Q))
         {
            MeleeGamepad();
+           
         }
         else if (Input.GetMouseButtonDown(1)||Input.GetKeyDown(KeyCode.E))
         {
@@ -93,6 +125,7 @@ public class MeleeRangedAttack : MonoBehaviour
 
     private void Melee()
     {
+        
         GetComponent<Animator>().SetTrigger("Melee");
         //GetComponent<AnimationForce>().melee = true;
     }
