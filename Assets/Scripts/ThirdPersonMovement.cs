@@ -67,6 +67,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public float slopeSpeed = 10.0f;
 
+    public bool rayGround;
+
+    public float groundedCheckDistence;
+
+    private float bufferCheckDistance = 0.1f;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -187,7 +193,8 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<Animator>().SetBool("Grounded", isGrounded);
+        GetComponent<Animator>().SetBool("Grounded", rayGround);
+        
         UpdateSlopeSliding();
 
         
@@ -279,6 +286,18 @@ public class ThirdPersonMovement : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+
+        groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
+
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
+        {
+            rayGround = true;
+        }
+        else
+        {
+            rayGround = false;
         }
     }
 
