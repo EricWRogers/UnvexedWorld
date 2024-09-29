@@ -187,7 +187,9 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GetComponent<Animator>().SetBool("Grounded", isGrounded);
         UpdateSlopeSliding();
+
         
         if (!isGrounded && jumpCount == 0)
         {
@@ -227,6 +229,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            GetComponent<Animator>().SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
@@ -235,6 +238,10 @@ public class ThirdPersonMovement : MonoBehaviour
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         
+        }
+        else
+        {
+            GetComponent<Animator>().SetBool("Moving", false);
         }
 
         gamepadMove.x = moveDir.x;
