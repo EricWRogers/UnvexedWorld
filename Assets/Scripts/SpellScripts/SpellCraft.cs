@@ -142,7 +142,7 @@ public class SpellCraft : MonoBehaviour
 
    
 
-    public void CastSpell(CastType castType, Aspect mainAspect, Aspect modAspect)
+    public void CastSpell(CastType castType)
     {
         Debug.Log("Casting a " + mainAspect.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
         if (castType == CastType.ranged)

@@ -262,14 +262,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            cameraManager.SwitchCamera(cameraManager.aimCam);
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            cameraManager.SwitchCamera(cameraManager.mainCam);
-        }
+        
         
 
 
