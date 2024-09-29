@@ -26,7 +26,7 @@ public class AttackState : SimpleState
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.SetDestination(((MeleeStateMachine)stateMachine).transform.position);
-            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 3.0f;
+            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         time.StartTimer(2, true);
