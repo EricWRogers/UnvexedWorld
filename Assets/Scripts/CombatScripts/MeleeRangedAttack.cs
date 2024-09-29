@@ -8,6 +8,9 @@ public class MeleeRangedAttack : MonoBehaviour
     public SpellCraft spellCraft;
     public SpellShot spellShot;
     PlayerGamepad gamepad;
+    private GameObject target;
+
+    public float attackRange;
 
     void Awake()
     {
@@ -19,16 +22,41 @@ public class MeleeRangedAttack : MonoBehaviour
     
     // Start is called before the first frame update
      void MeleeGamepad()
-        {
+    {
+        
+
+        
             
-            if (spellCraft.casting)
+             if(Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
-                spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+             
+                
+                Debug.Log("Found"+target.name);
+                gameObject.transform.LookAt(target.transform);
+                if (spellCraft.casting)
+                {
+                    spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+                }
+                Melee();
             }
-            Melee();
+            else
+            {
+                if (spellCraft.casting)
+                {
+                    spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+                }
+                Melee();
+            }
+            if(Vector3.Distance(target.transform.position, transform.position) > attackRange)
+            {
+                FindNewTarget();
+            }
+           
         }
     void Start()
     {
+        target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+
         
     }
     void OnEnable()
@@ -44,6 +72,7 @@ public class MeleeRangedAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
         
         if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Q))
         {
@@ -98,5 +127,11 @@ public class MeleeRangedAttack : MonoBehaviour
     public void EndParticleSpell()
     {
         GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().EndParticle();
+    }
+
+    void FindNewTarget()
+    {
+       
+        target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 }
