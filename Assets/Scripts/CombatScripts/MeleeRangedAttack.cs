@@ -35,7 +35,7 @@ public class MeleeRangedAttack : MonoBehaviour
                 gameObject.transform.LookAt(target.transform);
                 if (spellCraft.casting)
                 {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+                    spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
                 Melee();
             }
@@ -43,7 +43,7 @@ public class MeleeRangedAttack : MonoBehaviour
             {
                 if (spellCraft.casting)
                 {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+                    spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
                 Melee();
             }
@@ -82,7 +82,7 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
             // {
-            //     spellCraft.CastSpell(SpellCraft.CastType.ranged, spellCraft.mainAspect, spellCraft.modAspect);
+            //     spellCraft.CastSpell(SpellCraft.CastType.ranged);
             // }
             
             Range();
@@ -104,9 +104,9 @@ public class MeleeRangedAttack : MonoBehaviour
         //spellShot.ShootPrefab();
     }
 
-    private void Damage()
+    private void UpdateSpells()
     {
-
+        spellCraft.CastSpell(SpellCraft.CastType.melee);
     }
 
     public void StartParticle()
