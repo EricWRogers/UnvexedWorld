@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,7 +11,25 @@ public class PauseMenu : MonoBehaviour
     public Button resumeButton;
     public Button quitButton;
 
+    PlayerGamepad gamepad;
+
     private bool isPaused = false;
+
+    void Awake()
+    {
+        gamepad = new PlayerGamepad();
+        gamepad.GamePlay.Pause.performed += ctx => CheckPause();
+    }
+
+    void OnEnable()
+    {
+        gamepad.GamePlay.Enable();
+    }
+
+    void OnDisable()
+    {
+        gamepad.GamePlay.Disable();
+    }
 
     void Start()
     {
@@ -35,6 +54,18 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
+        }
+    }
+
+    void CheckPause()
+    {
+        if (isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 

@@ -116,6 +116,15 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""a66807a2-feb0-460c-9985-5f818571efd1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -228,6 +237,17 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""Casting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cb06a85-21f7-411d-ac06-16d440ed430f"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -246,6 +266,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Scavange = m_GamePlay.FindAction("Scavange", throwIfNotFound: true);
         m_GamePlay_Clear = m_GamePlay.FindAction("Clear", throwIfNotFound: true);
         m_GamePlay_Casting = m_GamePlay.FindAction("Casting", throwIfNotFound: true);
+        m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Scavange;
     private readonly InputAction m_GamePlay_Clear;
     private readonly InputAction m_GamePlay_Casting;
+    private readonly InputAction m_GamePlay_Pause;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -331,6 +353,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Scavange => m_Wrapper.m_GamePlay_Scavange;
         public InputAction @Clear => m_Wrapper.m_GamePlay_Clear;
         public InputAction @Casting => m_Wrapper.m_GamePlay_Casting;
+        public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -370,6 +393,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Casting.started += instance.OnCasting;
             @Casting.performed += instance.OnCasting;
             @Casting.canceled += instance.OnCasting;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -404,6 +430,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Casting.started -= instance.OnCasting;
             @Casting.performed -= instance.OnCasting;
             @Casting.canceled -= instance.OnCasting;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -433,5 +462,6 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnScavange(InputAction.CallbackContext context);
         void OnClear(InputAction.CallbackContext context);
         void OnCasting(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

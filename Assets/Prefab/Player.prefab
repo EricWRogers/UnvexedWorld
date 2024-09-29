@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -561,7 +561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -1885,7 +1885,7 @@ GameObject:
   - component: {fileID: 1919406391244116265}
   - component: {fileID: 8892828267072295871}
   - component: {fileID: 9208766189387090613}
-  - component: {fileID: 7646706070096529230}
+  - component: {fileID: 8678946718278521828}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1953,7 +1953,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
-  cameraManager: {fileID: 7646706070096529230}
+  cameraManager: {fileID: 8678946718278521828}
   gravity: -15.8
   gravityFirstJump: -15
   gravitySecondJump: -20
@@ -2167,7 +2167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groundEnemies: []
---- !u!114 &7646706070096529230
+--- !u!114 &8678946718278521828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2180,6 +2180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameras:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   mainCam: {fileID: 0}
@@ -3034,7 +3035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3774,7 +3775,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -3907,7 +3908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
@@ -4340,6 +4341,8 @@ MonoBehaviour:
   meleeWeaponImage: {fileID: 2741286575569044825}
   rangedWeaponImage: {fileID: 3396916719575845637}
   spellReady: {fileID: 2583979101037607956}
+  spellCraft: {fileID: 0}
+  colors: []
 --- !u!1 &7421284933510605364
 GameObject:
   m_ObjectHideFlags: 0
@@ -4698,7 +4701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 0
+    m_Mode: 3
     m_WrapAround: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
