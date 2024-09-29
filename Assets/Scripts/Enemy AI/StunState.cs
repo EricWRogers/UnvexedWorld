@@ -15,9 +15,10 @@ public class StunState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Flee State");
+        Debug.Log("Stun State");
         base.OnStart();
         agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+        ((MeleeStateMachine)stateMachine).enemyKnockback.knockbackStrength = 1f;
         stunTimer = stunDuration;  
         agent.isStopped = true;    // Stop the AI from moving
         Debug.Log("Entering Stun State");
@@ -33,7 +34,6 @@ public class StunState : SimpleState
         else
         {
             ((MeleeStateMachine)stateMachine).ChangeState(nameof(InRangeState));
-            ((MeleeStateMachine)stateMachine).isPunched = false;
         }
     }
 
@@ -42,6 +42,7 @@ public class StunState : SimpleState
         base.OnExit();
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
+        ((MeleeStateMachine)stateMachine).enemyKnockback.knockbackStrength = 10.0f;
         Debug.Log("Exiting Stun State");
     }
 
