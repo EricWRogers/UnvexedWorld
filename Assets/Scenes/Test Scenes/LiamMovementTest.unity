@@ -1008,7 +1008,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939381918}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.000000029802319, z: 0.00000001117587, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1030,6 +1030,7 @@ GameObject:
   - component: {fileID: 965933317}
   - component: {fileID: 965933321}
   - component: {fileID: 965933322}
+  - component: {fileID: 965933323}
   m_Layer: 10
   m_Name: Cube (1)
   m_TagString: GroundEnemy
@@ -1176,6 +1177,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &965933323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 965933316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cecce9c6f7c7132199a4249ef17befb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockbackStrength: 5
 --- !u!1 &1100846962 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2830819120904706804, guid: 910d14837d066c545a2d274990b96354,
@@ -2675,7 +2689,7 @@ PrefabInstance:
     - target: {fileID: 8706320879354399655, guid: 9de57a30b9a28a24faf7e15b772cd56d,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9729401
+      value: 0.97294015
       objectReference: {fileID: 0}
     - target: {fileID: 8706320879354399655, guid: 9de57a30b9a28a24faf7e15b772cd56d,
         type: 3}
@@ -2685,12 +2699,12 @@ PrefabInstance:
     - target: {fileID: 8706320879354399655, guid: 9de57a30b9a28a24faf7e15b772cd56d,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.030294329
+      value: 0.030294314
       objectReference: {fileID: 0}
     - target: {fileID: 8706320879354399655, guid: 9de57a30b9a28a24faf7e15b772cd56d,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0010845792
+      value: 0.0010845754
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
