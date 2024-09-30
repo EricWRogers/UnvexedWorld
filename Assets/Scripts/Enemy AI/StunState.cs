@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.StateMachine;
+using SuperPupSystems.Helper;
 using UnityEngine.AI;
 
 [System.Serializable]
 public class StunState : SimpleState
 {
     NavMeshAgent agent;
+    public Material defaultMaterial;
+    public Material stunMaterial;
+    private Renderer targetRenderer;
+    private DamageIndicator enemyIndicator;
     public float stunDuration = 2.0f;  // Duration of stun
     private float stunTimer;
     public float stunCooldown = 5.0f;  // Time before AI can be stunned again
@@ -21,14 +26,20 @@ public class StunState : SimpleState
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
             meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            targetRenderer = meleeStateMachine.GetComponent<Renderer>();
+            enemyIndicator = meleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
             agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            targetRenderer = agroMeleeStateMachine.GetComponent<Renderer>();
+            enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
         stunTimer = stunDuration;  
         agent.isStopped = true;    // Stop the AI from moving
+        targetRenderer.material = stunMaterial;
+        enemyIndicator.enabled = false;
         Debug.Log("Entering Stun State");
     }
 
@@ -39,7 +50,7 @@ public class StunState : SimpleState
         {
             stunTimer -= _dt;
         }
-        else
+        if (stunTimer <= 0)
         {
             stateMachine.ChangeState(nameof(InRangeState));
         }
@@ -50,6 +61,8 @@ public class StunState : SimpleState
         base.OnExit();
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
+        targetRenderer.material = defaultMaterial;
+        enemyIndicator.enabled = true;
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
             meleeStateMachine.enemyKnockback.knockbackStrength = 10.0f;
