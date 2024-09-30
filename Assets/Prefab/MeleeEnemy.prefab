@@ -63,6 +63,37 @@ MonoBehaviour:
   autoRestart: 0
   countDownTime: 0.5
   timeScale: 1
+--- !u!1 &3767387920307875363
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5665479801649016648}
+  m_Layer: 0
+  m_Name: DamagePicture
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5665479801649016648
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3767387920307875363}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -0.05, y: 1.26, z: -2.2586498}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2838965134027731655}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &4819105881875074391
 GameObject:
   m_ObjectHideFlags: 0
@@ -5073,6 +5104,7 @@ Transform:
   - {fileID: 8328559370041719840}
   - {fileID: 3026456611360914696}
   - {fileID: 8252026528217606020}
+  - {fileID: 5665479801649016648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!33 &1539412806370484818
@@ -5426,6 +5458,9 @@ MonoBehaviour:
   hurtMaterial: {fileID: 2100000, guid: 1755fdc7a4e30344a91d2e7b3719d248, type: 2}
   targetRenderer: {fileID: 1813499150184163638}
   timer: {fileID: 4370211555340675385}
+  FloatingMessagePrefab: {fileID: 816794096944370603, guid: d63ec7c4ddf52894cb189039cdee2e73,
+    type: 3}
+  FloatingMessagePosition: {fileID: 5665479801649016648}
 --- !u!114 &2975168457193762620
 MonoBehaviour:
   m_ObjectHideFlags: 0
