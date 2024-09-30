@@ -17,8 +17,16 @@ public class StunState : SimpleState
     {
         Debug.Log("Stun State");
         base.OnStart();
-        agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-        ((MeleeStateMachine)stateMachine).enemyKnockback.knockbackStrength = 1f;
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+        }
+        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+        {
+            agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
+            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+        }
         stunTimer = stunDuration;  
         agent.isStopped = true;    // Stop the AI from moving
         Debug.Log("Entering Stun State");
@@ -33,7 +41,7 @@ public class StunState : SimpleState
         }
         else
         {
-            ((MeleeStateMachine)stateMachine).ChangeState(nameof(InRangeState));
+            stateMachine.ChangeState(nameof(InRangeState));
         }
     }
 
@@ -42,7 +50,16 @@ public class StunState : SimpleState
         base.OnExit();
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
-        ((MeleeStateMachine)stateMachine).enemyKnockback.knockbackStrength = 10.0f;
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            meleeStateMachine.enemyKnockback.knockbackStrength = 10.0f;
+            meleeStateMachine.isPunched = false;
+        }
+        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+        {
+            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 10.0f;
+            agroMeleeStateMachine.isPunched = false;
+        }
         Debug.Log("Exiting Stun State");
     }
 
