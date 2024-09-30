@@ -25,7 +25,8 @@ public class MeleeStateMachine : SimpleStateMachine
 
     public Transform target;
     private Health health;
-    private Knockback enemyKnockback;
+    [HideInInspector]
+    public Knockback enemyKnockback;
     [HideInInspector]
     public Vector3 lastKnownPlayerPosition;
 
@@ -74,11 +75,10 @@ public class MeleeStateMachine : SimpleStateMachine
         if (isPunched && stunned.CanEnterStunState())
         {
             ChangeState(nameof(StunState));
-            enemyKnockback.knockbackStrength = .01f;
-        }else
-        {
-            enemyKnockback.knockbackStrength = 20.0f;
+            isPunched = false;
         }
+        
+        stunned.UpdateCooldown(Time.deltaTime);
     }
 
     public void TakenDamage()
