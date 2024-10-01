@@ -8,28 +8,81 @@ public class MeleeRangedAttack : MonoBehaviour
     public SpellCraft spellCraft;
     public SpellShot spellShot;
     PlayerGamepad gamepad;
+    private GameObject target;
+
+    public float attackRange;
+
+    public ThirdPersonMovement speed;
+
+    public float resetSpeed = 15.0f;
+
+    private float lockUP = 0.0f;
+
+    public bool isAttacking;
+
+    public Animator animator;
 
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
-         gamepad.GamePlay.Shoot.performed += ctx => Range();
-         
+        gamepad.GamePlay.Shoot.performed += ctx => Range();
+
     }
-    
+
     // Start is called before the first frame update
-     void MeleeGamepad()
+    void MeleeGamepad()
+    {
+        isAttacking = true;
+
+        if (target == null)
+            target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+
+        if (target)
         {
-            
-            if (spellCraft.casting)
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
-                spellCraft.CastSpell(SpellCraft.CastType.melee, spellCraft.mainAspect, spellCraft.modAspect);
+
+
+
+                Debug.Log("Found" + target.name);
+                gameObject.transform.LookAt(target.transform);
+                if (spellCraft.casting)
+                {
+                    spellCraft.CastSpell(SpellCraft.CastType.melee);
+                }
+                Melee();
+
             }
-            Melee();
+            else
+            {
+                isAttacking = true;
+                if (spellCraft.casting)
+                {
+                    spellCraft.CastSpell(SpellCraft.CastType.melee);
+                }
+                Melee();
+            }
+            if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
+            {
+
+                FindNewTarget();
+            }
         }
+
+
+
+    }
+
+    void CancelLockUp()
+    {
+        isAttacking = false;
+    }
     void Start()
     {
-        
+        target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+        animator = GetComponentsInChildren<Animator>()[1];
+
     }
     void OnEnable()
     {
@@ -44,26 +97,40 @@ public class MeleeRangedAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Q))
+        animator.SetBool("Lock", isAttacking);
+        if (isAttacking == true)
         {
-           MeleeGamepad();
+            speed.baseSpeed = lockUP;
+            speed.turnSmoothTime = 10.0f;
         }
-        else if (Input.GetMouseButtonDown(1)||Input.GetKeyDown(KeyCode.E))
+        else
+        {
+            speed.baseSpeed = resetSpeed;
+            speed.turnSmoothTime = 0.1f;
+        }
+
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
+        {
+            MeleeGamepad();
+
+        }
+        else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.E))
         {
             // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
             // {
-            //     spellCraft.CastSpell(SpellCraft.CastType.ranged, spellCraft.mainAspect, spellCraft.modAspect);
+            //     spellCraft.CastSpell(SpellCraft.CastType.ranged);
             // }
-            
+
             Range();
         }
 
-        
+
     }
 
     private void Melee()
     {
+
         GetComponent<Animator>().SetTrigger("Melee");
         //GetComponent<AnimationForce>().melee = true;
     }
@@ -75,9 +142,9 @@ public class MeleeRangedAttack : MonoBehaviour
         //spellShot.ShootPrefab();
     }
 
-    private void Damage()
+    private void UpdateSpells()
     {
-
+        spellCraft.CastSpell(SpellCraft.CastType.melee);
     }
 
     public void StartParticle()
@@ -98,5 +165,11 @@ public class MeleeRangedAttack : MonoBehaviour
     public void EndParticleSpell()
     {
         GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().EndParticle();
+    }
+
+    void FindNewTarget()
+    {
+
+        target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 }

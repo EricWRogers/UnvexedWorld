@@ -58,6 +58,7 @@ public class ProjectileSpell : MonoBehaviour
                     m_info.transform.gameObject.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
                 }
                 m_info.transform.GetComponent<Health>()?.Damage(damage);
+                m_info.transform.GetComponent<Knockback>()?.OnHurt();
                 hitTarget.Invoke(m_info.transform.gameObject);
                 if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
                 {

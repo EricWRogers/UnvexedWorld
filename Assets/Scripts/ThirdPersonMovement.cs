@@ -57,15 +57,19 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float dashStartTime;
 
-    public GameObject groundCheck;
-
-    bool m_HitDetect;
-
     public bool isSliding;
 
     private Vector3 slopSlideSpeed;
 
     public float slopeSpeed = 10.0f;
+
+    public bool rayGround;
+
+    public float groundedCheckDistence;
+
+    private float bufferCheckDistance = 0.1f;
+
+    public Animator animator;
 
     void Awake()
     {
@@ -181,13 +185,17 @@ public class ThirdPersonMovement : MonoBehaviour
     
     void Start()
     {
+        animator = GetComponentsInChildren<Animator>()[1];
         Cursor.lockState = CursorLockMode.Locked;    
     }
 
     // Update is called once per frame
     void Update()
     {
+        animator.SetBool("Grounded", rayGround);
+        
         UpdateSlopeSliding();
+
         
         if (!isGrounded && jumpCount == 0)
         {
@@ -227,6 +235,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (direction.magnitude >= 0.1f)
         {
+            animator.SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
 
@@ -235,6 +244,10 @@ public class ThirdPersonMovement : MonoBehaviour
             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDir.normalized * speed * Time.deltaTime);
         
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
         }
 
         gamepadMove.x = moveDir.x;
@@ -249,14 +262,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            cameraManager.SwitchCamera(cameraManager.aimCam);
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            cameraManager.SwitchCamera(cameraManager.mainCam);
-        }
+        
         
 
 
@@ -272,6 +278,18 @@ public class ThirdPersonMovement : MonoBehaviour
         else
         {
             isGrounded = false;
+        }
+
+        groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
+
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
+        {
+            rayGround = true;
+        }
+        else
+        {
+            rayGround = false;
         }
     }
 
