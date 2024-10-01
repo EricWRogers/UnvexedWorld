@@ -71,6 +71,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Animator animator;
 
+    public float attackForwared = 2.0f;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -262,14 +264,7 @@ public class ThirdPersonMovement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            cameraManager.SwitchCamera(cameraManager.aimCam);
-        }
-        if(Input.GetKeyDown(KeyCode.Q))
-        {
-            cameraManager.SwitchCamera(cameraManager.mainCam);
-        }
+        
         
 
 
@@ -329,6 +324,12 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Destroy(this);
     }  
+
+    public void Attackforward()
+    {
+         velocity.x -= attackForwared * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
 
  
 }

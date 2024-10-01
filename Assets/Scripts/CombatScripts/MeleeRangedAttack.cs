@@ -12,52 +12,82 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public float attackRange;
 
+    public ThirdPersonMovement speed;
+
+    public float resetSpeed = 15.0f;
+
+    private float lockUP = 0.0f;
+
+    public bool isAttacking;
+
+    public Animator animator;
+
+    public CameraManager cameraManager;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
-         gamepad.GamePlay.Shoot.performed += ctx => Range();
-         
-    }
-    
-    // Start is called before the first frame update
-     void MeleeGamepad()
-    {
-        
+        gamepad.GamePlay.Shoot.performed += ctx => Range();
 
-        
-            
-             if(Vector3.Distance(target.transform.position, transform.position) < attackRange)
+         cameraManager =GetComponent<CameraManager>();
+
+
+    }
+
+    // Start is called before the first frame update
+    void MeleeGamepad()
+    {
+        isAttacking = true;
+
+        if (target == null)
+            target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+
+        if (target)
+        {
+            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
-             
-                
-                Debug.Log("Found"+target.name);
-                gameObject.transform.LookAt(target.transform);
+
+                Vector3 dir = (transform.position + target.transform.position).normalized;
+
+                Debug.Log("Found" + target.name);
+                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
                 Melee();
+
             }
             else
             {
+                isAttacking = true;
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
                 Melee();
             }
-            if(Vector3.Distance(target.transform.position, transform.position) > attackRange)
+            if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
+
                 FindNewTarget();
             }
-           
         }
+
+
+
+    }
+
+    void CancelLockUp()
+    {
+        isAttacking = false;
+    }
     void Start()
     {
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+        animator = GetComponentsInChildren<Animator>()[1];
 
-        
     }
     void OnEnable()
     {
@@ -72,27 +102,43 @@ public class MeleeRangedAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-      
-        
-        if (Input.GetMouseButtonDown(0)||Input.GetKeyDown(KeyCode.Q))
+        animator.SetBool("Lock", isAttacking);
+        if (isAttacking == true)
         {
-           MeleeGamepad();
+            cameraManager.SwitchCamera(cameraManager.meleeCamera);
+            speed.baseSpeed = lockUP;
+            speed.turnSmoothTime = 10.0f;
+            
         }
-        else if (Input.GetMouseButtonDown(1)||Input.GetKeyDown(KeyCode.E))
+        else
+        {
+            cameraManager.SwitchCamera(cameraManager.mainCam);
+            speed.baseSpeed = resetSpeed;
+            speed.turnSmoothTime = 0.1f;
+        }
+
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
+        {
+            MeleeGamepad();
+
+        }
+        else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.E))
         {
             // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
             // {
             //     spellCraft.CastSpell(SpellCraft.CastType.ranged);
             // }
-            
+
             Range();
         }
 
-        
+
     }
 
     private void Melee()
     {
+
         GetComponent<Animator>().SetTrigger("Melee");
         //GetComponent<AnimationForce>().melee = true;
     }
@@ -131,7 +177,7 @@ public class MeleeRangedAttack : MonoBehaviour
 
     void FindNewTarget()
     {
-       
+
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 }

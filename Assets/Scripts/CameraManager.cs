@@ -7,11 +7,11 @@ public class CameraManager : MonoBehaviour
 
     public CinemachineFreeLook mainCam;
     public CinemachineFreeLook dashCam;
-
-    public CinemachineFreeLook aimCam;
-
     public CinemachineFreeLook startCamera;
+
+    public  CinemachineFreeLook meleeCamera;
     private CinemachineFreeLook currentCam;
+    
 
     private void Start()
     {

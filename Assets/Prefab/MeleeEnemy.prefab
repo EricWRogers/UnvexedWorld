@@ -5017,7 +5017,6 @@ GameObject:
   - component: {fileID: 780554987024075741}
   - component: {fileID: 2622489867113047157}
   - component: {fileID: 817973545046678325}
-  - component: {fileID: 2975168457193762620}
   - component: {fileID: 4881924701287456061}
   - component: {fileID: 956308900980481692}
   m_Layer: 10
@@ -5105,7 +5104,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 10.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -5236,10 +5235,10 @@ MonoBehaviour:
   outOfHealth:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6081782571847116660}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 6947525862659754007}
+        m_TargetAssemblyTypeName: SuperPupSystems.Helper.Health, Assembly-CSharp
+        m_MethodName: DestroyGameObject
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -5304,8 +5303,10 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    stunDuration: 10
-    stunCooldown: 15
+    defaultMaterial: {fileID: 2100000, guid: f29990fa0873de348abd0176ed7bdae3, type: 2}
+    stunMaterial: {fileID: 2100000, guid: 8a08cda4391cd3b73a991b92ea7239c6, type: 2}
+    stunDuration: 4
+    stunCooldown: 8
   alert:
     stateStart:
       m_PersistentCalls:
@@ -5360,6 +5361,7 @@ MonoBehaviour:
   ranMaxFlee: 15
   inAttackRange: 1
   target: {fileID: 0}
+  enemyKnockback: {fileID: 0}
   lastKnownPlayerPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2622489867113047157
 MonoBehaviour:
@@ -5396,25 +5398,6 @@ MonoBehaviour:
   hurtMaterial: {fileID: 2100000, guid: 1755fdc7a4e30344a91d2e7b3719d248, type: 2}
   targetRenderer: {fileID: 6073569315875115553}
   timer: {fileID: 4370211555340675385}
---- !u!114 &2975168457193762620
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6081782571847116660}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b7d5dfa4b4d73b39388d62e14241cb01, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Method: 3
-  m_Curve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!114 &4881924701287456061
 MonoBehaviour:
   m_ObjectHideFlags: 0
