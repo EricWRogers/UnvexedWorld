@@ -22,11 +22,16 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public Animator animator;
 
+    public CameraManager cameraManager;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
+
+         cameraManager =GetComponent<CameraManager>();
+
 
     }
 
@@ -100,11 +105,13 @@ public class MeleeRangedAttack : MonoBehaviour
         animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
+            cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
         }
         else
         {
+            cameraManager.SwitchCamera(cameraManager.mainCam);
             speed.baseSpeed = resetSpeed;
             speed.turnSmoothTime = 0.1f;
         }
