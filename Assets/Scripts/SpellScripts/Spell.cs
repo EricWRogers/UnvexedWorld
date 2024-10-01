@@ -72,7 +72,11 @@ public class Spell : MonoBehaviour
         Debug.Log("Heal" + change*lifeStealRatio);
         if(change>0)
         {
-            GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            //GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            for (int i = 0; i < change; i++)
+            {
+                Instantiate(ParticleManager.Instance.LifeStealOrb, gameObject.transform.position, transform.rotation);   
+            }
         }
     }
 }
