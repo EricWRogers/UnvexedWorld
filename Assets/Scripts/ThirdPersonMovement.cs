@@ -71,6 +71,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Animator animator;
 
+    public float attackForwared = 2.0f;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -322,6 +324,12 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Destroy(this);
     }  
+
+    public void Attackforward()
+    {
+         velocity.x -= attackForwared * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+    }
 
  
 }

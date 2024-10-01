@@ -48,10 +48,10 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
 
-
+                Vector3 dir = (transform.position + target.transform.position).normalized;
 
                 Debug.Log("Found" + target.name);
-                gameObject.transform.LookAt(target.transform);
+                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
@@ -108,6 +108,7 @@ public class MeleeRangedAttack : MonoBehaviour
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
+            
         }
         else
         {
