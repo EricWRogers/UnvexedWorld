@@ -40,6 +40,8 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         isAttacking = true;
 
+        
+
         if (target == null)
             target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
 
@@ -48,10 +50,11 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
 
-                Vector3 dir = (transform.position + target.transform.position).normalized;
+                Vector3 dir = (target.transform.position - transform.position).normalized;
+                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
 
                 Debug.Log("Found" + target.name);
-                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+                
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
@@ -121,6 +124,7 @@ public class MeleeRangedAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
         {
             MeleeGamepad();
+            
 
         }
         else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.E))
@@ -180,4 +184,6 @@ public class MeleeRangedAttack : MonoBehaviour
 
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
+
+   
 }
