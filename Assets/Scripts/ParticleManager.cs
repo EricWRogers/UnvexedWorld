@@ -8,7 +8,7 @@ public class ParticleManager : MonoBehaviour
 
     public GameObject AOE;
     public GameObject DOTParticle;
-    public GameObject LifeStealParticle;
+    public GameObject LifeStealOrb;
     public GameObject BurstParticle;
     public GameObject ScavengeParticle;
     public GameObject SplendorParticle;
