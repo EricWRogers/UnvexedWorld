@@ -15,10 +15,15 @@ namespace Scripts.System.MessageSystem
         public float InitialXVelocityRange = 3f;
         public float LifeTime = 0.8f;
 
+        private Transform player;
+        private PunchScript playerMelee;
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _damageValue = transform.Find("Canvas/DamageValue").GetComponent<TMP_Text>();
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+            playerMelee = GameObject.Find("Player/Model/Cube (1)/hitboxMelee").GetComponent<PunchScript>();
         }
 
         private void Start()
@@ -28,10 +33,15 @@ namespace Scripts.System.MessageSystem
             Destroy(gameObject, LifeTime);
         }
 
-        // Keep the method public and it can still accept a string, since TMP_Text needs a string
-        public void SetMessage(string msg)
+        private void Update()
         {
-            _damageValue.SetText(msg);
+            transform.rotation = Quaternion.LookRotation(transform.position - Camera.main.transform.position);
+        }
+
+        // Keep the method public and it can still accept a string, since TMP_Text needs a string
+        public void SetMessage()
+        {
+            _damageValue.SetText(playerMelee.damage.ToString());
         }
     }
 }

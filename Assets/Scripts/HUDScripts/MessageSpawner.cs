@@ -4,31 +4,21 @@ using Scripts.System.MessageSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Scripts.Systems.MessageSystem
+namespace MessageSystem
 {
     public class MessageSpawner : MonoBehaviour
     {
-        [SerializeField]
-        private Vector2 _initialPosition;
+        public GameObject floatingMessagePrefab;
+        public GameObject enemy;
 
-        [SerializeField]
-        private GameObject _messagePrefab;
-
-        public void SpawnMessage(string msg)
+        public void SpawnMessage()
         {
-            var msgObj = Instantiate(_messagePrefab, GetSpawnPosition(), Quaternion.identity);
-            var inGameMessage = msgObj.GetComponent<FloatingMessage>();
-
-            // Set the message text to the damage value
-            if (inGameMessage != null)
+            GameObject newMessage = Instantiate(floatingMessagePrefab, enemy.transform.position, Quaternion.identity);
+            FloatingMessage messageScript = newMessage.GetComponent<FloatingMessage>();
+            if (messageScript != null)
             {
-                inGameMessage.SetMessage(msg);
+                messageScript.SetMessage();
             }
-        }
-
-        private Vector3 GetSpawnPosition()
-        {
-            return transform.position + (Vector3)_initialPosition;
         }
     }
 }

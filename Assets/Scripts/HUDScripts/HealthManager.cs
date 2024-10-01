@@ -38,14 +38,14 @@ public class HealthManager : MonoBehaviour
         Debug.Log("Health updated: " + currentHealth); // Debug log for checking health updates
         
         // Check if the health is below 25%, start flashing if necessary
-        if (currentHealth / (float)playerHealth.maxHealth < 0.25f && !isFlashing)
+        if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing)
         {
             Debug.Log("Health is below 25%, starting flash..."); // Debug log for flashing condition
             StartCoroutine(FlashHealthBar());
         }
-        else if (currentHealth / (float)playerHealth.maxHealth >= 0.25f && isFlashing)
+        else if (currentHealth / (float)playerHealth.maxHealth >= 0.35f && isFlashing)
         {
-            StopCoroutine(FlashHealthBar()); // Stop flashing when health is above 25%
+            StopCoroutine(FlashHealthBar()); // Stop flashing when health is above 35%
             isFlashing = false;
             healthFillImage.color = healthBarNormalColor; // Reset back to the normal color (red)
         }
@@ -56,7 +56,7 @@ public class HealthManager : MonoBehaviour
     {
         isFlashing = true; // Mark that flashing has started
 
-        while (playerHealth.currentHealth / (float)playerHealth.maxHealth < 0.25f)
+        while (playerHealth.currentHealth / (float)playerHealth.maxHealth < 0.35f)
         {
             // Flash to white
             healthFillImage.color = flashColor;
@@ -69,6 +69,6 @@ public class HealthManager : MonoBehaviour
             yield return new WaitForSeconds(flashRepeatDelay);
         }
 
-        isFlashing = false; // Stop flashing once health is above 25%
+        isFlashing = false; // Stop flashing once health is above 35%
     }
 }
