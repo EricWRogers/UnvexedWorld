@@ -8479,7 +8479,7 @@ Camera:
     height: 1
   near clip plane: 0.01
   far clip plane: 5000
-  field of view: 60
+  field of view: 45
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -8763,7 +8763,7 @@ PrefabInstance:
     - target: {fileID: 7851748807880046413, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1e-45
+      value: 3e-45
       objectReference: {fileID: 0}
     - target: {fileID: 7851748807880046413, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
@@ -8827,6 +8827,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8300624827442194067, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8300624827442194067, guid: b4dd57de410d1eb438c7a6d3b5162a55,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 0.99569994
       objectReference: {fileID: 0}
@@ -8838,7 +8843,7 @@ PrefabInstance:
     - target: {fileID: 8300624827442194067, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1e-45
+      value: 1e-45
       objectReference: {fileID: 0}
     - target: {fileID: 8300624827442194067, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
@@ -12492,7 +12497,7 @@ PrefabInstance:
     - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: flashColor.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
@@ -12502,13 +12507,28 @@ PrefabInstance:
     - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: flashColor.r
-      value: 0.9538556
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: healthFillImage
       value: 
       objectReference: {fileID: 344585462}
+    - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
+        type: 3}
+      propertyPath: healthBarNormalColor.b
+      value: 0.15895337
+      objectReference: {fileID: 0}
+    - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
+        type: 3}
+      propertyPath: healthBarNormalColor.g
+      value: 0.15895337
+      objectReference: {fileID: 0}
+    - target: {fileID: 177590592611150720, guid: 1bb923267bdb967448530422388441f8,
+        type: 3}
+      propertyPath: healthBarNormalColor.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
     - target: {fileID: 401253980138798559, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
       propertyPath: m_LocalPosition.x
