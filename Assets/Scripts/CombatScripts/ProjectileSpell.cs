@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
 
 
 [RequireComponent(typeof(Timer))]
-public class ProjectileSpell : MonoBehaviour
+public class ProjectileSpell : MonoBehaviour, IDamageDealer
 {
     public int damage = 1;
     public float speed = 20f;
@@ -59,6 +60,11 @@ public class ProjectileSpell : MonoBehaviour
                 }
                 m_info.transform.GetComponent<Health>()?.Damage(damage);
                 m_info.transform.GetComponent<Knockback>()?.OnHurt();
+                MessageSpawner messageSpawner = m_info.transform.GetComponentInChildren<MessageSpawner>();
+                if (messageSpawner != null)
+                {
+                    messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+                }
                 hitTarget.Invoke(m_info.transform.gameObject);
                 if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
                 {
@@ -95,5 +101,10 @@ public class ProjectileSpell : MonoBehaviour
             //default particle
             particle = null;
         }
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
 }
