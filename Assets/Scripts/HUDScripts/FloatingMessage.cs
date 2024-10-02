@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Scripts.System.MessageSystem
+namespace Scripts.HUDScripts.MessageSystem
 {
     public class FloatingMessage : MonoBehaviour
     {
@@ -15,15 +15,10 @@ namespace Scripts.System.MessageSystem
         public float InitialXVelocityRange = 3f;
         public float LifeTime = 0.8f;
 
-        private Transform player;
-        private PunchScript playerMelee;
-
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _damageValue = transform.Find("Canvas/DamageValue").GetComponent<TMP_Text>();
-            player = GameObject.FindGameObjectWithTag("Player").transform;
-            playerMelee = GameObject.Find("Player/Model/Cube (1)/hitboxMelee").GetComponent<PunchScript>();
         }
 
         private void Start()
@@ -39,9 +34,9 @@ namespace Scripts.System.MessageSystem
         }
 
         // Keep the method public and it can still accept a string, since TMP_Text needs a string
-        public void SetMessage()
+        public void SetMessage(int damageAmount)
         {
-            _damageValue.SetText(playerMelee.damage.ToString());
+            _damageValue.SetText(damageAmount.ToString());
         }
     }
 }

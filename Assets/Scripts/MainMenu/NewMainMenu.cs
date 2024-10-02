@@ -6,10 +6,10 @@ using UnityEditor;
 
 public class NewMainMenu : MonoBehaviour
 {
-    public void PlayGame()
+    public void PlayGame(string sceneName)
     {
         Debug.Log("Next Scene");
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(sceneName);
     }
 
     public void QuitGame()

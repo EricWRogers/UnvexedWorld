@@ -8,17 +8,22 @@ public class LevelManager : MonoBehaviour
     [SerializeField]
     private List<GameObject> groundEnemies = new List<GameObject>();
 
-    public GameObject doorOne;    // First door
-    public GameObject doorTwo;    // Second door for the next area
+    public GameObject finalDoor;    // Final Door
+    public GameObject fogAreaOne;
+    public GameObject fogAreaTwo;
+    public GameObject fogAreaThree;
     public GameObject enemyAreaOne;
     public GameObject enemyAreaTwo;
+    public GameObject enemyAreaThree;
 
-    private bool areaOneCleared = false;
-    private bool isAreaTwoActivated = false;  // New flag for area two
+    // private bool areaOneCleared = false;
+    // private bool areaTwoCleared = false;
+    // private bool isAreaTwoActivated = false;  // Updated flag
+    // private bool isAreaThreeActivated = false;  // New flag for area three
 
     void Start()
     {
-        UpdateGroundEnemies(enemyAreaOne);  // Start with the first area
+        //UpdateGroundEnemies(enemyAreaOne);  // Start with the first area
         AddHealthListeners();               // Add health listeners for the first area
     }
 
@@ -35,7 +40,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
-            if (enemy != null && enemy.transform.IsChildOf(enemyArea.transform))  // Only enemies in the current area
+            if (enemy != null && enemy.transform.IsChildOf(enemyArea.transform) && enemy.activeInHierarchy)  // Only enemies in the current area
             {
                 groundEnemies.Add(enemy);
             }
@@ -46,27 +51,37 @@ public class LevelManager : MonoBehaviour
     public void EnemyCheck()
     {
         groundEnemies.RemoveAll(enemy => enemy == null || !enemy);
+        // groundEnemies.Clear();
+        // GameObject[] enemies = GameObject.FindGameObjectsWithTag("GroundEnemy");
 
-        if (groundEnemies.Count == 0)
+        /*if (groundEnemies.Count == 0)
         {
+
             if (!areaOneCleared)
             {
                 // First area cleared, open first door and activate second area
                 areaOneCleared = true;
-                OpenDoor(doorOne, "isAreaOneCleared");
+                fogAreaOne.SetActive(false);
 
                 // Activate second area and delay the update of ground enemies
-                enemyAreaTwo.SetActive(true);
+                //enemyAreaTwo.SetActive(true);
                 Debug.Log("The First Area is Over");
                 StartCoroutine(DelayedActivateSecondArea());
             }
-            else if (isAreaTwoActivated)  // Only check if area two has been activated
+            else if (!areaTwoCleared && isAreaTwoActivated)  // Check if area two is activated before clearing
             {
                 Debug.Log("The Second Area is Over");
-                // Second area cleared, open second door (final escape)
-                OpenDoor(doorTwo, "isAreaTwoCleared");
+                areaTwoCleared = true;  // Set flag
+                fogAreaTwo.SetActive(false);
+                enemyAreaThree.SetActive(true); // Activate third area
+                isAreaThreeActivated = true;
             }
-        }
+            else if (areaOneCleared && areaTwoCleared && isAreaThreeActivated)
+            {
+                // All areas cleared, open the final door
+                OpenDoor(finalDoor, "isAreaOneCleared");
+            }
+        }*/
     }
 
     // Coroutine to delay the enemy update for the second area
@@ -75,7 +90,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);  // Delay to ensure enemies are fully activated
         UpdateGroundEnemies(enemyAreaTwo);  // Update with enemies from the second area
         AddHealthListeners();               // Add health listeners for the second area's enemies
-        isAreaTwoActivated = true;          // Mark area two as activated
+        //isAreaTwoActivated = true;          // Mark area two as activated
     }
 
     // Remove a specific enemy from the list when they die

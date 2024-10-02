@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
-public class Spell : MonoBehaviour
+public class Spell : MonoBehaviour, IDamageDealer
 {
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
@@ -29,6 +30,11 @@ public class Spell : MonoBehaviour
     public void Burst(GameObject target)
     {
         target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
+        MessageSpawner messageSpawner = target.GetComponentInChildren<MessageSpawner>();
+        if (messageSpawner != null)
+        {
+            messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+        }
     }
 
     public void ApplyDOT(GameObject target)
@@ -72,7 +78,16 @@ public class Spell : MonoBehaviour
         Debug.Log("Heal" + change*lifeStealRatio);
         if(change>0)
         {
-            GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            //GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            for (int i = 0; i < change; i++)
+            {
+                Instantiate(ParticleManager.Instance.LifeStealOrb, gameObject.transform.position, transform.rotation);   
+            }
         }
+    }
+
+    public int GetDamage()
+    {
+        return burstDamage;
     }
 }

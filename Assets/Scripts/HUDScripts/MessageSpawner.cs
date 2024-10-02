@@ -1,23 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
-using Scripts.System.MessageSystem;
+//using Scripts.System.MessageSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace MessageSystem
+namespace Scripts.HUDScripts.MessageSystem
 {
     public class MessageSpawner : MonoBehaviour
     {
         public GameObject floatingMessagePrefab;
-        public GameObject enemy;
-
-        public void SpawnMessage()
+        public void ApplyDamage(GameObject damageSource)
         {
-            GameObject newMessage = Instantiate(floatingMessagePrefab, enemy.transform.position, Quaternion.identity);
-            FloatingMessage messageScript = newMessage.GetComponent<FloatingMessage>();
-            if (messageScript != null)
+            IDamageDealer damageDealer = damageSource.GetComponent<IDamageDealer>();
+            if (damageDealer != null)
             {
-                messageScript.SetMessage();
+                int damage = damageDealer.GetDamage();
+                Debug.Log("Damage dealt: " + damage);
+                ShowFloatingMessage(damage);
+            }
+            else
+            {
+                Debug.Log("No IDamageDealer found on the damage source.");
+            }
+        }
+
+        private void ShowFloatingMessage(int damage)
+        {
+            GameObject message = Instantiate(floatingMessagePrefab, transform.position + Vector3.up * 2f, Quaternion.identity);
+            FloatingMessage floatingMsg = message.GetComponent<FloatingMessage>();
+            if (floatingMsg != null)
+            {
+                floatingMsg.SetMessage(damage);
             }
         }
     }
