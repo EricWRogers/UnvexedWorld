@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
+    public StunState stunned;
     public AlertState alert;
     public InRangeState inRange;
     public AttackState melee;
@@ -16,6 +17,7 @@ public class MeleeStateMachine : SimpleStateMachine
     public bool isAlive;
     public bool isClose;
     public bool isSearching;
+    public bool isPunched;
 
     public float ranMinFlee;
     public float ranMaxFlee;
@@ -24,11 +26,14 @@ public class MeleeStateMachine : SimpleStateMachine
     public Transform target;
     private Health health;
     [HideInInspector]
+    public Knockback enemyKnockback;
+    [HideInInspector]
     public Vector3 lastKnownPlayerPosition;
 
     void Awake()
     {
         states.Add(randomMovement);
+        states.Add(stunned);
         states.Add(alert);
         states.Add(inRange);
         states.Add(melee);
@@ -42,6 +47,8 @@ public class MeleeStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
+
+        enemyKnockback = gameObject.GetComponent<Knockback>();
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
@@ -58,6 +65,24 @@ public class MeleeStateMachine : SimpleStateMachine
             isAlive = false;
         }
 
+        if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
+        {
+            ChangeState(nameof(AlertState));
+        }
+
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
+
+        if (isPunched && stunned.CanEnterStunState())
+        {
+            ChangeState(nameof(StunState));
+            isPunched = false;
+        }
+        
+        stunned.UpdateCooldown(Time.deltaTime);
+    }
+
+    public void TakenDamage()
+    {
+        isPunched = true;
     }
 }

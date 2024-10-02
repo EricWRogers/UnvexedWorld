@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -10,7 +11,27 @@ public class PauseMenu : MonoBehaviour
     public Button resumeButton;
     public Button quitButton;
 
+    public WinMenuScript win;
+
+    PlayerGamepad gamepad;
+
     private bool isPaused = false;
+
+    void Awake()
+    {
+        gamepad = new PlayerGamepad();
+        gamepad.GamePlay.Pause.performed += ctx => CheckPause();
+    }
+
+    void OnEnable()
+    {
+        gamepad.GamePlay.Enable();
+    }
+
+    void OnDisable()
+    {
+        gamepad.GamePlay.Disable();
+    }
 
     void Start()
     {
@@ -25,7 +46,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         // Check if the player presses the Escape key
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && win.didWin != true)
         {
             if (isPaused)
             {
@@ -35,6 +56,18 @@ public class PauseMenu : MonoBehaviour
             {
                 Pause();
             }
+        }
+    }
+
+    void CheckPause()
+    {
+        if (isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
         }
     }
 
