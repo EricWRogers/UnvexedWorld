@@ -2028,7 +2028,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: dee8c7d3f18856d42b31d5a20bdc4cff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -2055,6 +2055,7 @@ MonoBehaviour:
   resetSpeed: 15
   isAttacking: 0
   animator: {fileID: 0}
+  cameraManager: {fileID: 0}
 --- !u!114 &1919406391244116265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2123,9 +2124,11 @@ MonoBehaviour:
   cameras:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   mainCam: {fileID: 0}
   dashCam: {fileID: 0}
   startCamera: {fileID: 0}
+  meleeCamera: {fileID: 0}
 --- !u!114 &8771430051349071788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4336,6 +4339,7 @@ MonoBehaviour:
   healthBar: {fileID: 1553817995279931855}
   resumeButton: {fileID: 2268924181497815806}
   quitButton: {fileID: 2353577440538962303}
+  win: {fileID: 3601648441269915796}
 --- !u!114 &3757074943368932339
 MonoBehaviour:
   m_ObjectHideFlags: 0

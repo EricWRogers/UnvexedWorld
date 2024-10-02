@@ -11,6 +11,8 @@ public class PauseMenu : MonoBehaviour
     public Button resumeButton;
     public Button quitButton;
 
+    public WinMenuScript win;
+
     PlayerGamepad gamepad;
 
     private bool isPaused = false;
@@ -44,7 +46,7 @@ public class PauseMenu : MonoBehaviour
     void Update()
     {
         // Check if the player presses the Escape key
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && win.didWin != true)
         {
             if (isPaused)
             {
