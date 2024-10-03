@@ -747,11 +747,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8678946718278521828, guid: 1bb923267bdb967448530422388441f8,
         type: 3}
-      propertyPath: aimCam
-      value: 
-      objectReference: {fileID: 1304961526}
-    - target: {fileID: 8678946718278521828, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
       propertyPath: dashCam
       value: 
       objectReference: {fileID: 1423000700}
@@ -775,11 +770,6 @@ PrefabInstance:
       propertyPath: cameras.Array.data[1]
       value: 
       objectReference: {fileID: 1423000700}
-    - target: {fileID: 8678946718278521828, guid: 1bb923267bdb967448530422388441f8,
-        type: 3}
-      propertyPath: cameras.Array.data[2]
-      value: 
-      objectReference: {fileID: 1304961526}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -930,18 +920,6 @@ MonoBehaviour:
   m_LegacyHeightOffset: 3.4028235e+38
   m_LegacyHeadingBias: 3.4028235e+38
   m_HeadingIsSlave: 1
---- !u!114 &1304961526 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3530639895112143558, guid: 910d14837d066c545a2d274990b96354,
-    type: 3}
-  m_PrefabInstance: {fileID: 1722471192}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 319d2fe34a804e245819465c9505ea59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1338476786 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6335940708244719803, guid: 910d14837d066c545a2d274990b96354,
@@ -1349,6 +1327,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7201692560950709864, guid: a834bd23862363243b4aec68ea2a492d,
+        type: 3}
+      propertyPath: targetTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5226076506195962170, guid: a834bd23862363243b4aec68ea2a492d,
         type: 3}
       propertyPath: m_Name
@@ -1729,12 +1712,12 @@ PrefabInstance:
     - target: {fileID: 4206703554231272563, guid: 910d14837d066c545a2d274990b96354,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000014901159
+      value: 0.000000014901159
       objectReference: {fileID: 0}
     - target: {fileID: 4206703554231272563, guid: 910d14837d066c545a2d274990b96354,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.000000009313225
+      value: -0.000000009313225
       objectReference: {fileID: 0}
     - target: {fileID: 8284448770413453842, guid: 910d14837d066c545a2d274990b96354,
         type: 3}
