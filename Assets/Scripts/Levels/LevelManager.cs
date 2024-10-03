@@ -16,14 +16,14 @@ public class LevelManager : MonoBehaviour
     public GameObject enemyAreaTwo;
     public GameObject enemyAreaThree;
 
-    private bool areaOneCleared = false;
-    private bool areaTwoCleared = false;
-    private bool isAreaTwoActivated = false;  // Updated flag
-    private bool isAreaThreeActivated = false;  // New flag for area three
+    // private bool areaOneCleared = false;
+    // private bool areaTwoCleared = false;
+    // private bool isAreaTwoActivated = false;  // Updated flag
+    // private bool isAreaThreeActivated = false;  // New flag for area three
 
     void Start()
     {
-        UpdateGroundEnemies(enemyAreaOne);  // Start with the first area
+        //UpdateGroundEnemies(enemyAreaOne);  // Start with the first area
         AddHealthListeners();               // Add health listeners for the first area
     }
 
@@ -40,7 +40,7 @@ public class LevelManager : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
-            if (enemy != null && enemy.transform.IsChildOf(enemyArea.transform) && enemy.active)  // Only enemies in the current area
+            if (enemy != null && enemy.transform.IsChildOf(enemyArea.transform) && enemy.activeInHierarchy)  // Only enemies in the current area
             {
                 groundEnemies.Add(enemy);
             }
@@ -90,7 +90,7 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);  // Delay to ensure enemies are fully activated
         UpdateGroundEnemies(enemyAreaTwo);  // Update with enemies from the second area
         AddHealthListeners();               // Add health listeners for the second area's enemies
-        isAreaTwoActivated = true;          // Mark area two as activated
+        //isAreaTwoActivated = true;          // Mark area two as activated
     }
 
     // Remove a specific enemy from the list when they die
