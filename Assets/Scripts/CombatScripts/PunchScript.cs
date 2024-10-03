@@ -33,6 +33,7 @@ public class PunchScript : MonoBehaviour
         Debug.Log("Hit" + other.gameObject.name);
         if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
         {   
+            particle = Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
             enemy = other.gameObject;
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
