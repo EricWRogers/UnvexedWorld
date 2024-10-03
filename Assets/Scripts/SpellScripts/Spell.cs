@@ -29,6 +29,7 @@ public class Spell : MonoBehaviour
     public void Burst(GameObject target)
     {
         target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
+        Instantiate(ParticleManager.Instance.BurstParticle, target.transform.position, target.transform.rotation);
     }
 
     public void ApplyDOT(GameObject target)

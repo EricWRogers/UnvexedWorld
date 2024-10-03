@@ -285,12 +285,22 @@ public class ThirdPersonMovement : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
         {
-            rayGround = true;
+            if (!rayGround)
+            {
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                rayGround = true;
+            }
         }
         else
         {
             rayGround = false;
         }
+
+        //if (jumpCount == 0)
+        //{
+            //play landing particle
+        //}
+
     }
 
     // Sliding down slopes
