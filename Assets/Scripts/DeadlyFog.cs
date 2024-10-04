@@ -15,6 +15,11 @@ public class DeadlyFog : MonoBehaviour
     public float damageTimer = 0;
     public float damageRate = 0.25f;
 
+    void Start()
+    {
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+    }
+
     public void DealDamage()
     {
         Debug.Log("Player is Damaged");
