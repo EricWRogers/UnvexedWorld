@@ -25,7 +25,7 @@ public class Knockback : MonoBehaviour
     {
         if (rb != null)
         {
-            Debug.Log("Applying knockback");
+            //Debug.Log("Applying knockback");
             Vector3 force = hitDirection.normalized * knockbackStrength;
             rb.AddForce(force, ForceMode.Impulse);
         }
