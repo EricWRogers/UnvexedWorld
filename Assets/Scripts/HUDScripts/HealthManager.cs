@@ -35,12 +35,12 @@ public class HealthManager : MonoBehaviour
     public void SetHealth(int currentHealth)
     {
         healthSlider.value = currentHealth;
-        Debug.Log("Health updated: " + currentHealth); // Debug log for checking health updates
+        //Debug.Log("Health updated: " + currentHealth); // Debug log for checking health updates
         
         // Check if the health is below 25%, start flashing if necessary
         if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing)
         {
-            Debug.Log("Health is below 25%, starting flash..."); // Debug log for flashing condition
+            //Debug.Log("Health is below 25%, starting flash..."); // Debug log for flashing condition
             StartCoroutine(FlashHealthBar());
         }
         else if (currentHealth / (float)playerHealth.maxHealth >= 0.35f && isFlashing)
