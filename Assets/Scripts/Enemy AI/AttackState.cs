@@ -19,7 +19,7 @@ public class AttackState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Attack State");
+        //Debug.Log("Attack State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine meleeStateMachine)
@@ -50,7 +50,7 @@ public class AttackState : SimpleState
             
             if (meleeStateMachine.LOS && !isAttacking)
             {
-                Debug.Log("Attacking");
+                //Debug.Log("Attacking");
                 isAttacking = true;
                 attack.Invoke();
             }
@@ -72,7 +72,7 @@ public class AttackState : SimpleState
             
             if (agroMeleeStateMachine.LOS && !isAttacking)
             {
-                Debug.Log("Attacking");
+                //Debug.Log("Attacking");
                 isAttacking = true;
                 attack.Invoke();
             }

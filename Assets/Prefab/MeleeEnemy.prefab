@@ -88,13 +88,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2783857062051690050}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 716.5801, y: 731.78, z: -115.98}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2838965134027731655}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &7768222355010818456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5248,20 +5248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7768222355010818456}
-        m_TargetAssemblyTypeName: Scripts.HUDScripts.MessageSystem.MessageSpawner,
-          Assembly-CSharp
-        m_MethodName: ApplyDamage
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 6081782571847116660}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   healed:
     m_PersistentCalls:
       m_Calls: []
@@ -5470,7 +5457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cecce9c6f7c7132199a4249ef17befb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockbackStrength: 10
+  knockbackStrength: 5
 --- !u!114 &956308900980481692
 MonoBehaviour:
   m_ObjectHideFlags: 0
