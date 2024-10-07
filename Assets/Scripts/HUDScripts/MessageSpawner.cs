@@ -26,7 +26,7 @@ namespace Scripts.HUDScripts.MessageSystem
 
         private void ShowFloatingMessage(int damage)
         {
-            GameObject message = Instantiate(floatingMessagePrefab, transform.position + Vector3.up * 2f, Quaternion.identity);
+            GameObject message = Instantiate(floatingMessagePrefab, transform.position + (Vector3.up * 2f), Quaternion.identity);
             FloatingMessage floatingMsg = message.GetComponent<FloatingMessage>();
             if (floatingMsg != null)
             {
