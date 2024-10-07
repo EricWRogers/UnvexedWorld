@@ -15,6 +15,7 @@ public class ParticleManager : MonoBehaviour
 
     public GameObject ScavengeParticleMelee;
     public GameObject SplendorParticleMelee;
+    public GameObject NoSpellImpact;
     
     // Start is called before the first frame update
 

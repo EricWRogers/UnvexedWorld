@@ -14,7 +14,7 @@ public class InRangeState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Move State");
+        //Debug.Log("Move State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine)
