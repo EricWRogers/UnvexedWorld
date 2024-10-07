@@ -17,7 +17,7 @@ public class FogManager : MonoBehaviour
 
         foreach (GameObject enemy in enemies)
         {
-            if (enemy != null && enemy.transform.IsChildOf(group.transform) && enemy.active)  // Only enemies in the current area
+            if (enemy != null && enemy.transform.IsChildOf(group.transform) && enemy.activeInHierarchy)  // Only enemies in the current area
             {
                 groundEnemies.Add(enemy);
             }

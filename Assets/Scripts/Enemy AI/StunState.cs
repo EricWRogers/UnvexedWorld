@@ -65,12 +65,12 @@ public class StunState : SimpleState
         enemyIndicator.enabled = true;
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            meleeStateMachine.enemyKnockback.knockbackStrength = 10.0f;
+            meleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             meleeStateMachine.isPunched = false;
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
-            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 10.0f;
+            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             agroMeleeStateMachine.isPunched = false;
         }
         Debug.Log("Exiting Stun State");

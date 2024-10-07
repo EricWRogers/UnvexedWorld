@@ -22,11 +22,16 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public Animator animator;
 
+    public CameraManager cameraManager;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
+
+         cameraManager =GetComponent<CameraManager>();
+
 
     }
 
@@ -34,6 +39,8 @@ public class MeleeRangedAttack : MonoBehaviour
     void MeleeGamepad()
     {
         isAttacking = true;
+
+        
 
         if (target == null)
             target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
@@ -43,10 +50,11 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
             {
 
-
+                Vector3 dir = (target.transform.position - transform.position).normalized;
+                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
 
                 Debug.Log("Found" + target.name);
-                gameObject.transform.LookAt(target.transform);
+                
                 if (spellCraft.casting)
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
@@ -100,11 +108,14 @@ public class MeleeRangedAttack : MonoBehaviour
         animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
+            cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
+            
         }
         else
         {
+            cameraManager.SwitchCamera(cameraManager.mainCam);
             speed.baseSpeed = resetSpeed;
             speed.turnSmoothTime = 0.1f;
         }
@@ -113,6 +124,7 @@ public class MeleeRangedAttack : MonoBehaviour
         if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
         {
             MeleeGamepad();
+            
 
         }
         else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.E))
@@ -172,4 +184,6 @@ public class MeleeRangedAttack : MonoBehaviour
 
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
+
+   
 }

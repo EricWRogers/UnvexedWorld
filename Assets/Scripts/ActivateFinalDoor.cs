@@ -9,7 +9,7 @@ public class ActivateFinalDoor : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player") && !fogWall.active)
+        if(col.gameObject.CompareTag("Player") && !fogWall.activeInHierarchy)
         {
             finalDoor.SetBool("OpenDoor", true);
         }

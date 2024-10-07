@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using Scripts.HUDScripts.MessageSystem;
 
 
 
-public class PunchScript : MonoBehaviour
+public class PunchScript : MonoBehaviour, IDamageDealer
 {
     
     public int damage = 1;
@@ -33,12 +34,18 @@ public class PunchScript : MonoBehaviour
         Debug.Log("Hit" + other.gameObject.name);
         if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
         {   
+            /*particle = */Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
             enemy = other.gameObject;
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            MessageSpawner messageSpawner = enemy.GetComponentInChildren<MessageSpawner>();
+            if (messageSpawner != null)
+            {
+                messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+            }
             other.GetComponent<Knockback>().OnHurt();
             punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
@@ -84,5 +91,10 @@ public class PunchScript : MonoBehaviour
         {
             Destroy(particle);
         }
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
 }
