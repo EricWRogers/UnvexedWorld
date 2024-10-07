@@ -22,7 +22,7 @@ public class LifeStealOrb : MonoBehaviour
         targetTime -= Time.deltaTime;
         transform.position += transform.forward * 25f * Time.deltaTime;
 
-        if (targetTime <= 0.0f)
+        if (targetTime <= 0.6f)
         {
             gameObject.transform.LookAt(player.transform);
             transform.position += transform.forward * 10f * Time.deltaTime;
