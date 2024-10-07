@@ -35,6 +35,7 @@ public class Spell : MonoBehaviour, IDamageDealer
         {
             messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
         }
+        Instantiate(ParticleManager.Instance.BurstParticle, target.transform.position, target.transform.rotation);
     }
 
     public void ApplyDOT(GameObject target)
