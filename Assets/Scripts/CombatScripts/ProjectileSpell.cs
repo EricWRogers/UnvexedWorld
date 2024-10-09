@@ -73,6 +73,13 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             }
             if (destroyOnImpact)
             {
+                if(gameObject.GetComponent<Spell>() !=null)
+                {
+                    if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+                    {
+                        gameObject.GetComponent<Spell>().SpellEffect(gameObject);
+                    }
+                }
                 DestroyBullet();
             }
         }
