@@ -16,7 +16,7 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public float resetSpeed = 15.0f;
 
-    private float lockUP = 0.0f;
+    public float lockUP = 3.0f;
 
     public bool isAttacking;
 
