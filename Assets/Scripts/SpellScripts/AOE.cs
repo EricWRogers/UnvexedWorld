@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
 [RequireComponent(typeof(Spell))]
-public class AOE : MonoBehaviour
+public class AOE : MonoBehaviour, IDamageDealer
 {
     public UnityEvent<GameObject> hitTarget;
     public float duration = 10f;
@@ -50,7 +51,17 @@ public class AOE : MonoBehaviour
             Debug.Log("AOE Hit" + target.gameObject.name + "");
             hitTarget.Invoke(target.gameObject);
             target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            MessageSpawner messageSpawner = target.GetComponentInChildren<MessageSpawner>();
+            if (messageSpawner != null)
+            {
+                messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+            }
         }
+    }
+
+    public int GetDamage()
+    {
+        return damage;
     }
 
 }

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
-public class Spell : MonoBehaviour
+public class Spell : MonoBehaviour, IDamageDealer
 {
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
@@ -29,6 +30,11 @@ public class Spell : MonoBehaviour
     public void Burst(GameObject target)
     {
         target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
+        MessageSpawner messageSpawner = target.GetComponentInChildren<MessageSpawner>();
+        if (messageSpawner != null)
+        {
+            messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+        }
         Instantiate(ParticleManager.Instance.BurstParticle, target.transform.position, target.transform.rotation);
     }
 
@@ -79,5 +85,10 @@ public class Spell : MonoBehaviour
                 Instantiate(ParticleManager.Instance.LifeStealOrb, gameObject.transform.position, transform.rotation);   
             }
         }
+    }
+
+    public int GetDamage()
+    {
+        return burstDamage;
     }
 }
