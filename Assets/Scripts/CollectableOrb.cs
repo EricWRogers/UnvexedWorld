@@ -24,8 +24,9 @@ public class CollectableOrb : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("You picked up an orb");
-            Destroy(this.gameObject);
+            collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
+            Destroy(this.gameObject);
         }
     }
 
