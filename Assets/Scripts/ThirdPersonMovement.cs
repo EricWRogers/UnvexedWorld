@@ -71,6 +71,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Animator animator;
 
+    public GameObject DashLines;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -130,10 +132,13 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
+                 DashLines.SetActive(true);
+
                 controller.Move(cam.forward * dashSpeed * Time.deltaTime);
             }
             else
             {
+                DashLines.SetActive(false);
                 dashing = false;
                 currectDashCoolDown = dashCoolDown;
                 cameraManager.SwitchCamera(cameraManager.mainCam);
