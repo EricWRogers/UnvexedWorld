@@ -7,6 +7,7 @@ using SuperPupSystems.StateMachine;
 [System.Serializable]
 public class AlertState : SimpleState
 {
+    public bool enteredAlert = false;
     private NavMeshAgent agent;
     private ParticleSystem dustPS;
     private float alertTime = 5f; 
@@ -14,8 +15,10 @@ public class AlertState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Alert State");
+        //Debug.Log("Alert State");
         base.OnStart();
+
+        enteredAlert = true;
 
         if (stateMachine is MeleeStateMachine)
         {

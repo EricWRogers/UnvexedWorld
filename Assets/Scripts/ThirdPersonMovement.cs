@@ -1,14 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.InputSystem;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
     public CharacterController controller;
 
+    PlayerGamepad gamepad;
+
+    Vector2 gamepadMove;
+
+    public CameraManager cameraManager;
     public float gravity = -3.5f;
 
+    public float gravityFirstJump = -5.0f;
+
+    public float gravitySecondJump = -15.0f;
+
+    public float baseSpeed = 6f;
+
     public float speed = 6f;
+
+    public float airSpeed = 3f;
 
     public float dashSpeed = 10f;
 
@@ -23,10 +38,6 @@ public class ThirdPersonMovement : MonoBehaviour
     public bool dashing = false;
 
     public bool isGrounded = false;
-
-    public float groundCheckDistance;
-
-    private float bufferCheckDistance = 0.1f;
 
     public bool isJumping;
 
@@ -46,87 +57,34 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private float dashStartTime;
 
-    public GameObject groundCheck;
+    public bool isSliding;
 
-     public float m_MaxDistance;
+    private Vector3 slopSlideSpeed;
 
-    bool m_HitDetect;
+    public float slopeSpeed = 10.0f;
 
-    void Start()
+    public bool rayGround;
+
+    public float groundedCheckDistence;
+
+    private float bufferCheckDistance = 0.1f;
+
+    public Animator animator;
+
+    void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-         
-        
+        gamepad = new PlayerGamepad();
+
+        gamepad.GamePlay.Jump.performed += ctx => GamepadJump();
+
+        gamepad.GamePlay.Dash.performed += ctx => GamepadDash();
+
+        gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
+        gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
     }
 
-
-
-    // Update is called once per frame
-    void Update()
+    void Jump()
     {
-        
-        if (!isGrounded)
-        {
-            
-            if (jumpCount < jumpMax)
-            {
-                isJumping = false;
-            }
-            velocity.y += gravity * Time.deltaTime;
-            controller.Move(velocity * Time.deltaTime);
-            
-        }
-        
-        //Movement
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        if (direction.magnitude >= 0.1f)
-        {
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
-
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-             moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
-            controller.Move(moveDir.normalized * speed * Time.deltaTime);
-            
-
-
-        }
-        //Dash
-        currectDashCoolDown -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
-        {
-
-            dashing = true;
-            dashStartTime = Time.time;
-           
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Cursor.lockState = CursorLockMode.None;
-        }
-
-        if (dashing)
-        {
-            if (Time.time < dashStartTime + dashTime)
-            {
-                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-            }
-            else
-            {
-                dashing = false;
-                currectDashCoolDown = dashCoolDown;
-            }
-        }
-
-
-        groundCheckDistance = (controller.height / 2) + bufferCheckDistance;
-        //Jump
         if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
         {
             isJumping = true;
@@ -137,30 +95,245 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
 
         }
+    }
+
+    void GamepadJump()
+    {
+        if ((isGrounded || jumpCount < jumpMax))
+        {
+            isJumping = true;
+            jumpCount++;
+            isGrounded = false;
+            velocity.y = 0;
+            velocity.y += jumpForce;
+            controller.Move(velocity * Time.deltaTime);
+
+        }
+    }
+
+    void Dash()
+    {
+         currectDashCoolDown -= Time.deltaTime;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
+        {
+
+            dashing = true;
+            dashStartTime = Time.time;
+            cameraManager.SwitchCamera(cameraManager.dashCam);
+            Vector3 dir = (transform.position - cam.transform.position).normalized;
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+        }
         
 
+        if (dashing)
+        {
+            if (Time.time < dashStartTime + dashTime)
+            {
+                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+            }
+            else
+            {
+                dashing = false;
+                currectDashCoolDown = dashCoolDown;
+                cameraManager.SwitchCamera(cameraManager.mainCam);
+            }
+        }
+
+    }
+
+    void GamepadDash()
+    {
+         currectDashCoolDown -= Time.deltaTime;
+
+        if ( (!dashing) && currectDashCoolDown <= 0.0f)
+        {
+
+            dashing = true;
+            dashStartTime = Time.time;
+            cameraManager.SwitchCamera(cameraManager.dashCam);
+            Vector3 dir = (transform.position - cam.transform.position).normalized;
+            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+        }
+        
+
+        if (dashing)
+        {
+            if (Time.time < dashStartTime + dashTime)
+            {
+                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+            }
+            else
+            {
+                dashing = false;
+                currectDashCoolDown = dashCoolDown;
+                cameraManager.SwitchCamera(cameraManager.mainCam);
+            }
+        }
+
+    }
+
+    void OnEnable()
+    {
+        gamepad.GamePlay.Enable();
+    }
+
+    void OnDisable()
+    {
+        gamepad.GamePlay.Disable();
+    }
+    
+    void Start()
+    {
+        animator = GetComponentsInChildren<Animator>()[1];
+        Cursor.lockState = CursorLockMode.Locked;    
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        animator.SetBool("Grounded", rayGround);
+        
+        UpdateSlopeSliding();
+
+        
+        if (!isGrounded && jumpCount == 0)
+        {
+            
+            if (jumpCount < jumpMax || isGrounded)
+            {
+                isJumping = false;
+            }
+            velocity.y += gravity * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+             speed = baseSpeed;
+            
+        }
+
+        if (jumpCount == 1)
+        {
+            velocity.y += gravityFirstJump * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            speed = airSpeed;
+        }
+        else
+        {
+            speed = baseSpeed;
+        }
+        if (jumpCount == jumpMax)
+        {
+            velocity.y += gravitySecondJump * Time.deltaTime;
+            controller.Move(velocity * Time.deltaTime);
+            speed = airSpeed;
+        }
+        
+        //Movement
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        if (direction.magnitude >= 0.1f)
+        {
+            animator.SetBool("Moving", true);
+            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, turnSmoothTime);
+
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDir.normalized * speed * Time.deltaTime);
+        
+        }
+        else
+        {
+            animator.SetBool("Moving", false);
+        }
+
+        gamepadMove.x = moveDir.x;
+        gamepadMove.y = moveDir.y;
+
+        
+        //Dash
+        Dash();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+
+        
+        
+
+
+       //Jump
+        Jump();
+        
+        //GroundCheck
         if(controller.collisionFlags == CollisionFlags.Below)
         {
             jumpCount = 0;
             isGrounded = true;
-            Debug.Log("ouch");
         }
         else
         {
             isGrounded = false;
         }
 
- 
-        
+        groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
 
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
+        {
+            if (!rayGround)
+            {
+                gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                rayGround = true;
+            }
+        }
+        else
+        {
+            rayGround = false;
+        }
+
+        //if (jumpCount == 0)
+        //{
+            //play landing particle
+        //}
 
     }
-    
+
+    // Sliding down slopes
+    void UpdateSlopeSliding()
+    {    
+        var sphereCastVericalOffset = controller.height/2 - controller.radius;
+        var castOrgin = transform.position - new Vector3(0,sphereCastVericalOffset,0);
+
+        if(Physics.SphereCast(castOrgin, controller.radius - .01f, Vector3.down, out var hit, .05f, ~LayerMask.GetMask("Player"),QueryTriggerInteraction.Ignore))
+        {
+
+            var collider = hit.collider;
+            var angle = Vector3.Angle(Vector3.up, hit.normal);
+
+            if( angle > controller.slopeLimit)
+            {
+                velocity.x += slopeSpeed * Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
+            }
+            else
+            {
+                velocity.x = 0 *Time.deltaTime;
+                controller.Move(velocity * Time.deltaTime);
+            }            
+        }
+    }
     
     public void StopMoving()
     {
         Destroy(this);
-    }
+    }  
 
-  
+    
+
+ 
 }

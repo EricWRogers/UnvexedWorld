@@ -14,14 +14,21 @@ public class InRangeState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Move State");
+        //Debug.Log("Move State");
         base.OnStart();
 
         if (stateMachine is MeleeStateMachine)
         {
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 1.0f;
+            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is AgroMeleeStateMachine)
+        {
+            agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+            attackRange = ((AgroMeleeStateMachine)stateMachine).inAttackRange + 0.5f;
         }
         
         
@@ -29,19 +36,38 @@ public class InRangeState : SimpleState
 
     public override void UpdateState(float dt)
     {
-        if (((MeleeStateMachine)stateMachine).isAlive && ((MeleeStateMachine)stateMachine).LOS)
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
+    {
+        if (meleeStateMachine.isAlive && meleeStateMachine.LOS)
         {
-            agent.SetDestination(((MeleeStateMachine)stateMachine).target.position);
+            agent.SetDestination(meleeStateMachine.target.position);
             if (!dustPS.isPlaying)
             {
                 dustPS.Play();
             }
-            if(Vector3.Distance(agent.transform.position, ((MeleeStateMachine)stateMachine).target.position) < attackRange)
+            if (Vector3.Distance(agent.transform.position, meleeStateMachine.target.position) < attackRange)
             {
                 dustPS.Stop();
                 stateMachine.ChangeState(nameof(AttackState));
             }
         }
+    }
+    else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+    {
+        if (agroMeleeStateMachine.isAlive)
+        {
+            agent.SetDestination(agroMeleeStateMachine.target.position);
+            if (!dustPS.isPlaying)
+            {
+                dustPS.Play();
+            }
+            if (Vector3.Distance(agent.transform.position, agroMeleeStateMachine.target.position) < attackRange)
+            {
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(AttackState));
+            }
+        }
+    }
 
     }
 

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
-public class Spell : MonoBehaviour
+public class Spell : MonoBehaviour, IDamageDealer
 {
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     public int burstDamage;
-    public int DOTDamage;
-    public int DOTDuration;
-    public GameObject AOEPrefab;
+    //public GameObject AOEPrefab;
+    //public GameObject DOTParticle;
     public int AOEDuration;
     public bool lifeSteal = false;
     public float lifeStealRatio = 1f;
@@ -30,6 +30,12 @@ public class Spell : MonoBehaviour
     public void Burst(GameObject target)
     {
         target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
+        MessageSpawner messageSpawner = target.GetComponentInChildren<MessageSpawner>();
+        if (messageSpawner != null)
+        {
+            messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
+        }
+        Instantiate(ParticleManager.Instance.BurstParticle, target.transform.position, target.transform.rotation);
     }
 
     public void ApplyDOT(GameObject target)
@@ -37,6 +43,7 @@ public class Spell : MonoBehaviour
         if(target.GetComponent<DOT>() == null)
         {
             target.AddComponent<DOT>();
+            target.GetComponent<DOT>().particle = ParticleManager.Instance.DOTParticle;
         }
     }
 
@@ -44,7 +51,7 @@ public class Spell : MonoBehaviour
     {
         if (mainAspect == SpellCraft.Aspect.splendor)
         {
-            GameObject AOE = Instantiate(AOEPrefab, gameObject.transform.position, transform.rotation);
+            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation);
             AOE.GetComponent<Spell>().modAspect = modAspect;
         }
         else
@@ -72,7 +79,16 @@ public class Spell : MonoBehaviour
         Debug.Log("Heal" + change*lifeStealRatio);
         if(change>0)
         {
-            GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            //GameObject.FindWithTag("Player").GetComponent<SuperPupSystems.Helper.Health>().Heal((int)(change*lifeStealRatio));
+            for (int i = 0; i < change; i++)
+            {
+                Instantiate(ParticleManager.Instance.LifeStealOrb, gameObject.transform.position, transform.rotation);   
+            }
         }
+    }
+
+    public int GetDamage()
+    {
+        return burstDamage;
     }
 }
