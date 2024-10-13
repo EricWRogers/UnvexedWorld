@@ -36,6 +36,14 @@ public class StunState : SimpleState
             targetRenderer = agroMeleeStateMachine.GetComponent<Renderer>();
             enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            agent = rangeStateMachine.GetComponent<NavMeshAgent>();
+            rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            targetRenderer = rangeStateMachine.GetComponent<Renderer>();
+            enemyIndicator = rangeStateMachine.GetComponent<DamageIndicator>();
+        }
+
         stunTimer = stunDuration;  
         agent.isStopped = true;    // Stop the AI from moving
         targetRenderer.material = stunMaterial;
@@ -72,6 +80,11 @@ public class StunState : SimpleState
         {
             agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             agroMeleeStateMachine.isPunched = false;
+        }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
+            rangeStateMachine.isPunched = false;
         }
         Debug.Log("Exiting Stun State");
     }

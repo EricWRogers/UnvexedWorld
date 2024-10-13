@@ -9,6 +9,7 @@ using UnityEngine.AI;
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
+    [SerializeField]
     private ParticleSystem dustPS;
     private float attackRange;
 
@@ -29,6 +30,13 @@ public class InRangeState : SimpleState
             agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
             attackRange = ((AgroMeleeStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is RangeStateMachine)
+        {
+            agent = ((RangeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((RangeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+            attackRange = ((RangeStateMachine)stateMachine).inAttackRange;
         }
         
         
@@ -65,6 +73,22 @@ public class InRangeState : SimpleState
             {
                 dustPS.Stop();
                 stateMachine.ChangeState(nameof(AttackState));
+            }
+        }
+    }
+    else if (stateMachine is RangeStateMachine rangeStateMachine)
+    {
+        if (rangeStateMachine.isAlive)
+        {
+            agent.SetDestination(rangeStateMachine.target.position);
+            if (!dustPS.isPlaying)
+            {
+                dustPS.Play();
+            }
+            if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) < attackRange)
+            {
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(WindUpState));
             }
         }
     }

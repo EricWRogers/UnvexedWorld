@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class RangeStateMachine : SimpleStateMachine
 {
+    public RandomMovementState movement;
     public StunState stunned;
     public InRangeState inRange;
     public WindUpState windUp;
@@ -31,9 +32,10 @@ public class RangeStateMachine : SimpleStateMachine
 
     void Awake()
     {
+        states.Add(movement);
         states.Add(stunned);
         states.Add(inRange);
-        states.Add(inRange);
+        states.Add(windUp);
         states.Add(range);
 
         foreach (SimpleState s in states)
@@ -50,7 +52,7 @@ public class RangeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        ChangeState(nameof(InRangeState));
+        ChangeState(nameof(RandomMovementState));
     }
 
     void Update()

@@ -14,7 +14,7 @@ public class WindUpState : SimpleState
 {
     public Timer timer;
     public UnityEvent windUp;  
-    public UnityEvent finishWindUp;
+    public UnityEvent stopWindUp;
     public float distanceRnage;
     private NavMeshAgent agent;
     private float windUpRange;
@@ -30,12 +30,6 @@ public class WindUpState : SimpleState
             agent.SetDestination(rangeStateMachine.transform.position);
             windUpRange = rangeStateMachine.inAttackRange + distanceRnage;
         }
-
-        timer.StartTimer(2, true);
-        if (windUp == null)
-        {
-            windUp = new UnityEvent();
-        }
     }
 
     public override void UpdateState(float dt)
@@ -43,23 +37,24 @@ public class WindUpState : SimpleState
         if (stateMachine is RangeStateMachine rangeStateMachine)
         {
             rangeStateMachine.transform.LookAt(rangeStateMachine.target);
-            
+
             if (rangeStateMachine.LOS && !isWindUp)
             {
-                //Debug.Log("windUping");
                 isWindUp = true;
                 windUp.Invoke();
+                timer.StartTimer(1.1f, false); 
             }
 
-            if(Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
+            if (isWindUp && timer.timeLeft <= 0)
             {
-                timer.autoRestart = false;
-                if (timer.timeLeft <= 0)
-                {
-                    isWindUp = false;
-                    finishWindUp.Invoke();
-                    stateMachine.ChangeState(nameof(AttackState));
-                }
+                stateMachine.ChangeState(nameof(AttackState));
+            }
+
+            if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > windUpRange)
+            {
+                isWindUp = false;
+                stopWindUp.Invoke();
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }

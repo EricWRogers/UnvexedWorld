@@ -24,6 +24,7 @@ public class RangeProjectile : MonoBehaviour
     [SerializeField] 
     private LayerMask grenadeCollisionMask;
 
+    [SerializeField]
     private bool isThrowing = false;
 
     private void Update()
@@ -40,7 +41,7 @@ public class RangeProjectile : MonoBehaviour
         Rigidbody grenade = Instantiate(grenadePrefab, releasePosition.position, Quaternion.identity);
         grenade.AddForce(releasePosition.forward * throwStrength, ForceMode.Impulse);
 
-        StartCoroutine(ExplodeAfterDelay(grenade));
+        //StartCoroutine(ExplodeAfterDelay(grenade));
     }
 
     private IEnumerator ExplodeAfterDelay(Rigidbody grenade)
