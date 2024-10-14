@@ -60,7 +60,7 @@ public class RandomMovementState : SimpleState
             if (meleeStateMachine.LOS == true)
             {   
                 dustPS.Stop();
-                stateMachine.ChangeState(nameof(AlertState));
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
         if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
