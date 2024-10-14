@@ -15,7 +15,7 @@ public class WindUpState : SimpleState
     public Timer timer;
     public UnityEvent windUp;  
     public UnityEvent stopWindUp;
-    public float distanceRnage;
+    public float distanceRange;
     private NavMeshAgent agent;
     private float windUpRange;
     public bool isWindUp;
@@ -28,7 +28,7 @@ public class WindUpState : SimpleState
         {
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             agent.SetDestination(rangeStateMachine.transform.position);
-            windUpRange = rangeStateMachine.inAttackRange + distanceRnage;
+            windUpRange = rangeStateMachine.inAttackRange + distanceRange;
         }
     }
 
@@ -42,19 +42,12 @@ public class WindUpState : SimpleState
             {
                 isWindUp = true;
                 windUp.Invoke();
-                timer.StartTimer(1.1f, false); 
+                timer.StartTimer(2f, false); 
             }
 
             if (isWindUp && timer.timeLeft <= 0)
             {
                 stateMachine.ChangeState(nameof(AttackState));
-            }
-
-            if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > windUpRange)
-            {
-                isWindUp = false;
-                stopWindUp.Invoke();
-                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }

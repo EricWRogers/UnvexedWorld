@@ -38,7 +38,7 @@ public class AttackState : SimpleState
         {
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             agent.SetDestination(rangeStateMachine.transform.position);
-            attackRange = rangeStateMachine.inAttackRange;
+            attackRange = rangeStateMachine.inAttackRange + 5.0f;
         }
 
         time.StartTimer(2, true);
@@ -102,6 +102,7 @@ public class AttackState : SimpleState
             {
                 isAttacking = true;
                 attack.Invoke();
+                rangeStateMachine.ChangeState(nameof(WindUpState));
             }
 
             if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)

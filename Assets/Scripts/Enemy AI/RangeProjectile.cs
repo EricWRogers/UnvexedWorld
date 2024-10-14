@@ -5,9 +5,9 @@ using UnityEngine;
 public class RangeProjectile : MonoBehaviour
 {
     [SerializeField] 
-    private Rigidbody grenadePrefab;
+    private Rigidbody prefab;
     [SerializeField] 
-    private Transform releasePosition;
+    private Transform firePoint;
     [SerializeField] 
     private float throwStrength = 10f;
     [SerializeField] 
@@ -22,7 +22,7 @@ public class RangeProjectile : MonoBehaviour
     [SerializeField] 
     private float timeBetweenPoints = 0.1f;
     [SerializeField] 
-    private LayerMask grenadeCollisionMask;
+    private LayerMask collisionMask;
 
     [SerializeField]
     private bool isThrowing = false;
@@ -34,22 +34,22 @@ public class RangeProjectile : MonoBehaviour
         DrawProjection();
     }
 
-    public void ThrowGrenade()
+    public void ThrowProjectile()
     {
         isThrowing = true;
 
-        Rigidbody grenade = Instantiate(grenadePrefab, releasePosition.position, Quaternion.identity);
-        grenade.AddForce(releasePosition.forward * throwStrength, ForceMode.Impulse);
+        Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity);
+        projectile.AddForce(firePoint.forward * throwStrength, ForceMode.Impulse);
 
         //StartCoroutine(ExplodeAfterDelay(grenade));
     }
 
-    private IEnumerator ExplodeAfterDelay(Rigidbody grenade)
+    private IEnumerator ExplodeAfterDelay(Rigidbody projectile)
     {
         yield return new WaitForSeconds(explosionDelay);
 
-        Instantiate(explosionEffect, grenade.transform.position, Quaternion.identity);
-        Destroy(grenade.gameObject);
+        Instantiate(explosionEffect, projectile.transform.position, Quaternion.identity);
+        Destroy(projectile.gameObject);
 
         isThrowing = false;
     }
@@ -59,8 +59,8 @@ public class RangeProjectile : MonoBehaviour
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
 
-        Vector3 startPosition = releasePosition.position;
-        Vector3 startVelocity = throwStrength * releasePosition.forward;
+        Vector3 startPosition = firePoint.position;
+        Vector3 startVelocity = throwStrength * firePoint.forward;
 
         int i = 0;
         lineRenderer.SetPosition(i, startPosition);
@@ -75,8 +75,7 @@ public class RangeProjectile : MonoBehaviour
 
             Vector3 lastPosition = lineRenderer.GetPosition(i - 1);
 
-            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out RaycastHit hit,
-                (point - lastPosition).magnitude, grenadeCollisionMask))
+            if (Physics.Raycast(lastPosition, (point - lastPosition).normalized, out RaycastHit hit,(point - lastPosition).magnitude, collisionMask))
             {
                 lineRenderer.SetPosition(i, hit.point);
                 lineRenderer.positionCount = i + 1;

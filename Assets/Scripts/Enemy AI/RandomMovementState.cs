@@ -9,82 +9,137 @@ public class RandomMovementState : SimpleState
 {
     private NavMeshAgent agent;
     private ParticleSystem dustPS;
-    private float moveDelay = 2.0f;
+    private float moveDelay = 2.0f; 
     private float moveTimer = 0f;
-    private float minDelay = 1.5f;
-    private float maxDelay = 3.0f;
-    public float range;
-    public Transform circleCenterObject;
+    private float minDelay = 1.5f; 
+    private float maxDelay = 3.0f; 
 
-    // Base properties expected for all AI types
-    private bool isAlive;
-    private bool LOS;
+    public float range; 
+    public Transform circleCenterObject;
 
     public override void OnStart()
     {
+        //Debug.Log("Wander State");
         base.OnStart();
 
-        // Assign agent and dustPS from the AI game object
-        agent = stateMachine.GetComponent<NavMeshAgent>();
-        dustPS = stateMachine.GetComponentInChildren<ParticleSystem>();
-
-        // Determine the AI type and assign properties
-        if (stateMachine is MeleeStateMachine meleeSM)
+        if (stateMachine is MeleeStateMachine)
         {
-            isAlive = meleeSM.isAlive;
-            LOS = meleeSM.LOS;
+            agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
         }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeSM)
+        else if(stateMachine is AgroMeleeStateMachine)
         {
-            isAlive = agroMeleeSM.isAlive;
-            LOS = agroMeleeSM.LOS;
+            agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
         }
-        else if (stateMachine is RangeStateMachine rangeSM)
+        else if(stateMachine is RangeStateMachine)
         {
-            isAlive = rangeSM.isAlive;
-            LOS = rangeSM.LOS;
+            agent = ((RangeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((RangeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
         }
 
         MoveToRandomPoint();
     }
-
+    
     public override void UpdateState(float dt)
     {
-        if (isAlive)
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            moveTimer += dt;
-
-            if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay)
+            if (meleeStateMachine.isAlive == true)
             {
-                moveTimer = 0f;
-                moveDelay = Random.Range(minDelay, maxDelay);
-                MoveToRandomPoint();
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
+            }
+        }
+        if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+        {
+            if (agroMeleeStateMachine.isAlive == true)
+            {
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
+            }
+        }
+        if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            if (rangeStateMachine.isAlive == true)
+            {
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
             }
         }
     }
 
+    public override void OnExit()
+    {
+        base.OnExit();
+    }
+
+    // Move to a random point within the specified range of the GameObject
     private void MoveToRandomPoint()
     {
         Vector3 point;
         if (GetRandomPoint(circleCenterObject.position, range, out point))
         {
             agent.SetDestination(point);
-            dustPS?.Play();
+            dustPS.Play();
 
-            if (LOS)
+            if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            if (meleeStateMachine.LOS == true)
             {
-                dustPS?.Stop();
-                ((MeleeStateMachine)stateMachine).ChangeState(nameof(AlertState));
+                
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(AlertState));
             }
+        }
+        if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+        {
+            if (agroMeleeStateMachine.LOS == true)
+            {
+                
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
+        if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            if (rangeStateMachine.LOS == true)
+            {
+                
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
         }
     }
 
+    // Generate a random point within the specified range of the center object
     bool GetRandomPoint(Vector3 center, float range, out Vector3 result)
     {
-        Vector3 randomDirection = Random.insideUnitSphere * range + center;
-        randomDirection.y = center.y;
+        Vector3 randomDirection = Random.insideUnitSphere * range;
+        randomDirection += center;
+        randomDirection.y = center.y; // Ensure the point is on the same y level
 
-        if (NavMesh.SamplePosition(randomDirection, out NavMeshHit hit, range, NavMesh.AllAreas))
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(randomDirection, out hit, range, NavMesh.AllAreas))
         {
             result = hit.position;
             return true;
