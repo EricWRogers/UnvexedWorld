@@ -7,6 +7,7 @@ using UnityEngine.AI;
 
 public class AgroMeleeStateMachine : SimpleStateMachine
 {
+    public RandomMovementState movement;
     public StunState stunned;
     public InRangeState inRange;
     public AttackState melee;
@@ -30,6 +31,7 @@ public class AgroMeleeStateMachine : SimpleStateMachine
 
     void Awake()
     {
+        states.Add(movement);
         states.Add(stunned);
         states.Add(inRange);
         states.Add(melee);
@@ -48,7 +50,7 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        ChangeState(nameof(InRangeState));
+        ChangeState(nameof(RandomMovementState));
     }
 
     void Update()
