@@ -20,12 +20,16 @@ public class SpellCraft : MonoBehaviour
     public SpellShot spellShot;
     public Aspect mainAspect = Aspect.none;
     public Aspect modAspect = Aspect.none;
+    public float scavengeMana = 100f;
+    public float splendorMana = 100f;
     public bool casting = false;
 
-     PlayerGamepad gamepad;
+    PlayerGamepad gamepad;
  
      
     public Spell[] spells;
+
+
      void Awake()
     // Start is called before the first frame update
     {
@@ -40,7 +44,7 @@ public class SpellCraft : MonoBehaviour
 
     }
 
-      void OnEnable()
+    void OnEnable()
     {
         gamepad.GamePlay.Enable();
     }
@@ -132,6 +136,8 @@ public class SpellCraft : MonoBehaviour
             ClearSpell();
         }
 
+        RegenMana(20*Time.deltaTime);
+
         
     }
 
@@ -167,6 +173,40 @@ public class SpellCraft : MonoBehaviour
                 GetComponentInChildren<Spell>().lifeSteal = false;
             }
             
+        }
+    }
+    public void SpendMana()
+    {
+        if (mainAspect == Aspect.splendor)
+        {
+            splendorMana -= 50;
+        }
+        else if(mainAspect == Aspect.scavenge)
+        {
+            scavengeMana -= 50;
+        }
+        if (modAspect == Aspect.splendor)
+        {
+            splendorMana -= 20;
+        }
+        else if(modAspect == Aspect.scavenge)
+        {
+            scavengeMana -= 20;
+        }
+    }
+
+    public void RegenMana(float amount)
+    {
+        splendorMana += amount;
+        scavengeMana += amount;
+        if(splendorMana>100)
+        {
+            splendorMana=100;
+        }
+        
+        if(scavengeMana>100)
+        {
+            scavengeMana=100;
         }
     }
 }
