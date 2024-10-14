@@ -12,6 +12,7 @@ public class RangeStateMachine : SimpleStateMachine
     public InRangeState inRange;
     public WindUpState windUp;
     public AttackState range;
+    public CooldownState cooldown;
     
     public bool LOS;
     public bool isAlive;
@@ -37,6 +38,7 @@ public class RangeStateMachine : SimpleStateMachine
         states.Add(inRange);
         states.Add(windUp);
         states.Add(range);
+        states.Add(cooldown);
 
         foreach (SimpleState s in states)
         {

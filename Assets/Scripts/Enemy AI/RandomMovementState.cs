@@ -56,6 +56,11 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
+            else if (meleeStateMachine.LOS == true)
+            {   
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(AlertState));
+            }
         }
         if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
@@ -70,6 +75,10 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
+            else if (agroMeleeStateMachine.LOS == true)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
         }
         if (stateMachine is RangeStateMachine rangeStateMachine)
         {
@@ -83,6 +92,10 @@ public class RandomMovementState : SimpleState
                     moveDelay = Random.Range(minDelay, maxDelay);
                     MoveToRandomPoint();
                 }
+            }
+            else if (rangeStateMachine.LOS == true)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }
@@ -102,32 +115,27 @@ public class RandomMovementState : SimpleState
             dustPS.Play();
 
             if (stateMachine is MeleeStateMachine meleeStateMachine)
-        {
-            if (meleeStateMachine.LOS == true)
             {
-                
-                dustPS.Stop();
-                stateMachine.ChangeState(nameof(AlertState));
+                if (meleeStateMachine.LOS == true)
+                {
+                    dustPS.Stop();
+                    stateMachine.ChangeState(nameof(AlertState));
+                }
             }
-        }
-        if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            if (agroMeleeStateMachine.LOS == true)
+            if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
             {
-                
-                dustPS.Stop();
-                stateMachine.ChangeState(nameof(InRangeState));
+                if (agroMeleeStateMachine.LOS == true)
+                {
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
             }
-        }
-        if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            if (rangeStateMachine.LOS == true)
+            if (stateMachine is RangeStateMachine rangeStateMachine)
             {
-                
-                dustPS.Stop();
-                stateMachine.ChangeState(nameof(InRangeState));
+                if (rangeStateMachine.LOS == true)
+                {
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
             }
-        }
         }
     }
 

@@ -39,6 +39,8 @@ public class AttackState : SimpleState
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             agent.SetDestination(rangeStateMachine.transform.position);
             attackRange = rangeStateMachine.inAttackRange + 5.0f;
+
+            rangeStateMachine.transform.LookAt(rangeStateMachine.target);
         }
 
         //time.StartTimer(2, true);
@@ -96,13 +98,13 @@ public class AttackState : SimpleState
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
-            rangeStateMachine.transform.LookAt(rangeStateMachine.target);
 
             if (rangeStateMachine.LOS && !isAttacking)
             {
                 isAttacking = true;
-                attack.Invoke(); 
-                time.StartTimer(2.0f, false); 
+                attack.Invoke();
+                time.StartTimer(1.5f, false);
+                stateMachine.ChangeState(nameof(InRangeState));
             }
 
             if (isAttacking && time.timeLeft <= 0)
