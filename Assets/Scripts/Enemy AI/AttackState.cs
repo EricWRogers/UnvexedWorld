@@ -41,7 +41,7 @@ public class AttackState : SimpleState
             attackRange = rangeStateMachine.inAttackRange + 5.0f;
         }
 
-        time.StartTimer(2, true);
+        //time.StartTimer(2, true);
         if (attack == null)
         {
             attack = new UnityEvent();
@@ -101,8 +101,14 @@ public class AttackState : SimpleState
             if (rangeStateMachine.LOS && !isAttacking)
             {
                 isAttacking = true;
-                attack.Invoke();
-                rangeStateMachine.ChangeState(nameof(WindUpState));
+                attack.Invoke(); 
+                time.StartTimer(2.0f, false); 
+            }
+
+            if (isAttacking && time.timeLeft <= 0)
+            {
+                isAttacking = false; 
+                stateMachine.ChangeState(nameof(WindUpState));
             }
 
             if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
