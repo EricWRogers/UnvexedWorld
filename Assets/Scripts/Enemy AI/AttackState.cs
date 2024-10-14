@@ -34,8 +34,15 @@ public class AttackState : SimpleState
             agent.SetDestination(agroMeleeStateMachine.transform.position);
             attackRange = agroMeleeStateMachine.inAttackRange + 0.5f;
         }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.canRotate = false;
+            agent = rangeStateMachine.GetComponent<NavMeshAgent>();
+            agent.SetDestination(rangeStateMachine.transform.position);
+            attackRange = rangeStateMachine.inAttackRange + 5.0f;
+        }
 
-        time.StartTimer(2, true);
+        //time.StartTimer(2, true);
         if (attack == null)
         {
             attack = new UnityEvent();
@@ -88,10 +95,45 @@ public class AttackState : SimpleState
                 }
             }
         }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.canRotate = true;
+            if (rangeStateMachine.canRotate)
+            {
+                rangeStateMachine.transform.LookAt(rangeStateMachine.target);
+            }
+
+            if (rangeStateMachine.LOS && !isAttacking)
+            {
+                isAttacking = true;
+                attack.Invoke();
+                time.StartTimer(1.5f, false);
+                stateMachine.ChangeState(nameof(InRangeState));
+                return;
+            }
+
+            if (isAttacking && time.timeLeft <= 0)
+            {
+                isAttacking = false; 
+                stateMachine.ChangeState(nameof(WindUpState));
+            }
+
+            if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
+            {
+                isAttacking = false;
+                stopAttacking.Invoke();
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
     }
     
     public override void OnExit()
     {
         base.OnExit();
+
+        if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.canRotate = true;
+        }
     }
 }
