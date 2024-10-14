@@ -6,6 +6,8 @@ public class ActivateFight : MonoBehaviour
 {
     public GameObject enemyGroup;
     public GameObject fogArea;
+
+    public bool on = false;
     // Start is called before the first frame update
     void Start()
     {
