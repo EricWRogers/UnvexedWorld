@@ -34,13 +34,12 @@ public class AttackState : SimpleState
             agent.SetDestination(agroMeleeStateMachine.transform.position);
             attackRange = agroMeleeStateMachine.inAttackRange + 0.5f;
         }
-        if (stateMachine is RangeStateMachine rangeStateMachine)
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
+            rangeStateMachine.canRotate = false;
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             agent.SetDestination(rangeStateMachine.transform.position);
             attackRange = rangeStateMachine.inAttackRange + 5.0f;
-
-            rangeStateMachine.transform.LookAt(rangeStateMachine.target);
         }
 
         //time.StartTimer(2, true);
@@ -98,6 +97,11 @@ public class AttackState : SimpleState
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
+            rangeStateMachine.canRotate = true;
+            if (rangeStateMachine.canRotate)
+            {
+                rangeStateMachine.transform.LookAt(rangeStateMachine.target);
+            }
 
             if (rangeStateMachine.LOS && !isAttacking)
             {
@@ -105,6 +109,7 @@ public class AttackState : SimpleState
                 attack.Invoke();
                 time.StartTimer(1.5f, false);
                 stateMachine.ChangeState(nameof(InRangeState));
+                return;
             }
 
             if (isAttacking && time.timeLeft <= 0)
@@ -125,5 +130,10 @@ public class AttackState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+
+        if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.canRotate = true;
+        }
     }
 }

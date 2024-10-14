@@ -10,10 +10,6 @@ public class RangeProjectile : MonoBehaviour
     private Transform firePoint;
     [SerializeField] 
     private float throwStrength = 10f;
-    [SerializeField] 
-    private float explosionDelay = 5f;
-    [SerializeField] 
-    private GameObject explosionEffect;
 
     [SerializeField] 
     private LineRenderer lineRenderer;
@@ -40,18 +36,6 @@ public class RangeProjectile : MonoBehaviour
 
         Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity);
         projectile.AddForce(firePoint.forward * throwStrength, ForceMode.Impulse);
-
-        //StartCoroutine(ExplodeAfterDelay(grenade));
-    }
-
-    private IEnumerator ExplodeAfterDelay(Rigidbody projectile)
-    {
-        yield return new WaitForSeconds(explosionDelay);
-
-        Instantiate(explosionEffect, projectile.transform.position, Quaternion.identity);
-        Destroy(projectile.gameObject);
-
-        isThrowing = false;
     }
 
     private void DrawProjection()

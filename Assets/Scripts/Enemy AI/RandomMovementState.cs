@@ -56,7 +56,8 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
-            else if (meleeStateMachine.LOS == true)
+            
+            if (meleeStateMachine.LOS == true)
             {   
                 dustPS.Stop();
                 stateMachine.ChangeState(nameof(AlertState));
@@ -75,7 +76,8 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
-            else if (agroMeleeStateMachine.LOS == true)
+            
+            if (agroMeleeStateMachine.LOS == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
@@ -93,7 +95,8 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
-            else if (rangeStateMachine.LOS == true)
+            
+            if (rangeStateMachine.LOS == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
@@ -113,29 +116,6 @@ public class RandomMovementState : SimpleState
         {
             agent.SetDestination(point);
             dustPS.Play();
-
-            if (stateMachine is MeleeStateMachine meleeStateMachine)
-            {
-                if (meleeStateMachine.LOS == true)
-                {
-                    dustPS.Stop();
-                    stateMachine.ChangeState(nameof(AlertState));
-                }
-            }
-            if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-            {
-                if (agroMeleeStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
-            }
-            if (stateMachine is RangeStateMachine rangeStateMachine)
-            {
-                if (rangeStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
-            }
         }
     }
 

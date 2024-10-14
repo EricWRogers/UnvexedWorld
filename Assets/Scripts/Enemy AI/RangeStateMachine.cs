@@ -13,7 +13,8 @@ public class RangeStateMachine : SimpleStateMachine
     public WindUpState windUp;
     public AttackState range;
     public CooldownState cooldown;
-    
+
+    public bool canRotate = true;
     public bool LOS;
     public bool isAlive;
     public bool isClose;
@@ -71,6 +72,7 @@ public class RangeStateMachine : SimpleStateMachine
 
         if (isPunched && stunned.CanEnterStunState())
         {
+            Debug.Log("Should Enter Stun State");
             ChangeState(nameof(StunState));
             isPunched = false;
         }
