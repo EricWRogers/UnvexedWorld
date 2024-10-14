@@ -14,11 +14,12 @@ public class Spell : MonoBehaviour, IDamageDealer
     public int AOEDuration;
     public bool lifeSteal = false;
     public float lifeStealRatio = 1f;
+    private ComboManager comboManager; // reference to ComboManager
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        comboManager = FindObjectOfType<ComboManager>(); // Automatically find ComboManager in the scene
     }
 
     // Update is called once per frame
@@ -30,11 +31,19 @@ public class Spell : MonoBehaviour, IDamageDealer
     public void Burst(GameObject target)
     {
         target.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(burstDamage);
+        comboManager.IncrementCombo(); // Increase combo meter on hit
         MessageSpawner messageSpawner = target.GetComponentInChildren<MessageSpawner>();
         if (messageSpawner != null)
         {
             messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
         }
+
+        if (comboManager != null)
+        {
+            comboManager.IncrementCombo(); // Increase combo meter on hit
+        }
+
+        comboManager?.IncrementCombo();
     }
 
     public void ApplyDOT(GameObject target)
@@ -44,6 +53,8 @@ public class Spell : MonoBehaviour, IDamageDealer
             target.AddComponent<DOT>();
             target.GetComponent<DOT>().particle = ParticleManager.Instance.DOTParticle;
         }
+
+        comboManager?.IncrementCombo();
     }
 
     public void SpellEffect(GameObject target)
@@ -69,7 +80,8 @@ public class Spell : MonoBehaviour, IDamageDealer
             }
         }
         //lifeSteal = false;
-        
+
+        comboManager?.IncrementCombo();
     }
 
     public void LifeSteal(HealthChangedObject healthChangedObject)
@@ -84,6 +96,8 @@ public class Spell : MonoBehaviour, IDamageDealer
                 Instantiate(ParticleManager.Instance.LifeStealOrb, gameObject.transform.position, transform.rotation);   
             }
         }
+
+        comboManager?.IncrementCombo();
     }
 
     public int GetDamage()

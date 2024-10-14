@@ -15,6 +15,7 @@ public class LoseMenuScript : MonoBehaviour
     public GameObject loseSection;
     public GameObject powerSystem;
     public GameObject healthBar;
+    public GameObject ComboMeter;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class LoseMenuScript : MonoBehaviour
         loseSection.SetActive(true);
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
+        ComboMeter.SetActive(false);
         Time.timeScale = 0.0f;
     }
 

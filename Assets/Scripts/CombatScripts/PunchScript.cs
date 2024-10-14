@@ -15,11 +15,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public UnityEvent<GameObject> punchTarget;
     public GameObject particle;
+    private ComboManager comboManager;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        comboManager = FindObjectOfType<ComboManager>();
     }
 
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            comboManager.IncrementCombo(); //Increase the combo meter on hit
             MessageSpawner messageSpawner = enemy.GetComponentInChildren<MessageSpawner>();
             if (messageSpawner != null)
             {

@@ -12,6 +12,7 @@ public class WinMenuScript : MonoBehaviour
     public GameObject winSection;
     public GameObject powerSystem;
     public GameObject healthBar;
+    public GameObject ComboMeter;
     
     void Start()
     {
@@ -26,6 +27,7 @@ public class WinMenuScript : MonoBehaviour
         winSection.SetActive(true);
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
+        ComboMeter.SetActive(false);
         Time.timeScale = 0.0f;
     }
 
