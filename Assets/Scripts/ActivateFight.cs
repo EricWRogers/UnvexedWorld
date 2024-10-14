@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ActivateFight : MonoBehaviour
 {
-    public GameObject enemyGroup;
     public GameObject fogArea;
 
     public bool on = false;
@@ -25,7 +24,6 @@ public class ActivateFight : MonoBehaviour
         if(col.gameObject.CompareTag("Player"))
         {
             Debug.Log("Activate");
-            enemyGroup.SetActive(true);
             fogArea.SetActive(true);
             //Activate Barrier to prevent player from leaving
             Destroy(gameObject);
