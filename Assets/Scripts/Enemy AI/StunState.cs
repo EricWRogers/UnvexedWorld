@@ -9,9 +9,7 @@ using UnityEngine.AI;
 public class StunState : SimpleState
 {
     NavMeshAgent agent;
-    public Material defaultMaterial;
     public Material stunMaterial;
-    private Renderer targetRenderer;
     private DamageIndicator enemyIndicator;
     public float stunDuration = 2.0f;  // Duration of stun
     private float stunTimer;
@@ -26,19 +24,24 @@ public class StunState : SimpleState
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
             meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
-            targetRenderer = meleeStateMachine.GetComponent<Renderer>();
             enemyIndicator = meleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
             agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
-            targetRenderer = agroMeleeStateMachine.GetComponent<Renderer>();
             enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            agent = rangeStateMachine.GetComponent<NavMeshAgent>();
+            rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            enemyIndicator = rangeStateMachine.GetComponent<DamageIndicator>();
+        }
+
         stunTimer = stunDuration;  
         agent.isStopped = true;    // Stop the AI from moving
-        targetRenderer.material = stunMaterial;
+        enemyIndicator.targetRenderer.material = stunMaterial;
         enemyIndicator.enabled = false;
         Debug.Log("Entering Stun State");
     }
@@ -61,7 +64,7 @@ public class StunState : SimpleState
         base.OnExit();
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
-        targetRenderer.material = defaultMaterial;
+        enemyIndicator.targetRenderer.material = enemyIndicator.defaultMaterial;
         enemyIndicator.enabled = true;
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
@@ -72,6 +75,11 @@ public class StunState : SimpleState
         {
             agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             agroMeleeStateMachine.isPunched = false;
+        }
+        else if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            rangeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
+            rangeStateMachine.isPunched = false;
         }
         Debug.Log("Exiting Stun State");
     }

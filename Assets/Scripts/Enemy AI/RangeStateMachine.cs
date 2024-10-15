@@ -5,13 +5,16 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-public class AgroMeleeStateMachine : SimpleStateMachine
+public class RangeStateMachine : SimpleStateMachine
 {
     public RandomMovementState movement;
     public StunState stunned;
     public InRangeState inRange;
-    public AttackState melee;
-    
+    public WindUpState windUp;
+    public AttackState range;
+    public CooldownState cooldown;
+
+    public bool canRotate = true;
     public bool LOS;
     public bool isAlive;
     public bool isClose;
@@ -34,7 +37,9 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         states.Add(movement);
         states.Add(stunned);
         states.Add(inRange);
-        states.Add(melee);
+        states.Add(windUp);
+        states.Add(range);
+        states.Add(cooldown);
 
         foreach (SimpleState s in states)
         {
@@ -67,6 +72,7 @@ public class AgroMeleeStateMachine : SimpleStateMachine
 
         if (isPunched && stunned.CanEnterStunState())
         {
+            Debug.Log("Should Enter Stun State");
             ChangeState(nameof(StunState));
             isPunched = false;
         }
