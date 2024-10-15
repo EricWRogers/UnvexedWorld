@@ -27,21 +27,78 @@ public class RandomMovementState : SimpleState
             agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
         }
+        else if(stateMachine is AgroMeleeStateMachine)
+        {
+            agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+        }
+        else if(stateMachine is RangeStateMachine)
+        {
+            agent = ((RangeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            dustPS = ((RangeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+        }
 
         MoveToRandomPoint();
     }
     
     public override void UpdateState(float dt)
     {
-        if (((MeleeStateMachine)stateMachine).isAlive == true)
-        { 
-            moveTimer += dt; 
-
-            if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            if (meleeStateMachine.isAlive == true)
             {
-                moveTimer = 0f; 
-                moveDelay = Random.Range(minDelay, maxDelay);
-                MoveToRandomPoint();
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
+            }
+            
+            if (meleeStateMachine.LOS == true)
+            {   
+                dustPS.Stop();
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
+        if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
+        {
+            if (agroMeleeStateMachine.isAlive == true)
+            {
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
+            }
+            
+            if (agroMeleeStateMachine.LOS == true)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+        }
+        if (stateMachine is RangeStateMachine rangeStateMachine)
+        {
+            if (rangeStateMachine.isAlive == true)
+            {
+                moveTimer += dt; 
+
+                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                {
+                    moveTimer = 0f; 
+                    moveDelay = Random.Range(minDelay, maxDelay);
+                    MoveToRandomPoint();
+                }
+            }
+            
+            if (rangeStateMachine.LOS == true)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }
@@ -59,12 +116,6 @@ public class RandomMovementState : SimpleState
         {
             agent.SetDestination(point);
             dustPS.Play();
-
-            if (((MeleeStateMachine)stateMachine).LOS)
-            {
-                dustPS.Stop();
-                stateMachine.ChangeState(nameof(AlertState));
-            }
         }
     }
 
