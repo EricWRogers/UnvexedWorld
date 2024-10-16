@@ -202,12 +202,12 @@ public class SpellCraft : MonoBehaviour
         {
             if (modAspect == Aspect.splendor && splendorMana>=20)
             {
-                splendorMana -= 70;
+                splendorMana -= 20;
+                scavengeMana-=50;
             }
             else if(modAspect == Aspect.scavenge && scavengeMana>=70)
             {
-                scavengeMana -= 20;
-                scavengeMana-=50;
+                scavengeMana -= 70;
             }
             else if (modAspect == Aspect.none)
             {
@@ -231,6 +231,7 @@ public class SpellCraft : MonoBehaviour
             }
             else if (modAspect == Aspect.none)
             {
+
             }
             else
             {
