@@ -36,6 +36,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {   
 
             Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+            gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
