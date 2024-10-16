@@ -5,36 +5,63 @@ using UnityEngine;
 public class ActivateFight : MonoBehaviour
 {
     public GameObject fogArea;
-
     public bool on = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [SerializeField]
+    private List<GameObject> enemiesInZone = new List<GameObject>();
 
-    void OnTriggerEnter(Collider col)
+    private void Start()
     {
-        if(col.gameObject.CompareTag("Player"))
+        foreach (Transform child in transform)
         {
-            Debug.Log("Activate");
-            fogArea.SetActive(true);
-            //Activate Barrier to prevent player from leaving
-            Destroy(gameObject);
+            enemiesInZone.Add(child.gameObject);
         }
     }
 
-    void OnTriggerExit(Collider col)
+    void FixedUpdate()
     {
-        if(col.gameObject.CompareTag("Player"))
+        if (on && transform.childCount == 1)
         {
-            Destroy(gameObject);
+            ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
+
+            int count = 0;
+
+            foreach(ActivateFight ae in argoZone)
+            {
+                if (ae.on == true)
+                    count++;
+            }
+
+            if (count <= 1)
+            {
+                AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
+                AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
+
+                backgroundMusic.volume = 1.0f;
+                battleMusic.Stop();
+            }
+
+            Destroy(this);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && on == false)
+        {
+            fogArea.SetActive(true);
+
+            on = true;
+            AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
+            AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
+
+            if (battleMusic.isPlaying == false)
+            {
+                backgroundMusic.volume = 0.2f;
+                battleMusic.Play();
+            }
+
+
         }
     }
 }
