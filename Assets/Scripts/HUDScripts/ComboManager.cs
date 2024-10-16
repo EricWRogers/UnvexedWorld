@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections;
 
 public class ComboManager : MonoBehaviour
 {
@@ -8,20 +9,36 @@ public class ComboManager : MonoBehaviour
     public float comboDuration = 2f;  // Time allowed between hits to maintain the combo
     private float comboTimer = 0f;
 
-    public Slider comboSlider;  // Slider to represent combo bar (if you want to keep it)
-    public TMP_Text comboCountText;  // Text to display combo count above the bar
-    public TMP_Text comboMultiplierText;  // Text to display combo multiplier beside the bar
+    // Slider for the combo meter
+    public Slider comboSlider; // One slider for all grades
+    public Image comboFill;
+    public int tier = 0;
 
-    // Multiplier thresholds
-    private const int multiplier1Threshold = 5;  // Threshold for x2
-    private const int multiplier2Threshold = 10; // Threshold for x3
-    private const int multiplier3Threshold = 20; // Threshold for x4
-    private const int multiplier4Threshold = 30; // Threshold for x5
+    public TMP_Text comboCountText;  // Text to display combo count
+    public TMP_Text multiplierText;   // Text to display multiplier
+    public RectTransform comboMeterTransform;  // For shaking effect
+
+    // Grading thresholds
+    private const int gradeCThreshold = 25;
+    private const int gradeBThreshold = 50;
+    private const int gradeAThreshold = 75;
+    private const int gradeSThreshold = 100;
+
+    // Grade images
+    public Image gradeCImage; // For displaying grade C
+    public Image gradeBImage; // For displaying grade B
+    public Image gradeAImage; // For displaying grade A
+    public Image gradeSImage; // For displaying grade S
 
     void Start()
     {
-        comboSlider.maxValue = multiplier4Threshold;  // Set slider max value, can still be used for feedback
-        comboSlider.value = 0;  // Initialize slider value
+        // Hide all grade images initially
+        gradeCImage.gameObject.SetActive(false);
+        gradeBImage.gameObject.SetActive(false);
+        gradeAImage.gameObject.SetActive(false);
+        gradeSImage.gameObject.SetActive(false);
+
+        ResetCombo();  // Initialize UI and deactivate all but C
     }
 
     void Update()
@@ -38,62 +55,134 @@ public class ComboManager : MonoBehaviour
 
     public void IncrementCombo()
     {
-        comboCount++;  // Increase the combo count
+        comboCount += 3;  // Increase the combo count
         comboTimer = comboDuration;  // Reset combo timer
         UpdateComboUI();  // Update the combo meter UI
     }
 
     public void ResetCombo()
     {
-        comboCount = 0;
-        UpdateComboUI();  // Update the UI after resetting
+        tier = 0;
+        comboCount = 0; // Reset to 0
+        ResetComboUI();  // Reset UI after resetting
+    }
+
+    void ResetComboUI()
+    {
+        // Update the combo count text
+        comboCountText.text = "Combo: " + comboCount;
+        comboSlider.value = 0;  // Reset the slider
+        int multiplier = CalculateMultiplier(comboCount);
+        multiplierText.text = "x1";  // Reset multiplier text
+
+        // Reset grade images
+        gradeCImage.gameObject.SetActive(true);
+        gradeBImage.gameObject.SetActive(false);
+        gradeAImage.gameObject.SetActive(false);
+        gradeSImage.gameObject.SetActive(false);
+
+        UpdateComboUI();
     }
 
     void UpdateComboUI()
     {
-        // Debug the combo count to check the updates
-        Debug.Log("Updating Combo UI. Combo Count: " + comboCount);
-
-        // Update Slider value (using the last threshold as a reference for visual purposes)
-        if (comboSlider != null)
-        {
-            comboSlider.value = Mathf.Clamp(comboCount, 0, multiplier4Threshold);  // Keep the slider value within the last multiplier
-        }
-
-        // Update the combo count text to just show the current combo count
+        // Update the combo count text
         comboCountText.text = "Combo: " + comboCount;
 
-        // Update the multiplier text
-        UpdateComboMultiplier();
+        // Update the multiplier based on the current combo count
+        int multiplier = CalculateMultiplier(comboCount);
+        multiplierText.text = "x" + multiplier;
+
+        gradeCImage.gameObject.SetActive(false);
+        gradeBImage.gameObject.SetActive(false);
+        gradeAImage.gameObject.SetActive(false);
+        gradeSImage.gameObject.SetActive(false);
+        UpdateSlider(25);
+        comboFill.color = Color.grey;
+
+        // Determine current grade based on combo count
+        if (CalculateMultiplier(comboCount) == 2)
+        {
+            // Grade C
+            gradeCImage.gameObject.SetActive(true);
+            gradeBImage.gameObject.SetActive(false);
+            gradeAImage.gameObject.SetActive(false);
+            gradeSImage.gameObject.SetActive(false);
+            UpdateSlider(25);
+            comboFill.color = Color.white;
+        }
+        else if (CalculateMultiplier(comboCount) == 3)
+        {
+            // Grade B
+            gradeCImage.gameObject.SetActive(false);
+            gradeBImage.gameObject.SetActive(true);
+            gradeAImage.gameObject.SetActive(false);
+            gradeSImage.gameObject.SetActive(false);
+            UpdateSlider(25);
+            comboFill.color = Color.blue;
+        }
+        else if (CalculateMultiplier(comboCount) == 4)
+        {
+            // Grade A
+            gradeCImage.gameObject.SetActive(false);
+            gradeBImage.gameObject.SetActive(false);
+            gradeAImage.gameObject.SetActive(true);
+            gradeSImage.gameObject.SetActive(false);
+            UpdateSlider(25);
+            comboFill.color = Color.green;
+        }
+        else if (CalculateMultiplier(comboCount) == 5)
+        {
+            // Grade S
+            gradeCImage.gameObject.SetActive(false);
+            gradeBImage.gameObject.SetActive(false);
+            gradeAImage.gameObject.SetActive(false);
+            gradeSImage.gameObject.SetActive(true);
+            UpdateSlider(25);
+            comboFill.color = Color.red;
+        }
     }
 
-    void UpdateComboMultiplier()
+    void UpdateSlider(int threshold)
     {
-        if (comboCount >= multiplier4Threshold)
+        comboSlider.value = comboCount;  // Set the slider to the current combo count
+
+        // Check if we've reached a threshold
+        if (comboCount >= threshold)
         {
-            comboMultiplierText.text = "x5";
-        }
-        else if (comboCount >= multiplier3Threshold)
-        {
-            comboMultiplierText.text = "x4";
-        }
-        else if (comboCount >= multiplier2Threshold)
-        {
-            comboMultiplierText.text = "x3";
-        }
-        else if (comboCount >= multiplier1Threshold)
-        {
-            comboMultiplierText.text = "x2";
-        }
-        else
-        {
-            comboMultiplierText.text = "x1";  // Default for lower combos
+            // Reset slider value for the next grade
+            tier++;
+            comboCount -= threshold;  // Move to next grade
+            comboSlider.value = 0;  // Reset slider value for new grade
         }
     }
 
-    // Decrease the combo only when the player gets hit
+    int CalculateMultiplier(int comboCount)
+    {
+        if (comboCount + (tier * 25) >= 100) return 5;
+        if (comboCount + (tier * 25) >= 75) return 4;
+        if (comboCount + (tier * 25) >= 50) return 3;
+        if (comboCount + (tier * 25) >= 25) return 2;
+        return 1; // Default multiplier is 1
+    }
+
+    // Reset combo when player gets hit
     public void PlayerHit()
     {
-        ResetCombo();  // Reset combo when player gets hit
+        //ResetCombo();
+        comboCount -= 10;
+
+        if (comboCount < 0)
+        {
+            if (tier > 0)
+                tier--;
+            
+            comboCount += 25;
+
+            if (comboCount < 0)
+                comboCount = 0;
+        }
+
+        UpdateComboUI();
     }
 }
