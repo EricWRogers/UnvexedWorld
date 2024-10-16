@@ -60,27 +60,27 @@ public class PlayerHUD : MonoBehaviour
         // Detect mouse clicks for melee and ranged weapon highlights
         if (Input.GetMouseButtonDown(0)) // Left click for melee
         {
-            HighlightMeleeWeapon(); 
+            //HighlightMeleeWeapon(); 
         }
         else if (Input.GetMouseButtonDown(1)) // Right click for ranged
         {
-            HighlightRangedWeapon(); 
+            //HighlightRangedWeapon(); 
         }
     }
 
     // Method to fill the next available box with heading spell color (either blue or red)
     
     // Highlight the melee weapon box
-    private void HighlightMeleeWeapon()
-    {
-        meleeWeaponImage.color = highlightColor; // Highlight melee weapon with yellow
-        rangedWeaponImage.color = defaultColor;  // Reset ranged weapon to default
-    }
+    // private void HighlightMeleeWeapon()
+    // {
+    //     meleeWeaponImage.color = highlightColor; // Highlight melee weapon with yellow
+    //     rangedWeaponImage.color = defaultColor;  // Reset ranged weapon to default
+    // }
 
-    // Highlight the ranged weapon box
-    private void HighlightRangedWeapon()
-    {
-        rangedWeaponImage.color = highlightColor; // Highlight ranged weapon with yellow
-        meleeWeaponImage.color = defaultColor;    // Reset melee weapon to default
-    }
+    // // Highlight the ranged weapon box
+    // private void HighlightRangedWeapon()
+    // {
+    //     rangedWeaponImage.color = highlightColor; // Highlight ranged weapon with yellow
+    //     meleeWeaponImage.color = defaultColor;    // Reset melee weapon to default
+    // }
 }
