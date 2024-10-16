@@ -177,21 +177,69 @@ public class SpellCraft : MonoBehaviour
     }
     public void SpendMana()
     {
-        if (mainAspect == Aspect.splendor)
+        if (mainAspect == Aspect.splendor && splendorMana>=50)
         {
-            splendorMana -= 50;
+            if (modAspect == Aspect.splendor && splendorMana>=70)
+            {
+                splendorMana -= 70;
+            }
+            else if(modAspect == Aspect.scavenge && scavengeMana>=20)
+            {
+                scavengeMana -= 20;
+                splendorMana-=50;
+            }
+            else if (modAspect == Aspect.none)
+            {
+                
+                splendorMana-=50;
+            }
+            else
+            {
+                GetComponent<Animator>().Play("Idle");
+            }
         }
-        else if(mainAspect == Aspect.scavenge)
+        else if (mainAspect == Aspect.scavenge && scavengeMana>=50)
         {
-            scavengeMana -= 50;
+            if (modAspect == Aspect.splendor && splendorMana>=20)
+            {
+                splendorMana -= 70;
+            }
+            else if(modAspect == Aspect.scavenge && scavengeMana>=70)
+            {
+                scavengeMana -= 20;
+                scavengeMana-=50;
+            }
+            else if (modAspect == Aspect.none)
+            {
+                
+                scavengeMana-=50;
+            }
+            else
+            {
+                GetComponent<Animator>().Play("Idle");
+            }
         }
-        if (modAspect == Aspect.splendor)
+        else if (mainAspect == Aspect.none)
         {
-            splendorMana -= 20;
+            if (modAspect == Aspect.splendor && splendorMana>=20)
+            {
+                splendorMana -= 20;
+            }
+            else if(modAspect == Aspect.scavenge && scavengeMana>=20)
+            {
+                scavengeMana -= 20;
+            }
+            else if (modAspect == Aspect.none)
+            {
+            }
+            else
+            {
+                GetComponent<Animator>().Play("Idle");
+            }
         }
-        else if(modAspect == Aspect.scavenge)
+        else
         {
-            scavengeMana -= 20;
+            GetComponent<Animator>().Play("Idle");
         }
     }
 
