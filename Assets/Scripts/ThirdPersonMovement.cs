@@ -73,6 +73,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public GameObject DashLines;
 
+    public LayerMask mask;
+
+     public GameObject groundCheck;
+
+    private RaycastHit m_info;
+
+    
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -202,6 +210,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CollisionCheck();
         animator.SetBool("Grounded", rayGround);
         
         UpdateSlopeSliding();
@@ -292,19 +301,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
         groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
 
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
-        {
-            if (!rayGround)
-            {
-                gameObject.GetComponentInChildren<ParticleSystem>().Play();
-                rayGround = true;
-            }
-        }
-        else
-        {
-            rayGround = false;
-        }
+    
+       
+
 
         //if (jumpCount == 0)
         //{
@@ -348,6 +347,45 @@ public class ThirdPersonMovement : MonoBehaviour
         AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
         dashSound.Play();
     }
+
+     private void CollisionCheck()
+        {
+            bool lastraygrounded = rayGround;
+            rayGround = false;
+            Vector3 left = -transform.right * 0.5f;
+            Vector3 right = transform.right * 0.5f;
+            Vector3 back = -transform.forward * 0.5f;
+            Vector3 forward = transform.forward * 0.5f;
+
+            if (Physics.Linecast(transform.position+left, groundCheck.transform.position+left, out m_info, mask))
+            {
+                rayGround = true;
+            }
+            
+            if (Physics.Linecast(transform.position+right, groundCheck.transform.position+right, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position+back, groundCheck.transform.position+back, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position+forward, groundCheck.transform.position+forward, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position, groundCheck.transform.position, out m_info, mask))
+            {
+                rayGround = true;
+            }
+            if(!lastraygrounded && rayGround == true)
+            {
+                 gameObject.GetComponentInChildren<ParticleSystem>().Play();
+            }
+        }
 
     
 
