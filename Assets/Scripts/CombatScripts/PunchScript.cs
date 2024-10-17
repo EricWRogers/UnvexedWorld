@@ -15,11 +15,13 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public UnityEvent<GameObject> punchTarget;
     public GameObject particle;
+
+    public ComboManager comboManager;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        comboManager = FindObjectOfType<ComboManager>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {   
 
             Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+            gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
@@ -51,6 +54,13 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             other.GetComponent<Knockback>().OnHurt();
             punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
+
+            // Increment the combo count
+            if (comboManager != null)
+            {
+                comboManager.IncrementCombo();
+            }
+            
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);

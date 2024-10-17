@@ -14,11 +14,13 @@ public class Spell : MonoBehaviour, IDamageDealer
     public int AOEDuration;
     public bool lifeSteal = false;
     public float lifeStealRatio = 1f;
+
+    public ComboManager comboManager;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        comboManager = FindObjectOfType<ComboManager>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,11 @@ public class Spell : MonoBehaviour, IDamageDealer
             messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
         }
         Instantiate(ParticleManager.Instance.BurstParticle, target.transform.position, target.transform.rotation);
+
+        if (comboManager != null)
+        {
+            comboManager.IncrementCombo();
+        }
     }
 
     public void ApplyDOT(GameObject target)

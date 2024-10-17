@@ -6,6 +6,7 @@ using SuperPupSystems.Helper;
 public class FogManager : MonoBehaviour
 {
     public GameObject group;
+    public GameObject fogArea;
 
     [SerializeField]
     private List<GameObject> groundEnemies = new List<GameObject>();
@@ -31,6 +32,7 @@ public class FogManager : MonoBehaviour
         if (groundEnemies.Count == 0)
         {
             gameObject.SetActive(false);
+            fogArea.SetActive(false);
         }
     }
 
