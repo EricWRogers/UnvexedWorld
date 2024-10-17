@@ -130,11 +130,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (dashing)
         {
+            DashSound();
             if (Time.time < dashStartTime + dashTime)
             {
                  DashLines.SetActive(true);
 
                 controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+                
             }
             else
             {
@@ -149,6 +151,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
+        DashSound();
          currectDashCoolDown -= Time.deltaTime;
 
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
@@ -166,7 +169,9 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
+                
                 controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+                
             }
             else
             {
@@ -337,6 +342,12 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Destroy(this);
     }  
+
+    public void DashSound()
+    {
+        AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+        dashSound.Play();
+    }
 
     
 
