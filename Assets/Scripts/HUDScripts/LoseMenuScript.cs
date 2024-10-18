@@ -10,8 +10,6 @@ public class LoseMenuScript : MonoBehaviour
     public bool isPlayerDead = false;
     public bool didLose = false;
 
-    public Health playerHealth;
-
     public GameObject loseSection;
     public GameObject powerSystem;
     public GameObject healthBar;
