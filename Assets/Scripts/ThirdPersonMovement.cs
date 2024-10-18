@@ -384,6 +384,8 @@ public class ThirdPersonMovement : MonoBehaviour
             if(!lastraygrounded && rayGround == true)
             {
                  gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                 AudioSource landSound = GameObject.Find("LandingSound").GetComponent<AudioSource>();
+                 landSound.Play();
             }
         }
 
