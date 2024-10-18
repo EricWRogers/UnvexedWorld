@@ -181,8 +181,8 @@ public class ThirdPersonMovement : MonoBehaviour
             dashing = true;
             dashStartTime = Time.time;
             cameraManager.SwitchCamera(cameraManager.dashCam);
-            Vector3 dir = (transform.position - cam.transform.position).normalized;
-            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+            //Vector3 dir = (transform.position - cam.transform.position).normalized;
+            //transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         }
         
 
@@ -191,7 +191,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Time.time < dashStartTime + dashTime)
             {
                 
-                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
                 
             }
             else
