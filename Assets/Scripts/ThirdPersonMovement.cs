@@ -136,6 +136,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
 
             dashing = true;
             dashStartTime = Time.time;
@@ -147,7 +149,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (dashing)
         {
-            DashSound();
+            
             if (Time.time < dashStartTime + dashTime)
             {
                 dashLines.SetActive(true);
@@ -168,12 +170,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
-       AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-       dashSound.Play();
+       
          currectDashCoolDown -= Time.deltaTime;
 
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
 
             dashing = true;
             dashStartTime = Time.time;
@@ -346,11 +349,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Destroy(this);
     }  
 
-    public void DashSound()
-    {
-        AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-        dashSound.Play();
-    }
+   
 
      private void CollisionCheck()
         {
