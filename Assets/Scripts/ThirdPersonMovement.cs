@@ -176,6 +176,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
             AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            //animator.Play("Dash");
             dashSound.Play();
 
             dashing = true;
