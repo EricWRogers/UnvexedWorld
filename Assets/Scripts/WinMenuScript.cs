@@ -12,6 +12,8 @@ public class WinMenuScript : MonoBehaviour
     public GameObject winSection;
     public GameObject powerSystem;
     public GameObject healthBar;
+    public GameObject comboInfo;
+    public GameObject mana;
     
     void Start()
     {
@@ -26,6 +28,8 @@ public class WinMenuScript : MonoBehaviour
         winSection.SetActive(true);
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
+        comboInfo.SetActive(false);
+        mana.SetActive(false);
         Time.timeScale = 0.0f;
     }
 
