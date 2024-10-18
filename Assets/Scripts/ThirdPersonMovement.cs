@@ -71,7 +71,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Animator animator;
 
-    public GameObject DashLines;
+    public GameObject dashLines;
 
     public LayerMask mask;
 
@@ -83,6 +83,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void Awake()
     {
+        dashLines = GameObject.Find("DashLines");
+        dashLines.SetActive(false);
+
         gamepad = new PlayerGamepad();
 
         gamepad.GamePlay.Jump.performed += ctx => GamepadJump();
@@ -91,6 +94,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
         gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
+    }
+    
+    void Start()
+    {
+        animator = GetComponentsInChildren<Animator>()[1];
+        Cursor.lockState = CursorLockMode.Locked;    
     }
 
     void Jump()
@@ -127,6 +136,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
 
             dashing = true;
             dashStartTime = Time.time;
@@ -138,17 +149,17 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (dashing)
         {
-            DashSound();
+            
             if (Time.time < dashStartTime + dashTime)
             {
-                 DashLines.SetActive(true);
+                dashLines.SetActive(true);
 
                 controller.Move(transform.forward * dashSpeed * Time.deltaTime);
                 
             }
             else
             {
-                DashLines.SetActive(false);
+                dashLines.SetActive(false);
                 dashing = false;
                 currectDashCoolDown = dashCoolDown;
                 cameraManager.SwitchCamera(cameraManager.mainCam);
@@ -159,12 +170,13 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
-       AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-       dashSound.Play();
+       
          currectDashCoolDown -= Time.deltaTime;
 
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
 
             dashing = true;
             dashStartTime = Time.time;
@@ -200,12 +212,6 @@ public class ThirdPersonMovement : MonoBehaviour
     void OnDisable()
     {
         gamepad.GamePlay.Disable();
-    }
-    
-    void Start()
-    {
-        animator = GetComponentsInChildren<Animator>()[1];
-        Cursor.lockState = CursorLockMode.Locked;    
     }
 
     // Update is called once per frame
@@ -343,11 +349,7 @@ public class ThirdPersonMovement : MonoBehaviour
         Destroy(this);
     }  
 
-    public void DashSound()
-    {
-        AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-        dashSound.Play();
-    }
+   
 
      private void CollisionCheck()
         {
