@@ -10,7 +10,6 @@ public class RangeStateMachine : SimpleStateMachine
     public RandomMovementState movement;
     public StunState stunned;
     public InRangeState inRange;
-    public WindUpState windUp;
     public AttackState range;
     public CooldownState cooldown;
 
@@ -28,7 +27,7 @@ public class RangeStateMachine : SimpleStateMachine
 
     public Transform target;
     private Health health;
-    [HideInInspector]
+    //[HideInInspector]
     public Animator anim;
     [HideInInspector]
     public Knockback enemyKnockback;
@@ -40,7 +39,6 @@ public class RangeStateMachine : SimpleStateMachine
         states.Add(movement);
         states.Add(stunned);
         states.Add(inRange);
-        states.Add(windUp);
         states.Add(range);
         states.Add(cooldown);
 
@@ -54,7 +52,7 @@ public class RangeStateMachine : SimpleStateMachine
     {
         health = gameObject.GetComponent<Health>();
 
-        anim = gameObject.GetComponentInChildren<Animator>();
+        //anim = GetComponentInChildren<Animator>();
 
         enemyKnockback = gameObject.GetComponent<Knockback>();
         

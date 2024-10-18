@@ -41,6 +41,8 @@ public class AttackState : SimpleState
         {
             rangeStateMachine.canRotate = false;
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
+
+            anim = rangeStateMachine.anim;
             agent.SetDestination(rangeStateMachine.transform.position);
             attackRange = rangeStateMachine.inAttackRange + 5.0f;
         }
@@ -62,7 +64,7 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
-                MeleeAttackAnimation();
+                anim.SetBool("isAttacking", true);
                 attack.Invoke();
             }
 
@@ -72,6 +74,7 @@ public class AttackState : SimpleState
                 if (time.timeLeft <= 0)
                 {
                     isAttacking = false;
+                    anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
@@ -85,7 +88,7 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
-                MeleeAttackAnimation();
+                anim.SetBool("isAttacking", true);
                 attack.Invoke();
             }
 
@@ -95,6 +98,7 @@ public class AttackState : SimpleState
                 if (time.timeLeft <= 0)
                 {
                     isAttacking = false;
+                    anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
@@ -111,7 +115,7 @@ public class AttackState : SimpleState
             if (rangeStateMachine.LOS && !isAttacking)
             {
                 isAttacking = true;
-                RangeAttackAnimation();
+                anim.SetBool("isRangeAttack", true);
                 attack.Invoke();
                 time.StartTimer(1.5f, false);
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -120,13 +124,14 @@ public class AttackState : SimpleState
 
             if (isAttacking && time.timeLeft <= 0)
             {
-                isAttacking = false; 
-                stateMachine.ChangeState(nameof(WindUpState));
+                isAttacking = false;
             }
 
             if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
             {
                 isAttacking = false;
+
+                anim.SetBool("isRangeAttack", false); 
                 stopAttacking.Invoke();
                 stateMachine.ChangeState(nameof(InRangeState));
             }
@@ -141,14 +146,5 @@ public class AttackState : SimpleState
         {
             rangeStateMachine.canRotate = true;
         }
-    }
-
-    public void MeleeAttackAnimation()
-    {
-        anim.SetBool("isAttacking", isAttacking);
-    }
-    public void RangeAttackAnimation()
-    {
-        anim.SetBool("isRangeAttack", isAttacking);
     }
 }
