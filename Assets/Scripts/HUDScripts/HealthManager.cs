@@ -17,6 +17,7 @@ public class HealthManager : MonoBehaviour
 
     void Start()
     {
+        playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
         // Initialize the health slider with max health
         healthSlider.maxValue = playerHealth.maxHealth;
         SetHealth(playerHealth.currentHealth);

@@ -10,11 +10,11 @@ public class LoseMenuScript : MonoBehaviour
     public bool isPlayerDead = false;
     public bool didLose = false;
 
-    public Health playerHealth;
-
     public GameObject loseSection;
     public GameObject powerSystem;
     public GameObject healthBar;
+    public GameObject comboInfo;
+    public GameObject mana;
 
     void Start()
     {
@@ -29,6 +29,8 @@ public class LoseMenuScript : MonoBehaviour
         loseSection.SetActive(true);
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
+        comboInfo.SetActive(false);
+        mana.SetActive(false);
         Time.timeScale = 0.0f;
     }
 

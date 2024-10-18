@@ -13,6 +13,7 @@ public class AttackState : SimpleState
     public UnityEvent attack;  
     public UnityEvent stopAttacking;
     private NavMeshAgent agent;
+    private Animator anim;
     private float attackRange;
     private bool playerInRange;
     public bool isAttacking;
@@ -25,12 +26,14 @@ public class AttackState : SimpleState
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            anim = meleeStateMachine.GetComponentInChildren<Animator>();
             agent.SetDestination(meleeStateMachine.transform.position);
             attackRange = meleeStateMachine.inAttackRange + 0.5f;
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
+            anim = agroMeleeStateMachine.GetComponentInChildren<Animator>();
             agent.SetDestination(agroMeleeStateMachine.transform.position);
             attackRange = agroMeleeStateMachine.inAttackRange + 0.5f;
         }
@@ -59,6 +62,7 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
+                MeleeAttackAnimation();
                 attack.Invoke();
             }
 
@@ -81,6 +85,7 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
+                MeleeAttackAnimation();
                 attack.Invoke();
             }
 
@@ -106,6 +111,7 @@ public class AttackState : SimpleState
             if (rangeStateMachine.LOS && !isAttacking)
             {
                 isAttacking = true;
+                RangeAttackAnimation();
                 attack.Invoke();
                 time.StartTimer(1.5f, false);
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -135,5 +141,14 @@ public class AttackState : SimpleState
         {
             rangeStateMachine.canRotate = true;
         }
+    }
+
+    public void MeleeAttackAnimation()
+    {
+        anim.SetBool("isAttacking", isAttacking);
+    }
+    public void RangeAttackAnimation()
+    {
+        anim.SetBool("isRangeAttack", isAttacking);
     }
 }

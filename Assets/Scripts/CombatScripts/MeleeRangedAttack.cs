@@ -9,6 +9,7 @@ public class MeleeRangedAttack : MonoBehaviour
     public SpellShot spellShot;
     PlayerGamepad gamepad;
     private GameObject target;
+    public Animator[] animators;
 
     public float attackRange;
 
@@ -142,8 +143,9 @@ public class MeleeRangedAttack : MonoBehaviour
 
     private void Melee()
     {
-
+        
         GetComponent<Animator>().SetTrigger("Melee");
+        GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
         //GetComponent<AnimationForce>().melee = true;
     }
 
