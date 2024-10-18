@@ -138,6 +138,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
             dashSound.Play();
+            animator.Play("Dash");
 
             dashing = true;
             dashStartTime = Time.time;
@@ -177,6 +178,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
             dashSound.Play();
+            animator.Play("Dash");
 
             dashing = true;
             dashStartTime = Time.time;
