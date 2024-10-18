@@ -159,7 +159,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
-        DashSound();
+       AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+       dashSound.Play();
          currectDashCoolDown -= Time.deltaTime;
 
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
