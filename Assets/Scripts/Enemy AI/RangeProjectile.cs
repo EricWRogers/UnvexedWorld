@@ -5,7 +5,7 @@ using UnityEngine;
 public class RangeProjectile : MonoBehaviour
 {
     [SerializeField] 
-    private Rigidbody prefab;
+    private GameObject prefab;
     [SerializeField] 
     private Transform firePoint;
     [SerializeField] 
@@ -32,9 +32,10 @@ public class RangeProjectile : MonoBehaviour
 
     public void ThrowProjectile()
     {
+        Debug.Log("ThrowProjectile");
         isThrowing = true;
 
-        Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity);
+        Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(firePoint.forward * throwStrength, ForceMode.Impulse);
     }
 
