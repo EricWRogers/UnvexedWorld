@@ -13,7 +13,6 @@ public class AgroMeleeStateMachine : SimpleStateMachine
     public AttackState melee;
     
     public bool LOS;
-    public bool isHurt;
     public bool isAlive;
     public bool isClose;
     public bool isSearching;
@@ -25,8 +24,6 @@ public class AgroMeleeStateMachine : SimpleStateMachine
 
     public Transform target;
     private Health health;
-    [HideInInspector]
-    public Animator anim;
     [HideInInspector]
     public Knockback enemyKnockback;
     [HideInInspector]
@@ -49,8 +46,6 @@ public class AgroMeleeStateMachine : SimpleStateMachine
     {
         health = gameObject.GetComponent<Health>();
 
-        anim = gameObject.GetComponentInChildren<Animator>();
-
         enemyKnockback = gameObject.GetComponent<Knockback>();
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -67,11 +62,6 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(isHurt)
-        {
-            Debug.Log("Then Enemy is Hurt");
-            anim.SetBool("isHurt", isHurt);
-        }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -87,10 +77,5 @@ public class AgroMeleeStateMachine : SimpleStateMachine
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }

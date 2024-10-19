@@ -13,7 +13,6 @@ public class AttackState : SimpleState
     public UnityEvent attack;  
     public UnityEvent stopAttacking;
     private NavMeshAgent agent;
-    private Animator anim;
     private float attackRange;
     private bool playerInRange;
     public bool isAttacking;
@@ -26,14 +25,12 @@ public class AttackState : SimpleState
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = meleeStateMachine.GetComponentInChildren<Animator>();
             agent.SetDestination(meleeStateMachine.transform.position);
             attackRange = meleeStateMachine.inAttackRange + 0.5f;
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = agroMeleeStateMachine.GetComponentInChildren<Animator>();
             agent.SetDestination(agroMeleeStateMachine.transform.position);
             attackRange = agroMeleeStateMachine.inAttackRange + 0.5f;
         }
@@ -41,8 +38,6 @@ public class AttackState : SimpleState
         {
             rangeStateMachine.canRotate = false;
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
-
-            anim = rangeStateMachine.anim;
             agent.SetDestination(rangeStateMachine.transform.position);
             attackRange = rangeStateMachine.inAttackRange + 5.0f;
         }
@@ -64,7 +59,6 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
-                anim.SetBool("isAttacking", true);
                 attack.Invoke();
             }
 
@@ -74,7 +68,6 @@ public class AttackState : SimpleState
                 if (time.timeLeft <= 0)
                 {
                     isAttacking = false;
-                    anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
@@ -88,7 +81,6 @@ public class AttackState : SimpleState
             {
                 //Debug.Log("Attacking");
                 isAttacking = true;
-                anim.SetBool("isAttacking", true);
                 attack.Invoke();
             }
 
@@ -98,7 +90,6 @@ public class AttackState : SimpleState
                 if (time.timeLeft <= 0)
                 {
                     isAttacking = false;
-                    anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
@@ -115,7 +106,6 @@ public class AttackState : SimpleState
             if (rangeStateMachine.LOS && !isAttacking)
             {
                 isAttacking = true;
-                anim.SetBool("isRangeAttack", true);
                 attack.Invoke();
                 time.StartTimer(1.5f, false);
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -124,14 +114,13 @@ public class AttackState : SimpleState
 
             if (isAttacking && time.timeLeft <= 0)
             {
-                isAttacking = false;
+                isAttacking = false; 
+                stateMachine.ChangeState(nameof(WindUpState));
             }
 
             if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
             {
                 isAttacking = false;
-
-                anim.SetBool("isRangeAttack", false); 
                 stopAttacking.Invoke();
                 stateMachine.ChangeState(nameof(InRangeState));
             }

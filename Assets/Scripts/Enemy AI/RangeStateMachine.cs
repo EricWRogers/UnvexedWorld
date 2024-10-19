@@ -10,12 +10,12 @@ public class RangeStateMachine : SimpleStateMachine
     public RandomMovementState movement;
     public StunState stunned;
     public InRangeState inRange;
+    public WindUpState windUp;
     public AttackState range;
     public CooldownState cooldown;
 
     public bool canRotate = true;
     public bool LOS;
-    public bool isHurt;
     public bool isAlive;
     public bool isClose;
     public bool isSearching;
@@ -27,8 +27,6 @@ public class RangeStateMachine : SimpleStateMachine
 
     public Transform target;
     private Health health;
-    //[HideInInspector]
-    public Animator anim;
     [HideInInspector]
     public Knockback enemyKnockback;
     [HideInInspector]
@@ -39,6 +37,7 @@ public class RangeStateMachine : SimpleStateMachine
         states.Add(movement);
         states.Add(stunned);
         states.Add(inRange);
+        states.Add(windUp);
         states.Add(range);
         states.Add(cooldown);
 
@@ -51,8 +50,6 @@ public class RangeStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
-
-        //anim = GetComponentInChildren<Animator>();
 
         enemyKnockback = gameObject.GetComponent<Knockback>();
         
@@ -70,14 +67,6 @@ public class RangeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(isHurt)
-        {
-            anim.SetBool("isHurt", true);
-            isHurt = false;
-        }else
-        {
-            anim.SetBool("isHurt", false);
-        }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -94,10 +83,5 @@ public class RangeStateMachine : SimpleStateMachine
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }

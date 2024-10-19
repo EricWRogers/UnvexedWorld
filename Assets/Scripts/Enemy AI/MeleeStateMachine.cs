@@ -14,7 +14,6 @@ public class MeleeStateMachine : SimpleStateMachine
     public AttackState melee;
     
     public bool LOS;
-    public bool isHurt;
     public bool isAlive;
     public bool isClose;
     public bool isSearching;
@@ -26,8 +25,6 @@ public class MeleeStateMachine : SimpleStateMachine
 
     public Transform target;
     private Health health;
-    [HideInInspector]
-    public Animator anim;
     [HideInInspector]
     public Knockback enemyKnockback;
     [HideInInspector]
@@ -51,8 +48,6 @@ public class MeleeStateMachine : SimpleStateMachine
     {
         health = gameObject.GetComponent<Health>();
 
-        anim = gameObject.GetComponentInChildren<Animator>();
-
         enemyKnockback = gameObject.GetComponent<Knockback>();
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -69,14 +64,7 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(isHurt)
-        {
-            anim.SetBool("isHurt", true);
-            isHurt = false;
-        }else
-        {
-            anim.SetBool("isHurt", false);
-        }
+
         // if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
         // {
         //     ChangeState(nameof(AlertState));
@@ -96,10 +84,5 @@ public class MeleeStateMachine : SimpleStateMachine
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }
