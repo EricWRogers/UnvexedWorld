@@ -8,6 +8,8 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     public GameObject powerSystem;
     public GameObject healthBar;
+    public GameObject comboInfo;
+    public GameObject mana;
     public Button resumeButton;
     public Button quitButton;
 
@@ -40,7 +42,7 @@ public class PauseMenu : MonoBehaviour
 
         // Assign button listeners
         resumeButton.onClick.AddListener(Resume);
-        quitButton.onClick.AddListener(Quit);
+        quitButton.onClick.AddListener(MainMenu);
     }
 
     void Update()
@@ -79,6 +81,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = true;
         healthBar.SetActive(false);
         powerSystem.SetActive(false);
+        comboInfo.SetActive(false);
+        mana.SetActive(false);
         Time.timeScale = 0f; // Freeze time
         isPaused = true;
     }
@@ -91,11 +95,13 @@ public class PauseMenu : MonoBehaviour
         Cursor.visible = false;
         healthBar.SetActive(true);
         powerSystem.SetActive(true);
+        comboInfo.SetActive(true);
+        mana.SetActive(true);
         Time.timeScale = 1f; // Unfreeze time
         isPaused = false;
     }
 
-    public void Quit()
+    public void MainMenu()
     {
         // Unfreeze time (important before changing scenes) and load the MainMenu scene
         Time.timeScale = 1f;

@@ -10,8 +10,12 @@ public class ActivateFight : MonoBehaviour
     [SerializeField]
     private List<GameObject> enemiesInZone = new List<GameObject>();
 
+    private MeshCollider fightAreaCollider;
+
     private void Start()
     {
+        fightAreaCollider = GetComponent<MeshCollider>();
+
         foreach (Transform child in transform)
         {
             enemiesInZone.Add(child.gameObject);
@@ -61,7 +65,7 @@ public class ActivateFight : MonoBehaviour
                 battleMusic.Play();
             }
 
-
+            Destroy(fightAreaCollider);
         }
     }
 }

@@ -71,10 +71,21 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Animator animator;
 
-    public GameObject DashLines;
+    public GameObject dashLines;
+
+    public LayerMask mask;
+
+     public GameObject groundCheck;
+
+    private RaycastHit m_info;
+
+    
 
     void Awake()
     {
+        dashLines = GameObject.Find("DashLines");
+        dashLines.SetActive(false);
+
         gamepad = new PlayerGamepad();
 
         gamepad.GamePlay.Jump.performed += ctx => GamepadJump();
@@ -83,6 +94,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
         gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
+    }
+    
+    void Start()
+    {
+        animator = GetComponentsInChildren<Animator>()[1];
+        Cursor.lockState = CursorLockMode.Locked;    
     }
 
     void Jump()
@@ -119,6 +136,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
+            animator.Play("Dash");
 
             dashing = true;
             dashStartTime = Time.time;
@@ -130,15 +150,17 @@ public class ThirdPersonMovement : MonoBehaviour
 
         if (dashing)
         {
+            
             if (Time.time < dashStartTime + dashTime)
             {
-                 DashLines.SetActive(true);
+                dashLines.SetActive(true);
 
                 controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+                
             }
             else
             {
-                DashLines.SetActive(false);
+                dashLines.SetActive(false);
                 dashing = false;
                 currectDashCoolDown = dashCoolDown;
                 cameraManager.SwitchCamera(cameraManager.mainCam);
@@ -149,16 +171,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
+       
          currectDashCoolDown -= Time.deltaTime;
 
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
+            animator.Play("Dash");
 
             dashing = true;
             dashStartTime = Time.time;
             cameraManager.SwitchCamera(cameraManager.dashCam);
-            Vector3 dir = (transform.position - cam.transform.position).normalized;
-            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+            //Vector3 dir = (transform.position - cam.transform.position).normalized;
+            //transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
         }
         
 
@@ -166,7 +192,9 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
-                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
+                
+                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
+                
             }
             else
             {
@@ -187,16 +215,11 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         gamepad.GamePlay.Disable();
     }
-    
-    void Start()
-    {
-        animator = GetComponentsInChildren<Animator>()[1];
-        Cursor.lockState = CursorLockMode.Locked;    
-    }
 
     // Update is called once per frame
     void Update()
     {
+        CollisionCheck();
         animator.SetBool("Grounded", rayGround);
         
         UpdateSlopeSliding();
@@ -287,19 +310,9 @@ public class ThirdPersonMovement : MonoBehaviour
 
         groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
 
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position,-transform.up, out hit,groundedCheckDistence))
-        {
-            if (!rayGround)
-            {
-                gameObject.GetComponentInChildren<ParticleSystem>().Play();
-                rayGround = true;
-            }
-        }
-        else
-        {
-            rayGround = false;
-        }
+    
+       
+
 
         //if (jumpCount == 0)
         //{
@@ -337,6 +350,49 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         Destroy(this);
     }  
+
+   
+
+     private void CollisionCheck()
+        {
+            bool lastraygrounded = rayGround;
+            rayGround = false;
+            Vector3 left = -transform.right * 0.5f;
+            Vector3 right = transform.right * 0.5f;
+            Vector3 back = -transform.forward * 0.5f;
+            Vector3 forward = transform.forward * 0.5f;
+
+            if (Physics.Linecast(transform.position+left, groundCheck.transform.position+left, out m_info, mask))
+            {
+                rayGround = true;
+            }
+            
+            if (Physics.Linecast(transform.position+right, groundCheck.transform.position+right, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position+back, groundCheck.transform.position+back, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position+forward, groundCheck.transform.position+forward, out m_info, mask))
+            {
+                rayGround = true;
+            }
+
+            if (Physics.Linecast(transform.position, groundCheck.transform.position, out m_info, mask))
+            {
+                rayGround = true;
+            }
+            if(!lastraygrounded && rayGround == true)
+            {
+                 gameObject.GetComponentInChildren<ParticleSystem>().Play();
+                 AudioSource landSound = GameObject.Find("LandingSound").GetComponent<AudioSource>();
+                 landSound.Play();
+            }
+        }
 
     
 
