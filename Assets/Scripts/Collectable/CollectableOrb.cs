@@ -7,6 +7,8 @@ public class CollectableOrb : MonoBehaviour
 
     private CollectableTracker collectableTracker;
 
+    public GameObject collectBlock;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +20,6 @@ public class CollectableOrb : MonoBehaviour
     {
         
     }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -26,6 +27,7 @@ public class CollectableOrb : MonoBehaviour
             Debug.Log("You picked up an orb");
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
+            collectBlock.SetActive(false);
             Destroy(this.gameObject);
         }
     }

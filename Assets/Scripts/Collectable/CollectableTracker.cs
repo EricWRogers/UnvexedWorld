@@ -16,6 +16,28 @@ public class CollectableTracker : MonoBehaviour
 
     //private bool collected = true;
 
+
+     
+    public List<GameObject> targetCache; 
+    
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (targetCache.Contains(collision.gameObject))
+
+            if (targetCache.IndexOf(collision.gameObject) == 0)
+            {
+                print("Pickup Collected");
+                targetCache.RemoveAt(0);
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                print("Wrong item picked up");
+            }
+    }
+    
+
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -23,6 +45,7 @@ public class CollectableTracker : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*
     void Update()
     {
         if (collectedOrbs >= 1)
@@ -47,5 +70,33 @@ public class CollectableTracker : MonoBehaviour
             collect5Block.SetActive(false);
         }
     }
+    */
 
 }
+
+/*
+
+Possible way to handle a list of things for order of colection
+
+public class TargetHandler : MonoBehaviour
+{
+    public List<GameObject> targetCache; 
+    
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (targetCache.Contains(collision.gameObject))
+
+            if (targetCache.IndexOf(collision.gameObject) == 0)
+            {
+                print("Pickup Collected");
+                targetCache.RemoveAt(0);
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                print("Wrong item picked up");
+            }
+    }
+}
+
+*/
