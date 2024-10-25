@@ -23,6 +23,7 @@ public class SpellCraft : MonoBehaviour
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
     public bool casting = false;
+    public bool direction = false;
 
     PlayerGamepad gamepad;
  
@@ -108,15 +109,22 @@ public class SpellCraft : MonoBehaviour
         {
             //CastSpell(CastType.melee,mainAspect,modAspect);
         }
-        else if (Input.GetKeyDown(KeyCode.E) && casting && mainAspect != Aspect.none)
+        else if (Input.GetKeyDown(KeyCode.E) /*&& casting && mainAspect != Aspect.none*/)
         {
+            direction = true;
             //CastSpell(CastType.ranged,mainAspect,modAspect);
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            direction = false;
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //mainAspect = Aspect.scavenge;
             Scavenge();
         }
+
+        GetComponent<Animator>().SetBool("CheckDirection", direction);
        
         // if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect == Aspect.none)
         // {
