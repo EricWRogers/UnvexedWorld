@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class WinGame : MonoBehaviour
 {
+
+    private CollectableManager collectableManager;
+
     public UnityEvent winGame;
     // Start is called before the first frame update
     void Start()
@@ -12,11 +15,17 @@ public class WinGame : MonoBehaviour
         
     }
 
+    //Reference collectible tracker, only winnible if at least 3 orbs have been collected
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
-        {
-            winGame.Invoke();
+        { 
+            collectableManager = other.gameObject.GetComponent<CollectableManager>();
+            if(collectableManager.collectedOrbs >= 3)
+            {
+                winGame.Invoke();
+            }
         }
     }
 }
