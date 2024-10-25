@@ -100,6 +100,27 @@ public class ComboManager : MonoBehaviour
         UpdateSlider(25);
         comboFill.color = Color.grey;
 
+        switch (multiplier)
+        {
+            case 2:
+                gradeCImage.gameObject.SetActive(true);
+                comboFill.color = Color.white;
+                break;
+            case 3:
+                gradeBImage.gameObject.SetActive(true);
+                comboFill.color = Color.blue;
+                break;
+            case 4:
+                gradeAImage.gameObject.SetActive(true);
+                comboFill.color = Color.green;
+                break;
+            case 5:
+                gradeSImage.gameObject.SetActive(true);
+                comboFill.color = Color.red;
+                comboSlider.value = comboSlider.maxValue;
+                break;
+        }
+
         // Determine current grade based on combo count
         if (CalculateMultiplier(comboCount) == 2)
         {
@@ -145,7 +166,14 @@ public class ComboManager : MonoBehaviour
 
     void UpdateSlider(int threshold)
     {
-        comboSlider.value = comboCount;  // Set the slider to the current combo count
+        // Prevent S tier stacking
+        if (tier >= 4)
+        {
+            comboSlider.value = comboSlider.maxValue;  // Set the slider to the current combo count
+            return;
+        }
+
+        comboSlider.value = comboCount;
 
         // Check if we've reached a threshold
         if (comboCount >= threshold)
@@ -169,20 +197,48 @@ public class ComboManager : MonoBehaviour
     // Reset combo when player gets hit
     public void PlayerHit()
     {
-        //ResetCombo();
-        comboCount -= 10;
-
-        if (comboCount < 0)
+        if (tier > 0)
         {
-            if (tier > 0)
-                tier--;
-            
-            comboCount += 25;
-
-            if (comboCount < 0)
-                comboCount = 0;
+            tier--; // Drop a letter grade
+            comboCount = 25; // Reset combo count to the start of the current tier
         }
+        else
+        {
+            comboCount = 0; // Reset to 0 if at the lowest tier
+        }
+        
+        RefreshGradeUI(); // Call RefreshGradeUI to update visuals on hit
+    }
 
-        UpdateComboUI();
+    // Helper method to update grade visuals based on current tier
+    private void RefreshGradeUI()
+    {
+        // Hide all grade images initially
+        gradeCImage.gameObject.SetActive(false);
+        gradeBImage.gameObject.SetActive(false);
+        gradeAImage.gameObject.SetActive(false);
+        gradeSImage.gameObject.SetActive(false);
+        
+        switch (tier)
+        {
+            case 1:
+                gradeCImage.gameObject.SetActive(true);
+                comboFill.color = Color.white;
+                break;
+            case 2:
+                gradeBImage.gameObject.SetActive(true);
+                comboFill.color = Color.blue;
+                break;
+            case 3:
+                gradeAImage.gameObject.SetActive(true);
+                comboFill.color = Color.green;
+                break;
+            case 4:
+                gradeSImage.gameObject.SetActive(true);
+                comboFill.color = Color.red;
+                comboSlider.value = comboSlider.maxValue;
+                break;
+        }
+        comboSlider.value = comboCount;
     }
 }
