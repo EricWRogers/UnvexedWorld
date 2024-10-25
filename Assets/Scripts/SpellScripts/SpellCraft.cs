@@ -266,4 +266,29 @@ public class SpellCraft : MonoBehaviour
             scavengeMana=100;
         }
     }
+
+    public void SetMain(Aspect aspect)
+    {
+        mainAspect = aspect;
+    }
+
+    public void SetMod(Aspect aspect)
+    {
+        modAspect = aspect;
+    }
+
+    public void AddTheListenerMain(SpellCraft.Aspect aspect)
+    {
+        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
+    }
+
+    public void AddTheListenerMod(SpellCraft.Aspect aspect)
+    {
+        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMod(aspect);});
+    }
+    
+    public void RemoveTheListener()
+    {
+        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.RemoveAllListeners();
+    }
 }
