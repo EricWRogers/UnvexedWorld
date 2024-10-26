@@ -88,7 +88,7 @@ public class InRangeState : SimpleState
                 if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) < attackRange)
                 {
                     dustPS.Stop();
-                    stateMachine.ChangeState(nameof(WindUpState));
+                    stateMachine.ChangeState(nameof(AttackState));
                 }
             }
         }
