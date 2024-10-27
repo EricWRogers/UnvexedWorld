@@ -212,4 +212,9 @@ public class SpellCraft : MonoBehaviour
     {
         gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.RemoveAllListeners();
     }
+
+    public void AOEOnMe()
+    {
+        Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation).AddComponent<HitListener>();
+    }
 }
