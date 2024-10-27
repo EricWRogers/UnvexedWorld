@@ -60,11 +60,11 @@ public class SpellCraft : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.F))
+        if(Input.GetKeyDown(KeyCode.E))
         {
             SetCasting();
         }
-        else if(Input.GetKeyUp(KeyCode.F))
+        else if(Input.GetKeyUp(KeyCode.E))
         {
             UnsetCast();
         }
