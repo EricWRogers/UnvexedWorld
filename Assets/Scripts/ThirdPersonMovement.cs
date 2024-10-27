@@ -235,7 +235,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         
         //Dash
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.F))
         {
         GamepadDash();
         }

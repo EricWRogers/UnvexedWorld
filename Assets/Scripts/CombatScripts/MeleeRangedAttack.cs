@@ -198,11 +198,11 @@ public class MeleeRangedAttack : MonoBehaviour
             Range();
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             LockOn();
         }
-        else if (Input.GetKeyUp(KeyCode.E))
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             LockOff();
         }
