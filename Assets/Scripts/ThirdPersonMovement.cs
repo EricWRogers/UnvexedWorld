@@ -13,6 +13,8 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector2 gamepadMove;
 
     public CameraManager cameraManager;
+
+    public MeleeRangedAttack lockOn;
     public float gravity = -3.5f;
 
     public float gravityFirstJump = -5.0f;
@@ -99,7 +101,8 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         animator = GetComponentsInChildren<Animator>()[1];
-        Cursor.lockState = CursorLockMode.Locked;    
+        Cursor.lockState = CursorLockMode.Locked;   
+        lockOn = GetComponent<MeleeRangedAttack>();
     }
 
     
@@ -265,6 +268,15 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
+
+        //lock on
+      if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*3)
+      {
+         
+        Vector3 dir = lockOn.target.transform.position - transform.position;
+        dir.y=0;
+        transform.rotation = Quaternion.LookRotation(dir);
+      }
 
     
     }
