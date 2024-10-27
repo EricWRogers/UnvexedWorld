@@ -125,6 +125,15 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOn"",
+                    ""type"": ""Button"",
+                    ""id"": ""1c858211-e9ba-428c-8da1-821a18b36357"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -186,7 +195,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""60c52be3-2605-4238-9e0f-9b73b32550a2"",
-                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -248,6 +257,17 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8127b9cd-13e8-4895-be51-8bcc9564b25b"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -267,6 +287,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Clear = m_GamePlay.FindAction("Clear", throwIfNotFound: true);
         m_GamePlay_Casting = m_GamePlay.FindAction("Casting", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
+        m_GamePlay_LockOn = m_GamePlay.FindAction("LockOn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Clear;
     private readonly InputAction m_GamePlay_Casting;
     private readonly InputAction m_GamePlay_Pause;
+    private readonly InputAction m_GamePlay_LockOn;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -354,6 +376,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Clear => m_Wrapper.m_GamePlay_Clear;
         public InputAction @Casting => m_Wrapper.m_GamePlay_Casting;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
+        public InputAction @LockOn => m_Wrapper.m_GamePlay_LockOn;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -396,6 +419,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @LockOn.started += instance.OnLockOn;
+            @LockOn.performed += instance.OnLockOn;
+            @LockOn.canceled += instance.OnLockOn;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -433,6 +459,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @LockOn.started -= instance.OnLockOn;
+            @LockOn.performed -= instance.OnLockOn;
+            @LockOn.canceled -= instance.OnLockOn;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -463,5 +492,6 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnClear(InputAction.CallbackContext context);
         void OnCasting(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnLockOn(InputAction.CallbackContext context);
     }
 }

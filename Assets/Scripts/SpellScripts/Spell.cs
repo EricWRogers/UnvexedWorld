@@ -98,4 +98,12 @@ public class Spell : MonoBehaviour, IDamageDealer
     {
         return burstDamage;
     }
+
+    public void SetSelf(SpellCraft.Aspect newMainAspect,SpellCraft.Aspect newModAspect)
+    {
+        mainAspect = newMainAspect;
+        modAspect = newModAspect;
+    }
+
+    
 }
