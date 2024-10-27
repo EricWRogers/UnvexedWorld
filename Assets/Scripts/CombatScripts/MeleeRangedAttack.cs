@@ -8,7 +8,7 @@ public class MeleeRangedAttack : MonoBehaviour
     public SpellCraft spellCraft;
     public SpellShot spellShot;
     PlayerGamepad gamepad;
-    private GameObject target;
+    public GameObject target;
     public Animator[] animators;
 
     public float attackRange;
@@ -36,7 +36,7 @@ public class MeleeRangedAttack : MonoBehaviour
         gamepad.GamePlay.LockOn.performed += ctx => LockOn();
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
-         cameraManager =GetComponent<CameraManager>();
+         cameraManager = GetComponent<CameraManager>();
 
 
     }
@@ -138,7 +138,9 @@ public class MeleeRangedAttack : MonoBehaviour
     void LockOn()
     {
         direction = true;
+       
     }
+    
     void LockOff()
     {
         direction = false;
