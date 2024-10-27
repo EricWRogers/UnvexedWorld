@@ -42,7 +42,7 @@ public class PauseMenu : MonoBehaviour
 
         // Assign button listeners
         resumeButton.onClick.AddListener(Resume);
-        quitButton.onClick.AddListener(MainMenu);
+        quitButton.onClick.AddListener(Quit);
     }
 
     void Update()
@@ -101,7 +101,7 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
     }
 
-    public void MainMenu()
+    public void Quit()
     {
         // Unfreeze time (important before changing scenes) and load the MainMenu scene
         Time.timeScale = 1f;
