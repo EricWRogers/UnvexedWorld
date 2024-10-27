@@ -138,6 +138,7 @@ public class MeleeRangedAttack : MonoBehaviour
     void LockOn()
     {
         direction = true;
+        FindNewTarget();
        
     }
     
@@ -255,7 +256,7 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().EndParticle();
     }
 
-    void FindNewTarget()
+   public void FindNewTarget()
     {
 
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
