@@ -23,7 +23,7 @@ public class SpellCraft : MonoBehaviour
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
     public bool casting = false;
-    public bool direction = false;
+   
 
     PlayerGamepad gamepad;
  
@@ -38,10 +38,11 @@ public class SpellCraft : MonoBehaviour
         
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
+        //gamepad.GamePlay.Sunder.performed += ctx => Sunder();
         gamepad.GamePlay.Splendor.performed += ctx => Splendor();
         gamepad.GamePlay.Clear.performed += ctx => ClearSpell();
         gamepad.GamePlay.Casting.performed += ctx => SetCasting();
-         gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
+        gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
 
     }
 
@@ -54,44 +55,7 @@ public class SpellCraft : MonoBehaviour
     {
         gamepad.GamePlay.Disable();
     }
-    void Scavenge()
-    {
-        if ( mainAspect == Aspect.none)
-        {
-            mainAspect = Aspect.scavenge;
-        }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.scavenge;
-        }
-    }
-    void Splendor()
-    {
-        if ( mainAspect == Aspect.none)
-        {
-            mainAspect = Aspect.splendor;
-        }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.splendor;
-        }
-    }
-
-    void ClearSpell()
-    {
-        mainAspect = Aspect.none;
-        modAspect = Aspect.none;
-    }
-
-    void SetCasting()
-    {
-        casting = true;
-    }
-  void UnsetCast()
-    {
-        casting = false;
-    }
-
+    
     
     // Update is called once per frame
     void Update()
@@ -105,35 +69,21 @@ public class SpellCraft : MonoBehaviour
             UnsetCast();
         }
         GetComponent<Animator>().SetBool("Casting", casting);
-        if (Input.GetKeyDown(KeyCode.Q) && casting && mainAspect != Aspect.none)
-        {
-            //CastSpell(CastType.melee,mainAspect,modAspect);
-        }
-        else if (Input.GetKeyDown(KeyCode.E) /*&& casting && mainAspect != Aspect.none*/)
-        {
-            direction = true;
-            //CastSpell(CastType.ranged,mainAspect,modAspect);
-        }
-        else if (Input.GetKeyUp(KeyCode.E))
-        {
-            direction = false;
-        }
+        
+        
+        
+        //Setting spell components
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             //mainAspect = Aspect.scavenge;
             Scavenge();
         }
 
-        GetComponent<Animator>().SetBool("CheckDirection", direction);
-       
-        // if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect == Aspect.none)
+        // if (Input.GetKeyDown(KeyCode.Alpha3))
         // {
-        //     mainAspect = Aspect.sunder;
+        //     Sunder();
         // }
-        // else if (Input.GetKeyDown(KeyCode.Alpha3) && mainAspect != Aspect.none && modAspect == Aspect.none)
-        // {
-        //     modAspect = Aspect.sunder;
-        // }
+
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Splendor();
@@ -143,9 +93,6 @@ public class SpellCraft : MonoBehaviour
         {
             ClearSpell();
         }
-
-        RegenMana(20*Time.deltaTime);
-
         
     }
 
@@ -183,90 +130,45 @@ public class SpellCraft : MonoBehaviour
             
         }
     }
-    public void SpendMana()
-    {
-        if (mainAspect == Aspect.splendor && splendorMana>=50)
-        {
-            if (modAspect == Aspect.splendor && splendorMana>=70)
-            {
-                splendorMana -= 70;
-            }
-            else if(modAspect == Aspect.scavenge && scavengeMana>=20)
-            {
-                scavengeMana -= 20;
-                splendorMana-=50;
-            }
-            else if (modAspect == Aspect.none)
-            {
-                
-                splendorMana-=50;
-            }
-            else
-            {
-                GetComponent<Animator>().Play("Idle");
-            }
-        }
-        else if (mainAspect == Aspect.scavenge && scavengeMana>=50)
-        {
-            if (modAspect == Aspect.splendor && splendorMana>=20)
-            {
-                splendorMana -= 20;
-                scavengeMana-=50;
-            }
-            else if(modAspect == Aspect.scavenge && scavengeMana>=70)
-            {
-                scavengeMana -= 70;
-            }
-            else if (modAspect == Aspect.none)
-            {
-                
-                scavengeMana-=50;
-            }
-            else
-            {
-                GetComponent<Animator>().Play("Idle");
-            }
-        }
-        else if (mainAspect == Aspect.none)
-        {
-            if (modAspect == Aspect.splendor && splendorMana>=20)
-            {
-                splendorMana -= 20;
-            }
-            else if(modAspect == Aspect.scavenge && scavengeMana>=20)
-            {
-                scavengeMana -= 20;
-            }
-            else if (modAspect == Aspect.none)
-            {
+    
 
-            }
-            else
-            {
-                GetComponent<Animator>().Play("Idle");
-            }
-        }
-        else
+    
+    //Populating the spell list
+    void Scavenge()
+    {
+        if ( mainAspect == Aspect.none)
         {
-            GetComponent<Animator>().Play("Idle");
+            mainAspect = Aspect.scavenge;
+        }
+        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        {
+            modAspect = Aspect.scavenge;
         }
     }
 
-    public void RegenMana(float amount)
+    void Sunder()
     {
-        splendorMana += amount;
-        scavengeMana += amount;
-        if(splendorMana>100)
+        if ( mainAspect == Aspect.none)
         {
-            splendorMana=100;
+            mainAspect = Aspect.sunder;
         }
-        
-        if(scavengeMana>100)
+        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
         {
-            scavengeMana=100;
+            modAspect = Aspect.sunder;
         }
     }
 
+    void Splendor()
+    {
+        if ( mainAspect == Aspect.none)
+        {
+            mainAspect = Aspect.splendor;
+        }
+        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        {
+            modAspect = Aspect.splendor;
+        }
+    }
     public void SetMain(Aspect aspect)
     {
         mainAspect = aspect;
@@ -277,6 +179,25 @@ public class SpellCraft : MonoBehaviour
         modAspect = aspect;
     }
 
+    void ClearSpell()
+    {
+        mainAspect = Aspect.none;
+        modAspect = Aspect.none;
+    }
+
+    
+    //controlling the casting variable
+    void SetCasting()
+    {
+        casting = true;
+    }
+  void UnsetCast()
+    {
+        casting = false;
+    }
+
+
+    //setting listeners for populating list on hit
     public void AddTheListenerMain(SpellCraft.Aspect aspect)
     {
         gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
