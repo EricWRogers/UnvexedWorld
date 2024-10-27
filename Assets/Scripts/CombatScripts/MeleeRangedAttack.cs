@@ -30,7 +30,7 @@ public class MeleeRangedAttack : MonoBehaviour
     void Awake()
     {
         gamepad = new PlayerGamepad();
-        gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
+        gamepad.GamePlay.MeleeLight.performed += ctx => MeleeGamepad();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
         gamepad.GamePlay.LockOn.performed += ctx => LockOn();
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();

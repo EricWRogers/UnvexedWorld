@@ -64,7 +64,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Melee"",
+                    ""name"": ""MeleeLight"",
                     ""type"": ""Button"",
                     ""id"": ""05d97a3c-d0df-4188-9104-cb397909786f"",
                     ""expectedControlType"": ""Button"",
@@ -134,6 +134,15 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MeleeHeavy"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3501592-e1b0-4ff6-a859-eb974e7749aa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -188,7 +197,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Melee"",
+                    ""action"": ""MeleeLight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -268,6 +277,17 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc875737-9aa5-4bd2-be20-d71e7b6a10af"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MeleeHeavy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -280,7 +300,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Jump = m_GamePlay.FindAction("Jump", throwIfNotFound: true);
         m_GamePlay_Dash = m_GamePlay.FindAction("Dash", throwIfNotFound: true);
         m_GamePlay_LookingRightStick = m_GamePlay.FindAction("LookingRightStick", throwIfNotFound: true);
-        m_GamePlay_Melee = m_GamePlay.FindAction("Melee", throwIfNotFound: true);
+        m_GamePlay_MeleeLight = m_GamePlay.FindAction("MeleeLight", throwIfNotFound: true);
         m_GamePlay_Shoot = m_GamePlay.FindAction("Shoot", throwIfNotFound: true);
         m_GamePlay_Splendor = m_GamePlay.FindAction("Splendor", throwIfNotFound: true);
         m_GamePlay_Scavange = m_GamePlay.FindAction("Scavange", throwIfNotFound: true);
@@ -288,6 +308,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Casting = m_GamePlay.FindAction("Casting", throwIfNotFound: true);
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         m_GamePlay_LockOn = m_GamePlay.FindAction("LockOn", throwIfNotFound: true);
+        m_GamePlay_MeleeHeavy = m_GamePlay.FindAction("MeleeHeavy", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -353,7 +374,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Jump;
     private readonly InputAction m_GamePlay_Dash;
     private readonly InputAction m_GamePlay_LookingRightStick;
-    private readonly InputAction m_GamePlay_Melee;
+    private readonly InputAction m_GamePlay_MeleeLight;
     private readonly InputAction m_GamePlay_Shoot;
     private readonly InputAction m_GamePlay_Splendor;
     private readonly InputAction m_GamePlay_Scavange;
@@ -361,6 +382,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Casting;
     private readonly InputAction m_GamePlay_Pause;
     private readonly InputAction m_GamePlay_LockOn;
+    private readonly InputAction m_GamePlay_MeleeHeavy;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -369,7 +391,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_GamePlay_Jump;
         public InputAction @Dash => m_Wrapper.m_GamePlay_Dash;
         public InputAction @LookingRightStick => m_Wrapper.m_GamePlay_LookingRightStick;
-        public InputAction @Melee => m_Wrapper.m_GamePlay_Melee;
+        public InputAction @MeleeLight => m_Wrapper.m_GamePlay_MeleeLight;
         public InputAction @Shoot => m_Wrapper.m_GamePlay_Shoot;
         public InputAction @Splendor => m_Wrapper.m_GamePlay_Splendor;
         public InputAction @Scavange => m_Wrapper.m_GamePlay_Scavange;
@@ -377,6 +399,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Casting => m_Wrapper.m_GamePlay_Casting;
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputAction @LockOn => m_Wrapper.m_GamePlay_LockOn;
+        public InputAction @MeleeHeavy => m_Wrapper.m_GamePlay_MeleeHeavy;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -398,9 +421,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LookingRightStick.started += instance.OnLookingRightStick;
             @LookingRightStick.performed += instance.OnLookingRightStick;
             @LookingRightStick.canceled += instance.OnLookingRightStick;
-            @Melee.started += instance.OnMelee;
-            @Melee.performed += instance.OnMelee;
-            @Melee.canceled += instance.OnMelee;
+            @MeleeLight.started += instance.OnMeleeLight;
+            @MeleeLight.performed += instance.OnMeleeLight;
+            @MeleeLight.canceled += instance.OnMeleeLight;
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
@@ -422,6 +445,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
+            @MeleeHeavy.started += instance.OnMeleeHeavy;
+            @MeleeHeavy.performed += instance.OnMeleeHeavy;
+            @MeleeHeavy.canceled += instance.OnMeleeHeavy;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -438,9 +464,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LookingRightStick.started -= instance.OnLookingRightStick;
             @LookingRightStick.performed -= instance.OnLookingRightStick;
             @LookingRightStick.canceled -= instance.OnLookingRightStick;
-            @Melee.started -= instance.OnMelee;
-            @Melee.performed -= instance.OnMelee;
-            @Melee.canceled -= instance.OnMelee;
+            @MeleeLight.started -= instance.OnMeleeLight;
+            @MeleeLight.performed -= instance.OnMeleeLight;
+            @MeleeLight.canceled -= instance.OnMeleeLight;
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
@@ -462,6 +488,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
+            @MeleeHeavy.started -= instance.OnMeleeHeavy;
+            @MeleeHeavy.performed -= instance.OnMeleeHeavy;
+            @MeleeHeavy.canceled -= instance.OnMeleeHeavy;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -485,7 +514,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
         void OnLookingRightStick(InputAction.CallbackContext context);
-        void OnMelee(InputAction.CallbackContext context);
+        void OnMeleeLight(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnSplendor(InputAction.CallbackContext context);
         void OnScavange(InputAction.CallbackContext context);
@@ -493,5 +522,6 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnCasting(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnMeleeHeavy(InputAction.CallbackContext context);
     }
 }
