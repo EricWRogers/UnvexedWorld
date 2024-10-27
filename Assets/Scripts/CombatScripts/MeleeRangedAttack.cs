@@ -25,18 +25,22 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public CameraManager cameraManager;
 
+    public bool direction = false;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Melee.performed += ctx => MeleeGamepad();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
+        gamepad.GamePlay.LockOn.performed += ctx => LockOn();
+        gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
          cameraManager =GetComponent<CameraManager>();
 
 
     }
 
-    // Start is called before the first frame update
+   
     void MeleeGamepad()
     {
         isAttacking = true;
@@ -60,7 +64,7 @@ public class MeleeRangedAttack : MonoBehaviour
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
-                Melee();
+                MeleeLight();
 
             }
             else
@@ -70,7 +74,7 @@ public class MeleeRangedAttack : MonoBehaviour
                 {
                     spellCraft.CastSpell(SpellCraft.CastType.melee);
                 }
-                Melee();
+                MeleeLight();
             }
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
@@ -81,6 +85,15 @@ public class MeleeRangedAttack : MonoBehaviour
 
 
 
+    }
+
+    void LockOn()
+    {
+        direction = true;
+    }
+    void LockOff()
+    {
+        direction = false;
     }
 
     void CancelLockUp()
@@ -103,7 +116,7 @@ public class MeleeRangedAttack : MonoBehaviour
         gamepad.GamePlay.Disable();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         animator.SetBool("Lock", isAttacking);
@@ -122,38 +135,49 @@ public class MeleeRangedAttack : MonoBehaviour
         }
 
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetMouseButtonDown(0))
         {
             MeleeGamepad();
             
 
         }
-        else if (Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.E))
+        else if (Input.GetMouseButtonDown(1))
         {
-            // if (spellCraft.casting && spellCraft.mainAspect!=SpellCraft.Aspect.none)
-            // {
-            //     spellCraft.CastSpell(SpellCraft.CastType.ranged);
-            // }
-
+           
             Range();
         }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LockOn();
+        }
+        else if (Input.GetKeyUp(KeyCode.E))
+        {
+            LockOff();
+        }
+        GetComponent<Animator>().SetBool("CheckDirection", direction);
+        GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
+
 
 
     }
 
-    private void Melee()
+    private void MeleeLight()
     {
-        
-        GetComponent<Animator>().SetTrigger("Melee");
+        GetComponent<Animator>().SetTrigger("Light");
         GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
-        //GetComponent<AnimationForce>().melee = true;
+    }
+
+    private void MeleeHeavy()
+    {
+        GetComponent<Animator>().SetTrigger("Heavy");
+        GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
     }
 
     private void Range()
     {
         GetComponent<Animator>().SetTrigger("Ranged");
-        //GetComponent<AnimationForce>().ranged = true;
-        //spellShot.ShootPrefab();
+       
     }
 
     private void UpdateSpells()
