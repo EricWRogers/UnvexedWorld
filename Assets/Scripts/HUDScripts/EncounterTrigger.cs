@@ -3,28 +3,17 @@ using UnityEngine;
 public class EncounterTrigger : MonoBehaviour
 {
     private HUDManager hudManager;
-    private ThirdPersonMovement playerMovement;
 
-    public int enemyCount;
-
-    private void Awake()
+    private void Start()
     {
         hudManager = FindObjectOfType<HUDManager>();
-        playerMovement = FindObjectOfType<ThirdPersonMovement>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            hudManager.ShowHUD();
-
-            // Reset DashLines visibility when entering combat area if currently dashing
-            if (playerMovement.dashing) 
-            {
-                playerMovement.dashLines.SetActive(false);
-                playerMovement.dashing = false;
-            }
+            hudManager.ShowHUD(); // Show HUD when entering the encounter area
         }
     }
 
@@ -32,13 +21,7 @@ public class EncounterTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hudManager.HideHUD();
+            hudManager.HideHUD(); // Hide HUD when exiting the encounter area
         }
-    }
-
-    public void EndEncounter()
-    {
-        Debug.Log("Encounter ended, hide HUD.");
-        hudManager.HideHUD();
     }
 }

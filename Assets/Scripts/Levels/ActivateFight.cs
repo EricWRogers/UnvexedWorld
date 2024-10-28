@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class ActivateFight : MonoBehaviour
 {
-    public GameObject fogArea;
-    public bool on = false;
+    public GameObject fogArea; // Optional fog area if you want it to appear
+    private bool on = false;
     [SerializeField]
     private List<GameObject> enemiesInZone = new List<GameObject>();
     private MeshCollider fightAreaCollider;
+    private HUDManager hudManager;
 
     private void Start()
     {
@@ -19,37 +20,15 @@ public class ActivateFight : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
-    {
-        if (on && enemiesInZone.Count == 0) // Check if there are no enemies left
-        {
-            HUDManager hudManager = FindObjectOfType<HUDManager>();
-            hudManager.HideHUD(); // Hide HUD when the fight is over
-
-            // Optional: Handle any additional end-of-fight logic here, like playing victory music
-
-            Destroy(this);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !on)
         {
-            fogArea.SetActive(true);
+            fogArea.SetActive(true); // Activate fog area if needed
             on = true;
-
-            // Play battle music
-            AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
-            AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
-
-            if (!battleMusic.isPlaying)
-            {
-                backgroundMusic.volume = 0.2f;
-                battleMusic.Play();
-            }
-
-            Destroy(fightAreaCollider);
+            
+            // Optional: Play battle music or any additional logic
+            Destroy(fightAreaCollider); // Disable the collider after entering
         }
     }
 }
