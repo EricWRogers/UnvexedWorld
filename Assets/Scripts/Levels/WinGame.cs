@@ -24,6 +24,14 @@ public class WinGame : MonoBehaviour
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             if(collectableTracker.collectedOrbs >= 3)
             {
+                //PlayerPrefs.setInt(collectableTracker.collectedOrbs, collectableTracker.collectedOrbs);
+                //collectableTracker.collectedOrbs = PlayerPrefs.GetInt("collectedOrbs");
+                //This should update collectedOrbs to match the total amount collected by the player
+                int prev = PlayerPrefs.GetInt("collectedOrbs", 0);
+                if (collectableTracker.collectedOrbs > prev)
+                {
+                    PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
+                }
                 winGame.Invoke();
             }
         }

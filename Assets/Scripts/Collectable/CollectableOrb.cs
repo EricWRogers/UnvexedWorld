@@ -28,6 +28,9 @@ public class CollectableOrb : MonoBehaviour
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
             collectBlock.SetActive(false);
+
+            //PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
+
             Destroy(this.gameObject);
         }
     }
