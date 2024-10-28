@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Melee",
+                    "name": "MeleeLight",
                     "type": "Button",
                     "id": "05d97a3c-d0df-4188-9104-cb397909786f",
                     "expectedControlType": "Button",
@@ -103,6 +103,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LockOn",
+                    "type": "Button",
+                    "id": "1c858211-e9ba-428c-8da1-821a18b36357",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "MeleeHeavy",
+                    "type": "Button",
+                    "id": "c3501592-e1b0-4ff6-a859-eb974e7749aa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -157,14 +175,14 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Melee",
+                    "action": "MeleeLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "60c52be3-2605-4238-9e0f-9b73b32550a2",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -224,6 +242,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8127b9cd-13e8-4895-be51-8bcc9564b25b",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockOn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc875737-9aa5-4bd2-be20-d71e7b6a10af",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeleeHeavy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
