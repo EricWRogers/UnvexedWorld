@@ -416,6 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 2408908693889748742}
   cameraManager: {fileID: 8678946718278521828}
+  lockOn: {fileID: 0}
   gravity: -15.8
   gravityFirstJump: -20
   gravitySecondJump: -20
@@ -608,7 +609,7 @@ Animator:
   m_GameObject: {fileID: 3428488077517617266}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dee8c7d3f18856d42b31d5a20bdc4cff, type: 2}
+  m_Controller: {fileID: 9100000, guid: 51f7d57bf9517ea46b814cc74fc51ef5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -633,6 +634,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellCraft: {fileID: 1034932654391892717}
   spellShot: {fileID: 1919406391244116265}
+  target: {fileID: 0}
   animators: []
   attackRange: 5
   speed: {fileID: 7060320185052712906}
@@ -641,6 +643,7 @@ MonoBehaviour:
   isAttacking: 0
   animator: {fileID: 0}
   cameraManager: {fileID: 0}
+  direction: 0
 --- !u!114 &1919406391244116265
 MonoBehaviour:
   m_ObjectHideFlags: 0
