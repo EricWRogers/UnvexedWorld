@@ -13,6 +13,8 @@ public class ThirdPersonMovement : MonoBehaviour
     Vector2 gamepadMove;
 
     public CameraManager cameraManager;
+
+    public MeleeRangedAttack lockOn;
     public float gravity = -3.5f;
 
     public float gravityFirstJump = -5.0f;
@@ -99,22 +101,11 @@ public class ThirdPersonMovement : MonoBehaviour
     void Start()
     {
         animator = GetComponentsInChildren<Animator>()[1];
-        Cursor.lockState = CursorLockMode.Locked;    
+        Cursor.lockState = CursorLockMode.Locked;   
+        lockOn = GetComponent<MeleeRangedAttack>();
     }
 
-    void Jump()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && (isGrounded || jumpCount < jumpMax))
-        {
-            isJumping = true;
-            jumpCount++;
-            isGrounded = false;
-            velocity.y = 0;
-            velocity.y += jumpForce;
-            controller.Move(velocity * Time.deltaTime);
-
-        }
-    }
+    
 
     void GamepadJump()
     {
@@ -130,24 +121,11 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
 
-    void Dash()
+    void Dashing()
     {
-         currectDashCoolDown -= Time.deltaTime;
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)&& (!dashing) && currectDashCoolDown <= 0.0f)
-        {
-
-            dashing = true;
-            dashStartTime = Time.time;
-            cameraManager.SwitchCamera(cameraManager.dashCam);
-           // Vector3 dir = (transform.position - transform.position).normalized;
-            //transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
-        }
-        
-
+        currectDashCoolDown -= Time.deltaTime;
         if (dashing)
         {
-            DashSound();
             if (Time.time < dashStartTime + dashTime)
             {
                 dashLines.SetActive(true);
@@ -168,37 +146,16 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
-       AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-       dashSound.Play();
-         currectDashCoolDown -= Time.deltaTime;
-
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
 
             dashing = true;
+            animator.Play("Dash");
             dashStartTime = Time.time;
+            dashLines.SetActive(true);
             cameraManager.SwitchCamera(cameraManager.dashCam);
-            Vector3 dir = (transform.position - cam.transform.position).normalized;
-            transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+            
         }
-        
-
-        if (dashing)
-        {
-            if (Time.time < dashStartTime + dashTime)
-            {
-                
-                controller.Move(cam.forward * dashSpeed * Time.deltaTime);
-                
-            }
-            else
-            {
-                dashing = false;
-                currectDashCoolDown = dashCoolDown;
-                cameraManager.SwitchCamera(cameraManager.mainCam);
-            }
-        }
-
     }
 
     void OnEnable()
@@ -278,19 +235,27 @@ public class ThirdPersonMovement : MonoBehaviour
 
         
         //Dash
-        Dash();
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+        GamepadDash();
+        }
+        Dashing();
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
         }
 
-        
+        currectDashCoolDown -= Time.deltaTime;
+
         
 
 
        //Jump
-        Jump();
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GamepadJump();
+        }
         
         //GroundCheck
         if(controller.collisionFlags == CollisionFlags.Below)
@@ -305,15 +270,31 @@ public class ThirdPersonMovement : MonoBehaviour
 
         groundedCheckDistence = (controller.height/2) + bufferCheckDistance;
 
+        //lock on
+        if (lockOn.target)
+        {
+            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*3)
+            {
+
+                if (lockOn.target == null){
+                    lockOn.target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+                }
+
+                if (lockOn.target){ 
+                Vector3 dir = lockOn.target.transform.position - transform.position;
+                dir.y=0;
+                transform.rotation = Quaternion.LookRotation(dir);
+                }
+
+                
+            }
+        }
+        else
+        {
+            lockOn.FindNewTarget();
+        }
+
     
-       
-
-
-        //if (jumpCount == 0)
-        //{
-            //play landing particle
-        //}
-
     }
 
     // Sliding down slopes
@@ -341,59 +322,41 @@ public class ThirdPersonMovement : MonoBehaviour
         }
     }
     
-    public void StopMoving()
-    {
-        Destroy(this);
-    }  
 
-    public void DashSound()
+    private void CollisionCheck()
     {
-        AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-        dashSound.Play();
-    }
-
-     private void CollisionCheck()
+        bool lastraygrounded = rayGround;
+        rayGround = false;
+        Vector3 left = -transform.right * 0.5f;
+        Vector3 right = transform.right * 0.5f;
+        Vector3 back = -transform.forward * 0.5f;
+        Vector3 forward = transform.forward * 0.5f;
+        if (Physics.Linecast(transform.position+left, groundCheck.transform.position+left, out m_info, mask))
         {
-            bool lastraygrounded = rayGround;
-            rayGround = false;
-            Vector3 left = -transform.right * 0.5f;
-            Vector3 right = transform.right * 0.5f;
-            Vector3 back = -transform.forward * 0.5f;
-            Vector3 forward = transform.forward * 0.5f;
-
-            if (Physics.Linecast(transform.position+left, groundCheck.transform.position+left, out m_info, mask))
-            {
-                rayGround = true;
-            }
-            
-            if (Physics.Linecast(transform.position+right, groundCheck.transform.position+right, out m_info, mask))
-            {
-                rayGround = true;
-            }
-
-            if (Physics.Linecast(transform.position+back, groundCheck.transform.position+back, out m_info, mask))
-            {
-                rayGround = true;
-            }
-
-            if (Physics.Linecast(transform.position+forward, groundCheck.transform.position+forward, out m_info, mask))
-            {
-                rayGround = true;
-            }
-
-            if (Physics.Linecast(transform.position, groundCheck.transform.position, out m_info, mask))
-            {
-                rayGround = true;
-            }
-            if(!lastraygrounded && rayGround == true)
-            {
-                 gameObject.GetComponentInChildren<ParticleSystem>().Play();
-                 AudioSource landSound = GameObject.Find("LandingSound").GetComponent<AudioSource>();
-                 landSound.Play();
-            }
+            rayGround = true;
         }
-
-    
-
- 
+        
+        if (Physics.Linecast(transform.position+right, groundCheck.transform.position+right, out m_info, mask))
+        {
+            rayGround = true;
+        }
+        if (Physics.Linecast(transform.position+back, groundCheck.transform.position+back, out m_info, mask))
+        {
+            rayGround = true;
+        }
+        if (Physics.Linecast(transform.position+forward, groundCheck.transform.position+forward, out m_info, mask))
+        {
+            rayGround = true;
+        }
+        if (Physics.Linecast(transform.position, groundCheck.transform.position, out m_info, mask))
+        {
+            rayGround = true;
+        }
+        if(!lastraygrounded && rayGround == true)
+        {
+             gameObject.GetComponentInChildren<ParticleSystem>().Play();
+             AudioSource landSound = GameObject.Find("LandingSound").GetComponent<AudioSource>();
+             landSound.Play();
+        }
+    }
 }
