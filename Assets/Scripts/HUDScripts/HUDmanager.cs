@@ -13,12 +13,20 @@ public class HUDManager : MonoBehaviour
     public void ShowHUD()
     {
         hud.SetActive(true); // Show HUD
-        dashLines.SetActive(true); // Ensure DashLines are enabled
     }
 
     public void HideHUD()
     {
         hud.SetActive(false); // Hide HUD
-        dashLines.SetActive(false); // Disable DashLines if needed
+    }
+
+    public void ShowDashLines()
+    {
+        dashLines.SetActive(true); // Show DashLines
+    }
+
+    public void HideDashLines()
+    {
+        dashLines.SetActive(false); // Hide DashLines
     }
 }

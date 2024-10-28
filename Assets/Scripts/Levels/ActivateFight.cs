@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +5,8 @@ public class ActivateFight : MonoBehaviour
 {
     public GameObject fogArea;
     public bool on = false;
-
     [SerializeField]
     private List<GameObject> enemiesInZone = new List<GameObject>();
-
     private MeshCollider fightAreaCollider;
 
     private void Start()
@@ -24,26 +21,12 @@ public class ActivateFight : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (on && transform.childCount == 1)
+        if (on && enemiesInZone.Count == 0) // Check if there are no enemies left
         {
-            ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
+            HUDManager hudManager = FindObjectOfType<HUDManager>();
+            hudManager.HideHUD(); // Hide HUD when the fight is over
 
-            int count = 0;
-
-            foreach(ActivateFight ae in argoZone)
-            {
-                if (ae.on == true)
-                    count++;
-            }
-
-            if (count <= 1)
-            {
-                AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
-                AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
-
-                backgroundMusic.volume = 1.0f;
-                battleMusic.Stop();
-            }
+            // Optional: Handle any additional end-of-fight logic here, like playing victory music
 
             Destroy(this);
         }
@@ -51,15 +34,16 @@ public class ActivateFight : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && on == false)
+        if (other.CompareTag("Player") && !on)
         {
             fogArea.SetActive(true);
-
             on = true;
+
+            // Play battle music
             AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
             AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
 
-            if (battleMusic.isPlaying == false)
+            if (!battleMusic.isPlaying)
             {
                 backgroundMusic.volume = 0.2f;
                 battleMusic.Play();
