@@ -11,14 +11,10 @@ public class AIBulletDamage : MonoBehaviour
         if(col.gameObject.CompareTag("Player"))
         {
             col.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
-            Destroy(gameObject);
+            Destroy(gameObject, .05f);
         }
-        
-        if(col.gameObject.CompareTag("GroundEnemy") == false)
-        {
-            Debug.Log(col.gameObject.name);
-            Destroy(gameObject, 1f);
-        }
-        //Destroy(gameObject, 1f);
+
+        if (col.gameObject.CompareTag("GroundEnemy") == false)
+            Destroy(gameObject, .05f);
     }
 }
