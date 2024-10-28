@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class WinGame : MonoBehaviour
 {
 
-    private CollectableManager collectableManager;
+    private CollectableTracker collectableTracker;
 
     public UnityEvent winGame;
     // Start is called before the first frame update
@@ -21,8 +21,8 @@ public class WinGame : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         { 
-            collectableManager = other.gameObject.GetComponent<CollectableManager>();
-            if(collectableManager.collectedOrbs >= 3)
+            collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
+            if(collectableTracker.collectedOrbs >= 3)
             {
                 winGame.Invoke();
             }
