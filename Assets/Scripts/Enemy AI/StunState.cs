@@ -11,6 +11,7 @@ public class StunState : SimpleState
     NavMeshAgent agent;
     public Material stunMaterial;
     private DamageIndicator enemyIndicator;
+    private Animator anim;
     public float stunDuration = 2.0f;  // Duration of stun
     private float stunTimer;
     public float stunCooldown = 5.0f;  // Time before AI can be stunned again
@@ -23,18 +24,21 @@ public class StunState : SimpleState
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            anim = meleeStateMachine.anim;
             meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = meleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
+            anim = agroMeleeStateMachine.anim;
             agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
+            anim = rangeStateMachine.anim;
             rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = rangeStateMachine.GetComponent<DamageIndicator>();
         }
@@ -52,10 +56,12 @@ public class StunState : SimpleState
         if (stunTimer > 0)
         {
             stunTimer -= _dt;
+            anim.SetBool("isHurt", true);
         }
         if (stunTimer <= 0)
         {
             stateMachine.ChangeState(nameof(InRangeState));
+            anim.SetBool("isHurt", false);
         }
     }
 
