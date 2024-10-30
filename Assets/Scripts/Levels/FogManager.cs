@@ -7,12 +7,14 @@ public class FogManager : MonoBehaviour
 {
     public GameObject group;
     public GameObject fogArea;
+    private HUDManager hudManager;
 
     [SerializeField]
     private List<GameObject> groundEnemies = new List<GameObject>();
 
     void Start()
     {
+        hudManager = GameObject.FindObjectOfType<HUDManager>();
         groundEnemies.Clear();  // Clear the current list of enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("GroundEnemy");
 
@@ -33,6 +35,7 @@ public class FogManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             fogArea.SetActive(false);
+            hudManager.HideHUD();
         }
     }
 
