@@ -20,6 +20,11 @@ public class CollectableOrb : MonoBehaviour
     {
         
     }
+
+    public void DestroySelf()
+    {
+        Destroy(this.gameObject);
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
@@ -28,10 +33,11 @@ public class CollectableOrb : MonoBehaviour
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
             collectBlock.SetActive(false);
+            gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
 
             //PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
 
-            Destroy(this.gameObject);
+           
         }
     }
 

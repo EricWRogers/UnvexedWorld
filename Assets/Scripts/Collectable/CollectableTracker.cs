@@ -34,8 +34,9 @@ public class CollectableTracker : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        PlayerPrefs.GetInt("collectedOrbs", collectedOrbs);
-        PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
+        //This is from me attempting to save progress between scenes
+        //PlayerPrefs.GetInt("collectedOrbs", collectedOrbs);
+        //PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
     }
 
 }
