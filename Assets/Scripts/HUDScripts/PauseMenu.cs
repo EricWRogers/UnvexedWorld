@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
-    public GameObject mana;
+    public GameObject moveSet; // Declare your MoveSet GameObject
     public Button resumeButton;
     public Button quitButton;
 
@@ -39,10 +39,11 @@ public class PauseMenu : MonoBehaviour
     {
         // Ensure the pause menu is hidden at the start
         pauseMenuUI.SetActive(false);
+        moveSet.SetActive(false); // Ensure MoveSet is hidden at the start
 
         // Assign button listeners
         resumeButton.onClick.AddListener(Resume);
-        quitButton.onClick.AddListener(MainMenu);
+        quitButton.onClick.AddListener(Quit);
     }
 
     void Update()
@@ -75,33 +76,36 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
+        Debug.Log("Game Paused");
         // Show the pause menu and freeze the game
         pauseMenuUI.SetActive(true);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        moveSet.SetActive(true); // Show the MoveSet UI
+        Cursor.lockState = CursorLockMode.None; // Unlock cursor
+        Cursor.visible = true; // Show cursor
         healthBar.SetActive(false);
         powerSystem.SetActive(false);
         comboInfo.SetActive(false);
-        mana.SetActive(false);
         Time.timeScale = 0f; // Freeze time
         isPaused = true;
+        
     }
 
     public void Resume()
     {
+        Debug.Log("Game Resumed");
         // Hide the pause menu and unfreeze the game
         pauseMenuUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        moveSet.SetActive(false); // Hide the MoveSet UI
+        Cursor.lockState = CursorLockMode.Locked; // Lock cursor
+        Cursor.visible = false; // Hide cursor
         healthBar.SetActive(true);
         powerSystem.SetActive(true);
         comboInfo.SetActive(true);
-        mana.SetActive(true);
         Time.timeScale = 1f; // Unfreeze time
         isPaused = false;
     }
 
-    public void MainMenu()
+    public void Quit()
     {
         // Unfreeze time (important before changing scenes) and load the MainMenu scene
         Time.timeScale = 1f;
