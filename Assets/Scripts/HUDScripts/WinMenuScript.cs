@@ -13,10 +13,15 @@ public class WinMenuScript : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
+
+    private WinGame winGameObj;
     
     void Start()
     {
         winSection.SetActive(false);
+
+        winGameObj = GameObject.FindObjectOfType<WinGame>();
+        winGameObj.winGame.AddListener(Win);
     }
     public void Win()
     {
