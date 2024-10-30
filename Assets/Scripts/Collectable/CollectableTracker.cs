@@ -8,8 +8,8 @@ public class CollectableTracker : MonoBehaviour
     //private CollectableManager collectableTracker;
 
     public int collectedOrbs = 0;
-
-
+   
+    //PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
  
     public List<GameObject> targetCache; 
     
@@ -34,7 +34,8 @@ public class CollectableTracker : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        PlayerPrefs.GetInt("collectedOrbs", collectedOrbs);
+        PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
     }
 
 }
