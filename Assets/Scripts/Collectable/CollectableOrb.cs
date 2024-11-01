@@ -21,10 +21,19 @@ public class CollectableOrb : MonoBehaviour
         
     }
 
+    //Make function to change orbs sphere and sphere(1) from opaque to transparent
+    //call it when collectables are collected (as animation event at start of animation)
+    public void opaqueToTransparent()
+    {
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
+    }
+
     public void DestroySelf()
     {
         Destroy(this.gameObject);
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
