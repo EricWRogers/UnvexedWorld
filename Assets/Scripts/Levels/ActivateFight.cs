@@ -14,6 +14,8 @@ public class ActivateFight : MonoBehaviour
     {
         fightAreaCollider = GetComponent<MeshCollider>();
 
+        hudManager = GameObject.FindObjectOfType<HUDManager>();
+
         foreach (Transform child in transform)
         {
             enemiesInZone.Add(child.gameObject);
@@ -26,6 +28,8 @@ public class ActivateFight : MonoBehaviour
         {
             fogArea.SetActive(true); // Activate fog area if needed
             on = true;
+
+            hudManager.ShowHUD();
             
             // Optional: Play battle music or any additional logic
             Destroy(fightAreaCollider); // Disable the collider after entering
