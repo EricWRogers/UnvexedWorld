@@ -13,11 +13,22 @@ public class WinMenuScript : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
-    public GameObject mana;
+
+    private WinGame winGameObj;
     
     void Start()
     {
         winSection.SetActive(false);
+
+       
+
+        if(winGameObj == null)
+        {
+            return;
+        }
+
+         winGameObj = GameObject.FindObjectOfType<WinGame>();
+        winGameObj.winGame.AddListener(Win);
     }
     public void Win()
     {
@@ -29,7 +40,6 @@ public class WinMenuScript : MonoBehaviour
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
-        mana.SetActive(false);
         Time.timeScale = 0.0f;
     }
 

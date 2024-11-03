@@ -14,11 +14,17 @@ public class LoseMenuScript : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
-    public GameObject mana;
+
+    private Health playerHealth;
+    
 
     void Start()
     {
         loseSection.SetActive(false);
+
+        playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+
+        playerHealth.outOfHealth.AddListener(Lose);    
     }
 
      public void Lose()
@@ -30,7 +36,6 @@ public class LoseMenuScript : MonoBehaviour
         powerSystem.SetActive(false);
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
-        mana.SetActive(false);
         Time.timeScale = 0.0f;
     }
 

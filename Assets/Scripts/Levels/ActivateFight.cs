@@ -1,20 +1,20 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ActivateFight : MonoBehaviour
 {
-    public GameObject fogArea;
-    public bool on = false;
-
+    public GameObject fogArea; // Optional fog area if you want it to appear
+    private bool on = false;
     [SerializeField]
     private List<GameObject> enemiesInZone = new List<GameObject>();
-
     private MeshCollider fightAreaCollider;
+    private HUDManager hudManager;
 
     private void Start()
     {
         fightAreaCollider = GetComponent<MeshCollider>();
+
+        hudManager = GameObject.FindObjectOfType<HUDManager>();
 
         foreach (Transform child in transform)
         {
@@ -22,9 +22,9 @@ public class ActivateFight : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (on && transform.childCount == 1)
+        if(on && transform.childCount == 1)
         {
             ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
 
@@ -32,11 +32,13 @@ public class ActivateFight : MonoBehaviour
 
             foreach(ActivateFight ae in argoZone)
             {
-                if (ae.on == true)
+                if(ae.on == true)
+                {
                     count++;
+                }
             }
 
-            if (count <= 1)
+            if(count <= 1)
             {
                 AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
                 AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
@@ -51,21 +53,23 @@ public class ActivateFight : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && on == false)
+        if (other.CompareTag("Player") && !on)
         {
-            fogArea.SetActive(true);
-
+            fogArea.SetActive(true); // Activate fog area if needed
             on = true;
             AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
             AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
 
-            if (battleMusic.isPlaying == false)
+            if(battleMusic.isPlaying == false)
             {
                 backgroundMusic.volume = 0.2f;
                 battleMusic.Play();
             }
 
-            Destroy(fightAreaCollider);
+            hudManager.ShowHUD();
+            
+            // Optional: Play battle music or any additional logic
+            Destroy(fightAreaCollider); // Disable the collider after entering
         }
     }
 }
