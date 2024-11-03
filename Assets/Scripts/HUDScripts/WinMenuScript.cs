@@ -20,7 +20,14 @@ public class WinMenuScript : MonoBehaviour
     {
         winSection.SetActive(false);
 
-        winGameObj = GameObject.FindObjectOfType<WinGame>();
+       
+
+        if(winGameObj == null)
+        {
+            return;
+        }
+
+         winGameObj = GameObject.FindObjectOfType<WinGame>();
         winGameObj.winGame.AddListener(Win);
     }
     public void Win()
