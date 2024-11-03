@@ -26,7 +26,7 @@ public class Knockback : MonoBehaviour
     {
         if (rb != null)
         {
-            rb.isKinematic = false;
+           // rb.isKinematic = false;
             Vector3 force = hitDirection.normalized * knockbackStrength;
             rb.AddForce(force, ForceMode.Impulse);
             StartCoroutine(ResetKinematicAfterDelay());
@@ -37,6 +37,6 @@ public class Knockback : MonoBehaviour
     {
         yield return new WaitForSeconds(knockbackDuration);
 
-        rb.isKinematic = true;
+        //rb.isKinematic = true;
     }
 }
