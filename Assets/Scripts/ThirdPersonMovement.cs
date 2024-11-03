@@ -283,9 +283,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 if (lockOn.target){ 
-                Vector3 dir = lockOn.target.transform.position - transform.position;
-                dir.y=0;
-                transform.rotation = Quaternion.LookRotation(dir);
+                    Vector3 dir = lockOn.target.transform.position - transform.position;
+                    dir.y=0;
+                    transform.rotation = Quaternion.LookRotation(dir);
+                    
                 }
 
                 
