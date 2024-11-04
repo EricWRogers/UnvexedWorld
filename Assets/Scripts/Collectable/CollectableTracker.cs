@@ -19,14 +19,14 @@ public class CollectableTracker : MonoBehaviour
 
             if (targetCache.IndexOf(collision.gameObject) == 0)
             {
-                print("Pickup Collected");
+                //print("Pickup Collected");
                 targetCache.RemoveAt(0);
                 Destroy(collision.gameObject);
             }
-            else
-            {
-                print("Wrong item picked up");
-            }
+            //else
+            //{
+            //    print("Wrong item picked up");
+            //}
     }
     
 
