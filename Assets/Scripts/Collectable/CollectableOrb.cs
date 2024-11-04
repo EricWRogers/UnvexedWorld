@@ -1,25 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CollectableOrb : MonoBehaviour
 {
-
+    public int id = 0;
+    public Texture texture;
+    public Texture darkTexture;
     private CollectableTracker collectableTracker;
 
     public GameObject collectBlock;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     //Turns of opaque orb, turns on transparent orb for animation
     public void opaqueToTransparent()
@@ -30,7 +21,6 @@ public class CollectableOrb : MonoBehaviour
 
     public void DestroySelf()
     {
-        //Destroy(this.gameObject);
         Destroy(transform.parent.gameObject);
     }
 
@@ -47,12 +37,17 @@ public class CollectableOrb : MonoBehaviour
             Debug.Log("You picked up an orb");
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
-            collectBlock.SetActive(false);
+            collectBlock.GetComponent<RawImage>().texture = texture;
             gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
 
             //PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
 
-           
+           CollectableUIManager[] cm = Resources.FindObjectsOfTypeAll<CollectableUIManager>();
+
+           foreach(CollectableUIManager c in cm)
+           {
+                c.Collect(id);
+           }
         }
     }
 

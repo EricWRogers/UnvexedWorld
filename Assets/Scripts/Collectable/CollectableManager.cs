@@ -11,10 +11,10 @@ public class CollectableManager : MonoBehaviour
 
     //public int collectedOrbs = 0;
 
-    public static CollectableManager Instance { get; private set; } = null;
+    //public static CollectableManager Instance { get; private set; } = null;
     private void Awake() 
      { 
-         if (Instance == null) 
+         /*if (Instance == null) 
          { 
              Instance = this; 
              DontDestroyOnLoad(this.gameObject); 
@@ -22,7 +22,8 @@ public class CollectableManager : MonoBehaviour
             else 
          {
             Destroy(this.gameObject); 
-         }
+         }*/
+     }
 
     // Start is called before the first frame update
     void Start()
@@ -35,5 +36,5 @@ public class CollectableManager : MonoBehaviour
     {
         
     }
-}
+
 }
