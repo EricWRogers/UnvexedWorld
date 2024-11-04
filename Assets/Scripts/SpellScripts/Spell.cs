@@ -101,8 +101,32 @@ public class Spell : MonoBehaviour, IDamageDealer
 
     public void SetSelf(SpellCraft.Aspect newMainAspect,SpellCraft.Aspect newModAspect)
     {
-        mainAspect = newMainAspect;
-        modAspect = newModAspect;
+        SetMain(newMainAspect);
+        SetMod(newModAspect);
+    }
+
+    public void SetMain(SpellCraft.Aspect aspect)
+    {
+        mainAspect = aspect;
+        if(aspect == SpellCraft.Aspect.scavenge)
+        {
+            lifeSteal=true;
+        }
+        else
+        {
+            lifeSteal=false;
+        }
+    }
+
+    public void SetMod(SpellCraft.Aspect aspect)
+    {
+        modAspect = aspect;
+    }
+
+    void ClearSpell()
+    {
+        SetMain(SpellCraft.Aspect.none);
+        SetMod(SpellCraft.Aspect.none);
     }
 
     
