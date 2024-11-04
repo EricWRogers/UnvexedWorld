@@ -31,7 +31,14 @@ public class CollectableOrb : MonoBehaviour
 
     public void DestroySelf()
     {
-        Destroy(this.gameObject);
+        //Destroy(this.gameObject);
+        Destroy(transform.parent.gameObject);
+    }
+
+    public void orbSound()
+    {
+        AudioSource orbCollectSound = GameObject.Find("OrbCollectSound").GetComponent<AudioSource>();
+        orbCollectSound.Play();
     }
 
     private void OnTriggerEnter(Collider other)
