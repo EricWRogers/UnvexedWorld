@@ -14,9 +14,40 @@ public class ActivateFight : MonoBehaviour
     {
         fightAreaCollider = GetComponent<MeshCollider>();
 
+        hudManager = GameObject.FindObjectOfType<HUDManager>();
+
         foreach (Transform child in transform)
         {
             enemiesInZone.Add(child.gameObject);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(on && transform.childCount == 1)
+        {
+            ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
+
+            int count = 0;
+
+            foreach(ActivateFight ae in argoZone)
+            {
+                if(ae.on == true)
+                {
+                    count++;
+                }
+            }
+
+            if(count <= 1)
+            {
+                AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
+                AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
+
+                backgroundMusic.volume = 1.0f;
+                battleMusic.Stop();
+            }
+
+            Destroy(this);
         }
     }
 
@@ -26,6 +57,16 @@ public class ActivateFight : MonoBehaviour
         {
             fogArea.SetActive(true); // Activate fog area if needed
             on = true;
+            AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
+            AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
+
+            if(battleMusic.isPlaying == false)
+            {
+                backgroundMusic.volume = 0.2f;
+                battleMusic.Play();
+            }
+
+            hudManager.ShowHUD();
             
             // Optional: Play battle music or any additional logic
             Destroy(fightAreaCollider); // Disable the collider after entering

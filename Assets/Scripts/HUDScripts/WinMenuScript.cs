@@ -13,10 +13,20 @@ public class WinMenuScript : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
+
+    private WinGame winGameObj;
     
     void Start()
     {
         winSection.SetActive(false);
+
+        if(winGameObj == null)
+        {
+            return;
+        }
+
+        winGameObj = GameObject.FindObjectOfType<WinGame>();
+        winGameObj.winGame.AddListener(Win);
     }
     public void Win()
     {
@@ -37,6 +47,13 @@ public class WinMenuScript : MonoBehaviour
         Time.timeScale = 1.0f;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
+    
     public void QuitGame()
     {
         #if(UNITY_EDITOR)

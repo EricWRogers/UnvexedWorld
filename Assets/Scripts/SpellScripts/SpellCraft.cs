@@ -115,17 +115,7 @@ public class SpellCraft : MonoBehaviour
         {
             for(int i = 0; i<spells.Length; i++)
             {
-                spells[i].mainAspect = mainAspect;
-                spells[i].modAspect = modAspect;
-            }
-            //GetComponentsInChildren<Spell>().modAspect = modAspect;
-            if (mainAspect == Aspect.scavenge)
-            {
-                GetComponentInChildren<Spell>().lifeSteal = true;
-            }
-            else
-            {
-                GetComponentInChildren<Spell>().lifeSteal = false;
+                spells[i].SetSelf(mainAspect,modAspect);
             }
             
         }
@@ -180,6 +170,23 @@ public class SpellCraft : MonoBehaviour
     }
 
     void ClearSpell()
+    {
+        mainAspect = Aspect.none;
+        modAspect = Aspect.none;
+    }
+
+    //Modifying the spell script on the fist
+    public void SetFistMain(Aspect aspect)
+    {
+        mainAspect = aspect;
+    }
+
+    public void SetFistMod(Aspect aspect)
+    {
+        modAspect = aspect;
+    }
+
+    void ClearFistSpell()
     {
         mainAspect = Aspect.none;
         modAspect = Aspect.none;
