@@ -11,6 +11,12 @@ public class CollectableOrb : MonoBehaviour
     private CollectableTracker collectableTracker;
 
     public GameObject collectBlock;
+    public GameObject collectBlock2;
+
+    public void Start()
+    {
+        
+    }
 
     //Turns of opaque orb, turns on transparent orb for animation
     public void opaqueToTransparent()
@@ -38,6 +44,7 @@ public class CollectableOrb : MonoBehaviour
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             collectableTracker.collectedOrbs += 1;
             collectBlock.GetComponent<RawImage>().texture = texture;
+            collectBlock2.GetComponent<RawImage>().texture = texture;
             gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
 
             //PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);

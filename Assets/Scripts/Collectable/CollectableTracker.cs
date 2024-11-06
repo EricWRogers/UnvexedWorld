@@ -11,7 +11,8 @@ public class CollectableTracker : MonoBehaviour
    
     //PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
  
-    public List<GameObject> targetCache; 
+    public List<GameObject> targetCache;
+    public List<GameObject> targetCache2; 
     
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,7 +22,16 @@ public class CollectableTracker : MonoBehaviour
             {
                 targetCache.RemoveAt(0);
                 Destroy(collision.gameObject);
-            }     
+            }
+
+        if (targetCache2.Contains(collision.gameObject))
+
+            if (targetCache2.IndexOf(collision.gameObject) == 0)
+            {
+                targetCache2.RemoveAt(0);
+                Destroy(collision.gameObject);
+            }    
+
     }
 
     // Start is called before the first frame update
