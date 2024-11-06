@@ -178,18 +178,17 @@ public class SpellCraft : MonoBehaviour
     //Modifying the spell script on the fist
     public void SetFistMain(Aspect aspect)
     {
-        mainAspect = aspect;
+        spells[0].SetMain(aspect);
     }
 
     public void SetFistMod(Aspect aspect)
     {
-        modAspect = aspect;
+        spells[0].SetMod(aspect);
     }
 
     void ClearFistSpell()
     {
-        mainAspect = Aspect.none;
-        modAspect = Aspect.none;
+        spells[0].ClearSpell();
     }
 
     
