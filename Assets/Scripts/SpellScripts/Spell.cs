@@ -123,7 +123,7 @@ public class Spell : MonoBehaviour, IDamageDealer
         modAspect = aspect;
     }
 
-    void ClearSpell()
+    public void ClearSpell()
     {
         SetMain(SpellCraft.Aspect.none);
         SetMod(SpellCraft.Aspect.none);
