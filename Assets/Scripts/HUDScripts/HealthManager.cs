@@ -15,12 +15,15 @@ public class HealthManager : MonoBehaviour
     public float flashDuration = 0.1f; // Duration of each flash
     public float flashRepeatDelay = 0.2f; // Delay between flashes
 
+    public HUDManager hud;
+
     void Start()
     {
         playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
         // Initialize the health slider with max health
         healthSlider.maxValue = playerHealth.maxHealth;
         SetHealth(playerHealth.currentHealth);
+       
 
         // Subscribe to the healthChanged event
         playerHealth.healthChanged.AddListener(OnHealthChanged);
@@ -39,7 +42,7 @@ public class HealthManager : MonoBehaviour
         //Debug.Log("Health updated: " + currentHealth); // Debug log for checking health updates
         
         // Check if the health is below 25%, start flashing if necessary
-        if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing)
+        if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing && hud.stop == true)
         {
             //Debug.Log("Health is below 25%, starting flash..."); // Debug log for flashing condition
             StartCoroutine(FlashHealthBar());
@@ -56,7 +59,7 @@ public class HealthManager : MonoBehaviour
     private IEnumerator FlashHealthBar()
     {
         isFlashing = true; // Mark that flashing has started
-
+       
         while (playerHealth.currentHealth / (float)playerHealth.maxHealth < 0.35f)
         {
             // Flash to white
