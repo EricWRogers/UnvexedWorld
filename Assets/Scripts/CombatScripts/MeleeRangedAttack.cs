@@ -143,8 +143,11 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         direction = true;
         FindNewTarget();
-        lockOnCanvas.transform.position = target.transform.position;
-        lockOnCanvas.SetActive(true);
+        if(target != null)
+        {
+            lockOnCanvas.transform.position = target.transform.position;
+            lockOnCanvas.SetActive(true);
+        }
        
     }
     
