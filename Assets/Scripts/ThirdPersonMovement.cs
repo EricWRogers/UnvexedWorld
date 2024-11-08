@@ -150,6 +150,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
             dashing = true;
             animator.Play("Dash");
+            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
+            dashSound.Play();
             dashStartTime = Time.time;
             dashLines.SetActive(true);
             audioManager.PlayDashSound();
@@ -281,9 +283,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 if (lockOn.target){ 
-                Vector3 dir = lockOn.target.transform.position - transform.position;
-                dir.y=0;
-                transform.rotation = Quaternion.LookRotation(dir);
+                    Vector3 dir = lockOn.target.transform.position - transform.position;
+                    dir.y=0;
+                    transform.rotation = Quaternion.LookRotation(dir);
+                    
                 }
 
                 

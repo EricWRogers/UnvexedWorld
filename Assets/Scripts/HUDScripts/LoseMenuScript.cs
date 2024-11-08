@@ -45,6 +45,12 @@ public class LoseMenuScript : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void MainMenu()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
+
     public void QuitGame()
     {
         #if(UNITY_EDITOR)

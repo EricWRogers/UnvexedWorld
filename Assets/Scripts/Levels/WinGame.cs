@@ -5,6 +5,9 @@ using UnityEngine.Events;
 
 public class WinGame : MonoBehaviour
 {
+
+    private CollectableTracker collectableTracker;
+
     public UnityEvent winGame;
     // Start is called before the first frame update
     void Start()
@@ -12,11 +15,26 @@ public class WinGame : MonoBehaviour
         
     }
 
+    //Reference collectible tracker, only winnible if at least 3 orbs have been collected
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
-        {
-            winGame.Invoke();
+        { 
+            collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
+            if(collectableTracker.collectedOrbs >= 3)
+            {
+                //This is from me attempting to save progress between scenes
+                //PlayerPrefs.setInt(collectableTracker.collectedOrbs, collectableTracker.collectedOrbs);
+                //collectableTracker.collectedOrbs = PlayerPrefs.GetInt("collectedOrbs");
+                //This should update collectedOrbs to match the total amount collected by the player
+                //int prev = PlayerPrefs.GetInt("collectedOrbs", 0);
+                //if (collectableTracker.collectedOrbs > prev)
+                //{
+                //    PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
+                //}
+                winGame.Invoke();
+            }
         }
     }
 }

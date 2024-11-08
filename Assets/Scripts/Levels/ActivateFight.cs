@@ -51,6 +51,35 @@ public class ActivateFight : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if(on && transform.childCount == 1)
+        {
+            ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
+
+            int count = 0;
+
+            foreach(ActivateFight ae in argoZone)
+            {
+                if(ae.on == true)
+                {
+                    count++;
+                }
+            }
+
+            if(count <= 1)
+            {
+                AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
+                AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
+
+                backgroundMusic.volume = 1.0f;
+                battleMusic.Stop();
+            }
+
+            Destroy(this);
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !on)
