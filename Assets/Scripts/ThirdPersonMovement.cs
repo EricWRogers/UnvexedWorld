@@ -80,8 +80,8 @@ public class ThirdPersonMovement : MonoBehaviour
      public GameObject groundCheck;
 
     private RaycastHit m_info;
+    private AudioManager audioManager;
 
-    
 
     void Awake()
     {
@@ -103,6 +103,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animator = GetComponentsInChildren<Animator>()[1];
         Cursor.lockState = CursorLockMode.Locked;   
         lockOn = GetComponent<MeleeRangedAttack>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     
@@ -129,9 +130,7 @@ public class ThirdPersonMovement : MonoBehaviour
             if (Time.time < dashStartTime + dashTime)
             {
                 dashLines.SetActive(true);
-
-                controller.Move(transform.forward * dashSpeed * Time.deltaTime);
-                
+                controller.Move(transform.forward * dashSpeed * Time.deltaTime);               
             }
             else
             {
@@ -153,6 +152,7 @@ public class ThirdPersonMovement : MonoBehaviour
             animator.Play("Dash");
             dashStartTime = Time.time;
             dashLines.SetActive(true);
+            audioManager.PlayDashSound();
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
         }
@@ -355,8 +355,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(!lastraygrounded && rayGround == true)
         {
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
-             AudioSource landSound = GameObject.Find("LandingSound").GetComponent<AudioSource>();
-             landSound.Play();
+             audioManager.PlayLandingSound();
         }
     }
 }

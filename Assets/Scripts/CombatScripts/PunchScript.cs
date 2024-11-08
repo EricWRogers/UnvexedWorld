@@ -17,12 +17,14 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public GameObject particle;
 
     public ComboManager comboManager;
+    private AudioManager audioManager;
     
     // Start is called before the first frame update
     void Start()
     {
          
         comboManager = FindObjectOfType<ComboManager>();
+        audioManager = FindObjectOfType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -115,7 +117,13 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public void PlayPunch()
     {
-        AudioSource punchSound = GameObject.Find("PunchSound").GetComponent<AudioSource>();
-        punchSound.Play();
+        if (audioManager != null)
+        {
+            FindObjectOfType<AudioManager>().PlayPunchSound();
+        }
+        else
+        {
+            Debug.Log("AudioManager not found! Punch no play");
+        }
     }
 }
