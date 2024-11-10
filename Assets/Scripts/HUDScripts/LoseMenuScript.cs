@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 using SuperPupSystems.Helper;
+using UnityEngine.EventSystems;
 
 public class LoseMenuScript : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class LoseMenuScript : MonoBehaviour
 
     private Health playerHealth;
     private PauseMenu pauseMenu;
+
+    public EventSystem eventSystem;
     
 
     void Start()
@@ -25,6 +28,8 @@ public class LoseMenuScript : MonoBehaviour
 
         pauseMenu = FindObjectOfType<PauseMenu>();
 
+         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
         playerHealth.outOfHealth.AddListener(Lose);    
@@ -32,6 +37,7 @@ public class LoseMenuScript : MonoBehaviour
 
      public void Lose()
     {
+        eventSystem.enabled = false;
         didLose = true;
         pauseMenu.enabled = false;
         Cursor.lockState = CursorLockMode.None;
