@@ -150,8 +150,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
             dashing = true;
             animator.Play("Dash");
-            AudioSource dashSound = GameObject.Find("DashSound").GetComponent<AudioSource>();
-            dashSound.Play();
+            
             dashStartTime = Time.time;
             dashLines.SetActive(true);
             audioManager.PlayDashSound();
