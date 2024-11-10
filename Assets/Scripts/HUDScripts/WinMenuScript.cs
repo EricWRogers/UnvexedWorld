@@ -15,6 +15,7 @@ public class WinMenuScript : MonoBehaviour
     public GameObject comboInfo;
 
     private WinGame winGameObj;
+    private PauseMenu pauseMenu;
     
     void Start()
     {
@@ -25,6 +26,8 @@ public class WinMenuScript : MonoBehaviour
             return;
         }
 
+        pauseMenu = FindObjectOfType<PauseMenu>();
+
         winGameObj = GameObject.FindObjectOfType<WinGame>();
         winGameObj.winGame.AddListener(Win);
     }
@@ -32,6 +35,7 @@ public class WinMenuScript : MonoBehaviour
     {
         Debug.Log("You have WON!");
         didWin = true;
+        pauseMenu.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winSection.SetActive(true);
@@ -45,12 +49,14 @@ public class WinMenuScript : MonoBehaviour
     {
         
         Time.timeScale = 1.0f;
+        pauseMenu.enabled = true;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
         Time.timeScale = 1.0f;
+        pauseMenu.enabled = true;
         SceneManager.LoadSceneAsync("MainMenu");
     }
     
