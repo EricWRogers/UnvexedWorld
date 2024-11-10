@@ -1,24 +1,53 @@
 using System.Collections.Generic;
 using UnityEngine;
+using SuperPupSystems.Helper;
 
 public class ActivateFight : MonoBehaviour
 {
-    public GameObject fogArea; // Optional fog area if you want it to appear
+    public GameObject fogArea; // Optional fog area if needed
     private bool on = false;
+
     [SerializeField]
     private List<GameObject> enemiesInZone = new List<GameObject>();
-    private MeshCollider fightAreaCollider;
+
+    private Collider fightAreaCollider;
     private HUDManager hudManager;
+    private AudioManager audioManager;
+
+    private int totalEnemies; // Track total number of enemies
+    private int defeatedEnemies; // Track number of defeated enemies
 
     private void Start()
     {
-        fightAreaCollider = GetComponent<MeshCollider>();
+        // Initialize components
+        fightAreaCollider = GetComponent<Collider>();
+        hudManager = FindObjectOfType<HUDManager>();
+        audioManager = FindObjectOfType<AudioManager>();
 
-        hudManager = GameObject.FindObjectOfType<HUDManager>();
-
+        // Add all child enemies to enemiesInZone list
         foreach (Transform child in transform)
         {
-            enemiesInZone.Add(child.gameObject);
+            if (child.CompareTag("Enemy")) // Ensure only enemies are added
+            {
+                enemiesInZone.Add(child.gameObject);
+            }
+        }
+
+        totalEnemies = enemiesInZone.Count; // Set the total number of enemies in the zone
+        defeatedEnemies = 0; // Initialize defeated enemies count
+
+        // Ensure background music starts if AudioManager is available
+        audioManager?.PlayBackgroundMusic();
+
+        // Add health listeners to each enemy to track defeat
+        foreach (var enemy in enemiesInZone)
+        {
+            Health enemyHealth = enemy.GetComponent<Health>();
+            if (enemyHealth != null)
+            {
+                // Add listener to detect when enemy's health reaches zero
+                enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(enemy));
+            }
         }
     }
 
@@ -55,21 +84,47 @@ public class ActivateFight : MonoBehaviour
     {
         if (other.CompareTag("Player") && !on)
         {
-            fogArea.SetActive(true); // Activate fog area if needed
             on = true;
-            AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
-            AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
-
-            if(battleMusic.isPlaying == false)
-            {
-                backgroundMusic.volume = 0.2f;
-                battleMusic.Play();
-            }
-
+            fogArea?.SetActive(true); // Activate fog area if specified
             hudManager.ShowHUD();
-            
-            // Optional: Play battle music or any additional logic
-            Destroy(fightAreaCollider); // Disable the collider after entering
+
+            // Start battle music when entering
+            audioManager?.PlayBattleMusic();
+
+            // Disable the collider after player enters to avoid re-triggering
+            if (fightAreaCollider != null)
+            {
+                fightAreaCollider.enabled = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && on)
+        {
+            on = false;
+            fogArea?.SetActive(false); // Deactivate fog area
+            hudManager.HideHUD();
+
+            // Return to background music after exiting fight area
+            if (!audioManager.IsBattleMusicPlaying())
+            {
+                audioManager?.PlayBackgroundMusic();
+            }
+        }
+    }
+
+    // Called when an enemy is defeated
+    private void OnEnemyDefeated(GameObject enemy)
+    {
+        defeatedEnemies++;
+
+        // Check if all enemies are defeated
+        if (defeatedEnemies >= totalEnemies)
+        {
+            // Switch to background music when all enemies are defeated
+            audioManager?.PlayBackgroundMusic();
         }
     }
 }
