@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class WinGame : MonoBehaviour
 {
 
     private CollectableTracker collectableTracker;
 
+    public EventSystem eventSystem;
+
     public UnityEvent winGame;
     // Start is called before the first frame update
     void Start()
     {
-        
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
     }
 
     //Reference collectible tracker, only winnible if at least 3 orbs have been collected
@@ -20,7 +23,8 @@ public class WinGame : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
-        { 
+        {   
+            eventSystem.enabled = false;
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
             if(collectableTracker.collectedOrbs >= 3)
             {

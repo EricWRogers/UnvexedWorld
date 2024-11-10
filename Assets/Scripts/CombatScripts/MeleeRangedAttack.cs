@@ -27,6 +27,10 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public bool direction = false;
 
+    public bool shoot = false;
+
+    public GameObject lockOnCanvas;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -37,6 +41,8 @@ public class MeleeRangedAttack : MonoBehaviour
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
          cameraManager = GetComponent<CameraManager>();
+
+         lockOnCanvas.SetActive(false);
 
 
     }
@@ -139,12 +145,18 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         direction = true;
         FindNewTarget();
+        if(target != null)
+        {
+            lockOnCanvas.transform.position = target.transform.position;
+            lockOnCanvas.SetActive(true);
+        }
        
     }
     
     void LockOff()
     {
         direction = false;
+        lockOnCanvas.SetActive(false);
     }
 
     void CancelLockUp()
@@ -228,6 +240,7 @@ public class MeleeRangedAttack : MonoBehaviour
     private void Range()
     {
         GetComponent<Animator>().SetTrigger("Ranged");
+        shoot = true;
        
     }
 
