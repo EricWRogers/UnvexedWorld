@@ -221,6 +221,12 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
+        if(direction == true && target != null)
+        {
+            lockOnCanvas.transform.position = target.transform.position;
+            lockOnCanvas.SetActive(true);
+        }
+
 
 
     }
