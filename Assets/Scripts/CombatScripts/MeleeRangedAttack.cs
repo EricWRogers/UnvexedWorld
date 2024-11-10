@@ -27,6 +27,8 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public bool direction = false;
 
+    public bool shoot = false;
+
     public GameObject lockOnCanvas;
 
     void Awake()
@@ -238,6 +240,7 @@ public class MeleeRangedAttack : MonoBehaviour
     private void Range()
     {
         GetComponent<Animator>().SetTrigger("Ranged");
+        shoot = true;
        
     }
 
