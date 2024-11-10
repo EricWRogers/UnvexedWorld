@@ -16,11 +16,14 @@ public class LoseMenuScript : MonoBehaviour
     public GameObject comboInfo;
 
     private Health playerHealth;
+    private PauseMenu pauseMenu;
     
 
     void Start()
     {
         loseSection.SetActive(false);
+
+        pauseMenu = FindObjectOfType<PauseMenu>();
 
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
@@ -30,6 +33,7 @@ public class LoseMenuScript : MonoBehaviour
      public void Lose()
     {
         didLose = true;
+        pauseMenu.enabled = false;
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loseSection.SetActive(true);
@@ -42,12 +46,14 @@ public class LoseMenuScript : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1.0f;
+        pauseMenu.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void MainMenu()
     {
         Time.timeScale = 1.0f;
+        pauseMenu.enabled = true;
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
