@@ -3,17 +3,31 @@ using UnityEngine;
 public class EncounterTrigger : MonoBehaviour
 {
     private HUDManager hudManager;
+    private AudioManager audioManager;
 
     private void Start()
     {
+        // Initialize HUDManager and AudioManager references
         hudManager = FindObjectOfType<HUDManager>();
+        audioManager = FindObjectOfType<AudioManager>();
+
+        if (hudManager == null)
+        {
+            Debug.LogWarning("HUDManager not found in the scene.");
+        }
+
+        if (audioManager == null)
+        {
+            Debug.LogWarning("AudioManager not found in the scene.");
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            hudManager.ShowHUD(); // Show HUD when entering the encounter area
+            hudManager?.ShowHUD();
+            audioManager?.PlayBattleMusic(); // Start battle music on entering
         }
     }
 
@@ -21,7 +35,8 @@ public class EncounterTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hudManager.HideHUD(); // Hide HUD when exiting the encounter area
+            hudManager?.HideHUD();
+            audioManager?.PlayBackgroundMusic(); // Switch back to background music
         }
     }
 }
