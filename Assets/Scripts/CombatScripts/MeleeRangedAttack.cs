@@ -35,7 +35,7 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.MeleeLight.performed += ctx => MeleeGamepadlight();
-        gamepad.GamePlay.MeleeHeavy.performed += ctx => MeleeGamepadHeavy();
+        //gamepad.GamePlay.MeleeHeavy.performed += ctx => MeleeGamepadHeavy();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
         gamepad.GamePlay.LockOn.performed += ctx => LockOn();
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
@@ -94,51 +94,51 @@ public class MeleeRangedAttack : MonoBehaviour
 
     }
 
-    void MeleeGamepadHeavy()
-    {
-        isAttacking = true;
+    // void MeleeGamepadHeavy()
+    // {
+    //     isAttacking = true;
 
         
 
-        if (target == null)
-            target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
+    //     if (target == null)
+    //         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
 
-        if (target)
-        {
-            if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
-            {
+    //     if (target)
+    //     {
+    //         if (Vector3.Distance(target.transform.position, transform.position) < attackRange)
+    //         {
 
-                Vector3 dir = (target.transform.position - transform.position).normalized;
-                transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
+    //             Vector3 dir = (target.transform.position - transform.position).normalized;
+    //             transform.eulerAngles = new Vector3(0, Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg, 0);
 
-                Debug.Log("Found" + target.name);
+    //             Debug.Log("Found" + target.name);
                 
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
-                MeleeHeavy();
+    //             if (spellCraft.casting)
+    //             {
+    //                 spellCraft.CastSpell(SpellCraft.CastType.melee);
+    //             }
+    //             MeleeHeavy();
 
-            }
-            else
-            {
-                isAttacking = true;
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
-                MeleeHeavy();
-            }
-            if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
-            {
+    //         }
+    //         else
+    //         {
+    //             isAttacking = true;
+    //             if (spellCraft.casting)
+    //             {
+    //                 spellCraft.CastSpell(SpellCraft.CastType.melee);
+    //             }
+    //             MeleeHeavy();
+    //         }
+    //         if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
+    //         {
 
-                FindNewTarget();
-            }
-        }
+    //             FindNewTarget();
+    //         }
+    //     }
 
 
 
-    }
+    // }
 
 
     void LockOn()
@@ -237,11 +237,11 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
     }
 
-    private void MeleeHeavy()
-    {
-        GetComponent<Animator>().SetTrigger("Heavy");
-        GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
-    }
+    // private void MeleeHeavy()
+    // {
+    //     GetComponent<Animator>().SetTrigger("Heavy");
+    //     GetComponentsInChildren<Animator>()[1].SetTrigger("Punch");
+    // }
 
     private void Range()
     {
