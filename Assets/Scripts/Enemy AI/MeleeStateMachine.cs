@@ -12,6 +12,8 @@ public class MeleeStateMachine : SimpleStateMachine
     public AlertState alert;
     public InRangeState inRange;
     public AttackState melee;
+
+    public NavMeshAgent agent;
     
     public bool LOS;
     public bool isHurt;
@@ -57,6 +59,8 @@ public class MeleeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
+        agent = GetComponent<NavMeshAgent>();
+
         ChangeState(nameof(RandomMovementState));
     }
 
@@ -68,14 +72,6 @@ public class MeleeStateMachine : SimpleStateMachine
         }else
         {
             isAlive = false;
-        }
-        if(isHurt)
-        {
-            anim.SetBool("isHurt", true);
-            isHurt = false;
-        }else
-        {
-            anim.SetBool("isHurt", false);
         }
         // if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
         // {
@@ -91,15 +87,19 @@ public class MeleeStateMachine : SimpleStateMachine
         }
         
         stunned.UpdateCooldown(Time.deltaTime);
+
+        if (agent.velocity.magnitude > 0.1f) 
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }

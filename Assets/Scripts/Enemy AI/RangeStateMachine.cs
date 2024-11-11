@@ -11,7 +11,8 @@ public class RangeStateMachine : SimpleStateMachine
     public StunState stunned;
     public InRangeState inRange;
     public AttackState range;
-    public CooldownState cooldown;
+
+    public NavMeshAgent agent;
 
     public bool canRotate = true;
     public bool LOS;
@@ -40,7 +41,6 @@ public class RangeStateMachine : SimpleStateMachine
         states.Add(stunned);
         states.Add(inRange);
         states.Add(range);
-        states.Add(cooldown);
 
         foreach (SimpleState s in states)
         {
@@ -58,6 +58,8 @@ public class RangeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
+        agent = GetComponent<NavMeshAgent>();
+
         ChangeState(nameof(RandomMovementState));
     }
 
@@ -70,14 +72,6 @@ public class RangeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(isHurt)
-        {
-            anim.SetBool("isHurt", true);
-            isHurt = false;
-        }else
-        {
-            anim.SetBool("isHurt", false);
-        }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -89,15 +83,19 @@ public class RangeStateMachine : SimpleStateMachine
         }
         
         stunned.UpdateCooldown(Time.deltaTime);
+
+        if (agent.velocity.magnitude > 0.1f) 
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }

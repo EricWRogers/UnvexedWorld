@@ -61,7 +61,7 @@ MonoBehaviour:
         m_CallState: 2
   autoStart: 0
   autoRestart: 0
-  countDownTime: 0.5
+  countDownTime: 0.25
   timeScale: 1
 --- !u!1 &3912719803137384589
 GameObject:
@@ -278,7 +278,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8613553040356505576}
+      - m_Target: {fileID: 3036130534618232616}
         m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
         m_MethodName: Play
         m_Mode: 5
@@ -339,7 +339,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    stunMaterial: {fileID: 2100000, guid: 8a08cda4391cd3b73a991b92ea7239c6, type: 2}
+    stunMaterial: {fileID: 2100000, guid: 3039b8137caf24847b16ccdcf0949f02, type: 2}
     stunDuration: 4
     stunCooldown: 8
   inRange:
@@ -363,7 +363,7 @@ MonoBehaviour:
     attack:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1976943649321802659}
+        - m_Target: {fileID: 3036130534618232616}
           m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
           m_MethodName: Play
           m_Mode: 5
@@ -379,6 +379,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     isAttacking: 0
+  agent: {fileID: 0}
   LOS: 0
   isHurt: 0
   isAlive: 0
@@ -445,9 +446,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34f62ce3eaabffe6398d2f2380e96881, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 2100000, guid: 99b1b929298cef94eb89a5863a764fdd, type: 2}
-  hurtMaterial: {fileID: 2100000, guid: 1755fdc7a4e30344a91d2e7b3719d248, type: 2}
-  targetRenderer: {fileID: 0}
+  defaultMaterial: {fileID: 2100000, guid: cd38bd47f8329b9dcb9b3174ead73a5f, type: 2}
+  hurtMaterial: {fileID: 2100000, guid: 91bfabc0d0b3b1c4db860e90b8778a87, type: 2}
+  targetRenderer: {fileID: 708149771143496906}
   timer: {fileID: 1856588566106068453}
 --- !u!114 &3922640917426388746
 MonoBehaviour:
@@ -5510,6 +5511,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_hurt_animation
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 22b11208298078c49adf9f0f18e81b83,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 37692a8bd706891ae90351d1abfffc02, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 22b11208298078c49adf9f0f18e81b83,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5519,9 +5530,15 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3663402058161655192}
   m_SourcePrefab: {fileID: 100100000, guid: 22b11208298078c49adf9f0f18e81b83, type: 3}
---- !u!1 &1976943649321802659 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -2294699676925423334, guid: 22b11208298078c49adf9f0f18e81b83,
+--- !u!137 &708149771143496906 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -964949561901969805, guid: 22b11208298078c49adf9f0f18e81b83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8883373403795507897}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3036130534618232616 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 22b11208298078c49adf9f0f18e81b83,
     type: 3}
   m_PrefabInstance: {fileID: 8883373403795507897}
   m_PrefabAsset: {fileID: 0}
