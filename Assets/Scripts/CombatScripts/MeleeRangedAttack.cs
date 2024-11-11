@@ -281,5 +281,14 @@ public class MeleeRangedAttack : MonoBehaviour
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 
+    public void FingerGun()
+    {
+        animator.Play("FingerGun");
+    }
+
+    public void LockUp()
+    {
+        isAttacking=true;
+    }
    
 }
