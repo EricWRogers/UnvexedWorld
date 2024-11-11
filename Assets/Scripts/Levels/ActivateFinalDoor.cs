@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class ActivateFinalDoor : MonoBehaviour
 {
-    public GameObject finalDoor;
+    public Animator finalDoor;
+    public GameObject finalDoorPS;
     public GameObject fogWall;
 
     void Start()
     {
-        finalDoor.SetActive(false);
+        finalDoor.enabled = false;
+        finalDoorPS.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.CompareTag("Player") && !fogWall.activeInHierarchy)
         {
-            finalDoor.SetActive(true);
+            finalDoor.enabled = true;
+            finalDoorPS.SetActive(true);
         }
     }
 }
