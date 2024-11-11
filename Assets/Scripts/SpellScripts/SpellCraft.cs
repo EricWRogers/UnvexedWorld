@@ -23,6 +23,14 @@ public class SpellCraft : MonoBehaviour
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
     public bool casting = false;
+
+    public bool mainSet = false;
+
+    public bool modSet = false;
+
+    public bool clear = false;
+
+   
    
 
     PlayerGamepad gamepad;
@@ -129,6 +137,7 @@ public class SpellCraft : MonoBehaviour
         if ( mainAspect == Aspect.none)
         {
             mainAspect = Aspect.scavenge;
+            
         }
         else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
         {
@@ -162,15 +171,18 @@ public class SpellCraft : MonoBehaviour
     public void SetMain(Aspect aspect)
     {
         mainAspect = aspect;
+        mainSet = true;
     }
 
     public void SetMod(Aspect aspect)
     {
         modAspect = aspect;
+        modSet = true;
     }
 
     void ClearSpell()
     {
+        clear = true;
         mainAspect = Aspect.none;
         modAspect = Aspect.none;
     }

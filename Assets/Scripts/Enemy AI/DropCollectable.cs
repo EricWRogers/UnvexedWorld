@@ -8,6 +8,6 @@ public class DropCollectable : MonoBehaviour
     
     public void OnDeath()
     {
-        Instantiate(prefab, transform.position, Quaternion.identity);
+        prefab.transform.position = transform.position;
     }
 }

@@ -27,6 +27,10 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public bool direction = false;
 
+    public bool shoot = false;
+
+    public GameObject lockOnCanvas;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -37,6 +41,8 @@ public class MeleeRangedAttack : MonoBehaviour
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
          cameraManager = GetComponent<CameraManager>();
+
+         lockOnCanvas.SetActive(false);
 
 
     }
@@ -139,12 +145,18 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         direction = true;
         FindNewTarget();
+        if(target != null)
+        {
+            lockOnCanvas.transform.position = target.transform.position;
+            lockOnCanvas.SetActive(true);
+        }
        
     }
     
     void LockOff()
     {
         direction = false;
+        lockOnCanvas.SetActive(false);
     }
 
     void CancelLockUp()
@@ -209,6 +221,12 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
+        if(direction == true && target != null)
+        {
+            lockOnCanvas.transform.position = target.transform.position;
+            lockOnCanvas.SetActive(true);
+        }
+
 
 
     }
@@ -228,6 +246,7 @@ public class MeleeRangedAttack : MonoBehaviour
     private void Range()
     {
         GetComponent<Animator>().SetTrigger("Ranged");
+        shoot = true;
        
     }
 
@@ -262,5 +281,14 @@ public class MeleeRangedAttack : MonoBehaviour
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 
+    public void FingerGun()
+    {
+        animator.Play("FingerGun");
+    }
+
+    public void LockUp()
+    {
+        isAttacking=true;
+    }
    
 }
