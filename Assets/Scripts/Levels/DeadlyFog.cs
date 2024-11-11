@@ -43,7 +43,7 @@ public class DeadlyFog : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (inFog)
         {
