@@ -49,13 +49,10 @@ public class InRangeState : SimpleState
             if (meleeStateMachine.isAlive && meleeStateMachine.LOS)
             {
                 agent.SetDestination(meleeStateMachine.target.position);
-                if (!dustPS.isPlaying)
-                {
-                    dustPS.Play();
-                }
+                
                 if (Vector3.Distance(agent.transform.position, meleeStateMachine.target.position) < attackRange)
                 {
-                    dustPS.Stop();
+                    //dustPS.Stop();
                     stateMachine.ChangeState(nameof(AttackState));
                 }
             }
@@ -65,13 +62,10 @@ public class InRangeState : SimpleState
             if (agroMeleeStateMachine.isAlive)
             {
                 agent.SetDestination(agroMeleeStateMachine.target.position);
-                if (!dustPS.isPlaying)
-                {
-                    dustPS.Play();
-                }
+                
                 if (Vector3.Distance(agent.transform.position, agroMeleeStateMachine.target.position) < attackRange)
                 {
-                    dustPS.Stop();
+                    //dustPS.Stop();
                     stateMachine.ChangeState(nameof(AttackState));
                 }
             }
@@ -81,13 +75,10 @@ public class InRangeState : SimpleState
             if (rangeStateMachine.isAlive)
             {
                 agent.SetDestination(rangeStateMachine.target.position);
-                if (!dustPS.isPlaying)
-                {
-                    dustPS.Play();
-                }
+
                 if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) < attackRange)
                 {
-                    dustPS.Stop();
+                    //dustPS.Stop();
                     stateMachine.ChangeState(nameof(AttackState));
                 }
             }
