@@ -10,6 +10,8 @@ public class AudioManager : MonoBehaviour
     public AudioClip landing;
     public AudioClip hurt;
 
+     public AudioClip orb;
+
     private AudioSource musicSource;
     private AudioSource sfxSource;
 
@@ -62,6 +64,10 @@ public class AudioManager : MonoBehaviour
     public void PlayHurtSound()
     {
         sfxSource.PlayOneShot(hurt);
+    }
+     public void PlayOrbSound()
+    {
+        sfxSource.PlayOneShot(orb);
     }
 
     public void StopMusic()

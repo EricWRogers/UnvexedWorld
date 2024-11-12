@@ -67,14 +67,7 @@ public class ActivateFight : MonoBehaviour
                 }
             }
 
-            if(count <= 1)
-            {
-                AudioSource backgroundMusic = GameObject.Find("Background Music").GetComponent<AudioSource>();
-                AudioSource battleMusic = GameObject.Find("Battle Music").GetComponent<AudioSource>();
-
-                backgroundMusic.volume = 1.0f;
-                battleMusic.Stop();
-            }
+           
 
             Destroy(this);
         }
