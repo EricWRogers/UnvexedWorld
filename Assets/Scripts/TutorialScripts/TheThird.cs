@@ -44,6 +44,8 @@ public class TheThird : MonoBehaviour
         {
             wall.SetActive(true);
             inArea = true;
+            spell.modSet = false;
+            
         }
     }
 

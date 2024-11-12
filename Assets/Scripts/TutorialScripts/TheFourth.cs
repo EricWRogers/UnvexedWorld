@@ -49,6 +49,7 @@ public class TheFourth : MonoBehaviour
         {
             wall.SetActive(true);
             inArea = true;
+            spell.clear = false;
         }
     }
 
