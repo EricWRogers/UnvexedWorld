@@ -46,8 +46,8 @@ public class SpellCraft : MonoBehaviour
         
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
-        //gamepad.GamePlay.Sunder.performed += ctx => Sunder();
-        gamepad.GamePlay.Splendor.performed += ctx => Splendor();
+        gamepad.GamePlay.Sunder.performed += ctx => Sunder();
+        //gamepad.GamePlay.Splendor.performed += ctx => Splendor();
         gamepad.GamePlay.Clear.performed += ctx => ClearSpell();
         gamepad.GamePlay.Casting.performed += ctx => SetCasting();
         gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
