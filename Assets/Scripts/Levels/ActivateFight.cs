@@ -84,6 +84,22 @@ public class ActivateFight : MonoBehaviour
             // Start battle music when entering
             audioManager?.PlayBattleMusic();
 
+            foreach (var enemy in enemiesInZone)
+            {
+                if (enemy.TryGetComponent<MeleeStateMachine>(out var meleeStateMachine))
+                {
+                    meleeStateMachine.isInsideCollider = true;
+                }
+                else if (enemy.TryGetComponent<AgroMeleeStateMachine>(out var agroMeleeStateMachine))
+                {
+                    agroMeleeStateMachine.isInsideCollider = true;
+                }
+                else if (enemy.TryGetComponent<RangeStateMachine>(out var rangeStateMachine))
+                {
+                    rangeStateMachine.isInsideCollider = true;
+                }
+            }
+
             // Disable the collider after player enters to avoid re-triggering
             if (fightAreaCollider != null)
             {
