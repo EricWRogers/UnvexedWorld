@@ -17,7 +17,7 @@ public class AgroMeleeStateMachine : SimpleStateMachine
     public bool LOS;
     public bool isHurt;
     public bool isAlive;
-    public bool isClose;
+    public bool isInsideCollider = false;
     public bool isSearching;
     public bool isPunched;
 

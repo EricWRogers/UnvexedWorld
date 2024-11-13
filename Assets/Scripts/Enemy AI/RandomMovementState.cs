@@ -57,7 +57,7 @@ public class RandomMovementState : SimpleState
                 }
             }
             
-            if (meleeStateMachine.LOS == true)
+            if (meleeStateMachine.LOS == true && meleeStateMachine.isInsideCollider == true)
             {   
                 //dustPS.Stop();
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -77,7 +77,7 @@ public class RandomMovementState : SimpleState
                 }
             }
             
-            if (agroMeleeStateMachine.LOS == true)
+            if (agroMeleeStateMachine.LOS == true && agroMeleeStateMachine.isInsideCollider == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
@@ -96,7 +96,7 @@ public class RandomMovementState : SimpleState
                 }
             }
             
-            if (rangeStateMachine.LOS == true)
+            if (rangeStateMachine.LOS == true && rangeStateMachine.isInsideCollider == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
