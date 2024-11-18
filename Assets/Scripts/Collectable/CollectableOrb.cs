@@ -46,6 +46,7 @@ public class CollectableOrb : MonoBehaviour
             collectBlock.GetComponent<RawImage>().texture = texture;
             collectBlock2.GetComponent<RawImage>().texture = texture;
             gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
+            GetComponent<Collider>().enabled = false;
 
             //PlayerPrefs.SetInt("collectedOrbs", collectableTracker.collectedOrbs);
 
