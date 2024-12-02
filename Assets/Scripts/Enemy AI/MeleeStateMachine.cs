@@ -9,10 +9,10 @@ public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public StunState stunned;
-    public AlertState alert;
     public InRangeState inRange;
     public AttackState melee;
 
+    [HideInInspector]
     public NavMeshAgent agent;
     
     public bool LOS;
@@ -22,8 +22,6 @@ public class MeleeStateMachine : SimpleStateMachine
     public bool isSearching;
     public bool isPunched;
 
-    public float ranMinFlee;
-    public float ranMaxFlee;
     public float inAttackRange = 1.0f;
 
     public Transform target;
@@ -39,7 +37,6 @@ public class MeleeStateMachine : SimpleStateMachine
     {
         states.Add(randomMovement);
         states.Add(stunned);
-        states.Add(alert);
         states.Add(inRange);
         states.Add(melee);
 
