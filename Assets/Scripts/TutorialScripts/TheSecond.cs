@@ -39,6 +39,8 @@ public class TheSecond : MonoBehaviour
         {
             wall.SetActive(true);
             inArea = true;
+            spell.mainSet = false;
+            spell.modSet = false;
         }
     }
 
