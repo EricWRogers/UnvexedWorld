@@ -45,9 +45,9 @@ public class SpellCraft : MonoBehaviour
         spells = GetComponentsInChildren<Spell>();
         
         gamepad = new PlayerGamepad();
-        gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
+        //gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
         //gamepad.GamePlay.Sunder.performed += ctx => Sunder();
-        gamepad.GamePlay.Splendor.performed += ctx => Splendor();
+        //gamepad.GamePlay.Splendor.performed += ctx => Splendor();
         gamepad.GamePlay.Clear.performed += ctx => ClearSpell();
         gamepad.GamePlay.Casting.performed += ctx => SetCasting();
         gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
@@ -81,26 +81,26 @@ public class SpellCraft : MonoBehaviour
         
         
         //Setting spell components
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+       // {
             //mainAspect = Aspect.scavenge;
-            Scavenge();
-        }
+            //Scavenge();
+        //}
 
         // if (Input.GetKeyDown(KeyCode.Alpha3))
         // {
         //     Sunder();
         // }
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Splendor();
-        }
+       // if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+           // Splendor();
+        //}
         
-        if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ClearSpell();
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha4))
+        //{
+           // ClearSpell();
+        //}
         
     }
 

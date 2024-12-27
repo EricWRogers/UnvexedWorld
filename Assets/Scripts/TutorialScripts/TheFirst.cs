@@ -46,6 +46,8 @@ public class TheFirst : MonoBehaviour
         {
             wall.SetActive(true);
             inArea = true;
+            attack.punched = false;
+            attack.shoot = false;
         }
     }
 
