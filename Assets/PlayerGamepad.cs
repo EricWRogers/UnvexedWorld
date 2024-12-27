@@ -143,6 +143,15 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Text"",
+                    ""type"": ""Button"",
+                    ""id"": ""d3ddf386-84c2-4acd-b335-62498c569561"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -288,6 +297,17 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""MeleeHeavy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4fd08fd1-8032-41b5-8c20-146d4e12c4cd"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Text"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -309,6 +329,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Pause = m_GamePlay.FindAction("Pause", throwIfNotFound: true);
         m_GamePlay_LockOn = m_GamePlay.FindAction("LockOn", throwIfNotFound: true);
         m_GamePlay_MeleeHeavy = m_GamePlay.FindAction("MeleeHeavy", throwIfNotFound: true);
+        m_GamePlay_Text = m_GamePlay.FindAction("Text", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,6 +404,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Pause;
     private readonly InputAction m_GamePlay_LockOn;
     private readonly InputAction m_GamePlay_MeleeHeavy;
+    private readonly InputAction m_GamePlay_Text;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -400,6 +422,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Pause => m_Wrapper.m_GamePlay_Pause;
         public InputAction @LockOn => m_Wrapper.m_GamePlay_LockOn;
         public InputAction @MeleeHeavy => m_Wrapper.m_GamePlay_MeleeHeavy;
+        public InputAction @Text => m_Wrapper.m_GamePlay_Text;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -448,6 +471,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @MeleeHeavy.started += instance.OnMeleeHeavy;
             @MeleeHeavy.performed += instance.OnMeleeHeavy;
             @MeleeHeavy.canceled += instance.OnMeleeHeavy;
+            @Text.started += instance.OnText;
+            @Text.performed += instance.OnText;
+            @Text.canceled += instance.OnText;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -491,6 +517,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @MeleeHeavy.started -= instance.OnMeleeHeavy;
             @MeleeHeavy.performed -= instance.OnMeleeHeavy;
             @MeleeHeavy.canceled -= instance.OnMeleeHeavy;
+            @Text.started -= instance.OnText;
+            @Text.performed -= instance.OnText;
+            @Text.canceled -= instance.OnText;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -523,5 +552,6 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnPause(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
         void OnMeleeHeavy(InputAction.CallbackContext context);
+        void OnText(InputAction.CallbackContext context);
     }
 }

@@ -82,6 +82,10 @@ public class ThirdPersonMovement : MonoBehaviour
     private RaycastHit m_info;
     private AudioManager audioManager;
 
+    public Diologue text;
+
+    public DialogueInteraction test;
+
 
     void Awake()
     {
@@ -119,6 +123,11 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y += jumpForce;
             controller.Move(velocity * Time.deltaTime);
 
+        }
+
+        if(test.InRange)
+        {
+            text.LineSkip();
         }
     }
 
