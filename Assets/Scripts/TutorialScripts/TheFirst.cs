@@ -20,7 +20,7 @@ public class TheFirst : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(attack.isAttacking == true && inArea == true)
+        if(attack.punched == true && inArea == true)
         {
             check1 = true;
         }

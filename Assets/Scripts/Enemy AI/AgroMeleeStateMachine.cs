@@ -11,6 +11,8 @@ public class AgroMeleeStateMachine : SimpleStateMachine
     public StunState stunned;
     public InRangeState inRange;
     public AttackState melee;
+
+    public NavMeshAgent agent;
     
     public bool LOS;
     public bool isHurt;
@@ -55,6 +57,8 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
+        agent = GetComponent<NavMeshAgent>();
+
         ChangeState(nameof(RandomMovementState));
     }
 
@@ -67,11 +71,6 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(isHurt)
-        {
-            Debug.Log("Then Enemy is Hurt");
-            anim.SetBool("isHurt", isHurt);
-        }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -82,15 +81,19 @@ public class AgroMeleeStateMachine : SimpleStateMachine
         }
         
         stunned.UpdateCooldown(Time.deltaTime);
+
+        if (agent.velocity.magnitude > 0.1f) 
+        {
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
     }
 
     public void TakenDamage()
     {
         isPunched = true;
-    }
-
-    public void Hurted()
-    {
-        isHurt = true;
     }
 }

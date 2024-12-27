@@ -29,6 +29,8 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public bool shoot = false;
 
+    public bool punched = false;
+
     public GameObject lockOnCanvas;
 
     void Awake()
@@ -51,6 +53,7 @@ public class MeleeRangedAttack : MonoBehaviour
     void MeleeGamepadlight()
     {
         isAttacking = true;
+        punched = true;
 
         
 
