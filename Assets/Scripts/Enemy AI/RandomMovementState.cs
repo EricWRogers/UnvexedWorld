@@ -11,8 +11,8 @@ public class RandomMovementState : SimpleState
     private ParticleSystem dustPS;
     private float moveDelay = 2.0f; 
     private float moveTimer = 0f;
-    private float minDelay = 1.5f; 
-    private float maxDelay = 3.0f; 
+    private float minDelay = 3.0f; 
+    private float maxDelay = 5.0f; 
 
     public float range; 
     public Transform circleCenterObject;
@@ -59,7 +59,7 @@ public class RandomMovementState : SimpleState
             
             if (meleeStateMachine.LOS == true)
             {   
-                dustPS.Stop();
+                //dustPS.Stop();
                 stateMachine.ChangeState(nameof(InRangeState));
             }
         }
@@ -115,7 +115,7 @@ public class RandomMovementState : SimpleState
         if (GetRandomPoint(circleCenterObject.position, range, out point))
         {
             agent.SetDestination(point);
-            dustPS.Play();
+            //dustPS.Play();
         }
     }
 
