@@ -82,6 +82,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private RaycastHit m_info;
     private AudioManager audioManager;
 
+   
+
 
     void Awake()
     {
@@ -120,6 +122,8 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
 
         }
+
+      
     }
 
     void Dashing()
