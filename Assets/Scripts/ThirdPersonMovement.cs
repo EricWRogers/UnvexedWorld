@@ -82,9 +82,7 @@ public class ThirdPersonMovement : MonoBehaviour
     private RaycastHit m_info;
     private AudioManager audioManager;
 
-    public Diologue text;
-
-    public DialogueInteraction test;
+   
 
 
     void Awake()
@@ -125,10 +123,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         }
 
-        if(test.InRange)
-        {
-            text.LineSkip();
-        }
+      
     }
 
     void Dashing()
