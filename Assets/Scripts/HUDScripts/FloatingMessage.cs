@@ -23,7 +23,7 @@ namespace Scripts.HUDScripts.MessageSystem
 
         private void Start()
         {
-            _rigidbody.velocity = 
+            _rigidbody.linearVelocity = 
                 new Vector2(Random.Range(-InitialXVelocityRange, InitialXVelocityRange), InitialYVelocity);
             Destroy(gameObject, LifeTime);
         }
