@@ -7,7 +7,7 @@ using SuperPupSystems.Helper;
 public class DestroySelf : MonoBehaviour
 {
     public Timer timer;
-    public int duration = 10;
+    public float duration = 10;
 
     private void Start()
     {
