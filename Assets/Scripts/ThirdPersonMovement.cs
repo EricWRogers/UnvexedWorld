@@ -84,6 +84,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public bool inText = false;
 
+    public bool nextLine = false;
+
    
 
 
@@ -97,6 +99,8 @@ public class ThirdPersonMovement : MonoBehaviour
         gamepad.GamePlay.Jump.performed += ctx => GamepadJump();
 
         gamepad.GamePlay.Dash.performed += ctx => GamepadDash();
+
+        gamepad.GamePlay.Jump.canceled += ctx => NextLine();
 
         gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
@@ -114,20 +118,44 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadJump()
     {
-        if ((isGrounded || jumpCount < jumpMax && !inText))
+        if(inText == false)
         {
-            isJumping = true;
-            jumpCount++;
-            isGrounded = false;
-            velocity.y = 0;
-            velocity.y += jumpForce;
-            controller.Move(velocity * Time.deltaTime);
+        
+            if ((isGrounded || jumpCount < jumpMax  ))
+                {
+                isJumping = true;
+                jumpCount++;
+                isGrounded = false;
+                velocity.y = 0;
+                velocity.y += jumpForce;
+                controller.Move(velocity * Time.deltaTime);
 
+                }
         }
 
 
       
     }
+
+    void NextLine()
+    {
+        nextLine = true;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("TextBox"))
+        { 
+           inText = true;
+             
+        }
+    }
+
+     void OnTriggerExit(Collider other) 
+    {
+       inText = false;
+    }
+    
 
     void Dashing()
     {
@@ -263,6 +291,11 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GamepadJump();
+            NextLine();
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+           nextLine = false;
         }
         
         //GroundCheck
