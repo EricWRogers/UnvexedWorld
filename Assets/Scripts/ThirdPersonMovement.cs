@@ -82,6 +82,8 @@ public class ThirdPersonMovement : MonoBehaviour
     private RaycastHit m_info;
     private AudioManager audioManager;
 
+    public bool inText = false;
+
    
 
 
@@ -112,7 +114,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadJump()
     {
-        if ((isGrounded || jumpCount < jumpMax))
+        if ((isGrounded || jumpCount < jumpMax && !inText))
         {
             isJumping = true;
             jumpCount++;
@@ -122,6 +124,7 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
 
         }
+
 
       
     }

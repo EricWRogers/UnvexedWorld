@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DialogueInteraction : MonoBehaviour
 {
+    public ThirdPersonMovment movement;
     public bool InRange = false;
 
      public GameObject DiologueBox;
