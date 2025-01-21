@@ -293,5 +293,10 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         isAttacking=true;
     }
+
+    public void MakeHitBox(int index)
+    {
+        Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
+    }
    
 }
