@@ -296,7 +296,7 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public void MakeHitBox(int index)
     {
-        Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (0.5f * gameObject.transform.forward), Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+        Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
     }
    
 }
