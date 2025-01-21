@@ -7,11 +7,21 @@ public class HitStop : MonoBehaviour
 {
 
     public bool waiting;
+
+    public PauseMenu gamePaused;
+
+    public float scaleTime = 0.0f;
+
+
+    public void Start()
+    {
+        gamePaused = FindObjectOfType<PauseMenu>();
+    }
     public void Stop(float duration)
     {
         if (waiting)
             return;
-        Time.timeScale = 0.0f;
+        Time.timeScale = scaleTime;
         StartCoroutine(Wait(duration));
     }
 
@@ -19,7 +29,10 @@ public class HitStop : MonoBehaviour
     {
         waiting = true;
         yield return new WaitForSecondsRealtime(duration);
-        Time.timeScale = 1.0f;
+        if(gamePaused.isPaused == false)
+        {
+            Time.timeScale = 1.0f;
+        }
         waiting = false;
 
     }
