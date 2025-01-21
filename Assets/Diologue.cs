@@ -20,7 +20,7 @@ public class Diologue : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        movement = GetComponent<ThirdPersonMovement>();
+        
         textComponent.text = string.Empty;
         
     }
