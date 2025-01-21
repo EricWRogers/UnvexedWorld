@@ -58,6 +58,7 @@ GameObject:
   - component: {fileID: 6034877939658952246}
   - component: {fileID: 257779114422334308}
   - component: {fileID: 8301843833823786389}
+  - component: {fileID: 6126519142447062901}
   m_Layer: 10
   m_Name: hitboxMelee
   m_TagString: Untagged
@@ -121,6 +122,21 @@ MonoBehaviour:
       m_Calls: []
   particle: {fileID: 0}
   comboManager: {fileID: 0}
+  hitStop: {fileID: 6126519142447062901}
+  duration: 0.08
+--- !u!114 &6126519142447062901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846848477704561281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
 --- !u!1 &4629087411539590639
 GameObject:
   m_ObjectHideFlags: 0
