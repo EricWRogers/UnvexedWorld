@@ -11,6 +11,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     
     public int damage = 1;
 
+    public float impactValue = 25f;
+
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
@@ -18,10 +20,15 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public ComboManager comboManager;
     private AudioManager audioManager;
+
+    public HitStop hitStop;
+
+    public float duration = 0.0f;
     
     // Start is called before the first frame update
     void Start()
     {
+        
          
         comboManager = FindObjectOfType<ComboManager>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -40,11 +47,15 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
         {   
             PlayPunch();
+            hitStop.Stop(duration);
 
             Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
+
+            //Burst Attack
+            enemy.GetComponent<Rigidbody>().AddForce(enemy.transform.up * impactValue, ForceMode.Impulse);
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);

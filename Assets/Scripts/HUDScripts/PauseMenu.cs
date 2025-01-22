@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
     PlayerGamepad gamepad;
 
-    private bool isPaused = false;
+    public bool isPaused = false;
 
     void Awake()
     {
