@@ -55,7 +55,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             enemy = other.gameObject;
 
             //Burst Attack
-            enemy.GetComponent<Rigidbody>().AddForce(enemy.transform.up * impactValue, ForceMode.Impulse);
+            enemy.GetComponent<Rigidbody>().AddForce(-enemy.transform.forward * impactValue, ForceMode.Impulse);
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);

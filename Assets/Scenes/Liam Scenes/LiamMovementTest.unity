@@ -404,17 +404,17 @@ PrefabInstance:
     - target: {fileID: 1015414223847504253, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -7.9
       objectReference: {fileID: 0}
     - target: {fileID: 1015414223847504253, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.94433844
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1015414223847504253, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.32897568
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1015414223847504253, guid: b4dd57de410d1eb438c7a6d3b5162a55,
         type: 3}
@@ -605,6 +605,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waiting: 0
+  gamePaused: {fileID: 0}
   scaleTime: 0
 --- !u!1001 &156831203
 PrefabInstance:
@@ -1628,6 +1629,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waiting: 0
+  gamePaused: {fileID: 0}
   scaleTime: 0
 --- !u!1 &721764036 stripped
 GameObject:
@@ -1897,6 +1899,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waiting: 0
+  gamePaused: {fileID: 0}
   scaleTime: 0
 --- !u!1001 &965283075
 PrefabInstance:
@@ -2126,7 +2129,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2723,6 +2726,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8715050301035536224, guid: 0370f3133a8966d47b490da2b65dfe07,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3140,6 +3148,12 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5280645139118874895, guid: 2e03aeac9110e574fb4d57facf5b9dab,
+        type: 3}
+      propertyPath: NoSpellImpact
+      value: 
+      objectReference: {fileID: 7224066140862083486, guid: b19e2f6b73ccbc543bce52687b1c8761,
+        type: 3}
     - target: {fileID: 7376219065727173673, guid: 2e03aeac9110e574fb4d57facf5b9dab,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3214,6 +3228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waiting: 0
+  gamePaused: {fileID: 0}
   scaleTime: 0
 --- !u!1 &2013781140
 GameObject:
@@ -3253,7 +3268,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -3303,7 +3318,7 @@ Transform:
   m_GameObject: {fileID: 2013781140}
   serializedVersion: 2
   m_LocalRotation: {x: 0.3826835, y: 0, z: 0, w: 0.9238795}
-  m_LocalPosition: {x: 0, y: 7, z: -6.1}
+  m_LocalPosition: {x: 0, y: 7, z: -7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
