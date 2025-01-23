@@ -11,6 +11,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     
     public int damage = 1;
 
+    public float impactValue = 25f;
+
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
@@ -51,6 +53,9 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
+
+            //Burst Attack
+            enemy.GetComponent<Rigidbody>().AddForce(-enemy.transform.forward * impactValue, ForceMode.Impulse);
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
