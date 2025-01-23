@@ -5,15 +5,13 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-public class MeleeStateMachine : SimpleStateMachine
+public class AgroMeleeStateMachine : SimpleStateMachine
 {
-    public RandomMovementState randomMovement;
+    public RandomMovementState movement;
     public StunState stunned;
-    public KnockBackState knockBack;
     public InRangeState inRange;
     public AttackState melee;
 
-    [HideInInspector]
     public NavMeshAgent agent;
     
     public bool LOS;
@@ -23,6 +21,8 @@ public class MeleeStateMachine : SimpleStateMachine
     public bool isSearching;
     public bool isPunched;
 
+    public float ranMinFlee;
+    public float ranMaxFlee;
     public float inAttackRange = 1.0f;
 
     public Transform target;
@@ -36,9 +36,8 @@ public class MeleeStateMachine : SimpleStateMachine
 
     void Awake()
     {
-        states.Add(randomMovement);
+        states.Add(movement);
         states.Add(stunned);
-        states.Add(knockBack);
         states.Add(inRange);
         states.Add(melee);
 
@@ -72,10 +71,6 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        // if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
-        // {
-        //     ChangeState(nameof(AlertState));
-        // }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
