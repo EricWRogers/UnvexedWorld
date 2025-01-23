@@ -1,9 +1,12 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using SuperPupSystems.Helper;
 
 public class RagdollEnabler : MonoBehaviour
 {
+    [SerializeField]
+    private GameObject enemy;
     [SerializeField]
     private Animator animator;
     [SerializeField]
@@ -15,12 +18,13 @@ public class RagdollEnabler : MonoBehaviour
     [SerializeField]
     private Rigidbody enemiesRigidbody;
     [SerializeField]
+    private GameObject enemyMat;
     private Collider enemiesCollider;
     private Rigidbody[] rb;
     private CharacterJoint[] joints;
     [SerializeField]
     private Collider[] colliders;
-    private float fadeOutDelay = 10f;
+    private float fadeOutDelay = 3f;
 
     private void Awake()
     {
@@ -103,11 +107,13 @@ public class RagdollEnabler : MonoBehaviour
         float time = 0;
         while (time < 1)
         {
-            //transform.position += Vector3.down * Time.deltaTime;
+            transform.position += Vector3.down * Time.deltaTime;
             time += Time.deltaTime;
+            float cv = enemyMat.GetComponent<Renderer>().material.GetFloat("_ClippingValue");
+            enemyMat.GetComponent<Renderer>().material.SetFloat("_ClippingValue", cv + Time.deltaTime);
             yield return null;
         }
 
-        gameObject.SetActive(false);
+        enemy.GetComponent<Health>().DestroyGameObject();
     }
 }
