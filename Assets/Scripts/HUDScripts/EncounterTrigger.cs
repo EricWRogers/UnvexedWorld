@@ -8,8 +8,8 @@ public class EncounterTrigger : MonoBehaviour
     private void Start()
     {
         // Initialize HUDManager and AudioManager references
-        hudManager = FindObjectOfType<HUDManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        hudManager = FindFirstObjectByType<HUDManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
 
         if (hudManager == null)
         {

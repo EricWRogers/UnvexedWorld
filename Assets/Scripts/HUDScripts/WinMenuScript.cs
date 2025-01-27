@@ -21,13 +21,13 @@ public class WinMenuScript : MonoBehaviour
     {
         winSection.SetActive(false);
 
-        winGameObj = GameObject.FindObjectOfType<WinGame>();
+        winGameObj = GameObject.FindFirstObjectByType<WinGame>();
         if (winGameObj == null)
         {
             return;
         }
         
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
         if (pauseMenu == null)
         {
             return;
