@@ -13,7 +13,7 @@ public class CameraLockon : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
 
-        lockOn = GameObject.FindObjectOfType<MeleeRangedAttack>();
+        lockOn = GameObject.FindFirstObjectByType<MeleeRangedAttack>();
     }
 
     // Update is called once per frame
