@@ -30,8 +30,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         
          
-        comboManager = FindObjectOfType<ComboManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        comboManager = FindFirstObjectByType<ComboManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -130,7 +130,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindObjectOfType<AudioManager>().PlayPunchSound();
+            FindFirstObjectByType<AudioManager>().PlayPunchSound();
         }
         else
         {

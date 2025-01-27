@@ -14,7 +14,7 @@ public class FogManager : MonoBehaviour
 
     void Start()
     {
-        hudManager = GameObject.FindObjectOfType<HUDManager>();
+        hudManager = GameObject.FindFirstObjectByType<HUDManager>();
         groundEnemies.Clear();  // Clear the current list of enemies
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("GroundEnemy");
 
