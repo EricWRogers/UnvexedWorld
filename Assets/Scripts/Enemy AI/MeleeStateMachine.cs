@@ -111,9 +111,11 @@ public class MeleeStateMachine : SimpleStateMachine
         isPunched = true;
     }
     
-    public void TypeOneKnockBack(Transform direction, float power)
+    public void TypeOneKnockBack(Vector3 direction, float power)
     {
-        rb.AddForce(direction.forward * power, ForceMode.Impulse);
+        knockBack.dir = direction;
+        knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.One;
         ChangeState(nameof(KnockBackState));
     }
 
@@ -123,7 +125,8 @@ public class MeleeStateMachine : SimpleStateMachine
         Vector3 dir = (transform.position - direction.transform.position).normalized;
         knockBack.mag = mag;
         knockBack.dir = dir;
-        rb.AddForce(dir * (power + mag), ForceMode.Impulse);
+        knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.Two;
         ChangeState(nameof(KnockBackState));
     }
 
@@ -134,6 +137,7 @@ public class MeleeStateMachine : SimpleStateMachine
         knockBack.mag = mag;
         knockBack.dir = dir;
         knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.Three;
         ChangeState(nameof(KnockBackState));
     }
 }

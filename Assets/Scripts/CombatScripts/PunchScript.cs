@@ -64,7 +64,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
                 if(doKnockBack)
                 {
-                    enemyGrunt.TypeOneKnockBack(direction, forceAmount);
+                    enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                 }
                 else
                 {
