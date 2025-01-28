@@ -24,6 +24,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public HitStop hitStop;
 
     public float duration = 0.0f;
+
+    public int punchSoundIndex = 0;
     
     // Start is called before the first frame update
     void Start()
@@ -130,7 +132,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindObjectOfType<AudioManager>().PlayPunchSound();
+            FindObjectOfType<AudioManager>().PlayPunchSound(punchSoundIndex);
         }
         else
         {
