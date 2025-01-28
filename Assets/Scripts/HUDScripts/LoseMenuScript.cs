@@ -26,7 +26,7 @@ public class LoseMenuScript : MonoBehaviour
     {
         loseSection.SetActive(false);
 
-        pauseMenu = FindObjectOfType<PauseMenu>();
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
 
          eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 

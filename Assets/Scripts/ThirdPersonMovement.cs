@@ -111,7 +111,7 @@ public class ThirdPersonMovement : MonoBehaviour
         animator = GetComponentsInChildren<Animator>()[1];
         Cursor.lockState = CursorLockMode.Locked;   
         lockOn = GetComponent<MeleeRangedAttack>();
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     

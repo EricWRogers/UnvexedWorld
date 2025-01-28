@@ -21,8 +21,8 @@ public class ActivateFight : MonoBehaviour
     {
         // Initialize components
         fightAreaCollider = GetComponent<Collider>();
-        hudManager = FindObjectOfType<HUDManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        hudManager = FindFirstObjectByType<HUDManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
 
         // Add all child enemies to enemiesInZone list
         foreach (Transform child in transform)
@@ -55,7 +55,7 @@ public class ActivateFight : MonoBehaviour
     {
         if(on && transform.childCount == 1)
         {
-            ActivateFight[] argoZone = FindObjectsOfType<ActivateFight>();
+            ActivateFight[] argoZone = FindObjectsByType<ActivateFight>(FindObjectsSortMode.None);
 
             int count = 0;
 
