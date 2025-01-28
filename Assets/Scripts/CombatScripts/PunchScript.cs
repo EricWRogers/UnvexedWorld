@@ -25,6 +25,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public HitStop hitStop;
 
     public float duration = 0.0f;
+
+    public int punchSoundIndex = 0;
     
     //Temp 
     public Transform direction;
@@ -148,7 +150,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindFirstObjectByType<AudioManager>().PlayPunchSound();
+            FindObjectOfType<AudioManager>().PlayPunchSound(punchSoundIndex);
         }
         else
         {
