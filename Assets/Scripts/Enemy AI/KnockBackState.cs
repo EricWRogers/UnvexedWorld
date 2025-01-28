@@ -30,23 +30,33 @@ public class KnockBackState : SimpleState
         }
         
         rb.linearVelocity = Vector3.zero;
-        rb.detectCollisions = true; // not sure if this bool is needed
+        //rb.detectCollisions = true; // not sure if this bool is needed
         rb.useGravity = true;
         rb.isKinematic = false;
 
         knockBackTimer = knockBackDuration;  
         agent.isStopped = true;
+
+        
     }
 
     public override void UpdateState(float dt)
     {
-        if (knockBackTimer > 0)
+        
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            knockBackTimer -= dt;
-        }
-        if (knockBackTimer <= 0)
-        {
-            stateMachine.ChangeState(nameof(InRangeState));
+            if (knockBackTimer > 0)
+            {
+                knockBackTimer -= dt;
+            }
+            if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
         }
     }
     

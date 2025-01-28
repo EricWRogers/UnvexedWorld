@@ -12,6 +12,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public int damage = 1;
 
     public float impactValue = 25f;
+    public bool doKnockBack;
 
     public GameObject enemy;
 
@@ -25,6 +26,10 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public float duration = 0.0f;
     
+    //Temp 
+    public Transform direction;
+    public float forceAmount = 4f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +59,19 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
             enemy = other.gameObject;
 
-            //Burst Attack
+            if (enemy.GetComponent<MeleeStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
+                if(doKnockBack)
+                {
+                    enemyGrunt.yesKnockBack = true;
+                }else
+                {
+                    enemyGrunt.yesKnockBack = false;
+                }
+                enemyGrunt.TypeOneKnockBack(direction, forceAmount);
+            }
+            
            
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
