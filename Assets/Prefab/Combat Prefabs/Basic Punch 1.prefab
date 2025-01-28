@@ -125,6 +125,8 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 6126519142447062901}
   duration: 0.08
+  direction: {fileID: 9087936371502928868}
+  forceAmount: 4
 --- !u!114 &6126519142447062901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +142,37 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0
+--- !u!1 &3592680559892838503
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9087936371502928868}
+  m_Layer: 10
+  m_Name: CenterofHitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9087936371502928868
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592680559892838503}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1298603358681588818}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4629087411539590639
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,7 +204,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 9087936371502928868}
   m_Father: {fileID: 6034877939658952246}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8419703228732666827

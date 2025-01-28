@@ -12,6 +12,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public int damage = 1;
 
     public float impactValue = 25f;
+    public bool doKnockBack;
 
     public GameObject enemy;
 
@@ -27,6 +28,10 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public int punchSoundIndex = 0;
     
+    //Temp 
+    public Transform direction;
+    public float forceAmount = 4f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,9 +50,9 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit" + other.gameObject.name);
         if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
-        {   
+        {
+            Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
             hitStop.Stop(duration);
 
@@ -56,7 +61,20 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
             enemy = other.gameObject;
 
-            //Burst Attack
+            if (enemy.GetComponent<MeleeStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
+                if(doKnockBack)
+                {
+                    enemyGrunt.TypeOneKnockBack(direction, forceAmount);
+                }
+                else
+                {
+                    enemyGrunt.yesKnockBack = false;
+                }
+                
+            }
+            
            
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
@@ -69,8 +87,8 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             {
                 messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
             }
-            other.GetComponent<Knockback>().OnHurt();
-            punchTarget.Invoke(enemy);
+            //other.GetComponent<Knockback>().OnHurt();
+            //punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
 
             // Increment the combo count
