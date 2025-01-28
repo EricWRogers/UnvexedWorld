@@ -85,10 +85,6 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        if(yesKnockBack)
-        {
-            ChangeState(nameof(KnockBackState));
-        }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -118,19 +114,26 @@ public class MeleeStateMachine : SimpleStateMachine
     public void TypeOneKnockBack(Transform direction, float power)
     {
         rb.AddForce(direction.forward * power, ForceMode.Impulse);
+        ChangeState(nameof(KnockBackState));
     }
 
     public void TypeTwoKnockBack(Transform direction, float power)
     {
         float mag = rb.linearVelocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
+        knockBack.mag = mag;
+        knockBack.dir = dir;
         rb.AddForce(dir * (power + mag), ForceMode.Impulse);
+        ChangeState(nameof(KnockBackState));
     }
 
     public void TypeThreeKnockBack(Transform direction, float power)
     {
         float mag = rb.linearVelocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
-        rb.AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+        knockBack.mag = mag;
+        knockBack.dir = dir;
+        knockBack.power = power;
+        ChangeState(nameof(KnockBackState));
     }
 }

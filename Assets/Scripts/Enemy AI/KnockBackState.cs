@@ -15,8 +15,11 @@ public class KnockBackState : SimpleState
 {
     private Rigidbody rb;
     private NavMeshAgent agent;
-    public float knockBackDuration = 3.0f;
-    private float knockBackTimer;
+
+    public float mag, power;
+    public Vector3 dir;
+    //public float knockBackDuration = 0.5f;
+    //private float knockBackTimer;
 
     public override void OnStart()
     {
@@ -29,13 +32,12 @@ public class KnockBackState : SimpleState
             rb = meleeStateMachine.GetComponent<Rigidbody>();
         }
         
-        rb.linearVelocity = Vector3.zero;
-        //rb.detectCollisions = true; // not sure if this bool is needed
         rb.useGravity = true;
         rb.isKinematic = false;
+        rb.AddForce(-(dir * (power + mag)), ForceMode.Impulse);
 
-        knockBackTimer = knockBackDuration;  
-        agent.isStopped = true;
+        //knockBackTimer = knockBackDuration;  
+        agent.enabled = false;
 
         
     }
@@ -45,15 +47,11 @@ public class KnockBackState : SimpleState
         
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            if (knockBackTimer > 0)
-            {
-                knockBackTimer -= dt;
-            }
-            if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
+            if (meleeStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
-            else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
+            else if(meleeStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
@@ -64,7 +62,7 @@ public class KnockBackState : SimpleState
     {
         base.OnExit();
 
-        agent.isStopped = false;
+        agent.enabled = true;
         rb.isKinematic = true;
         rb.useGravity = false;
 
