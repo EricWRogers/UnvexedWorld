@@ -9,8 +9,8 @@ using UnityEngine.AI;
 public class StunState : SimpleState
 {
     NavMeshAgent agent;
-    public Material stunMaterial;
-    private DamageIndicator enemyIndicator;
+    public Transform spawnLocation;
+    public float stunPSLocation = 2f;
     private Animator anim;
     public float stunDuration = 2.0f;  // Duration of stun
     private float stunTimer;
@@ -25,43 +25,45 @@ public class StunState : SimpleState
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
             anim = meleeStateMachine.anim;
-            //meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
-            enemyIndicator = meleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
             anim = agroMeleeStateMachine.anim;
-            //agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
-            enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             anim = rangeStateMachine.anim;
-            //rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
-            enemyIndicator = rangeStateMachine.GetComponent<DamageIndicator>();
         }
 
+        ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
+
         stunTimer = stunDuration;  
-        agent.isStopped = true;    // Stop the AI from moving
-        enemyIndicator.targetRenderer.material = stunMaterial;
-        enemyIndicator.enabled = false;
+        agent.isStopped = true;
         Debug.Log("Entering Stun State");
     }
 
     public override void UpdateState(float _dt)
     {
         base.UpdateState(_dt);
-        if (stunTimer > 0)
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            stunTimer -= _dt;
-            anim.SetBool("isHurt", true);
-        }
-        if (stunTimer <= 0)
-        {
-            stateMachine.ChangeState(nameof(InRangeState));
-            anim.SetBool("isHurt", false);
+            if (stunTimer > 0)
+            {
+                stunTimer -= _dt;
+                anim.SetBool("isHurt", true);
+            }
+            if (stunTimer <= 0 && meleeStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+                anim.SetBool("isHurt", false);
+            }
+            else if(stunTimer <= 0 && meleeStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+                anim.SetBool("isHurt", false);
+            }
         }
     }
 
@@ -70,21 +72,17 @@ public class StunState : SimpleState
         base.OnExit();
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
-        enemyIndicator.targetRenderer.material = enemyIndicator.defaultMaterial;
-        enemyIndicator.enabled = true;
+        ParticleManager.Instance.DestroyStunParticles();
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            //meleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             meleeStateMachine.isPunched = false;
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
-            //agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             agroMeleeStateMachine.isPunched = false;
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
-            //rangeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             rangeStateMachine.isPunched = false;
         }
         Debug.Log("Exiting Stun State");

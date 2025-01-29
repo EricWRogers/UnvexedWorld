@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
 
      public AudioClip orb;
 
+     public AudioClip enemyHurt;
+
     private AudioSource musicSource;
     private AudioSource sfxSource;
 
@@ -70,6 +72,11 @@ public class AudioManager : MonoBehaviour
      public void PlayOrbSound()
     {
         sfxSource.PlayOneShot(orb);
+    }
+
+     public void PlayEnemyHurtSound()
+    {
+        sfxSource.PlayOneShot(enemyHurt);
     }
 
     public void StopMusic()
