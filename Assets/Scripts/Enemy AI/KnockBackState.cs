@@ -13,9 +13,21 @@ This verison of the knock back uses the rigidbody method to give them knock back
 [System.Serializable]
 public class KnockBackState : SimpleState
 {
+    public enum KnockBackType
+    {
+        One,
+        Two,
+        Three
+    }
+
     private Rigidbody rb;
     private NavMeshAgent agent;
-    public float knockBackDuration = 3.0f;
+
+    public float mag, power;
+    public Vector3 dir;
+
+    public KnockBackType kbType;
+    public float knockBackDuration = 0.5f;
     private float knockBackTimer;
 
     public override void OnStart()
@@ -29,24 +41,46 @@ public class KnockBackState : SimpleState
             rb = meleeStateMachine.GetComponent<Rigidbody>();
         }
         
-        rb.linearVelocity = Vector3.zero;
-        rb.detectCollisions = true; // not sure if this bool is needed
-        rb.useGravity = true;
         rb.isKinematic = false;
+        switch(kbType)
+        {
+            case KnockBackType.One: {
+                rb.AddForce(dir * power, ForceMode.Impulse);
+                break;
+            }
+            case KnockBackType.Two: {
+                rb.AddForce(dir * (power + mag), ForceMode.Impulse);
+                break;
+            }
+            case KnockBackType.Three: {
+                rb.AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+                break;
+            }
+        }
 
         knockBackTimer = knockBackDuration;  
-        agent.isStopped = true;
+        agent.enabled = false;
+
+        
     }
 
     public override void UpdateState(float dt)
     {
-        if (knockBackTimer > 0)
+        
+        if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            knockBackTimer -= dt;
-        }
-        if (knockBackTimer <= 0)
-        {
-            stateMachine.ChangeState(nameof(InRangeState));
+            if(knockBackTimer > 0)
+            {
+                knockBackTimer -= dt;
+            }
+            if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
         }
     }
     
@@ -54,9 +88,8 @@ public class KnockBackState : SimpleState
     {
         base.OnExit();
 
-        agent.isStopped = false;
+        agent.enabled = true;
         rb.isKinematic = true;
-        rb.useGravity = false;
 
     }
 }

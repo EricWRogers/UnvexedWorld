@@ -17,7 +17,7 @@ public class CollectableOrb : MonoBehaviour
 
     public void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     //Turns of opaque orb, turns on transparent orb for animation

@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class MeleeStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
+    public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
     public InRangeState inRange;
@@ -22,6 +23,8 @@ public class MeleeStateMachine : SimpleStateMachine
     public bool isInsideCollider = false;
     public bool isSearching;
     public bool isPunched;
+    public bool isIdling;
+    public bool yesKnockBack;
 
     public float inAttackRange = 1.0f;
 
@@ -33,10 +36,12 @@ public class MeleeStateMachine : SimpleStateMachine
     public Knockback enemyKnockback;
     [HideInInspector]
     public Vector3 lastKnownPlayerPosition;
+    private Rigidbody rb;
 
     void Awake()
     {
         states.Add(randomMovement);
+        states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
         states.Add(inRange);
@@ -60,7 +65,15 @@ public class MeleeStateMachine : SimpleStateMachine
 
         agent = GetComponent<NavMeshAgent>();
 
-        ChangeState(nameof(RandomMovementState));
+        rb = GetComponent<Rigidbody>();
+
+        if(isIdling)
+        {
+            ChangeState(nameof(IdleState));
+        }else
+        {
+            ChangeState(nameof(RandomMovementState));
+        }
     }
 
     void Update()
@@ -72,10 +85,6 @@ public class MeleeStateMachine : SimpleStateMachine
         {
             isAlive = false;
         }
-        // if(health.currentHealth < health.maxHealth && alert.enteredAlert == false)
-        // {
-        //     ChangeState(nameof(AlertState));
-        // }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
 
@@ -100,5 +109,35 @@ public class MeleeStateMachine : SimpleStateMachine
     public void TakenDamage()
     {
         isPunched = true;
+    }
+    
+    public void TypeOneKnockBack(Vector3 direction, float power)
+    {
+        knockBack.dir = direction;
+        knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.One;
+        ChangeState(nameof(KnockBackState));
+    }
+
+    public void TypeTwoKnockBack(Transform direction, float power)
+    {
+        float mag = rb.linearVelocity.magnitude;
+        Vector3 dir = (transform.position - direction.transform.position).normalized;
+        knockBack.mag = mag;
+        knockBack.dir = dir;
+        knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.Two;
+        ChangeState(nameof(KnockBackState));
+    }
+
+    public void TypeThreeKnockBack(Transform direction, float power)
+    {
+        float mag = rb.linearVelocity.magnitude;
+        Vector3 dir = (transform.position - direction.transform.position).normalized;
+        knockBack.mag = mag;
+        knockBack.dir = dir;
+        knockBack.power = power;
+        knockBack.kbType = KnockBackState.KnockBackType.Three;
+        ChangeState(nameof(KnockBackState));
     }
 }

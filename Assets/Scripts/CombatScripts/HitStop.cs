@@ -15,7 +15,7 @@ public class HitStop : MonoBehaviour
 
     public void Start()
     {
-        gamePaused = FindObjectOfType<PauseMenu>();
+        gamePaused = FindFirstObjectByType<PauseMenu>();
     }
     public void Stop(float duration)
     {

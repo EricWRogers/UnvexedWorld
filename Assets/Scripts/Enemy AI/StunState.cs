@@ -25,21 +25,21 @@ public class StunState : SimpleState
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
             anim = meleeStateMachine.anim;
-            meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            //meleeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = meleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
             agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
             anim = agroMeleeStateMachine.anim;
-            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            //agroMeleeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = agroMeleeStateMachine.GetComponent<DamageIndicator>();
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
             agent = rangeStateMachine.GetComponent<NavMeshAgent>();
             anim = rangeStateMachine.anim;
-            rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
+            //rangeStateMachine.enemyKnockback.knockbackStrength = 1f;
             enemyIndicator = rangeStateMachine.GetComponent<DamageIndicator>();
         }
 
@@ -74,17 +74,17 @@ public class StunState : SimpleState
         enemyIndicator.enabled = true;
         if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            meleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
+            //meleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             meleeStateMachine.isPunched = false;
         }
         else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
         {
-            agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
+            //agroMeleeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             agroMeleeStateMachine.isPunched = false;
         }
         else if (stateMachine is RangeStateMachine rangeStateMachine)
         {
-            rangeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
+            //rangeStateMachine.enemyKnockback.knockbackStrength = 5.0f;
             rangeStateMachine.isPunched = false;
         }
         Debug.Log("Exiting Stun State");
