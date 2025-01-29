@@ -11,8 +11,8 @@ public class FistAlpha : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        leftHand = GetComponentsInChildren<PunchScript>()[0].gameObject.transform.parent.gameObject.GetComponent<Renderer>();
-        rightHand = GetComponentsInChildren<PunchScript>()[3].gameObject.transform.parent.gameObject.GetComponent<Renderer>();
+        //leftHand = GetComponentsInChildren<PunchScript>()[0].gameObject.transform.parent.gameObject.GetComponent<Renderer>();
+        //rightHand = GetComponentsInChildren<PunchScript>()[3].gameObject.transform.parent.gameObject.GetComponent<Renderer>();
         color = leftHand.material.color;
 
     }

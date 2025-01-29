@@ -200,7 +200,7 @@ public class SpellCraft : MonoBehaviour
 
     void ClearFistSpell()
     {
-        spells[0].ClearSpell();
+        //spells[0].ClearSpell();
     }
 
     

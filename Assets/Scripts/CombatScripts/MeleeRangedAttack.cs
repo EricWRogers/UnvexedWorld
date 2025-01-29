@@ -260,22 +260,22 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public void StartParticle()
     {
-        GetComponentInChildren<PunchScript>().StartParticle();
+        //GetComponentInChildren<PunchScript>().StartParticle();
     }
 
     public void EndParticle()
     {
-        GetComponentInChildren<PunchScript>().EndParticle();
+        //GetComponentInChildren<PunchScript>().EndParticle();
     }
 
     public void StartParticleSpell()
     {
-        GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().StartParticle();
+        //GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().StartParticle();
     }
 
     public void EndParticleSpell()
     {
-        GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().EndParticle();
+       // GetComponentInChildren<Spell>().gameObject.GetComponent<PunchScript>().EndParticle();
     }
 
    public void FindNewTarget()
