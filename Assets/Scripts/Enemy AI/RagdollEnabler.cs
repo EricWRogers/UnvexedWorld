@@ -18,8 +18,9 @@ public class RagdollEnabler : MonoBehaviour
     [SerializeField]
     private Rigidbody enemiesRigidbody;
     [SerializeField]
-    private GameObject enemyMat;
     private Collider enemiesCollider;
+    [SerializeField]
+    private GameObject enemyMat;
     private Rigidbody[] rb;
     private CharacterJoint[] joints;
     [SerializeField]
@@ -49,8 +50,8 @@ public class RagdollEnabler : MonoBehaviour
     {
         animator.enabled = false;
         agent.enabled = false;
-        Destroy(enemiesRigidbody);
-        Destroy(enemiesCollider);
+        enemiesRigidbody.Sleep();
+        enemiesCollider.enabled = false;
         foreach (CharacterJoint joint in joints)
         {
             joint.enableCollision = true;
