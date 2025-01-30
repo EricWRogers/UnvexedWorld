@@ -5,8 +5,6 @@ using UnityEngine;
 public class CollectableTracker : MonoBehaviour
 {
 
-    //private CollectableManager collectableTracker;
-
     public int collectedOrbs = 0;
    
     //PlayerPrefs.SetInt("collectedOrbs", collectedOrbs);
