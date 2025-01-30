@@ -5,6 +5,8 @@ using SuperPupSystems.Helper;
 
 public class RagdollEnabler : MonoBehaviour
 {
+    public float power = 100f;
+    public Transform chest;
     [SerializeField]
     private GameObject enemy;
     [SerializeField]
@@ -21,6 +23,7 @@ public class RagdollEnabler : MonoBehaviour
     private Collider enemiesCollider;
     [SerializeField]
     private GameObject enemyMat;
+    [SerializeField]
     private Rigidbody[] rb;
     private CharacterJoint[] joints;
     [SerializeField]
@@ -62,6 +65,7 @@ public class RagdollEnabler : MonoBehaviour
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
+            rigidbody.AddForce(chest.forward * power, ForceMode.Impulse);
         }
         foreach(Collider collider in colliders)
         {
