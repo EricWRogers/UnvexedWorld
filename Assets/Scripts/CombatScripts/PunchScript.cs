@@ -8,9 +8,9 @@ using Scripts.HUDScripts.MessageSystem;
 
 public class PunchScript : MonoBehaviour, IDamageDealer
 {
-    
+    [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
+    public int knockBackType;
     public int damage = 1;
-
     public float impactValue = 25f;
     public bool doKnockBack;
 
@@ -69,13 +69,21 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             if (enemy.GetComponent<MeleeStateMachine>() != null)
             {
                 var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
-                if(doKnockBack)
+                
+                switch (knockBackType)
                 {
-                    enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
-                }
-                else
-                {
-                    enemyGrunt.yesKnockBack = false;
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
                 }
                 
             }
