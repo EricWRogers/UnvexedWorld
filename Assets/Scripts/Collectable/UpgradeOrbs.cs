@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using SuperPupSystems.Manager;
 
 public class UpgradeOrbs : MonoBehaviour
 {
 
-    public int points = 0;
-
+    //public WalletManager walletManager;
     public void opaqueToTransparent()
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(true);
@@ -25,8 +25,9 @@ public class UpgradeOrbs : MonoBehaviour
         {
 
             Debug.Log("You picked up a point");
-            points++;
             gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
+            WalletManager.instance.Earn(1);
+            //walletManager.Earn();
 
         }
     }
