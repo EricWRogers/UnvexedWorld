@@ -16,6 +16,9 @@ public class ParticleManager : MonoBehaviour
     public GameObject ScavengeParticleMelee;
     public GameObject SplendorParticleMelee;
     public GameObject NoSpellImpact;
+    public GameObject StunParticle;
+
+    private GameObject stunPS;
     
     // Start is called before the first frame update
 
@@ -42,4 +45,15 @@ public class ParticleManager : MonoBehaviour
     {
         
     }
+
+    public void SpawnStunParticles(Transform spawnLocation, GameObject stuned)
+    {
+        stunPS = GameObject.Instantiate(StunParticle, spawnLocation.position, spawnLocation.rotation);
+        stunPS.transform.parent=stuned.transform;
+    }
+    public void DestroyStunParticles()
+    {
+        Destroy(stunPS);
+    }
+
 }
