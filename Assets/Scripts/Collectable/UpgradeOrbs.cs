@@ -7,15 +7,28 @@ public class UpgradeOrbs : MonoBehaviour
 {
 
     public int points = 0;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public void opaqueToTransparent()
     {
-        
+        gameObject.transform.GetChild(1).gameObject.SetActive(true);
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DestroySelf()
     {
-        
+        Destroy(transform.parent.gameObject);
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+
+            Debug.Log("You picked up a point");
+            points++;
+            gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
+
+        }
+    }
+
 }
