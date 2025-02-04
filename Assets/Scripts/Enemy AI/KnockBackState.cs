@@ -27,7 +27,7 @@ public class KnockBackState : SimpleState
     public Vector3 dir;
 
     public KnockBackType kbType;
-    public float knockBackDuration = 0.5f;
+    public float knockBackDuration = 1f;
     private float knockBackTimer;
 
     public override void OnStart()

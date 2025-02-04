@@ -50,7 +50,11 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
+        if(other.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+        if (other.GetComponent<Rigidbody>().isKinematic == true && other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
         {
             Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
@@ -60,11 +64,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
+            Rigidbody enemyRigidbody = enemy.GetComponent<Rigidbody>();
 
             if (enemy.GetComponent<MeleeStateMachine>() != null)
             {
                 var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
-                if(doKnockBack && enemyGrunt.stateName != "KnockBackState")
+                if(doKnockBack)
                 {
                     enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                 }
