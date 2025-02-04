@@ -18,13 +18,11 @@ public class MeleeStateMachine : SimpleStateMachine
     public NavMeshAgent agent;
     
     public bool LOS;
-    public bool isHurt;
     public bool isAlive;
     public bool isInsideCollider = false;
     public bool isSearching;
     public bool isPunched;
     public bool isIdling;
-    public bool yesKnockBack;
 
     public float inAttackRange = 1.0f;
 
