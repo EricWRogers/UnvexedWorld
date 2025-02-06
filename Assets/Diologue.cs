@@ -9,7 +9,7 @@ public class Diologue : MonoBehaviour
     public string[] lines;
     public float textSpeed;
 
-    private int index = 0;
+    private int index;
 
     public ThirdPersonMovement movement;
 
@@ -21,7 +21,7 @@ public class Diologue : MonoBehaviour
     void Start()
     {
         
-        
+       
         
     }
 
@@ -51,15 +51,13 @@ public class Diologue : MonoBehaviour
 
     public void StartDiolague()
     {
-        movement.nextLine = false;
-        index = 0;
-
-        StartCoroutine(TypeLine());
+       textComponent.text = string.Empty;
+       index = 0;  
+       StartCoroutine(TypeLine());
     }
 
     IEnumerator TypeLine()
     {
-        textComponent.text = string.Empty;
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
@@ -70,7 +68,6 @@ public class Diologue : MonoBehaviour
 
     public void NextLine()
     {
-        return;
         if (index < lines.Length - 1)
         {
             index++;
