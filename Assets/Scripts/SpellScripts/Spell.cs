@@ -69,10 +69,10 @@ public class Spell : MonoBehaviour, IDamageDealer
         }
         else
         {
-            // if (mainAspect == SpellCraft.Aspect.scavenge)
-            // {
-            //     lifeSteal = true;
-            // }
+            if (mainAspect == SpellCraft.Aspect.scavenge)
+            {
+                lifeSteal = true;
+            }
             if (modAspect == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);

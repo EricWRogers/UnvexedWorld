@@ -79,6 +79,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
+            punchTarget.Invoke(enemy);
             
            
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
@@ -93,7 +94,6 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
             }
             //other.GetComponent<Knockback>().OnHurt();
-            punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
 
             // Increment the combo count
@@ -104,6 +104,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
+                gameObject.GetComponent<Spell>().lifeSteal=false;
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
