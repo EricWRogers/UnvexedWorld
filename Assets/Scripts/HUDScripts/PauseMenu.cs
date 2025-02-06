@@ -18,8 +18,8 @@ public class PauseMenu : MonoBehaviour
 
     PlayerGamepad gamepad;
 
-    private bool isPaused = false;
     private bool isMoveSetOpen = false; // Track MoveSet visibility
+    public bool isPaused = false;
 
     void Awake()
     {

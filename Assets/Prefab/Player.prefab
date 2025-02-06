@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 2871871069591221471}
   - component: {fileID: 3901099139461342666}
   - component: {fileID: 7600554091824202769}
+  - component: {fileID: 6572754884023028211}
   m_Layer: 10
   m_Name: hitboxMelee
   m_TagString: Untagged
@@ -124,18 +125,38 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1357691472247148494}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  impactValue: 25
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
   particle: {fileID: 0}
   comboManager: {fileID: 0}
+  hitStop: {fileID: 6572754884023028211}
+  duration: 0.08
+  direction: {fileID: 0}
+  forceAmount: 4
+--- !u!114 &6572754884023028211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357691472247148494}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
+  gamePaused: {fileID: 0}
+  scaleTime: 0
 --- !u!1 &1517210709097364466
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +169,7 @@ GameObject:
   - component: {fileID: 5546246667359878835}
   - component: {fileID: 457303878982036732}
   - component: {fileID: 8078126482553075178}
+  - component: {fileID: 1219071687971717652}
   m_Layer: 10
   m_Name: hitboxMeleeSpell
   m_TagString: Untagged
@@ -198,12 +220,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517210709097364466}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  impactValue: 25
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -222,6 +245,10 @@ MonoBehaviour:
         m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
+  hitStop: {fileID: 1219071687971717652}
+  duration: 0.08
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &8078126482553075178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +256,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1517210709097364466}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
   m_Name: 
@@ -241,6 +268,21 @@ MonoBehaviour:
   lifeSteal: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
+--- !u!114 &1219071687971717652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1517210709097364466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
+  gamePaused: {fileID: 0}
+  scaleTime: 0
 --- !u!1 &2447428497531705966
 GameObject:
   m_ObjectHideFlags: 0
@@ -299,6 +341,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -391,7 +436,6 @@ CharacterController:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -446,6 +490,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 448
   groundCheck: {fileID: 9102230733065985664}
+  inText: 0
+  nextLine: 0
 --- !u!114 &8836706426513764780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,10 +644,13 @@ MonoBehaviour:
   scavengeMana: 100
   splendorMana: 100
   casting: 0
+  mainSet: 0
+  modSet: 0
+  clear: 0
   spells: []
 --- !u!95 &2053287272649519943
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -609,12 +658,13 @@ Animator:
   m_GameObject: {fileID: 3428488077517617266}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 51f7d57bf9517ea46b814cc74fc51ef5, type: 2}
+  m_Controller: {fileID: 9100000, guid: a2f9d491782c981468a3d2752c42c77c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -644,6 +694,8 @@ MonoBehaviour:
   animator: {fileID: 0}
   cameraManager: {fileID: 0}
   direction: 0
+  shoot: 0
+  punched: 0
   lockOnCanvas: {fileID: 0}
 --- !u!114 &1919406391244116265
 MonoBehaviour:
@@ -825,6 +877,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -909,6 +964,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -997,6 +1055,7 @@ GameObject:
   - component: {fileID: 8886733541739158580}
   - component: {fileID: 62144555621833360}
   - component: {fileID: 4122956698861526187}
+  - component: {fileID: 3028280041297013385}
   m_Layer: 10
   m_Name: hitboxMelee
   m_TagString: Untagged
@@ -1047,18 +1106,38 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4807682470508934147}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  impactValue: 25
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
   particle: {fileID: 0}
   comboManager: {fileID: 0}
+  hitStop: {fileID: 3028280041297013385}
+  duration: 0.08
+  direction: {fileID: 0}
+  forceAmount: 4
+--- !u!114 &3028280041297013385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4807682470508934147}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
+  gamePaused: {fileID: 0}
+  scaleTime: 0
 --- !u!1 &5072688189730731773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1121,6 +1200,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1260,6 +1342,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1344,6 +1429,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1402,6 +1490,7 @@ GameObject:
   - component: {fileID: 6549216374439866901}
   - component: {fileID: 3942807038700845477}
   - component: {fileID: 6837203116807346577}
+  - component: {fileID: 2940375568617385299}
   m_Layer: 10
   m_Name: hitboxMeleeSpell
   m_TagString: Untagged
@@ -1452,12 +1541,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9132048802227107496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
+  impactValue: 25
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1476,6 +1566,10 @@ MonoBehaviour:
         m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
+  hitStop: {fileID: 2940375568617385299}
+  duration: 0.08
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &6837203116807346577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,7 +1577,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9132048802227107496}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
   m_Name: 
@@ -1495,6 +1589,21 @@ MonoBehaviour:
   lifeSteal: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
+--- !u!114 &2940375568617385299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9132048802227107496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
+  gamePaused: {fileID: 0}
+  scaleTime: 0
 --- !u!1001 &1261411845046958499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1964,7 +2073,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5996256405591546049, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: -5436331458515968512, guid: efe06c63b78a94147925fc6e57af42e4,
@@ -2499,12 +2608,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -1772708737164479019, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: 'm_Materials.Array.data[1]'
       value: 
       objectReference: {fileID: 2100000, guid: 1c9d79fa52ab07c45a82bd26c180c2cd, type: 2}
     - target: {fileID: -1668171617262235254, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: -1517600558820796813, guid: efe06c63b78a94147925fc6e57af42e4,
@@ -2684,7 +2793,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 316196590041946621, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: 919132149155446097, guid: efe06c63b78a94147925fc6e57af42e4,
@@ -3109,12 +3218,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4681987651875248247, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1c9d79fa52ab07c45a82bd26c180c2cd, type: 2}
     - target: {fileID: 5000945588539885055, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: 5866666021909216657, guid: efe06c63b78a94147925fc6e57af42e4,
@@ -3164,7 +3273,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6362387924961923749, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: 6780660292624819870, guid: efe06c63b78a94147925fc6e57af42e4,
@@ -3229,7 +3338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7186066242549691165, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: a41a315d1a9752a4398176be9c04f468, type: 2}
     - target: {fileID: 7995114671567784594, guid: efe06c63b78a94147925fc6e57af42e4,
