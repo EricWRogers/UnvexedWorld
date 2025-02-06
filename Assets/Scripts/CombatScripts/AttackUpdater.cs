@@ -11,6 +11,12 @@ public class AttackUpdater : MonoBehaviour
     void Start()
     {
         spells = gameObject.GetComponentsInChildren<Spell>();
+
+        foreach(Spell spell in spells)
+        {
+            spell.mainAspect = element;
+            spell.subAspect = aspect;
+        }
     }
 
     // Update is called once per frame

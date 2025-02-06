@@ -23,6 +23,10 @@ public class Spell : MonoBehaviour, IDamageDealer
     void Start()
     {
         comboManager = FindFirstObjectByType<ComboManager>();
+        if(gameObject.GetComponent<PunchScript>()!=null)
+        {
+            gameObject.GetComponent<PunchScript>().punchTarget.AddListener(SpellEffect);
+        }
     }
 
     // Update is called once per frame
@@ -60,7 +64,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     {
         if (mainAspect == SpellCraft.Aspect.splendor)
         {
-            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation);
+            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
             AOE.GetComponent<Spell>().modAspect = modAspect;
         }
         else

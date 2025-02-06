@@ -93,7 +93,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
             }
             //other.GetComponent<Knockback>().OnHurt();
-            //punchTarget.Invoke(enemy);
+            punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
 
             // Increment the combo count
