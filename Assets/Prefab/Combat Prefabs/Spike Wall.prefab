@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -78,6 +79,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1401711529906405081}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &1401711529906405081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -171,6 +176,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5940640408612574668}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &5940640408612574668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,6 +264,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -264,6 +273,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5331345390148031777}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &5331345390148031777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +361,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -357,6 +370,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2054831663534967622}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &2054831663534967622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +399,7 @@ GameObject:
   - component: {fileID: 8816696711155652406}
   - component: {fileID: 1063699795772695673}
   - component: {fileID: 3064719865596312514}
+  - component: {fileID: -8088364117850296361}
   m_Layer: 0
   m_Name: Spike Wall
   m_TagString: Untagged
@@ -445,6 +462,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8088364117850296361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714565100702186554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 0
+  aspect: 0
 --- !u!1 &922871494913781920
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +546,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -523,6 +555,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 4337011843437339687}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &4337011843437339687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,6 +751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -724,6 +760,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2566194921841682518}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &2566194921841682518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -917,6 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -925,6 +965,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1409600758519699127}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &1409600758519699127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1126,6 +1170,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1945202258090825940}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &1945202258090825940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,6 +1258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1219,6 +1267,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8337196355033629404}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &8337196355033629404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1520,6 +1571,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1528,6 +1580,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1277006087321690220}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &1277006087321690220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1937,6 +1992,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1945,6 +2001,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1129409071278214355}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &1129409071278214355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2246,6 +2305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2254,6 +2314,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5395711393052618613}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &5395711393052618613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2953,6 +3016,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2961,6 +3025,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2040582661037533202}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &2040582661037533202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3154,6 +3221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3162,6 +3230,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8395250486917577123}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &8395250486917577123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3247,6 +3318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3255,6 +3327,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 7930092067370289320}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &7930092067370289320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3448,6 +3523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3456,6 +3532,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8015727054462901749}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &8015727054462901749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3576,6 +3655,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3584,6 +3664,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8592856008189311135}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &8592856008189311135
 MonoBehaviour:
   m_ObjectHideFlags: 0

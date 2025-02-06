@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8816696711155652406}
   - component: {fileID: 1063699795772695673}
+  - component: {fileID: 849559381742270415}
   m_Layer: 0
   m_Name: Basic Punch 1
   m_TagString: Untagged
@@ -47,6 +48,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   duration: 0.2
+--- !u!114 &849559381742270415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714565100702186554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 0
+  aspect: 0
 --- !u!1 &1846848477704561281
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   impactValue: 0
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -125,6 +141,7 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 6126519142447062901}
   duration: 0.08
+  punchSoundIndex: 0
   direction: {fileID: 9087936371502928868}
   forceAmount: 4
 --- !u!114 &6126519142447062901
