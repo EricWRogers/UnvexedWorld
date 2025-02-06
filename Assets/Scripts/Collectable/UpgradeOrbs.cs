@@ -7,11 +7,18 @@ using SuperPupSystems.Manager;
 public class UpgradeOrbs : MonoBehaviour
 {
 
+    private AudioManager audioManager;
+
     //public WalletManager walletManager;
     public void opaqueToTransparent()
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(true);
         gameObject.transform.GetChild(2).gameObject.SetActive(false);
+    }
+
+    public void orbSound()
+    {
+        //audioManager.PlayOrbSound();
     }
 
     public void DestroySelf()

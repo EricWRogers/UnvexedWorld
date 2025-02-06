@@ -1,15 +1,14 @@
 using UnityEngine;
+using TMPro;
 
 public class WalletHUD : MonoBehaviour
 {
 
-    public int total_coin;
+    public TMP_Text count;
 
-    public int amount_gained;
-
-    public void CountUp()
+    public void CountUp(int _amountGained, int _totalCoins)
     {
-        
+        count.text = "Points: " + _totalCoins.ToString();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -23,4 +22,6 @@ public class WalletHUD : MonoBehaviour
     {
         
     }
+
+    //At end of level save coin value to player pref, at start of level assign coin value
 }
