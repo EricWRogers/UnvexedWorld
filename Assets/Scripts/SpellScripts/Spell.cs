@@ -15,6 +15,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     //public GameObject DOTParticle;
     public int AOEDuration;
     public bool lifeSteal = false;
+    public bool overwriteSpell = false;
     public float lifeStealRatio = 1f;
 
     public ComboManager comboManager;
@@ -26,6 +27,12 @@ public class Spell : MonoBehaviour, IDamageDealer
         if(gameObject.GetComponent<PunchScript>()!=null)
         {
             gameObject.GetComponent<PunchScript>().punchTarget.AddListener(SpellEffect);
+        }
+        if(gameObject.GetComponentInParent<AttackUpdater>()!=null && overwriteSpell == false)
+        {
+            AttackUpdater temp = gameObject.GetComponentInParent<AttackUpdater>();
+            mainAspect = temp.element;
+            subAspect = temp.aspect;
         }
     }
 
