@@ -35,6 +35,7 @@ public class DialogueInteraction : MonoBehaviour
             DiologueBox.SetActive(true);
             InRange = true;
             text.StartDiolague();
+            Debug.Log("InText");
              
         }
     }
