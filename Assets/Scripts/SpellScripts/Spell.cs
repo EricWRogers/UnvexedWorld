@@ -8,6 +8,8 @@ public class Spell : MonoBehaviour, IDamageDealer
 {
     public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
+    
+    public int subAspect = 0;
     public int burstDamage;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;

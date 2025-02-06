@@ -250,7 +250,12 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public void MakeHitBox(int index)
     {
-        Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
+        GameObject temp = Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponent<AttackUpdater>() != null)
+        {
+            temp.GetComponent<AttackUpdater>().element = spellCraft.mainAspect;
+            temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+        }
     }
    
 }

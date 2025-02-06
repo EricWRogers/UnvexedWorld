@@ -22,6 +22,7 @@ public class SpellCraft : MonoBehaviour
     public Aspect modAspect = Aspect.none;
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
+    public int subAspect = 0;
     public bool casting = false;
 
     public bool mainSet = false;
