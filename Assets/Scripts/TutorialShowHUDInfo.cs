@@ -9,7 +9,7 @@ public class TutorialShowHUDInfo : MonoBehaviour
 
     void Awake()
     {
-        HUD = GameObject.FindObjectOfType<HUDManager>();
+        HUD = GameObject.FindFirstObjectByType<HUDManager>();
     }
     
     // Start is called before the first frame update

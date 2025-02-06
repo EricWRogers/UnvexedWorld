@@ -20,7 +20,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     // Start is called before the first frame update
     void Start()
     {
-        comboManager = FindObjectOfType<ComboManager>();
+        comboManager = FindFirstObjectByType<ComboManager>();
     }
 
     // Update is called once per frame

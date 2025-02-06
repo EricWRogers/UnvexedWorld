@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class DialogueInteraction : MonoBehaviour
 {
+    
     public bool InRange = false;
 
      public GameObject DiologueBox;
 
      public Diologue text;
+
+     
 
      
 
@@ -22,7 +25,7 @@ public class DialogueInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
+      
     }
 
     void OnTriggerEnter(Collider other)
@@ -32,6 +35,7 @@ public class DialogueInteraction : MonoBehaviour
             DiologueBox.SetActive(true);
             InRange = true;
             text.StartDiolague();
+            Debug.Log("InText");
              
         }
     }

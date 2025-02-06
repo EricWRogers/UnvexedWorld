@@ -11,35 +11,47 @@ public class Diologue : MonoBehaviour
 
     private int index;
 
+    public ThirdPersonMovement movement;
+
+    
+
    
 
     // Start is called before the first frame update
     void Start()
     {
-        textComponent.text = string.Empty;
         
+       
+        
+    }
+
+      void Update()
+    {
+        if(movement.nextLine == true)
+        {
+            LineSkip();   
+        }
     }
    
 
     // Update is called once per frame
     public void LineSkip()
     {
-       
-       {
-            if (textComponent.text == lines[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                textComponent.text = lines[index];
-            }
-       }
+        movement.nextLine = false;
+        if (textComponent.text == lines[index])
+        {
+            NextLine();
+        }
+        else
+        {
+            StopAllCoroutines();
+            textComponent.text = lines[index];
+        }
     }
 
     public void StartDiolague()
     {
+       textComponent.text = string.Empty;
        index = 0;  
        StartCoroutine(TypeLine());
     }
@@ -54,7 +66,7 @@ public class Diologue : MonoBehaviour
 
     }
 
-    void NextLine()
+    public void NextLine()
     {
         if (index < lines.Length - 1)
         {

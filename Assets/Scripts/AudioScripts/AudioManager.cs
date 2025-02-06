@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
@@ -6,11 +8,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip backgroundMusic;
     public AudioClip battleMusic;
     public AudioClip playerDash;
-    public AudioClip punch;
+    public List<AudioClip> punchSounds;
     public AudioClip landing;
     public AudioClip hurt;
 
      public AudioClip orb;
+
+     public AudioClip enemyHurt;
 
     private AudioSource musicSource;
     private AudioSource sfxSource;
@@ -51,9 +55,9 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(playerDash);
     }
 
-    public void PlayPunchSound()
+    public void PlayPunchSound(int i)
     {
-        sfxSource.PlayOneShot(punch);
+        sfxSource.PlayOneShot(punchSounds[i]);
     }
 
     public void PlayLandingSound()
@@ -68,6 +72,11 @@ public class AudioManager : MonoBehaviour
      public void PlayOrbSound()
     {
         sfxSource.PlayOneShot(orb);
+    }
+
+     public void PlayEnemyHurtSound()
+    {
+        sfxSource.PlayOneShot(enemyHurt);
     }
 
     public void StopMusic()

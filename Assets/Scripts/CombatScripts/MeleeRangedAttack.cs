@@ -156,7 +156,7 @@ public class MeleeRangedAttack : MonoBehaviour
        
     }
     
-    void LockOff()
+    public void LockOff()
     {
         direction = false;
         lockOnCanvas.SetActive(false);
@@ -292,6 +292,11 @@ public class MeleeRangedAttack : MonoBehaviour
     public void LockUp()
     {
         isAttacking=true;
+    }
+
+    public void MakeHitBox(int index)
+    {
+        Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
     }
    
 }
