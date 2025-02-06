@@ -21,7 +21,7 @@ public class Diologue : MonoBehaviour
     void Start()
     {
         
-        textComponent.text = string.Empty;
+       
         
     }
 
@@ -51,6 +51,7 @@ public class Diologue : MonoBehaviour
 
     public void StartDiolague()
     {
+       textComponent.text = string.Empty;
        index = 0;  
        StartCoroutine(TypeLine());
     }
