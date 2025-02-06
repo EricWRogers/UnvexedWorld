@@ -2,11 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using SuperPupSystems.Helper;
+using Mono.Cecil.Cil;
 
 public class RagdollEnabler : MonoBehaviour
 {
     public float power = 100f;
-    public Transform chest;
+    public Vector3 chest;
     [SerializeField]
     private GameObject enemy;
     [SerializeField]
@@ -25,6 +26,8 @@ public class RagdollEnabler : MonoBehaviour
     private GameObject enemyMat;
     [SerializeField]
     private Rigidbody[] rb;
+    [SerializeField]
+    private GameObject enemyKnockBack;
     private CharacterJoint[] joints;
     [SerializeField]
     private Collider[] colliders;
@@ -51,6 +54,8 @@ public class RagdollEnabler : MonoBehaviour
 
     public void EnableRagdoll()
     {
+        chest = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
+        power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
@@ -65,7 +70,7 @@ public class RagdollEnabler : MonoBehaviour
             rigidbody.detectCollisions = true;
             rigidbody.useGravity = true;
             rigidbody.isKinematic = false;
-            rigidbody.AddForce(chest.forward * power, ForceMode.Impulse);
+            rigidbody.AddForce(chest * power, ForceMode.Impulse);
         }
         foreach(Collider collider in colliders)
         {
