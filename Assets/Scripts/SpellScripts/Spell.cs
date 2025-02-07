@@ -10,7 +10,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     
     public int subAspect = 0;
-    public int burstDamage;
+    public int burstDamage = 10;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;
     public int AOEDuration;
@@ -69,28 +69,30 @@ public class Spell : MonoBehaviour, IDamageDealer
 
     public void SpellEffect(GameObject target)
     {
-        if (mainAspect == SpellCraft.Aspect.splendor)
+        if(subAspect == 0)
         {
-            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
-            AOE.GetComponent<Spell>().modAspect = modAspect;
-        }
-        else
-        {
+            if (mainAspect == SpellCraft.Aspect.splendor)
+            {
+                GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
+                AOE.GetComponent<Spell>().modAspect = modAspect;
+            }
             if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 lifeSteal = true;
             }
-            if (modAspect == SpellCraft.Aspect.scavenge)
+        }
+        else if (subAspect == 1)
+        {
+            
+            if (mainAspect == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);
             }
-            if (modAspect == SpellCraft.Aspect.splendor)
+            if (mainAspect == SpellCraft.Aspect.splendor)
             {
                 Burst(target);
             }
-        }
-        //lifeSteal = false;
-        
+        }        
     }
 
     public void LifeSteal(HealthChangedObject healthChangedObject)

@@ -76,7 +76,9 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(enemy.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 3:
                         enemyGrunt.TypeThreeKnockBack(direction, forceAmount);

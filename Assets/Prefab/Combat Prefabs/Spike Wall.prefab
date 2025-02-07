@@ -69,9 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -81,7 +82,7 @@ MonoBehaviour:
   hitStop: {fileID: 1401711529906405081}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &1401711529906405081
 MonoBehaviour:
@@ -113,9 +114,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &147742162605649492
@@ -187,9 +189,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -199,7 +202,7 @@ MonoBehaviour:
   hitStop: {fileID: 5940640408612574668}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &5940640408612574668
 MonoBehaviour:
@@ -231,9 +234,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &255645125529426775
@@ -305,9 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -317,7 +322,7 @@ MonoBehaviour:
   hitStop: {fileID: 5331345390148031777}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &5331345390148031777
 MonoBehaviour:
@@ -349,9 +354,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &653249406639306742
@@ -423,9 +429,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -435,7 +442,7 @@ MonoBehaviour:
   hitStop: {fileID: 2054831663534967622}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &2054831663534967622
 MonoBehaviour:
@@ -467,9 +474,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &714565100702186554
@@ -560,6 +568,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   aspect: 0
+  spells: []
 --- !u!1 &922871494913781920
 GameObject:
   m_ObjectHideFlags: 0
@@ -629,9 +638,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -641,7 +651,7 @@ MonoBehaviour:
   hitStop: {fileID: 4337011843437339687}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &4337011843437339687
 MonoBehaviour:
@@ -673,9 +683,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &1275265092455369074
@@ -854,6 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 0
   damage: 5
   impactValue: 25
   doKnockBack: 0
@@ -1060,9 +1072,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1072,7 +1085,7 @@ MonoBehaviour:
   hitStop: {fileID: 1409600758519699127}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &1409600758519699127
 MonoBehaviour:
@@ -1104,9 +1117,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &2040912113451011868
@@ -1286,9 +1300,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1298,7 +1313,7 @@ MonoBehaviour:
   hitStop: {fileID: 1945202258090825940}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &1945202258090825940
 MonoBehaviour:
@@ -1330,9 +1345,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &2375136564335222847
@@ -1404,9 +1420,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1416,7 +1433,7 @@ MonoBehaviour:
   hitStop: {fileID: 8337196355033629404}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &8337196355033629404
 MonoBehaviour:
@@ -1448,9 +1465,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &3043424048393170719
@@ -1738,9 +1756,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1750,7 +1769,7 @@ MonoBehaviour:
   hitStop: {fileID: 1277006087321690220}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &1277006087321690220
 MonoBehaviour:
@@ -1782,9 +1801,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &3327022713707857091
@@ -2180,9 +2200,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2192,7 +2213,7 @@ MonoBehaviour:
   hitStop: {fileID: 1129409071278214355}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &1129409071278214355
 MonoBehaviour:
@@ -2224,9 +2245,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &4526108636590752114
@@ -2514,9 +2536,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2526,7 +2549,7 @@ MonoBehaviour:
   hitStop: {fileID: 5395711393052618613}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &5395711393052618613
 MonoBehaviour:
@@ -2558,9 +2581,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &5007613686621797459
@@ -3246,9 +3270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3258,7 +3283,7 @@ MonoBehaviour:
   hitStop: {fileID: 2040582661037533202}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &2040582661037533202
 MonoBehaviour:
@@ -3290,9 +3315,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &6677289518921203531
@@ -3472,9 +3498,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3484,7 +3511,7 @@ MonoBehaviour:
   hitStop: {fileID: 8395250486917577123}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &8395250486917577123
 MonoBehaviour:
@@ -3516,9 +3543,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &7434751682079475203
@@ -3590,9 +3618,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3602,7 +3631,7 @@ MonoBehaviour:
   hitStop: {fileID: 7930092067370289320}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &7930092067370289320
 MonoBehaviour:
@@ -3634,9 +3663,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &7815224922687926058
@@ -3816,9 +3846,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3828,7 +3859,7 @@ MonoBehaviour:
   hitStop: {fileID: 8015727054462901749}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &8015727054462901749
 MonoBehaviour:
@@ -3860,9 +3891,10 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
 --- !u!1 &8123301419686453936
@@ -3969,9 +4001,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 1
   damage: 5
   impactValue: 25
-  doKnockBack: 0
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3981,7 +4014,7 @@ MonoBehaviour:
   hitStop: {fileID: 8592856008189311135}
   duration: 0.2
   punchSoundIndex: 0
-  direction: {fileID: 0}
+  direction: {fileID: 1298603358681588818}
   forceAmount: 4
 --- !u!114 &8592856008189311135
 MonoBehaviour:
@@ -4013,8 +4046,9 @@ MonoBehaviour:
   mainAspect: 0
   modAspect: 0
   subAspect: 0
-  burstDamage: 0
+  burstDamage: 10
   AOEDuration: 0
   lifeSteal: 0
+  overwriteSpell: 0
   lifeStealRatio: 1
   comboManager: {fileID: 0}
