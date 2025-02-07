@@ -54,7 +54,7 @@ public class SpellShot : MonoBehaviour
     {
         if (spellCraft.CurrentElement != SpellCraft.Aspect.none)
         {
-            ShootSpellPrefab(spellCraft.CurrentElement, spellCraft.modAspect);
+            ShootSpellPrefab(spellCraft.CurrentElement);
         }
         else
         {
@@ -62,7 +62,7 @@ public class SpellShot : MonoBehaviour
         }
     }
 
-    public void ShootSpellPrefab(SpellCraft.Aspect CurrentElement, SpellCraft.Aspect modAspect)
+    public void ShootSpellPrefab(SpellCraft.Aspect CurrentElement)
     {
         aimRotation = targetCamera.transform.rotation.eulerAngles;
         aimRotation.x -= aimOffset;
@@ -80,7 +80,6 @@ public class SpellShot : MonoBehaviour
                 bullet.GetComponent<Spell>().lifeSteal = false;
             }
         bullet.GetComponent<Spell>().CurrentElement = CurrentElement;
-        bullet.GetComponent<Spell>().modAspect = modAspect;
         
         //Rigidbody rigi = bullet.GetComponentInChildren<Rigidbody>();
         //rigi.AddForce(firePoint.forward * bulletSpeed, ForceMode.Impulse);

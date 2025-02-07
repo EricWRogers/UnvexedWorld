@@ -131,12 +131,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         }
         if(gameObject.GetComponent<Spell>() != null)
         {
-            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge || (gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.scavenge))
+            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
-            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor|| (gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.splendor))
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;

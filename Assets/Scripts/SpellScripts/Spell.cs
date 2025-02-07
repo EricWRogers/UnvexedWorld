@@ -7,7 +7,6 @@ using Scripts.HUDScripts.MessageSystem;
 public class Spell : MonoBehaviour, IDamageDealer
 {
     public SpellCraft.Aspect CurrentElement = SpellCraft.Aspect.none;
-    public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     
     public int subAspect = 0;
     public int burstDamage = 10;
@@ -74,7 +73,6 @@ public class Spell : MonoBehaviour, IDamageDealer
             if (CurrentElement == SpellCraft.Aspect.splendor)
             {
                 GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
-                AOE.GetComponent<Spell>().modAspect = modAspect;
             }
             if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
@@ -114,10 +112,9 @@ public class Spell : MonoBehaviour, IDamageDealer
         return burstDamage;
     }
 
-    public void SetSelf(SpellCraft.Aspect newCurrentElement,SpellCraft.Aspect newModAspect)
+    public void SetSelf(SpellCraft.Aspect newCurrentElement)
     {
         SetMain(newCurrentElement);
-        SetMod(newModAspect);
     }
 
     public void SetMain(SpellCraft.Aspect aspect)
@@ -133,15 +130,9 @@ public class Spell : MonoBehaviour, IDamageDealer
         }
     }
 
-    public void SetMod(SpellCraft.Aspect aspect)
-    {
-        modAspect = aspect;
-    }
-
     public void ClearSpell()
     {
         SetMain(SpellCraft.Aspect.none);
-        SetMod(SpellCraft.Aspect.none);
     }
 
     

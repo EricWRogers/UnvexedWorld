@@ -35,7 +35,6 @@ public class PlayerHUD : MonoBehaviour
     void Update()
     {
         powerSystemImages[0].color = colors[(int)spellCraft.CurrentElement];
-        powerSystemImages[1].color = colors[(int)spellCraft.modAspect];
 
 
         // Check if F key is held down for combining spells

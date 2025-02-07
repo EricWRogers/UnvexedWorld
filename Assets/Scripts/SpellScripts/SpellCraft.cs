@@ -19,7 +19,7 @@ public class SpellCraft : MonoBehaviour
     }
     public SpellShot spellShot;
     public Aspect CurrentElement = Aspect.none;
-    public Aspect modAspect = Aspect.none;
+    public List<Aspect> unlockedElements = new List<Aspect>{Aspect.none};
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
     public int subAspect = 0;
@@ -27,7 +27,6 @@ public class SpellCraft : MonoBehaviour
 
     public bool mainSet = false;
 
-    public bool modSet = false;
 
     public bool clear = false;
 
@@ -114,17 +113,16 @@ public class SpellCraft : MonoBehaviour
 
     public void CastSpell(CastType castType)
     {
-        Debug.Log("Casting a " + CurrentElement.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
         if (castType == CastType.ranged)
         {
-            spellShot.ShootSpellPrefab(CurrentElement, modAspect);
+            spellShot.ShootSpellPrefab(CurrentElement);
            
         }
         if (castType == CastType.melee)
         {
             for(int i = 0; i<spells.Length; i++)
             {
-                spells[i].SetSelf(CurrentElement,modAspect);
+                spells[i].SetSelf(CurrentElement);
             }
             
         }
@@ -140,10 +138,6 @@ public class SpellCraft : MonoBehaviour
             CurrentElement = Aspect.scavenge;
             
         }
-        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.scavenge;
-        }
     }
 
     void Sunder()
@@ -151,10 +145,6 @@ public class SpellCraft : MonoBehaviour
         if ( CurrentElement == Aspect.none)
         {
             CurrentElement = Aspect.sunder;
-        }
-        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.sunder;
         }
     }
 
@@ -164,10 +154,6 @@ public class SpellCraft : MonoBehaviour
         {
             CurrentElement = Aspect.splendor;
         }
-        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
-        {
-            modAspect = Aspect.splendor;
-        }
     }
     public void SetMain(Aspect aspect)
     {
@@ -175,28 +161,16 @@ public class SpellCraft : MonoBehaviour
         mainSet = true;
     }
 
-    public void SetMod(Aspect aspect)
-    {
-        modAspect = aspect;
-        modSet = true;
-    }
-
     void ClearSpell()
     {
         clear = true;
         CurrentElement = Aspect.none;
-        modAspect = Aspect.none;
     }
 
     //Modifying the spell script on the fist
     public void SetFistMain(Aspect aspect)
     {
         spells[0].SetMain(aspect);
-    }
-
-    public void SetFistMod(Aspect aspect)
-    {
-        spells[0].SetMod(aspect);
     }
 
     void ClearFistSpell()
@@ -220,11 +194,6 @@ public class SpellCraft : MonoBehaviour
     public void AddTheListenerMain(SpellCraft.Aspect aspect)
     {
         gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
-    }
-
-    public void AddTheListenerMod(SpellCraft.Aspect aspect)
-    {
-        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMod(aspect);});
     }
     
     public void RemoveTheListener()
