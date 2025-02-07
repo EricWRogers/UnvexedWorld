@@ -156,7 +156,7 @@ public class MeleeRangedAttack : MonoBehaviour
        
     }
     
-    void LockOff()
+    public void LockOff()
     {
         direction = false;
         lockOnCanvas.SetActive(false);
