@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class AudioManager : MonoBehaviour
     {
         public string name;
         public AudioClip clip;
+        public AudioMixerGroup mixerGroup; // Unique Mixer Group for each SFX
     }
 
     [System.Serializable]
@@ -15,7 +17,11 @@ public class AudioManager : MonoBehaviour
     {
         public string name;
         public AudioClip clip;
+        public AudioMixerGroup mixerGroup; // Unique Mixer Group for each Music track
     }
+
+    [Header("Audio Mixer")]
+    public AudioMixer audioMixer;  // Reference to the Audio Mixer
 
     [Header("Music")]
     public List<MusicElement> musicTracks;
@@ -23,106 +29,147 @@ public class AudioManager : MonoBehaviour
     [Header("Sound Effects")]
     public List<SFXElement> soundEffects;
 
-    private AudioSource musicSource;
-    private AudioSource sfxSource;
-
     void Awake()
     {
-        // Initialize AudioSources
-        musicSource = gameObject.AddComponent<AudioSource>();
-        sfxSource = gameObject.AddComponent<AudioSource>();
-
-        musicSource.loop = true; // Music should loop
+        // Ensure the audio mixer is correctly assigned
+        if (audioMixer == null)
+        {
+            Debug.LogError("Audio Mixer is missing in AudioManager!");
+        }
     }
 
-    private AudioClip GetMusicClip(string name)
+    private MusicElement GetMusicElement(string name)
     {
-        foreach (MusicElement music in musicTracks)
-        {
-            if (music.name == name)
-                return music.clip;
-        }
-        return null;
+        return musicTracks.Find(music => music.name == name);
     }
 
-    private AudioClip GetSFXClip(string name)
+    private SFXElement GetSFXElement(string name)
     {
-        foreach (SFXElement sfx in soundEffects)
-        {
-            if (sfx.name == name)
-                return sfx.clip;
-        }
-        return null;
+        return soundEffects.Find(sfx => sfx.name == name);
     }
 
     // --- Music Methods ---
     public void PlayBackgroundMusic()
     {
-        AudioClip clip = GetMusicClip("BackgroundMusic");
-        if (clip != null && (musicSource.clip != clip || !musicSource.isPlaying))
+        MusicElement music = GetMusicElement("BackgroundMusic");
+        if (music != null)
         {
-            musicSource.Stop();
-            musicSource.clip = clip;
-            musicSource.Play();
+            PlaySound(music.clip, music.mixerGroup);
         }
     }
 
     public void PlayBattleMusic()
     {
-        AudioClip clip = GetMusicClip("BattleMusic");
-        if (clip != null && (musicSource.clip != clip || !musicSource.isPlaying))
+        MusicElement music = GetMusicElement("BattleMusic");
+        if (music != null)
         {
-            musicSource.Stop();
-            musicSource.clip = clip;
-            musicSource.Play();
+            PlaySound(music.clip, music.mixerGroup);
         }
     }
 
     public void StopMusic()
     {
-        musicSource.Stop();
+        // Stop all currently playing audio
+        AudioSource[] sources = GetComponents<AudioSource>();
+        foreach (AudioSource source in sources)
+        {
+            source.Stop();
+        }
     }
 
     public bool IsBattleMusicPlaying()
     {
-        AudioClip clip = GetMusicClip("BattleMusic");
-        return clip != null && musicSource.clip == clip && musicSource.isPlaying;
+        MusicElement music = GetMusicElement("BattleMusic");
+        AudioSource[] sources = GetComponents<AudioSource>();
+
+        foreach (AudioSource source in sources)
+        {
+            if (music != null && source.clip == music.clip && source.isPlaying)
+                return true;
+        }
+        return false;
     }
 
     // --- SFX Methods ---
     public void PlayDashSound()
     {
-        AudioClip clip = GetSFXClip("Dash");
-        if (clip != null) sfxSource.PlayOneShot(clip);
+        PlaySFX("Dash");
     }
 
     public void PlayPunchSound(int i)
     {
         if (i >= 0 && i < soundEffects.Count)
-            sfxSource.PlayOneShot(soundEffects[i].clip);
+        {
+            PlaySound(soundEffects[i].clip, soundEffects[i].mixerGroup);
+        }
     }
 
     public void PlayLandingSound()
     {
-        AudioClip clip = GetSFXClip("Landing");
-        if (clip != null) sfxSource.PlayOneShot(clip);
+        PlaySFX("Landing");
     }
 
     public void PlayHurtSound()
     {
-        AudioClip clip = GetSFXClip("Hurt");
-        if (clip != null) sfxSource.PlayOneShot(clip);
+        PlaySFX("Hurt");
     }
 
     public void PlayOrbSound()
     {
-        AudioClip clip = GetSFXClip("Orb");
-        if (clip != null) sfxSource.PlayOneShot(clip);
+        PlaySFX("Orb");
     }
 
     public void PlayEnemyHurtSound()
     {
-        AudioClip clip = GetSFXClip("EnemyHurt");
-        if (clip != null) sfxSource.PlayOneShot(clip);
+        PlaySFX("EnemyHurt");
+    }
+
+    private void PlaySFX(string name)
+    {
+        SFXElement sfx = GetSFXElement(name);
+        if (sfx != null)
+        {
+            PlaySound(sfx.clip, sfx.mixerGroup);
+        }
+    }
+
+    private void PlaySound(AudioClip clip, AudioMixerGroup mixerGroup)
+    {
+        if (clip != null)
+        {
+            AudioSource source = gameObject.AddComponent<AudioSource>();
+            source.clip = clip;
+            source.outputAudioMixerGroup = mixerGroup;
+            source.Play();
+            Destroy(source, clip.length); // Destroy audio source after playing
+        }
+    }
+
+    // --- Equalizer Controls for each sound element ---
+    public void SetBass(string soundName, float value)
+    {
+        SetEQ(soundName, "Bass", value);
+    }
+
+    public void SetMid(string soundName, float value)
+    {
+        SetEQ(soundName, "Mid", value);
+    }
+
+    public void SetTreble(string soundName, float value)
+    {
+        SetEQ(soundName, "Treble", value);
+    }
+
+    private void SetEQ(string soundName, string parameter, float value)
+    {
+        SFXElement sfx = GetSFXElement(soundName);
+        MusicElement music = GetMusicElement(soundName);
+
+        AudioMixerGroup mixerGroup = sfx != null ? sfx.mixerGroup : music?.mixerGroup;
+        if (mixerGroup != null)
+        {
+            audioMixer.SetFloat(parameter + "_" + soundName, Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20);
+        }
     }
 }
