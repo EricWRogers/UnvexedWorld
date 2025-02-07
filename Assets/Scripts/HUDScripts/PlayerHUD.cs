@@ -34,7 +34,7 @@ public class PlayerHUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        powerSystemImages[0].color = colors[(int)spellCraft.mainAspect];
+        powerSystemImages[0].color = colors[(int)spellCraft.CurrentElement];
         powerSystemImages[1].color = colors[(int)spellCraft.modAspect];
 
 

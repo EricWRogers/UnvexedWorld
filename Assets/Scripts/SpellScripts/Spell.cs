@@ -6,7 +6,7 @@ using Scripts.HUDScripts.MessageSystem;
 
 public class Spell : MonoBehaviour, IDamageDealer
 {
-    public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
+    public SpellCraft.Aspect CurrentElement = SpellCraft.Aspect.none;
     public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
     
     public int subAspect = 0;
@@ -31,7 +31,7 @@ public class Spell : MonoBehaviour, IDamageDealer
         if(gameObject.GetComponentInParent<AttackUpdater>()!=null && overwriteSpell == false)
         {
             AttackUpdater temp = gameObject.GetComponentInParent<AttackUpdater>();
-            mainAspect = temp.element;
+            CurrentElement = temp.element;
             subAspect = temp.aspect;
         }
     }
@@ -71,12 +71,12 @@ public class Spell : MonoBehaviour, IDamageDealer
     {
         if(subAspect == 0)
         {
-            if (mainAspect == SpellCraft.Aspect.splendor)
+            if (CurrentElement == SpellCraft.Aspect.splendor)
             {
                 GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
                 AOE.GetComponent<Spell>().modAspect = modAspect;
             }
-            if (mainAspect == SpellCraft.Aspect.scavenge)
+            if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 lifeSteal = true;
             }
@@ -84,11 +84,11 @@ public class Spell : MonoBehaviour, IDamageDealer
         else if (subAspect == 1)
         {
             
-            if (mainAspect == SpellCraft.Aspect.scavenge)
+            if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);
             }
-            if (mainAspect == SpellCraft.Aspect.splendor)
+            if (CurrentElement == SpellCraft.Aspect.splendor)
             {
                 Burst(target);
             }
@@ -114,15 +114,15 @@ public class Spell : MonoBehaviour, IDamageDealer
         return burstDamage;
     }
 
-    public void SetSelf(SpellCraft.Aspect newMainAspect,SpellCraft.Aspect newModAspect)
+    public void SetSelf(SpellCraft.Aspect newCurrentElement,SpellCraft.Aspect newModAspect)
     {
-        SetMain(newMainAspect);
+        SetMain(newCurrentElement);
         SetMod(newModAspect);
     }
 
     public void SetMain(SpellCraft.Aspect aspect)
     {
-        mainAspect = aspect;
+        CurrentElement = aspect;
         if(aspect == SpellCraft.Aspect.scavenge)
         {
             lifeSteal=true;

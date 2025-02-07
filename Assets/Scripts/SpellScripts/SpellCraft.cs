@@ -18,7 +18,7 @@ public class SpellCraft : MonoBehaviour
         sunder,
     }
     public SpellShot spellShot;
-    public Aspect mainAspect = Aspect.none;
+    public Aspect CurrentElement = Aspect.none;
     public Aspect modAspect = Aspect.none;
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
@@ -84,7 +84,7 @@ public class SpellCraft : MonoBehaviour
         //Setting spell components
         //if (Input.GetKeyDown(KeyCode.Alpha1))
        // {
-            //mainAspect = Aspect.scavenge;
+            //CurrentElement = Aspect.scavenge;
             //Scavenge();
         //}
 
@@ -114,17 +114,17 @@ public class SpellCraft : MonoBehaviour
 
     public void CastSpell(CastType castType)
     {
-        Debug.Log("Casting a " + mainAspect.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
+        Debug.Log("Casting a " + CurrentElement.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
         if (castType == CastType.ranged)
         {
-            spellShot.ShootSpellPrefab(mainAspect, modAspect);
+            spellShot.ShootSpellPrefab(CurrentElement, modAspect);
            
         }
         if (castType == CastType.melee)
         {
             for(int i = 0; i<spells.Length; i++)
             {
-                spells[i].SetSelf(mainAspect,modAspect);
+                spells[i].SetSelf(CurrentElement,modAspect);
             }
             
         }
@@ -135,12 +135,12 @@ public class SpellCraft : MonoBehaviour
     //Populating the spell list
     void Scavenge()
     {
-        if ( mainAspect == Aspect.none)
+        if ( CurrentElement == Aspect.none)
         {
-            mainAspect = Aspect.scavenge;
+            CurrentElement = Aspect.scavenge;
             
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
         {
             modAspect = Aspect.scavenge;
         }
@@ -148,11 +148,11 @@ public class SpellCraft : MonoBehaviour
 
     void Sunder()
     {
-        if ( mainAspect == Aspect.none)
+        if ( CurrentElement == Aspect.none)
         {
-            mainAspect = Aspect.sunder;
+            CurrentElement = Aspect.sunder;
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
         {
             modAspect = Aspect.sunder;
         }
@@ -160,18 +160,18 @@ public class SpellCraft : MonoBehaviour
 
     void Splendor()
     {
-        if ( mainAspect == Aspect.none)
+        if ( CurrentElement == Aspect.none)
         {
-            mainAspect = Aspect.splendor;
+            CurrentElement = Aspect.splendor;
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else if ( CurrentElement != Aspect.none && modAspect == Aspect.none)
         {
             modAspect = Aspect.splendor;
         }
     }
     public void SetMain(Aspect aspect)
     {
-        mainAspect = aspect;
+        CurrentElement = aspect;
         mainSet = true;
     }
 
@@ -184,7 +184,7 @@ public class SpellCraft : MonoBehaviour
     void ClearSpell()
     {
         clear = true;
-        mainAspect = Aspect.none;
+        CurrentElement = Aspect.none;
         modAspect = Aspect.none;
     }
 

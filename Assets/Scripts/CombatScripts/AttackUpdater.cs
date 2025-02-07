@@ -14,7 +14,7 @@ public class AttackUpdater : MonoBehaviour
 
         foreach(Spell spell in spells)
         {
-            spell.mainAspect = element;
+            spell.CurrentElement = element;
             spell.subAspect = aspect;
         }
     }
