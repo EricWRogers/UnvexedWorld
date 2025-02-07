@@ -83,6 +83,20 @@ public class SpellCraft : MonoBehaviour
         {
             UnlockElement((Aspect)(elementIndex%4));
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftBracket))
+        {
+            CycleAspect();
+        }
+
+        if(Input.mouseScrollDelta.y<0)
+        {
+            CycleElementDown();
+        }
+        else if(Input.mouseScrollDelta.y>0)
+        {
+            CycleElementUp();
+        }
     }
 
     public void PrintCastType(CastType castType)
@@ -147,6 +161,30 @@ public class SpellCraft : MonoBehaviour
             elementIndex = 0;
         }
         CurrentElement = unlockedElements[elementIndex];
+    }
+    public void CycleElementDown()
+    {
+        if(elementIndex-1 < 0)
+        {
+            elementIndex = unlockedElements.Count-1;
+        }
+        else
+        {
+            elementIndex--;
+        }
+        CurrentElement = unlockedElements[elementIndex];
+    }
+
+    public void CycleAspect()
+    {
+        if(subAspect==0)
+        {
+            subAspect=1;
+        }
+        else
+        {
+            subAspect = 0;
+        }
     }
 
     void ClearSpell()
