@@ -25,7 +25,7 @@ public class TheFourth : MonoBehaviour
             check1 = true;
         }
 
-        if(spell.modSet == true && inArea == true)
+        if(inArea == true)
         {
             check2 = true;
         }
