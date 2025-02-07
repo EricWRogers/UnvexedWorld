@@ -22,6 +22,7 @@ public class SpellCraft : MonoBehaviour
     public List<Aspect> unlockedElements = new List<Aspect>{Aspect.none};
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
+    public int elementIndex = 0;
     public int subAspect = 0;
     public bool casting = false;
 
@@ -78,30 +79,10 @@ public class SpellCraft : MonoBehaviour
         }
         GetComponent<Animator>().SetBool("Casting", casting);
         
-        
-        
-        //Setting spell components
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-       // {
-            //CurrentElement = Aspect.scavenge;
-            //Scavenge();
-        //}
-
-        // if (Input.GetKeyDown(KeyCode.Alpha3))
-        // {
-        //     Sunder();
-        // }
-
-       // if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-           // Splendor();
-        //}
-        
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-           // ClearSpell();
-        //}
-        
+        if(Input.GetKeyDown(KeyCode.RightBracket))
+        {
+            UnlockElement((Aspect)(elementIndex%4));
+        }
     }
 
     public void PrintCastType(CastType castType)
@@ -155,10 +136,17 @@ public class SpellCraft : MonoBehaviour
             CurrentElement = Aspect.splendor;
         }
     }
-    public void SetMain(Aspect aspect)
+    public void CycleElementUp()
     {
-        CurrentElement = aspect;
-        mainSet = true;
+        if(elementIndex+1 < unlockedElements.Count)
+        {
+            elementIndex++;
+        }
+        else
+        {
+            elementIndex = 0;
+        }
+        CurrentElement = unlockedElements[elementIndex];
     }
 
     void ClearSpell()
@@ -170,7 +158,7 @@ public class SpellCraft : MonoBehaviour
     //Modifying the spell script on the fist
     public void SetFistMain(Aspect aspect)
     {
-        spells[0].SetMain(aspect);
+        //spells[0].SetMain(aspect);
     }
 
     void ClearFistSpell()
@@ -189,12 +177,17 @@ public class SpellCraft : MonoBehaviour
         casting = false;
     }
 
+    public void UnlockElement(Aspect aspect)
+    {
+        unlockedElements.Insert(unlockedElements.Count,aspect);
+    }
 
     //setting listeners for populating list on hit
     public void AddTheListenerMain(SpellCraft.Aspect aspect)
     {
-        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
+        //gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
     }
+
     
     public void RemoveTheListener()
     {
