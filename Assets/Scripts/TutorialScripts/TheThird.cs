@@ -25,7 +25,7 @@ public class TheThird : MonoBehaviour
             check1 = true;
         }
 
-        if(spell.modSet == true && inArea == true)
+        if(inArea == true)
         {
             check2 = true;
         }
@@ -43,9 +43,7 @@ public class TheThird : MonoBehaviour
         if(col.gameObject.CompareTag("Player"))
         {
             wall.SetActive(true);
-            inArea = true;
-            spell.modSet = false;
-            
+            inArea = true;            
         }
     }
 
