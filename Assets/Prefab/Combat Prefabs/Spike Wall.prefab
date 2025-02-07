@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3203053616231440245}
   - component: {fileID: 608971035407156432}
   - component: {fileID: 1401711529906405081}
+  - component: {fileID: 7993078298934173805}
   m_Layer: 10
   m_Name: hitboxMelee (4)
   m_TagString: Untagged
@@ -68,8 +69,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -78,6 +81,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1401711529906405081}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &1401711529906405081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +99,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &7993078298934173805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 137658142801415196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &147742162605649492
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,6 +131,7 @@ GameObject:
   - component: {fileID: 3003750306834151954}
   - component: {fileID: 6131970930009436830}
   - component: {fileID: 5940640408612574668}
+  - component: {fileID: 3042838039183819005}
   m_Layer: 10
   m_Name: hitboxMelee (4)
   m_TagString: Untagged
@@ -161,8 +188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -171,6 +200,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5940640408612574668}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &5940640408612574668
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,6 +218,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &3042838039183819005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147742162605649492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &255645125529426775
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +250,7 @@ GameObject:
   - component: {fileID: 2774927199018714481}
   - component: {fileID: 2334586566663479990}
   - component: {fileID: 5331345390148031777}
+  - component: {fileID: 6733639045477432130}
   m_Layer: 10
   m_Name: hitboxMelee (2)
   m_TagString: Untagged
@@ -254,8 +307,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -264,6 +319,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5331345390148031777}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &5331345390148031777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +337,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &6733639045477432130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255645125529426775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &653249406639306742
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,6 +369,7 @@ GameObject:
   - component: {fileID: 8804798892628828806}
   - component: {fileID: 6438731851843898418}
   - component: {fileID: 2054831663534967622}
+  - component: {fileID: 8319566534162054966}
   m_Layer: 10
   m_Name: hitbox7
   m_TagString: Untagged
@@ -347,8 +426,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -357,6 +438,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2054831663534967622}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &2054831663534967622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +456,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &8319566534162054966
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653249406639306742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &714565100702186554
 GameObject:
   m_ObjectHideFlags: 0
@@ -383,9 +487,10 @@ GameObject:
   - component: {fileID: 8816696711155652406}
   - component: {fileID: 1063699795772695673}
   - component: {fileID: 3064719865596312514}
+  - component: {fileID: -8088364117850296361}
   m_Layer: 0
   m_Name: Spike Wall
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -445,6 +550,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-8088364117850296361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714565100702186554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 0
+  aspect: 0
+  spells: []
 --- !u!1 &922871494913781920
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +577,7 @@ GameObject:
   - component: {fileID: 3562534386529137368}
   - component: {fileID: 6159859089106371555}
   - component: {fileID: 4337011843437339687}
+  - component: {fileID: 3144654719893268314}
   m_Layer: 10
   m_Name: hitboxMelee (2)
   m_TagString: Untagged
@@ -513,8 +634,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -523,6 +646,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 4337011843437339687}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &4337011843437339687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,6 +664,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &3144654719893268314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922871494913781920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &1275265092455369074
 GameObject:
   m_ObjectHideFlags: 0
@@ -714,8 +860,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 0
   damage: 5
   impactValue: 25
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -724,6 +872,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2566194921841682518}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &2566194921841682518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -859,6 +1010,7 @@ GameObject:
   - component: {fileID: 1987334980371152395}
   - component: {fileID: 2430664468336108253}
   - component: {fileID: 1409600758519699127}
+  - component: {fileID: 3577964523897416331}
   m_Layer: 10
   m_Name: hitbox1
   m_TagString: Untagged
@@ -915,8 +1067,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -925,6 +1079,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1409600758519699127}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &1409600758519699127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +1097,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &3577964523897416331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2015755276979137615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &2040912113451011868
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1237,7 @@ GameObject:
   - component: {fileID: 4149834802888747885}
   - component: {fileID: 8127495525962305980}
   - component: {fileID: 1945202258090825940}
+  - component: {fileID: 3883909358776790619}
   m_Layer: 10
   m_Name: hitboxMelee (3)
   m_TagString: Untagged
@@ -1116,8 +1294,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1126,6 +1306,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1945202258090825940}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &1945202258090825940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1141,6 +1324,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &3883909358776790619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2184806463464365119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &2375136564335222847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1356,7 @@ GameObject:
   - component: {fileID: 1370247508671917406}
   - component: {fileID: 6380373493539844600}
   - component: {fileID: 8337196355033629404}
+  - component: {fileID: 3713232092030277730}
   m_Layer: 10
   m_Name: hitbox4
   m_TagString: Untagged
@@ -1209,8 +1413,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1219,6 +1425,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8337196355033629404}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &8337196355033629404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1234,6 +1443,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &3713232092030277730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2375136564335222847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &3043424048393170719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,6 +1691,7 @@ GameObject:
   - component: {fileID: 3542232213700691267}
   - component: {fileID: 5455566775744614471}
   - component: {fileID: 1277006087321690220}
+  - component: {fileID: 1848697633266195390}
   m_Layer: 10
   m_Name: hitbox3
   m_TagString: Untagged
@@ -1518,8 +1748,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1528,6 +1760,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1277006087321690220}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &1277006087321690220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1543,6 +1778,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &1848697633266195390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3259318701434536193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &3327022713707857091
 GameObject:
   m_ObjectHideFlags: 0
@@ -1879,6 +2134,7 @@ GameObject:
   - component: {fileID: 3887258188968650265}
   - component: {fileID: 6286818078105572788}
   - component: {fileID: 1129409071278214355}
+  - component: {fileID: 8223810951643829971}
   m_Layer: 10
   m_Name: hitbox6
   m_TagString: Untagged
@@ -1935,8 +2191,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1945,6 +2203,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 1129409071278214355}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &1129409071278214355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1960,6 +2221,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &8223810951643829971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4193601563559458017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &4526108636590752114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2188,6 +2469,7 @@ GameObject:
   - component: {fileID: 1033584621962610450}
   - component: {fileID: 7599651400050206766}
   - component: {fileID: 5395711393052618613}
+  - component: {fileID: 7305733898067716148}
   m_Layer: 10
   m_Name: hitbox8
   m_TagString: Untagged
@@ -2244,8 +2526,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2254,6 +2538,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 5395711393052618613}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &5395711393052618613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2269,6 +2556,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &7305733898067716148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4836727890042308940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &5007613686621797459
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2925,7 @@ Transform:
   m_GameObject: {fileID: 5363733951931281693}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2653,7 +2960,7 @@ Transform:
   m_GameObject: {fileID: 5637338172200691862}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: -2}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2895,6 +3202,7 @@ GameObject:
   - component: {fileID: 4755350229378252536}
   - component: {fileID: 5205182956854025179}
   - component: {fileID: 2040582661037533202}
+  - component: {fileID: 2012511585690141647}
   m_Layer: 10
   m_Name: hitboxMelee (1)
   m_TagString: Untagged
@@ -2951,8 +3259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -2961,6 +3271,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 2040582661037533202}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &2040582661037533202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2976,6 +3289,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &2012511585690141647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6042839076777324896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &6677289518921203531
 GameObject:
   m_ObjectHideFlags: 0
@@ -3096,6 +3429,7 @@ GameObject:
   - component: {fileID: 2036454678869990776}
   - component: {fileID: 1286543720355543946}
   - component: {fileID: 8395250486917577123}
+  - component: {fileID: 2355213746348784620}
   m_Layer: 10
   m_Name: hitbox5
   m_TagString: Untagged
@@ -3152,8 +3486,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3162,6 +3498,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8395250486917577123}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &8395250486917577123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3177,6 +3516,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &2355213746348784620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6933419604696792496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &7434751682079475203
 GameObject:
   m_ObjectHideFlags: 0
@@ -3189,6 +3548,7 @@ GameObject:
   - component: {fileID: 7056517430367862487}
   - component: {fileID: 203099234015543754}
   - component: {fileID: 7930092067370289320}
+  - component: {fileID: 6894237104138924236}
   m_Layer: 10
   m_Name: hitboxMelee (1)
   m_TagString: Untagged
@@ -3245,8 +3605,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3255,6 +3617,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 7930092067370289320}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &7930092067370289320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3270,6 +3635,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &6894237104138924236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7434751682079475203}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &7815224922687926058
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,6 +3775,7 @@ GameObject:
   - component: {fileID: 2562391565965248898}
   - component: {fileID: 1609616643819211057}
   - component: {fileID: 8015727054462901749}
+  - component: {fileID: 7615788653290511437}
   m_Layer: 10
   m_Name: hitbox2
   m_TagString: Untagged
@@ -3446,8 +3832,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3456,6 +3844,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8015727054462901749}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 25
 --- !u!114 &8015727054462901749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3471,6 +3862,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &7615788653290511437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8098070314009061414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &8123301419686453936
 GameObject:
   m_ObjectHideFlags: 0
@@ -3496,7 +3907,7 @@ Transform:
   m_GameObject: {fileID: 8123301419686453936}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3518,6 +3929,7 @@ GameObject:
   - component: {fileID: 300552142790543650}
   - component: {fileID: 7204789746977638734}
   - component: {fileID: 8592856008189311135}
+  - component: {fileID: 7168613680706771634}
   m_Layer: 10
   m_Name: hitboxMelee (3)
   m_TagString: Untagged
@@ -3574,8 +3986,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 2
   damage: 5
   impactValue: 25
+  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -3584,6 +3998,9 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 8592856008189311135}
   duration: 0.2
+  punchSoundIndex: 0
+  direction: {fileID: 1298603358681588818}
+  forceAmount: 10
 --- !u!114 &8592856008189311135
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3599,3 +4016,23 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0.1
+--- !u!114 &7168613680706771634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8450140226696097883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
