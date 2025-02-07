@@ -31,6 +31,8 @@ public class SpellCraft : MonoBehaviour
 
     public bool clear = false;
 
+
+
    
    
 
@@ -52,6 +54,8 @@ public class SpellCraft : MonoBehaviour
         gamepad.GamePlay.Clear.performed += ctx => ClearSpell();
         gamepad.GamePlay.Casting.performed += ctx => SetCasting();
         gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
+        gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
+        gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
 
     }
 
