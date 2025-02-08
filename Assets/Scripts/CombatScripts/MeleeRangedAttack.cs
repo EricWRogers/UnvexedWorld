@@ -35,13 +35,15 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public CameraLockon cameraLockon;
 
+    public static bool unLock = true;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.MeleeLight.performed += ctx => MeleeGamepadlight();
         //gamepad.GamePlay.MeleeHeavy.performed += ctx => MeleeGamepadHeavy();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
-        gamepad.GamePlay.LockOn.performed += ctx => LockOn();
+        gamepad.GamePlay.LockOnTest.performed += ctx => CheckLock();
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
          cameraManager = GetComponent<CameraManager>();
@@ -99,6 +101,12 @@ public class MeleeRangedAttack : MonoBehaviour
 
     }
 
+    void LockOnTrue()
+    {
+        unLock = false;
+        
+    }
+
 
     void LockOn()
     {
@@ -109,7 +117,10 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
+            
         }
+        unLock = true;
+       
        
     }
     
@@ -117,7 +128,21 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         direction = false;
         lockOnCanvas.SetActive(false);
+        unLock = false;
     }
+    public void CheckLock()
+    {
+        if (unLock == false)
+        {
+            LockOn();
+        }
+        else
+        {
+            LockOff();
+        }
+    }
+    
+
 
     void CancelLockUp()
     {
@@ -173,12 +198,18 @@ public class MeleeRangedAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            LockOn();
+            {
+                if (unLock == false)
+                {
+                    LockOn();
+                }
+                else
+                {
+                    LockOff();
+                }
+            }
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            LockOff();
-        }
+       
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
@@ -187,6 +218,8 @@ public class MeleeRangedAttack : MonoBehaviour
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
         }
+
+     
 
 
 
