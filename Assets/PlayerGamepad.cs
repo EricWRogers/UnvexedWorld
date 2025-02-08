@@ -170,6 +170,15 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LockOnTest"",
+                    ""type"": ""Button"",
+                    ""id"": ""16e47449-d40b-40f2-83f7-bcaffbbfb69b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -348,6 +357,17 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""Cycleelement"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b6840031-461f-4ba7-b717-57d744ceb9ae"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockOnTest"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -372,6 +392,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_Text = m_GamePlay.FindAction("Text", throwIfNotFound: true);
         m_GamePlay_Cycleaspect = m_GamePlay.FindAction("Cycleaspect", throwIfNotFound: true);
         m_GamePlay_Cycleelement = m_GamePlay.FindAction("Cycleelement", throwIfNotFound: true);
+        m_GamePlay_LockOnTest = m_GamePlay.FindAction("LockOnTest", throwIfNotFound: true);
     }
 
     ~@PlayerGamepad()
@@ -454,6 +475,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_Text;
     private readonly InputAction m_GamePlay_Cycleaspect;
     private readonly InputAction m_GamePlay_Cycleelement;
+    private readonly InputAction m_GamePlay_LockOnTest;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -474,6 +496,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @Text => m_Wrapper.m_GamePlay_Text;
         public InputAction @Cycleaspect => m_Wrapper.m_GamePlay_Cycleaspect;
         public InputAction @Cycleelement => m_Wrapper.m_GamePlay_Cycleelement;
+        public InputAction @LockOnTest => m_Wrapper.m_GamePlay_LockOnTest;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -531,6 +554,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Cycleelement.started += instance.OnCycleelement;
             @Cycleelement.performed += instance.OnCycleelement;
             @Cycleelement.canceled += instance.OnCycleelement;
+            @LockOnTest.started += instance.OnLockOnTest;
+            @LockOnTest.performed += instance.OnLockOnTest;
+            @LockOnTest.canceled += instance.OnLockOnTest;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -583,6 +609,9 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Cycleelement.started -= instance.OnCycleelement;
             @Cycleelement.performed -= instance.OnCycleelement;
             @Cycleelement.canceled -= instance.OnCycleelement;
+            @LockOnTest.started -= instance.OnLockOnTest;
+            @LockOnTest.performed -= instance.OnLockOnTest;
+            @LockOnTest.canceled -= instance.OnLockOnTest;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -618,5 +647,6 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnText(InputAction.CallbackContext context);
         void OnCycleaspect(InputAction.CallbackContext context);
         void OnCycleelement(InputAction.CallbackContext context);
+        void OnLockOnTest(InputAction.CallbackContext context);
     }
 }
