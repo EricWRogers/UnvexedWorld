@@ -212,6 +212,11 @@ public class ThirdPersonMovement : MonoBehaviour
         
         UpdateSlopeSliding();
 
+        if(inText == false)
+        {
+            nextLine = false;
+        }
+
         
         if (!isGrounded && jumpCount == 0)
         {

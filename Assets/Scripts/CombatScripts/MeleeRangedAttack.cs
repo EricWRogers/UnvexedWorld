@@ -33,6 +33,8 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public GameObject lockOnCanvas;
 
+    public CameraLockon cameraLockon;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -101,6 +103,7 @@ public class MeleeRangedAttack : MonoBehaviour
     void LockOn()
     {
         direction = true;
+        cameraLockon.oneTime = true;
         FindNewTarget();
         if(target != null)
         {
@@ -124,6 +127,7 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
         animator = GetComponentsInChildren<Animator>()[1];
+        cameraLockon = GameObject.FindFirstObjectByType<CameraLockon>();
 
     }
     void OnEnable()
