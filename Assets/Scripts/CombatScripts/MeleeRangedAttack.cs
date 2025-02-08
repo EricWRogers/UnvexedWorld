@@ -92,6 +92,7 @@ public class MeleeRangedAttack : MonoBehaviour
             }
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
+                
 
                 FindNewTarget();
             }
@@ -198,16 +199,15 @@ public class MeleeRangedAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            if (unLock == false)
             {
-                if (unLock == false)
-                {
-                    LockOn();
-                }
-                else
-                {
-                    LockOff();
-                }
+                LockOn();
             }
+            else
+            {
+                LockOff();
+            }
+        
         }
        
         GetComponent<Animator>().SetBool("CheckDirection", direction);
