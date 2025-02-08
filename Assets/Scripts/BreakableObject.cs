@@ -6,11 +6,9 @@ public class BreakableObject : MonoBehaviour
 {
     public GameObject unBrokenObject;
     public GameObject brokenObject;
+    public Rigidbody[] rb;
 
-    [SerializeField]
-    private Rigidbody[] rb;
-
-    private float power = 5f;
+    public float breakPower = 5f;
 
     public string[] tagNames; //need to make this so that the we can check what can and cannot make the 
 
@@ -18,12 +16,12 @@ public class BreakableObject : MonoBehaviour
     {
         unBrokenObject.SetActive(true);
         brokenObject.SetActive(false);
-        rb = brokenObject.GetComponentsInChildren<Rigidbody>();
+        PopulateRB();
     }
 
-    private void Start()
+    public void PopulateRB()
     {
-
+        rb = brokenObject.GetComponentsInChildren<Rigidbody>();
     }
 
     private void OnTriggerEnter(Collider col)
@@ -33,17 +31,22 @@ public class BreakableObject : MonoBehaviour
             unBrokenObject.SetActive(false);
             brokenObject.SetActive(true);
 
-            if(rb != null)
-            {
-                foreach(Rigidbody rigidbodies in rb)
-                {
-                    float mag = rigidbodies.linearVelocity.magnitude;
-                    Vector3 dir = (transform.position - unBrokenObject.transform.position).normalized;
-                    rigidbodies.AddForce(dir * (power + mag), ForceMode.Impulse);
-                }
-            }
+            LanuchPieces();
 
             Destroy(this, 1f);
+        }
+    }
+
+    public void LanuchPieces()
+    {
+        if(rb != null)
+        {
+            foreach(Rigidbody rigidbodies in rb)
+            {
+                float mag = rigidbodies.linearVelocity.magnitude;
+                Vector3 dir = (transform.position - unBrokenObject.transform.position).normalized;
+                rigidbodies.AddForce(dir * (breakPower + mag), ForceMode.Impulse);
+            }
         }
     }
 }
