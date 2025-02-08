@@ -28,7 +28,7 @@ public class BreakableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player"))
+        if(col.gameObject.CompareTag(tagNames[0]) || col.gameObject.CompareTag(tagNames[1]) || col.gameObject.CompareTag(tagNames[2]))
         {
             unBrokenObject.SetActive(false);
             brokenObject.SetActive(true);

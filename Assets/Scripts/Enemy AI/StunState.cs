@@ -21,20 +21,10 @@ public class StunState : SimpleState
     {
         Debug.Log("Stun State");
         base.OnStart();
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = meleeStateMachine.anim;
-        }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = agroMeleeStateMachine.anim;
-        }
-        else if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            agent = rangeStateMachine.GetComponent<NavMeshAgent>();
-            anim = rangeStateMachine.anim;
+            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = gruntStateMachine.anim;
         }
 
         ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
@@ -47,22 +37,19 @@ public class StunState : SimpleState
     public override void UpdateState(float _dt)
     {
         base.UpdateState(_dt);
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             if (stunTimer > 0)
             {
                 stunTimer -= _dt;
-                anim.SetBool("isHurt", true);
             }
-            if (stunTimer <= 0 && meleeStateMachine.isIdling == false)
+            if (stunTimer <= 0 && gruntStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
-                anim.SetBool("isHurt", false);
             }
-            else if(stunTimer <= 0 && meleeStateMachine.isIdling == true)
+            else if(stunTimer <= 0 && gruntStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
-                anim.SetBool("isHurt", false);
             }
         }
     }
@@ -73,17 +60,9 @@ public class StunState : SimpleState
         agent.isStopped = false;   // Allow movement again
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
         ParticleManager.Instance.DestroyStunParticles();
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            meleeStateMachine.isPunched = false;
-        }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            agroMeleeStateMachine.isPunched = false;
-        }
-        else if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            rangeStateMachine.isPunched = false;
+            gruntStateMachine.canStun = false;
         }
         Debug.Log("Exiting Stun State");
     }

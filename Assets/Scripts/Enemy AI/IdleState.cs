@@ -21,7 +21,16 @@ public class IdleState : SimpleState
 
     public override void UpdateState(float dt)
     {
-        
+        if (stateMachine is GruntStateMachine gruntStateMachine)
+        {    
+            if (gruntStateMachine.isInsideCollider == true && gruntStateMachine.isAlive == true)
+            {   
+                if(gruntStateMachine.LOS == true)
+                {
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
+            }
+        }
     }
     
     public override void OnExit()
