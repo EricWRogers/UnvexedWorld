@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class MeleeRangedAttack : MonoBehaviour
 {
     public SpellCraft spellCraft;
-    public SpellShot spellShot;
     PlayerGamepad gamepad;
     public GameObject target;
     public Animator[] animators;
@@ -35,13 +34,17 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public CameraLockon cameraLockon;
 
+    public static bool unLock = true;
+
+    public Transform firePoint;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.MeleeLight.performed += ctx => MeleeGamepadlight();
         //gamepad.GamePlay.MeleeHeavy.performed += ctx => MeleeGamepadHeavy();
         gamepad.GamePlay.Shoot.performed += ctx => Range();
-        gamepad.GamePlay.LockOn.performed += ctx => LockOn();
+        gamepad.GamePlay.LockOnTest.performed += ctx => CheckLock();
         gamepad.GamePlay.LockOn.canceled += ctx => LockOff();
 
          cameraManager = GetComponent<CameraManager>();
@@ -72,24 +75,17 @@ public class MeleeRangedAttack : MonoBehaviour
 
                 Debug.Log("Found" + target.name);
                 
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
                 MeleeLight();
 
             }
             else
             {
                 isAttacking = true;
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
                 MeleeLight();
             }
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
+                
 
                 FindNewTarget();
             }
@@ -97,6 +93,12 @@ public class MeleeRangedAttack : MonoBehaviour
 
 
 
+    }
+
+    void LockOnTrue()
+    {
+        unLock = false;
+        
     }
 
 
@@ -109,7 +111,10 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
+            
         }
+        unLock = true;
+       
        
     }
     
@@ -117,7 +122,21 @@ public class MeleeRangedAttack : MonoBehaviour
     {
         direction = false;
         lockOnCanvas.SetActive(false);
+        unLock = false;
     }
+    public void CheckLock()
+    {
+        if (unLock == false)
+        {
+            LockOn();
+        }
+        else
+        {
+            LockOff();
+        }
+    }
+    
+
 
     void CancelLockUp()
     {
@@ -173,12 +192,17 @@ public class MeleeRangedAttack : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            LockOn();
+            if (unLock == false)
+            {
+                LockOn();
+            }
+            else
+            {
+                LockOff();
+            }
+        
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            LockOff();
-        }
+       
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
@@ -187,6 +211,8 @@ public class MeleeRangedAttack : MonoBehaviour
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
         }
+
+     
 
 
 
@@ -209,11 +235,6 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetTrigger("Ranged");
         shoot = true;
        
-    }
-
-    private void UpdateSpells()
-    {
-        spellCraft.CastSpell(SpellCraft.CastType.melee);
     }
 
     public void StartParticle()
@@ -259,6 +280,18 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
             temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
+        }
+    }
+
+    public void RangedAttack(int index)
+    {
+        GameObject temp = Instantiate(AttackManager.Instance.rangeAttackPrefabs[index],firePoint.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponent<AttackUpdater>() != null)
+        {
+            temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
+            temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
         }
     }
    
