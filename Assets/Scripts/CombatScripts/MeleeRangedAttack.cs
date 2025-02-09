@@ -292,6 +292,18 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
             temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
+        }
+    }
+
+    public void RangedAttack(int index)
+    {
+        GameObject temp = Instantiate(AttackManager.Instance.rangeAttackPrefabs[index],spellShot.firePoint.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponent<AttackUpdater>() != null)
+        {
+            temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
+            temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
         }
     }
    
