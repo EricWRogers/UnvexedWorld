@@ -344,8 +344,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             lockOn.FindNewTarget();
         }
-
-    
     }
 
     // Sliding down slopes
