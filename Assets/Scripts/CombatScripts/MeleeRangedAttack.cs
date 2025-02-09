@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class MeleeRangedAttack : MonoBehaviour
 {
     public SpellCraft spellCraft;
-    public SpellShot spellShot;
     PlayerGamepad gamepad;
     public GameObject target;
     public Animator[] animators;
@@ -36,6 +35,8 @@ public class MeleeRangedAttack : MonoBehaviour
     public CameraLockon cameraLockon;
 
     public static bool unLock = true;
+
+    public Transform firePoint;
 
     void Awake()
     {
@@ -74,20 +75,12 @@ public class MeleeRangedAttack : MonoBehaviour
 
                 Debug.Log("Found" + target.name);
                 
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
                 MeleeLight();
 
             }
             else
             {
                 isAttacking = true;
-                if (spellCraft.casting)
-                {
-                    spellCraft.CastSpell(SpellCraft.CastType.melee);
-                }
                 MeleeLight();
             }
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
@@ -244,11 +237,6 @@ public class MeleeRangedAttack : MonoBehaviour
        
     }
 
-    private void UpdateSpells()
-    {
-        spellCraft.CastSpell(SpellCraft.CastType.melee);
-    }
-
     public void StartParticle()
     {
         GetComponentInChildren<PunchScript>().StartParticle();
@@ -292,6 +280,18 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
             temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
+        }
+    }
+
+    public void RangedAttack(int index)
+    {
+        GameObject temp = Instantiate(AttackManager.Instance.rangeAttackPrefabs[index],firePoint.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponent<AttackUpdater>() != null)
+        {
+            temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
+            temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
+            temp.GetComponent<AttackUpdater>().player = gameObject;
         }
     }
    
