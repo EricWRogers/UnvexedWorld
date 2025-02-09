@@ -1,16 +1,46 @@
+using SuperPupSystems.StateMachine;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class ChargeState : MonoBehaviour
+/*The now chase state*/
+
+[System.Serializable]
+public class ChargeState : SimpleState
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private NavMeshAgent agent;
+    private float attackRange;
+
+    public override void OnStart()
     {
-        
+        base.OnStart();
+
+        if (stateMachine is GruntStateMachine)
+        {
+            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            attackRange = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void UpdateState(float dt)
     {
-        
+        if (stateMachine is GruntStateMachine gruntStateMachine)
+        {
+            if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
+            {
+                agent.SetDestination(gruntStateMachine.target.position);
+                
+                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                {
+                    stateMachine.ChangeState(nameof(AttackState));
+                }
+            }
+        }
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
     }
 }

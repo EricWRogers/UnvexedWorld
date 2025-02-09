@@ -11,8 +11,11 @@ public class GruntStateMachine : SimpleStateMachine
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
-    public InRangeState inRange;
+    public InRangeState chase;
+    public SurroundState surround;
+    public ChargeState charge;
     public AttackState melee;
+    public RetreatState retreat;
 
     public Transform target;
     
@@ -38,8 +41,11 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
-        states.Add(inRange);
+        states.Add(chase);
+        states.Add(surround);
+        states.Add(charge);
         states.Add(melee);
+        states.Add(retreat);
 
         foreach (SimpleState s in states)
         {

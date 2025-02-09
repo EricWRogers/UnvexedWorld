@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
+/*In this state we want the enemies get 
+ready to surround the player*/
 
+[System.Serializable]
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;

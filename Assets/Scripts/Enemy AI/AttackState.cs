@@ -6,6 +6,8 @@ using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+/*Attacking few a seconds the return to the surround state via retreat state*/
+
 [System.Serializable]
 public class AttackState : SimpleState
 {
@@ -60,7 +62,7 @@ public class AttackState : SimpleState
                     isAttacking = false;
                     anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(InRangeState));
+                    stateMachine.ChangeState(nameof(RetreatState));
                 }
             }
         }    }
