@@ -5173,6 +5173,19 @@ MonoBehaviour:
           m_StringArgument: EnemyHurt
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2742741511450734889, guid: f17fe3695fd436d4596143d0e385bd06,
+          type: 3}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayEnemyHurtSound
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: EnemyHurt
+          m_BoolArgument: 0
+        m_CallState: 2
   outOfHealth:
     m_PersistentCalls:
       m_Calls:
@@ -5254,7 +5267,6 @@ MonoBehaviour:
     stateMachine: {fileID: 0}
     spawnLocation: {fileID: 7596173313873238204}
     stunPSLocation: 2
-    stunMaterial: {fileID: 2100000, guid: 3039b8137caf24847b16ccdcf0949f02, type: 2}
     stunDuration: 4
     stunCooldown: 8
   knockBack:
@@ -5309,13 +5321,11 @@ MonoBehaviour:
     isAttacking: 0
   agent: {fileID: 0}
   LOS: 0
-  isHurt: 0
   isAlive: 0
   isInsideCollider: 0
   isSearching: 0
   isPunched: 0
   isIdling: 0
-  yesKnockBack: 0
   inAttackRange: 1
   target: {fileID: 0}
   anim: {fileID: 0}
