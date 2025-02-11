@@ -76,7 +76,9 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 3:
                         enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
@@ -87,6 +89,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
+            punchTarget.Invoke(enemy);
             
            
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
@@ -101,7 +104,6 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
             }
             //other.GetComponent<Knockback>().OnHurt();
-            //punchTarget.Invoke(enemy);
             Debug.Log(" Enemy Hit");
 
             // Increment the combo count
@@ -112,10 +114,26 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
+                gameObject.GetComponent<Spell>().lifeSteal=false;
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        
+        if(other.gameObject.CompareTag("Breakable"))
+        {
+            other.GetComponent<Rigidbody>().Sleep();
+            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
+            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
+            
+            if(other.GetComponent<BreakableObject>().rb != null)
+            {
+                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
+                {
+                    float mag = rigidbodies.linearVelocity.magnitude;
+                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
+                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
+                }
+            }
+        }
 
     }
    
@@ -128,12 +146,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         }
         if(gameObject.GetComponent<Spell>() != null)
         {
-            if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge || (gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.scavenge))
+            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
-            else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor|| (gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.splendor))
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
@@ -163,7 +181,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindObjectOfType<AudioManager>().PlayPunchSound(punchSoundIndex);
+            FindFirstObjectByType<AudioManager>().PlayPunchSound(punchSoundIndex);
         }
         else
         {

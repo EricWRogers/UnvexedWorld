@@ -4,82 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[System.Serializable]
+/*In this state we want the enemies get 
+ready to surround the player*/
 
+[System.Serializable]
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
-    [SerializeField]
-    private ParticleSystem dustPS;
-    private float attackRange;
+    private float surroundRange = 8.0f;
 
     public override void OnStart()
     {
-        //Debug.Log("Move State");
         base.OnStart();
 
-        if (stateMachine is MeleeStateMachine)
+        if (stateMachine is GruntStateMachine)
         {
-            agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-            attackRange = ((MeleeStateMachine)stateMachine).inAttackRange + 0.5f;
+            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
         }
-
-        if (stateMachine is AgroMeleeStateMachine)
-        {
-            agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-            attackRange = ((AgroMeleeStateMachine)stateMachine).inAttackRange + 0.5f;
-        }
-
-        if (stateMachine is RangeStateMachine)
-        {
-            agent = ((RangeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((RangeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-            attackRange = ((RangeStateMachine)stateMachine).inAttackRange + 5.0f;;
-        }
-        
-        
     }
 
     public override void UpdateState(float dt)
     {
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            if (meleeStateMachine.isAlive && meleeStateMachine.LOS)
+            if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                agent.SetDestination(meleeStateMachine.target.position);
+                agent.SetDestination(gruntStateMachine.target.position);
                 
-                if (Vector3.Distance(agent.transform.position, meleeStateMachine.target.position) < attackRange)
+                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) <= surroundRange)
                 {
-                    //dustPS.Stop();
-                    stateMachine.ChangeState(nameof(AttackState));
-                }
-            }
-        }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            if (agroMeleeStateMachine.isAlive)
-            {
-                agent.SetDestination(agroMeleeStateMachine.target.position);
-                
-                if (Vector3.Distance(agent.transform.position, agroMeleeStateMachine.target.position) < attackRange)
-                {
-                    //dustPS.Stop();
-                    stateMachine.ChangeState(nameof(AttackState));
-                }
-            }
-        }
-        else if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            if (rangeStateMachine.isAlive)
-            {
-                agent.SetDestination(rangeStateMachine.target.position);
-
-                if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) < attackRange)
-                {
-                    //dustPS.Stop();
-                    stateMachine.ChangeState(nameof(AttackState));
+                    stateMachine.ChangeState(nameof(SurroundState));
                 }
             }
         }

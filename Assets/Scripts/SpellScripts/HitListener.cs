@@ -10,7 +10,7 @@ public class HitListener : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        gameObject.GetComponent<AOE>().hitTarget.AddListener(delegate{player.GetComponent<SpellCraft>().SetMain(SpellCraft.Aspect.splendor);});
+        //gameObject.GetComponent<AOE>().hitTarget.AddListener(delegate{player.GetComponent<SpellCraft>().SetMain(SpellCraft.Aspect.splendor);});
     }
 
     // Update is called once per frame
