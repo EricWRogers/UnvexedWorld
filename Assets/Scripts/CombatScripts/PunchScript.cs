@@ -8,8 +8,11 @@ using Scripts.HUDScripts.MessageSystem;
 
 public class PunchScript : MonoBehaviour, IDamageDealer
 {
-    
+    [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
+    public int knockBackType;
     public int damage = 1;
+    public float impactValue = 25f;
+    public bool doKnockBack;
 
     public GameObject enemy;
 
@@ -18,13 +21,24 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public ComboManager comboManager;
     private AudioManager audioManager;
+
+    public HitStop hitStop;
+
+    public float duration = 0.0f;
+
+    public int punchSoundIndex = 0;
     
+    //Temp 
+    public Transform direction;
+    public float forceAmount = 4f;
+
     // Start is called before the first frame update
     void Start()
     {
+        
          
-        comboManager = FindObjectOfType<ComboManager>();
-        audioManager = FindObjectOfType<AudioManager>();
+        comboManager = FindFirstObjectByType<ComboManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     // Update is called once per frame
@@ -36,15 +50,48 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     }
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Hit" + other.gameObject.name);
-        if (other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
-        {   
+        if(other.gameObject.CompareTag("Player"))
+        {
+            return;
+        }
+        if (other.GetComponent<Rigidbody>().isKinematic == true && other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
+        {
+            Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
+            hitStop.Stop(duration);
 
             Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
+            Rigidbody enemyRigidbody = enemy.GetComponent<Rigidbody>();
+
+            if (enemy.GetComponent<MeleeStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
+                
+                switch (knockBackType)
+                {
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+            punchTarget.Invoke(enemy);
+            
+           
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
@@ -56,8 +103,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             {
                 messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
             }
-            other.GetComponent<Knockback>().OnHurt();
-            punchTarget.Invoke(enemy);
+            //other.GetComponent<Knockback>().OnHurt();
             Debug.Log(" Enemy Hit");
 
             // Increment the combo count
@@ -68,10 +114,26 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             
             if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
             {
+                gameObject.GetComponent<Spell>().lifeSteal=false;
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        
+        if(other.gameObject.CompareTag("Breakable"))
+        {
+            other.GetComponent<Rigidbody>().Sleep();
+            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
+            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
+            
+            if(other.GetComponent<BreakableObject>().rb != null)
+            {
+                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
+                {
+                    float mag = rigidbodies.linearVelocity.magnitude;
+                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
+                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
+                }
+            }
+        }
 
     }
    
@@ -84,12 +146,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         }
         if(gameObject.GetComponent<Spell>() != null)
         {
-            if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge || (gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.scavenge))
+            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
-            else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor|| (gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.none && gameObject.GetComponent<Spell>().modAspect == SpellCraft.Aspect.splendor))
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticleMelee, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
@@ -119,7 +181,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindObjectOfType<AudioManager>().PlayPunchSound();
+            FindFirstObjectByType<AudioManager>().PlayPunchSound(punchSoundIndex);
         }
         else
         {

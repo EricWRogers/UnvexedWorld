@@ -17,18 +17,20 @@ public class SpellCraft : MonoBehaviour
         splendor,
         sunder,
     }
-    public SpellShot spellShot;
-    public Aspect mainAspect = Aspect.none;
-    public Aspect modAspect = Aspect.none;
+    public Aspect CurrentElement = Aspect.none;
+    public List<Aspect> unlockedElements = new List<Aspect>{Aspect.none};
     public float scavengeMana = 100f;
     public float splendorMana = 100f;
+    public int elementIndex = 0;
+    public int subAspect = 0;
     public bool casting = false;
 
     public bool mainSet = false;
 
-    public bool modSet = false;
 
     public bool clear = false;
+
+
 
    
    
@@ -45,12 +47,10 @@ public class SpellCraft : MonoBehaviour
         spells = GetComponentsInChildren<Spell>();
         
         gamepad = new PlayerGamepad();
-        //gamepad.GamePlay.Scavange.performed += ctx => Scavenge();
-        //gamepad.GamePlay.Sunder.performed += ctx => Sunder();
-        //gamepad.GamePlay.Splendor.performed += ctx => Splendor();
-        gamepad.GamePlay.Clear.performed += ctx => ClearSpell();
         gamepad.GamePlay.Casting.performed += ctx => SetCasting();
         gamepad.GamePlay.Casting.canceled += ctx => UnsetCast();
+        gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
+        gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
 
     }
 
@@ -78,129 +78,60 @@ public class SpellCraft : MonoBehaviour
         }
         GetComponent<Animator>().SetBool("Casting", casting);
         
-        
-        
-        //Setting spell components
-        //if (Input.GetKeyDown(KeyCode.Alpha1))
-       // {
-            //mainAspect = Aspect.scavenge;
-            //Scavenge();
-        //}
-
-        // if (Input.GetKeyDown(KeyCode.Alpha3))
-        // {
-        //     Sunder();
-        // }
-
-       // if (Input.GetKeyDown(KeyCode.Alpha2))
-        //{
-           // Splendor();
-        //}
-        
-        //if (Input.GetKeyDown(KeyCode.Alpha4))
-        //{
-           // ClearSpell();
-        //}
-        
-    }
-
-    public void PrintCastType(CastType castType)
-    {
-        Debug.Log("" + castType.ToString());
-    }
-
-   
-
-    public void CastSpell(CastType castType)
-    {
-        Debug.Log("Casting a " + mainAspect.ToString() + " spell with " + modAspect.ToString() + " modifications at " + castType.ToString() + " range.");
-        if (castType == CastType.ranged)
+        if(Input.GetKeyDown(KeyCode.RightBracket))
         {
-            spellShot.ShootSpellPrefab(mainAspect, modAspect);
-           
+            UnlockElement((Aspect)(elementIndex%4));
         }
-        if (castType == CastType.melee)
+
+        if(Input.GetKeyDown(KeyCode.LeftBracket))
         {
-            for(int i = 0; i<spells.Length; i++)
-            {
-                spells[i].SetSelf(mainAspect,modAspect);
-            }
-            
+            CycleAspect();
+        }
+
+        if(Input.mouseScrollDelta.y<0)
+        {
+            CycleElementDown();
+        }
+        else if(Input.mouseScrollDelta.y>0)
+        {
+            CycleElementUp();
         }
     }
-    
-
-    
-    //Populating the spell list
-    void Scavenge()
+    public void CycleElementUp()
     {
-        if ( mainAspect == Aspect.none)
+        if(elementIndex+1 < unlockedElements.Count)
         {
-            mainAspect = Aspect.scavenge;
-            
+            elementIndex++;
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else
         {
-            modAspect = Aspect.scavenge;
+            elementIndex = 0;
         }
+        CurrentElement = unlockedElements[elementIndex];
     }
-
-    void Sunder()
+    public void CycleElementDown()
     {
-        if ( mainAspect == Aspect.none)
+        if(elementIndex-1 < 0)
         {
-            mainAspect = Aspect.sunder;
+            elementIndex = unlockedElements.Count-1;
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else
         {
-            modAspect = Aspect.sunder;
+            elementIndex--;
         }
+        CurrentElement = unlockedElements[elementIndex];
     }
 
-    void Splendor()
+    public void CycleAspect()
     {
-        if ( mainAspect == Aspect.none)
+        if(subAspect==0)
         {
-            mainAspect = Aspect.splendor;
+            subAspect=1;
         }
-        else if ( mainAspect != Aspect.none && modAspect == Aspect.none)
+        else
         {
-            modAspect = Aspect.splendor;
+            subAspect = 0;
         }
-    }
-    public void SetMain(Aspect aspect)
-    {
-        mainAspect = aspect;
-        mainSet = true;
-    }
-
-    public void SetMod(Aspect aspect)
-    {
-        modAspect = aspect;
-        modSet = true;
-    }
-
-    void ClearSpell()
-    {
-        clear = true;
-        mainAspect = Aspect.none;
-        modAspect = Aspect.none;
-    }
-
-    //Modifying the spell script on the fist
-    public void SetFistMain(Aspect aspect)
-    {
-        spells[0].SetMain(aspect);
-    }
-
-    public void SetFistMod(Aspect aspect)
-    {
-        spells[0].SetMod(aspect);
-    }
-
-    void ClearFistSpell()
-    {
-        spells[0].ClearSpell();
     }
 
     
@@ -214,17 +145,17 @@ public class SpellCraft : MonoBehaviour
         casting = false;
     }
 
+    public void UnlockElement(Aspect aspect)
+    {
+        unlockedElements.Insert(unlockedElements.Count,aspect);
+    }
 
     //setting listeners for populating list on hit
     public void AddTheListenerMain(SpellCraft.Aspect aspect)
     {
-        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
+        //gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
     }
 
-    public void AddTheListenerMod(SpellCraft.Aspect aspect)
-    {
-        gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMod(aspect);});
-    }
     
     public void RemoveTheListener()
     {

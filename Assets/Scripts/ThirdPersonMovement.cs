@@ -82,6 +82,10 @@ public class ThirdPersonMovement : MonoBehaviour
     private RaycastHit m_info;
     private AudioManager audioManager;
 
+    public bool inText = false;
+
+    public bool nextLine = false;
+
    
 
 
@@ -96,6 +100,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
         gamepad.GamePlay.Dash.performed += ctx => GamepadDash();
 
+        gamepad.GamePlay.Jump.canceled += ctx => NextLine();
+
         gamepad.GamePlay.Movement.performed += ctx => gamepadMove = ctx.ReadValue<Vector2>();
         gamepad.GamePlay.Movement.canceled += ctx => gamepadMove = Vector2.zero;
     }
@@ -105,26 +111,51 @@ public class ThirdPersonMovement : MonoBehaviour
         animator = GetComponentsInChildren<Animator>()[1];
         Cursor.lockState = CursorLockMode.Locked;   
         lockOn = GetComponent<MeleeRangedAttack>();
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     
 
     void GamepadJump()
     {
-        if ((isGrounded || jumpCount < jumpMax))
+        if(inText == false)
         {
-            isJumping = true;
-            jumpCount++;
-            isGrounded = false;
-            velocity.y = 0;
-            velocity.y += jumpForce;
-            controller.Move(velocity * Time.deltaTime);
+        
+            if ((isGrounded || jumpCount < jumpMax  ))
+                {
+                isJumping = true;
+                jumpCount++;
+                isGrounded = false;
+                velocity.y = 0;
+                velocity.y += jumpForce;
+                controller.Move(velocity * Time.deltaTime);
 
+                }
         }
+
 
       
     }
+
+    void NextLine()
+    {
+        nextLine = true;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("TextBox"))
+        { 
+           inText = true;
+             
+        }
+    }
+
+     void OnTriggerExit(Collider other) 
+    {
+       inText = false;
+    }
+    
 
     void Dashing()
     {
@@ -180,6 +211,11 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("Grounded", rayGround);
         
         UpdateSlopeSliding();
+
+        if(inText == false)
+        {
+            nextLine = false;
+        }
 
         
         if (!isGrounded && jumpCount == 0)
@@ -260,6 +296,11 @@ public class ThirdPersonMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GamepadJump();
+            NextLine();
+        }
+        if(Input.GetKeyUp(KeyCode.Space))
+        {
+           nextLine = false;
         }
         
         //GroundCheck
@@ -293,6 +334,10 @@ public class ThirdPersonMovement : MonoBehaviour
                 }
 
                 
+            }
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 3)
+            {
+                lockOn.LockOff();
             }
         }
         else

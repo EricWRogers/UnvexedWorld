@@ -10,17 +10,25 @@ using Scripts.HUDScripts.MessageSystem;
 [RequireComponent(typeof(Timer))]
 public class ProjectileSpell : MonoBehaviour, IDamageDealer
 {
+    [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
+    public int knockBackType;
     public int damage = 1;
     public float speed = 20f;
     public float lifeTime = 10f;
     public bool destroyOnImpact = true;
     public UnityEvent<GameObject> hitTarget;
+    public UnityEvent activate;
     public LayerMask mask;
     public List<string> tags;
     public GameObject particle;
     private Vector3 m_lastPosition;
     private RaycastHit m_info;
     private Timer m_timer;
+    public GameObject enemy;
+    
+    public Transform direction;
+    
+    public float forceAmount = 4f;
     private void Awake()
     {
         if (hitTarget == null)
@@ -54,9 +62,11 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         {
             if (tags.Contains(m_info.transform.tag))
             {
+                 enemy = m_info.transform.gameObject;
+                hitTarget.Invoke(enemy);
                 if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
                 {
-                    m_info.transform.gameObject.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
+                    enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
                 }
                 m_info.transform.GetComponent<Health>()?.Damage(damage);
                 m_info.transform.GetComponent<Knockback>()?.OnHurt();
@@ -65,17 +75,39 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 {
                     messageSpawner.ApplyDamage(gameObject); // Pass the gameObject that dealt the damage
                 }
-                hitTarget.Invoke(m_info.transform.gameObject);
                 if(gameObject.GetComponent<Spell>()?.lifeSteal == true)
                 {
-                    m_info.transform.gameObject.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
+                    enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
+                }
+                
+                if (enemy.GetComponent<MeleeStateMachine>() != null)
+                {
+                    var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
+                    
+                    switch (knockBackType)
+                    {
+                        case 1:
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 2:
+                            //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                            direction.LookAt(enemy.transform);
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 3:
+                            enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                            break;
+                        default:
+                            Debug.Log("Incorrect Knock back type please use 1-3.");
+                            break;
+                    }
                 }
             }
             if (destroyOnImpact)
             {
                 if(gameObject.GetComponent<Spell>() !=null)
                 {
-                    if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
                     {
                         gameObject.GetComponent<Spell>().SpellEffect(gameObject);
                     }
@@ -92,12 +124,12 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         if(gameObject.GetComponent<Spell>() != null)
         {
-            if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge)
+            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
-            else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;

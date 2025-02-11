@@ -6,13 +6,15 @@ using Scripts.HUDScripts.MessageSystem;
 
 public class Spell : MonoBehaviour, IDamageDealer
 {
-    public SpellCraft.Aspect mainAspect = SpellCraft.Aspect.none;
-    public SpellCraft.Aspect modAspect = SpellCraft.Aspect.none;
-    public int burstDamage;
+    public SpellCraft.Aspect CurrentElement = SpellCraft.Aspect.none;
+    
+    public int subAspect = 0;
+    public int burstDamage = 10;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;
     public int AOEDuration;
     public bool lifeSteal = false;
+    public bool overwriteSpell = false;
     public float lifeStealRatio = 1f;
 
     public ComboManager comboManager;
@@ -20,7 +22,17 @@ public class Spell : MonoBehaviour, IDamageDealer
     // Start is called before the first frame update
     void Start()
     {
-        comboManager = FindObjectOfType<ComboManager>();
+        comboManager = FindFirstObjectByType<ComboManager>();
+        if(gameObject.GetComponent<PunchScript>()!=null)
+        {
+            gameObject.GetComponent<PunchScript>().punchTarget.AddListener(SpellEffect);
+        }
+        if(gameObject.GetComponentInParent<AttackUpdater>()!=null && overwriteSpell == false)
+        {
+            AttackUpdater temp = gameObject.GetComponentInParent<AttackUpdater>();
+            CurrentElement = temp.element;
+            subAspect = temp.aspect;
+        }
     }
 
     // Update is called once per frame
@@ -56,28 +68,29 @@ public class Spell : MonoBehaviour, IDamageDealer
 
     public void SpellEffect(GameObject target)
     {
-        if (mainAspect == SpellCraft.Aspect.splendor)
+        if(subAspect == 0)
         {
-            GameObject AOE = Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation);
-            AOE.GetComponent<Spell>().modAspect = modAspect;
+            if (CurrentElement == SpellCraft.Aspect.splendor)
+            {
+                GameObject AOE = Instantiate(ParticleManager.Instance.AOE, target.transform.position, transform.rotation);
+            }
+            if (CurrentElement == SpellCraft.Aspect.scavenge)
+            {
+                lifeSteal = true;
+            }
         }
-        else
+        else if (subAspect == 1)
         {
-            // if (mainAspect == SpellCraft.Aspect.scavenge)
-            // {
-            //     lifeSteal = true;
-            // }
-            if (modAspect == SpellCraft.Aspect.scavenge)
+            
+            if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 ApplyDOT(target);
             }
-            if (modAspect == SpellCraft.Aspect.splendor)
+            if (CurrentElement == SpellCraft.Aspect.splendor)
             {
                 Burst(target);
             }
-        }
-        //lifeSteal = false;
-        
+        }        
     }
 
     public void LifeSteal(HealthChangedObject healthChangedObject)
@@ -99,15 +112,14 @@ public class Spell : MonoBehaviour, IDamageDealer
         return burstDamage;
     }
 
-    public void SetSelf(SpellCraft.Aspect newMainAspect,SpellCraft.Aspect newModAspect)
+    public void SetSelf(SpellCraft.Aspect newCurrentElement)
     {
-        SetMain(newMainAspect);
-        SetMod(newModAspect);
+        SetMain(newCurrentElement);
     }
 
     public void SetMain(SpellCraft.Aspect aspect)
     {
-        mainAspect = aspect;
+        CurrentElement = aspect;
         if(aspect == SpellCraft.Aspect.scavenge)
         {
             lifeSteal=true;
@@ -118,15 +130,9 @@ public class Spell : MonoBehaviour, IDamageDealer
         }
     }
 
-    public void SetMod(SpellCraft.Aspect aspect)
-    {
-        modAspect = aspect;
-    }
-
     public void ClearSpell()
     {
         SetMain(SpellCraft.Aspect.none);
-        SetMod(SpellCraft.Aspect.none);
     }
 
     
