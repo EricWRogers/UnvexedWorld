@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
 public class MeleeRangedAttack : MonoBehaviour
 {
@@ -127,6 +129,12 @@ public class MeleeRangedAttack : MonoBehaviour
         direction = false;
         lockOnCanvas.SetActive(false);
         unLock = false;
+    }
+
+    public void LockOffEvent()
+    {
+        LockOff();
+        Debug.Log("Fart Smella");
     }
     public void CheckLock()
     {

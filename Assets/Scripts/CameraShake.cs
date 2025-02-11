@@ -3,6 +3,8 @@ using UnityEngine;
 using Cinemachine;
 using Cinemachine.Utility;
 
+using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 public class CameraShake : MonoBehaviour
 {
 public float amplitudeGain;
@@ -10,7 +12,19 @@ public float frequemcyGain;
 public CinemachineFreeLook cmFreeCam;
 public float shakeDuration;
 
+public GameObject player;
+
+public void Start()
+{
+  player = GameObject.FindGameObjectWithTag("Player");
+}
+
 public void DoShake()
+{
+    StartCoroutine(Shake());
+}
+
+public void DoShake(HealthChangedObject healthChangedObject)
 {
     StartCoroutine(Shake());
 }
@@ -33,6 +47,12 @@ void Noise(float amplitude,float frequency)
     cmFreeCam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = frequency;
 
 }
+
+   public void Update()
+   {
+        
+         player.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(DoShake);
+   }
 
 }
  
