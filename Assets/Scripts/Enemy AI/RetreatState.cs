@@ -13,14 +13,19 @@ public class RetreatState : SimpleState
 {
     private NavMeshAgent agent;
     public float attackRange;
+    public float retreatDistance = 8f;
+    private Vector3 retreatPosition;
+    private bool reachedRetreatPoint = false;
 
     public override void OnStart()
     {
         base.OnStart();
 
-        if (stateMachine is GruntStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            retreatPosition = CalculateRetreatPosition(gruntStateMachine);
+            agent.SetDestination(retreatPosition);
         }
     }
 
@@ -30,11 +35,9 @@ public class RetreatState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                //Instead of going towards the player we need to do the opposite!!!
-                agent.SetDestination(gruntStateMachine.target.position);
-                
-                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                if (!reachedRetreatPoint && Vector3.Distance(agent.transform.position, retreatPosition) < 0.5f)
                 {
+                    reachedRetreatPoint = true;
                     stateMachine.ChangeState(nameof(SurroundState));
                 }
             }
@@ -44,5 +47,11 @@ public class RetreatState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+    }
+
+    private Vector3 CalculateRetreatPosition(GruntStateMachine gruntStateMachine)
+    {
+        Vector3 directionAway = (gruntStateMachine.transform.position - gruntStateMachine.target.position).normalized;
+        return gruntStateMachine.transform.position + directionAway * retreatDistance;
     }
 }

@@ -44,13 +44,10 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
-            
-            if (gruntStateMachine.isInsideCollider == true)
-            {   
-                if(gruntStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
+   
+            if(gruntStateMachine.LOS == true)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }
