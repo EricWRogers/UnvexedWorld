@@ -5,13 +5,14 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-/*Return to surround state and reenter into the queue*/
+/*In short the AI after attacking needs to run away from the player, 
+so the AI needs to return to surround state and reenter into the queue*/
 
 [System.Serializable]
 public class RetreatState : SimpleState
 {
     private NavMeshAgent agent;
-    private float attackRange;
+    public float attackRange;
 
     public override void OnStart()
     {
@@ -20,7 +21,6 @@ public class RetreatState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            attackRange = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
     }
 
@@ -30,6 +30,7 @@ public class RetreatState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
+                //Instead of going towards the player we need to do the opposite!!!
                 agent.SetDestination(gruntStateMachine.target.position);
                 
                 if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
