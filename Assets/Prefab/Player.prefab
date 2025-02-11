@@ -418,6 +418,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1987475542971134052}
+  - {fileID: 1068535680641007942}
   - {fileID: 9090155982644465829}
   - {fileID: 7756106815954976046}
   - {fileID: 3664396929940847429}
@@ -690,21 +691,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellCraft: {fileID: 1034932654391892717}
-  target: {fileID: 0}
   animators: []
-  attackRange: 5
+  target: {fileID: 0}
+  lockOnCanvas: {fileID: 0}
+  cameraLockon: {fileID: 0}
   speed: {fileID: 7060320185052712906}
   resetSpeed: 15
   lockUP: 3
+  attackRange: 5
   isAttacking: 0
   animator: {fileID: 0}
   cameraManager: {fileID: 0}
   direction: 0
-  shoot: 0
   punched: 0
-  lockOnCanvas: {fileID: 0}
-  cameraLockon: {fileID: 0}
+  shoot: 0
   firePoint: {fileID: 7756106815954976046}
+  activeProjectile: {fileID: 0}
 --- !u!114 &8892828267072295871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1682,6 +1684,85 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0
+--- !u!1001 &675129788499584685
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8423083024635871786}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_Name
+      value: NEW_Drift_Character_model
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: b88b35b692812ac4aa1c3188f873a23c,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b88b35b692812ac4aa1c3188f873a23c, type: 3}
+--- !u!4 &1068535680641007942 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
+    type: 3}
+  m_PrefabInstance: {fileID: 675129788499584685}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1261411845046958499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2878,6 +2959,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Drift_Character_Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: efe06c63b78a94147925fc6e57af42e4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1131314871960647440, guid: efe06c63b78a94147925fc6e57af42e4,
         type: 3}
