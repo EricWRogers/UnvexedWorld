@@ -8,7 +8,6 @@ using SuperPupSystems.StateMachine;
 public class RandomMovementState : SimpleState
 {
     private NavMeshAgent agent;
-    private ParticleSystem dustPS;
     private float moveDelay = 2.0f; 
     private float moveTimer = 0f;
     private float minDelay = 3.0f; 
@@ -22,20 +21,9 @@ public class RandomMovementState : SimpleState
         //Debug.Log("Wander State");
         base.OnStart();
 
-        if (stateMachine is MeleeStateMachine)
+        if (stateMachine is GruntStateMachine)
         {
-            agent = ((MeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((MeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-        }
-        else if(stateMachine is AgroMeleeStateMachine)
-        {
-            agent = ((AgroMeleeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((AgroMeleeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
-        }
-        else if(stateMachine is RangeStateMachine)
-        {
-            agent = ((RangeStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            dustPS = ((RangeStateMachine)stateMachine).GetComponentInChildren<ParticleSystem>();
+            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
         }
 
         MoveToRandomPoint();
@@ -43,9 +31,9 @@ public class RandomMovementState : SimpleState
     
     public override void UpdateState(float dt)
     {
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            if (meleeStateMachine.isAlive == true)
+            if (gruntStateMachine.isAlive == true)
             {
                 moveTimer += dt; 
 
@@ -56,59 +44,10 @@ public class RandomMovementState : SimpleState
                     MoveToRandomPoint();
                 }
             }
-            
-            if (meleeStateMachine.isInsideCollider == true)
-            {   
-                if(meleeStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
-                //dustPS.Stop();
-            }
-        }
-        if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            if (agroMeleeStateMachine.isAlive == true)
+   
+            if(gruntStateMachine.LOS == true)
             {
-                moveTimer += dt; 
-
-                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
-                {
-                    moveTimer = 0f; 
-                    moveDelay = Random.Range(minDelay, maxDelay);
-                    MoveToRandomPoint();
-                }
-            }
-            
-            if (agroMeleeStateMachine.isInsideCollider == true)
-            {
-                if(agroMeleeStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
-                
-            }
-        }
-        if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            if (rangeStateMachine.isAlive == true)
-            {
-                moveTimer += dt; 
-
-                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
-                {
-                    moveTimer = 0f; 
-                    moveDelay = Random.Range(minDelay, maxDelay);
-                    MoveToRandomPoint();
-                }
-            }
-            
-            if (rangeStateMachine.isInsideCollider == true)
-            {
-                if(rangeStateMachine.LOS == true)
-                {
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
+                stateMachine.ChangeState(nameof(InRangeState));
             }
         }
     }
@@ -125,7 +64,6 @@ public class RandomMovementState : SimpleState
         if (GetRandomPoint(circleCenterObject.position, range, out point))
         {
             agent.SetDestination(point);
-            //dustPS.Play();
         }
     }
 
