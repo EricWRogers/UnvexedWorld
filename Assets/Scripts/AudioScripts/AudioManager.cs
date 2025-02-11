@@ -1,175 +1,139 @@
 using UnityEngine;
-using UnityEngine.Audio;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class SFXElement
-    {
-        public string name;
-        public AudioClip clip;
-        public AudioMixerGroup mixerGroup; // Unique Mixer Group for each SFX
-    }
-
-    [System.Serializable]
-    public class MusicElement
-    {
-        public string name;
-        public AudioClip clip;
-        public AudioMixerGroup mixerGroup; // Unique Mixer Group for each Music track
-    }
-
-    [Header("Audio Mixer")]
-    public AudioMixer audioMixer;  // Reference to the Audio Mixer
-
+    // Music and Sound Effect clips
     [Header("Music")]
-    public List<MusicElement> musicTracks;
+    public AudioClip backgroundMusic;
+    public AudioClip battleMusic;
 
-    [Header("Sound Effects")]
-    public List<SFXElement> soundEffects;
+    [Header("SFX")]
+    public List<AudioClip> playerDash;
+    public List<AudioClip> punchSounds;
+    public List<AudioClip> landing;
+    public List<AudioClip> hurt;
+    public List<AudioClip> orb;
+    public List<AudioClip> enemyHurt;
+
+    // AudioSources for music and SFX
+    private AudioSource musicSource;
+    private AudioSource sfxSource;
+
+    // Equalizer settings for Music
+    [Header("Music Equalizer")]
+    public Equalizer musicEqualizer;
+
+    // Equalizer settings for SFX
+    [Header("SFX Equalizer")]
+    public Equalizer dashEqualizer;
+    public Equalizer punchEqualizer;
+    public Equalizer landingEqualizer;
+    public Equalizer hurtEqualizer;
+    public Equalizer orbEqualizer;
+    public Equalizer enemyHurtEqualizer;
+
+    [System.Serializable]
+    public class Equalizer
+    {
+        [Range(0f, 1f)] public float bass = 0.5f;
+        [Range(0f, 1f)] public float mid = 0.5f;
+        [Range(0f, 1f)] public float treble = 0.5f;
+    }
 
     void Awake()
     {
-        // Ensure the audio mixer is correctly assigned
-        if (audioMixer == null)
-        {
-            Debug.LogError("Audio Mixer is missing in AudioManager!");
-        }
+        // Initialize two AudioSources
+        musicSource = gameObject.AddComponent<AudioSource>();
+        sfxSource = gameObject.AddComponent<AudioSource>();
+
+        musicSource.loop = true; // Music source should loop for background/battle music
     }
 
-    private MusicElement GetMusicElement(string name)
-    {
-        return musicTracks.Find(music => music.name == name);
-    }
-
-    private SFXElement GetSFXElement(string name)
-    {
-        return soundEffects.Find(sfx => sfx.name == name);
-    }
-
-    // --- Music Methods ---
+    // Music playback
     public void PlayBackgroundMusic()
     {
-        MusicElement music = GetMusicElement("BackgroundMusic");
-        if (music != null)
+        if (musicSource.clip != backgroundMusic || !musicSource.isPlaying)
         {
-            PlaySound(music.clip, music.mixerGroup);
+            musicSource.Stop(); // Ensure previous music stops before playing new one
+            musicSource.clip = backgroundMusic;
+            musicSource.Play();
         }
     }
 
     public void PlayBattleMusic()
     {
-        MusicElement music = GetMusicElement("BattleMusic");
-        if (music != null)
+        if (musicSource.clip != battleMusic || !musicSource.isPlaying)
         {
-            PlaySound(music.clip, music.mixerGroup);
+            musicSource.Stop(); // Ensure previous music stops before playing new one
+            musicSource.clip = battleMusic;
+            musicSource.Play();
         }
     }
 
-    public void StopMusic()
+    // SFX playback
+    public void PlayDashSound(int i)
     {
-        // Stop all currently playing audio
-        AudioSource[] sources = GetComponents<AudioSource>();
-        foreach (AudioSource source in sources)
-        {
-            source.Stop();
-        }
-    }
-
-    public bool IsBattleMusicPlaying()
-    {
-        MusicElement music = GetMusicElement("BattleMusic");
-        AudioSource[] sources = GetComponents<AudioSource>();
-
-        foreach (AudioSource source in sources)
-        {
-            if (music != null && source.clip == music.clip && source.isPlaying)
-                return true;
-        }
-        return false;
-    }
-
-    // --- SFX Methods ---
-    public void PlayDashSound()
-    {
-        PlaySFX("Dash");
+        sfxSource.PlayOneShot(playerDash[i]);
     }
 
     public void PlayPunchSound(int i)
     {
-        if (i >= 0 && i < soundEffects.Count)
-        {
-            PlaySound(soundEffects[i].clip, soundEffects[i].mixerGroup);
-        }
+        sfxSource.PlayOneShot(punchSounds[i]);
     }
 
-    public void PlayLandingSound()
+    public void PlayLandingSound(int i)
     {
-        PlaySFX("Landing");
+        sfxSource.PlayOneShot(landing[i]);
     }
 
-    public void PlayHurtSound()
+    public void PlayHurtSound(int i)
     {
-        PlaySFX("Hurt");
+        sfxSource.PlayOneShot(hurt[i]);
     }
 
-    public void PlayOrbSound()
+    public void PlayOrbSound(int i)
     {
-        PlaySFX("Orb");
+        sfxSource.PlayOneShot(orb[i]);
     }
 
-    public void PlayEnemyHurtSound()
+    public void PlayEnemyHurtSound(int i)
     {
-        PlaySFX("EnemyHurt");
+        sfxSource.PlayOneShot(enemyHurt[i]);
     }
 
-    private void PlaySFX(string name)
+    // Stop music
+    public void StopMusic()
     {
-        SFXElement sfx = GetSFXElement(name);
-        if (sfx != null)
-        {
-            PlaySound(sfx.clip, sfx.mixerGroup);
-        }
+        musicSource.Stop();
     }
 
-    private void PlaySound(AudioClip clip, AudioMixerGroup mixerGroup)
+    // New method to check if battle music is playing
+    public bool IsBattleMusicPlaying()
     {
-        if (clip != null)
-        {
-            AudioSource source = gameObject.AddComponent<AudioSource>();
-            source.clip = clip;
-            source.outputAudioMixerGroup = mixerGroup;
-            source.Play();
-            Destroy(source, clip.length); // Destroy audio source after playing
-        }
+        return musicSource.clip == battleMusic && musicSource.isPlaying;
     }
 
-    // --- Equalizer Controls for each sound element ---
-    public void SetBass(string soundName, float value)
+    // Equalizer control for Music (bass, mid, treble adjustments)
+    void UpdateMusicEqualizer()
     {
-        SetEQ(soundName, "Bass", value);
+        // Adjust the bass, mid, and treble ranges for music
+        musicSource.pitch = Mathf.Lerp(0.5f, 2f, musicEqualizer.bass); // Example: adjust pitch for bass
+        // The actual frequency ranges for mid and treble can be mapped similarly
     }
 
-    public void SetMid(string soundName, float value)
+    // Equalizer control for each SFX category
+    void UpdateSFXEqualizer()
     {
-        SetEQ(soundName, "Mid", value);
+        // Adjust the bass, mid, and treble ranges for SFX
+        sfxSource.pitch = Mathf.Lerp(0.5f, 2f, dashEqualizer.bass); // Example: adjust pitch for dash sound
+        // Similarly adjust for other SFX like punch, landing, etc.
     }
 
-    public void SetTreble(string soundName, float value)
+    // Call the equalizer updates in Update to continuously adjust the audio properties
+    void Update()
     {
-        SetEQ(soundName, "Treble", value);
-    }
-
-    private void SetEQ(string soundName, string parameter, float value)
-    {
-        SFXElement sfx = GetSFXElement(soundName);
-        MusicElement music = GetMusicElement(soundName);
-
-        AudioMixerGroup mixerGroup = sfx != null ? sfx.mixerGroup : music?.mixerGroup;
-        if (mixerGroup != null)
-        {
-            audioMixer.SetFloat(parameter + "_" + soundName, Mathf.Log10(Mathf.Max(value, 0.0001f)) * 20);
-        }
+        UpdateMusicEqualizer();
+        UpdateSFXEqualizer();
     }
 }
