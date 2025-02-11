@@ -1,82 +1,81 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
-    // Music and Sound Effect clips
-    public AudioClip backgroundMusic;
-    public AudioClip battleMusic;
-    public AudioClip playerDash;
-    public List<AudioClip> punchSounds;
-    public AudioClip landing;
-    public AudioClip hurt;
+    [System.Serializable]
+    public class SFXElement
+    {
+        public string name;
+        public AudioClip clip;
+    }
 
-     public AudioClip orb;
+    [System.Serializable]
+    public class MusicElement
+    {
+        public string name;
+        public AudioClip clip;
+    }
 
-     public AudioClip enemyHurt;
+    [Header("Music")]
+    public List<MusicElement> musicTracks;
+
+    [Header("Sound Effects")]
+    public List<SFXElement> soundEffects;
 
     private AudioSource musicSource;
     private AudioSource sfxSource;
 
     void Awake()
     {
-        // Initialize two AudioSources
+        // Initialize AudioSources
         musicSource = gameObject.AddComponent<AudioSource>();
         sfxSource = gameObject.AddComponent<AudioSource>();
 
-        musicSource.loop = true; // Music source should loop for background/battle music
+        musicSource.loop = true; // Music should loop
     }
 
+    private AudioClip GetMusicClip(string name)
+    {
+        foreach (MusicElement music in musicTracks)
+        {
+            if (music.name == name)
+                return music.clip;
+        }
+        return null;
+    }
+
+    private AudioClip GetSFXClip(string name)
+    {
+        foreach (SFXElement sfx in soundEffects)
+        {
+            if (sfx.name == name)
+                return sfx.clip;
+        }
+        return null;
+    }
+
+    // --- Music Methods ---
     public void PlayBackgroundMusic()
     {
-        // Only play background music if it's not already playing
-        if (musicSource.clip != backgroundMusic || !musicSource.isPlaying)
+        AudioClip clip = GetMusicClip("BackgroundMusic");
+        if (clip != null && (musicSource.clip != clip || !musicSource.isPlaying))
         {
-            musicSource.Stop(); // Ensure previous music stops before playing new one
-            musicSource.clip = backgroundMusic;
+            musicSource.Stop();
+            musicSource.clip = clip;
             musicSource.Play();
         }
     }
 
     public void PlayBattleMusic()
     {
-        // Only play battle music if it's not already playing
-        if (musicSource.clip != battleMusic || !musicSource.isPlaying)
+        AudioClip clip = GetMusicClip("BattleMusic");
+        if (clip != null && (musicSource.clip != clip || !musicSource.isPlaying))
         {
-            musicSource.Stop(); // Ensure previous music stops before playing new one
-            musicSource.clip = battleMusic;
+            musicSource.Stop();
+            musicSource.clip = clip;
             musicSource.Play();
         }
-    }
-
-    public void PlayDashSound()
-    {
-        sfxSource.PlayOneShot(playerDash);
-    }
-
-    public void PlayPunchSound(int i)
-    {
-        sfxSource.PlayOneShot(punchSounds[i]);
-    }
-
-    public void PlayLandingSound()
-    {
-        sfxSource.PlayOneShot(landing);
-    }
-
-    public void PlayHurtSound()
-    {
-        sfxSource.PlayOneShot(hurt);
-    }
-     public void PlayOrbSound()
-    {
-        sfxSource.PlayOneShot(orb);
-    }
-
-     public void PlayEnemyHurtSound()
-    {
-        sfxSource.PlayOneShot(enemyHurt);
     }
 
     public void StopMusic()
@@ -84,9 +83,46 @@ public class AudioManager : MonoBehaviour
         musicSource.Stop();
     }
 
-    // New method to check if battle music is playing
     public bool IsBattleMusicPlaying()
     {
-        return musicSource.clip == battleMusic && musicSource.isPlaying;
+        AudioClip clip = GetMusicClip("BattleMusic");
+        return clip != null && musicSource.clip == clip && musicSource.isPlaying;
+    }
+
+    // --- SFX Methods ---
+    public void PlayDashSound()
+    {
+        AudioClip clip = GetSFXClip("Dash");
+        if (clip != null) sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayPunchSound(int i)
+    {
+        if (i >= 0 && i < soundEffects.Count)
+            sfxSource.PlayOneShot(soundEffects[i].clip);
+    }
+
+    public void PlayLandingSound()
+    {
+        AudioClip clip = GetSFXClip("Landing");
+        if (clip != null) sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayHurtSound()
+    {
+        AudioClip clip = GetSFXClip("Hurt");
+        if (clip != null) sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayOrbSound()
+    {
+        AudioClip clip = GetSFXClip("Orb");
+        if (clip != null) sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayEnemyHurtSound()
+    {
+        AudioClip clip = GetSFXClip("EnemyHurt");
+        if (clip != null) sfxSource.PlayOneShot(clip);
     }
 }

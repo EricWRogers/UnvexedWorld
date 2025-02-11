@@ -20,7 +20,7 @@ public class TheSecond : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if( spell.mainSet == true && inArea == true ||spell.modSet == true)
+        if( spell.mainSet == true && inArea == true)
         {
             check1 = true;
         }
@@ -40,7 +40,6 @@ public class TheSecond : MonoBehaviour
             wall.SetActive(true);
             inArea = true;
             spell.mainSet = false;
-            spell.modSet = false;
         }
     }
 

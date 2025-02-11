@@ -10,9 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 8816696711155652406}
   - component: {fileID: 1063699795772695673}
+  - component: {fileID: 849559381742270415}
   m_Layer: 0
   m_Name: Basic Punch 1
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +48,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   duration: 0.2
+--- !u!114 &849559381742270415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714565100702186554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  element: 0
+  aspect: 0
+  spells: []
 --- !u!1 &1846848477704561281
 GameObject:
   m_ObjectHideFlags: 0
@@ -59,6 +75,7 @@ GameObject:
   - component: {fileID: 257779114422334308}
   - component: {fileID: 8301843833823786389}
   - component: {fileID: 6126519142447062901}
+  - component: {fileID: 6775899298371220468}
   m_Layer: 10
   m_Name: hitboxMelee
   m_TagString: Untagged
@@ -115,8 +132,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 0
   damage: 5
   impactValue: 0
+  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -125,6 +144,7 @@ MonoBehaviour:
   comboManager: {fileID: 0}
   hitStop: {fileID: 6126519142447062901}
   duration: 0.08
+  punchSoundIndex: 0
   direction: {fileID: 9087936371502928868}
   forceAmount: 4
 --- !u!114 &6126519142447062901
@@ -142,6 +162,26 @@ MonoBehaviour:
   waiting: 0
   gamePaused: {fileID: 0}
   scaleTime: 0
+--- !u!114 &6775899298371220468
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1846848477704561281}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 10
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  comboManager: {fileID: 0}
 --- !u!1 &3592680559892838503
 GameObject:
   m_ObjectHideFlags: 0
