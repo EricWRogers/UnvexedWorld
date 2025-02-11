@@ -30,6 +30,7 @@ public class SurroundState : SimpleState
         {
             target = gruntStateMachine.target;
             agent = gruntStateMachine.agent;
+            gruntStateMachine.transform.LookAt(gruntStateMachine.target);
         }
         //start adding to the queue 
 
@@ -92,6 +93,8 @@ public class SurroundState : SimpleState
                     target.position.y,
                     target.position.z + Random.Range(minRadius, maxRadius) * Mathf.Sin(2 * Mathf.PI * index / count)
                 );
+
+                enemyState.transform.LookAt(((GruntStateMachine)stateMachine).target);
 
                 if (enemyState.TryGetComponent(out NavMeshAgent enemyAgent))
                 {
