@@ -6,6 +6,8 @@ using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 
+/*Attacking few a seconds the return to the surround state via retreat state*/
+
 [System.Serializable]
 public class AttackState : SimpleState
 {
@@ -15,7 +17,9 @@ public class AttackState : SimpleState
     private NavMeshAgent agent;
     private Animator anim;
     private float attackRange;
-    private bool playerInRange;
+    public float attackTimer;
+    public float cooldownTimer = 3f;
+    private float attackDuration = 3f;
     public bool isAttacking;
 
     public override void OnStart()
@@ -23,28 +27,12 @@ public class AttackState : SimpleState
         //Debug.Log("Attack State");
         base.OnStart();
 
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = meleeStateMachine.GetComponentInChildren<Animator>();
-            agent.SetDestination(meleeStateMachine.transform.position);
-            attackRange = meleeStateMachine.inAttackRange + 0.5f;
-        }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            agent = agroMeleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = agroMeleeStateMachine.GetComponentInChildren<Animator>();
-            agent.SetDestination(agroMeleeStateMachine.transform.position);
-            attackRange = agroMeleeStateMachine.inAttackRange + 0.5f;
-        }
-        else if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            rangeStateMachine.canRotate = false;
-            agent = rangeStateMachine.GetComponent<NavMeshAgent>();
-
-            anim = rangeStateMachine.anim;
-            agent.SetDestination(rangeStateMachine.transform.position);
-            attackRange = rangeStateMachine.inAttackRange + 5.0f;
+            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = gruntStateMachine.GetComponentInChildren<Animator>();
+            agent.SetDestination(gruntStateMachine.transform.position);
+            attackRange = gruntStateMachine.inAttackRange + 0.5f;
         }
 
         //time.StartTimer(2, true);
@@ -52,88 +40,38 @@ public class AttackState : SimpleState
         {
             attack = new UnityEvent();
         }
+
+        attackTimer = attackDuration;
     }
 
-    public override void UpdateState(float dt)
+    public override void UpdateState(float _dt)
     {
-        if (stateMachine is MeleeStateMachine meleeStateMachine)
-        {
-            meleeStateMachine.transform.LookAt(meleeStateMachine.target);
-            
-            if (meleeStateMachine.LOS && !isAttacking)
-            {
-                //Debug.Log("Attacking");
-                isAttacking = true;
-                anim.SetBool("isAttacking", true);
-                attack.Invoke();
-            }
+        base.UpdateState(_dt);
 
-            if(Vector3.Distance(agent.transform.position, meleeStateMachine.target.position) > meleeStateMachine.inAttackRange)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
+        {
+            gruntStateMachine.transform.LookAt(gruntStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if (gruntStateMachine.LOS && attackTimer > 0f)
             {
-                time.autoRestart = false;
-                if (time.timeLeft <= 0)
+                if (cooldownTimer <= 0f)
                 {
-                    isAttacking = false;
-                    anim.SetBool("isAttacking", false);
-                    stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(InRangeState));
+                    isAttacking = true;
+                    anim.SetBool("isAttacking", true);
+                    attack.Invoke();
+
+                    cooldownTimer = 1.0f;
                 }
             }
-        }
-        else if (stateMachine is AgroMeleeStateMachine agroMeleeStateMachine)
-        {
-            agroMeleeStateMachine.transform.LookAt(agroMeleeStateMachine.target);
-            
-            if (agroMeleeStateMachine.LOS && !isAttacking)
-            {
-                //Debug.Log("Attacking");
-                isAttacking = true;
-                anim.SetBool("isAttacking", true);
-                attack.Invoke();
-            }
-
-            if(Vector3.Distance(agent.transform.position, agroMeleeStateMachine.target.position) > agroMeleeStateMachine.inAttackRange)
-            {
-                time.autoRestart = false;
-                if (time.timeLeft <= 0)
-                {
-                    isAttacking = false;
-                    anim.SetBool("isAttacking", false);
-                    stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(InRangeState));
-                }
-            }
-        }
-        else if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            rangeStateMachine.canRotate = true;
-            if (rangeStateMachine.canRotate)
-            {
-                rangeStateMachine.transform.LookAt(rangeStateMachine.target);
-            }
-
-            if (rangeStateMachine.LOS && !isAttacking)
-            {
-                isAttacking = true;
-                anim.SetBool("isRangeAttack", true);
-                attack.Invoke();
-                time.StartTimer(1.5f, false);
-                stateMachine.ChangeState(nameof(InRangeState));
-                return;
-            }
-
-            if (isAttacking && time.timeLeft <= 0)
+            else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
             {
                 isAttacking = false;
-            }
-
-            if (Vector3.Distance(agent.transform.position, rangeStateMachine.target.position) > rangeStateMachine.inAttackRange)
-            {
-                isAttacking = false;
-
-                anim.SetBool("isRangeAttack", false); 
+                anim.SetBool("isAttacking", false);
                 stopAttacking.Invoke();
-                stateMachine.ChangeState(nameof(InRangeState));
+                stateMachine.ChangeState(nameof(RetreatState));
             }
         }
     }
@@ -141,10 +79,5 @@ public class AttackState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-
-        if (stateMachine is RangeStateMachine rangeStateMachine)
-        {
-            rangeStateMachine.canRotate = true;
-        }
     }
 }
