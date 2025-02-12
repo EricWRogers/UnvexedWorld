@@ -164,6 +164,7 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             if (Time.time < dashStartTime + dashTime)
             {
+                velocity.y -= gravity * Time.deltaTime;
                 dashLines.SetActive(true);
                 controller.Move(transform.forward * dashSpeed * Time.deltaTime);               
             }
@@ -182,13 +183,14 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
+            velocity.y -= gravity * Time.deltaTime;
 
             dashing = true;
             animator.Play("Dash");
             
             dashStartTime = Time.time;
             dashLines.SetActive(true);
-            audioManager.PlayDashSound();
+            audioManager.PlayDashSound(0);
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
         }
@@ -218,7 +220,7 @@ public class ThirdPersonMovement : MonoBehaviour
         }
 
         
-        if (!isGrounded && jumpCount == 0)
+        if (!isGrounded && jumpCount == 0 )
         {
             
             if (jumpCount < jumpMax || isGrounded)
@@ -231,7 +233,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
         }
 
-        if (jumpCount == 1)
+        if (jumpCount == 1 )
         {
             velocity.y += gravityFirstJump * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
@@ -335,7 +337,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 3)
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 10)
             {
                 lockOn.LockOff();
             }
@@ -344,8 +346,6 @@ public class ThirdPersonMovement : MonoBehaviour
         {
             lockOn.FindNewTarget();
         }
-
-    
     }
 
     // Sliding down slopes
@@ -406,7 +406,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(!lastraygrounded && rayGround == true)
         {
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
-             audioManager.PlayLandingSound();
+             audioManager.PlayLandingSound(0);
         }
     }
 }

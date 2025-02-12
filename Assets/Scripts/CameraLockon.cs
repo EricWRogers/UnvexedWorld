@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Unity.VisualScripting;
+using SuperPupSystems.Helper;
+using Scripts.HUDScripts.MessageSystem;
 
 public class CameraLockon : MonoBehaviour
 {
@@ -11,6 +14,8 @@ public class CameraLockon : MonoBehaviour
     public CinemachineTargetGroup tg;
     public Transform groupObject;
     public bool oneTime;
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +46,7 @@ public class CameraLockon : MonoBehaviour
             }
         }
 
-        if (lockOn.direction == false)
+        if (lockOn.direction == false && lockOn.target != null)
        {
             lockCamera.LookAt = player.transform;
             tg.RemoveMember(lockOn.target.transform);
@@ -50,6 +55,12 @@ public class CameraLockon : MonoBehaviour
 
       
         
+    }
+
+    public void Remove()
+    {
+        tg.RemoveMember(lockOn.target.transform);
+        tg.RemoveMember(player.transform);
     }
 
     void AddM()
