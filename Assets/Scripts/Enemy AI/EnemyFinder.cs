@@ -9,11 +9,12 @@ public class EnemyFinder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out SimpleStateMachine enemy))
+        if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
         {
-            if (!nearbyEnemies.Contains(enemy))
+            if (other.GetComponent<GruntStateMachine>() != null)
             {
-                nearbyEnemies.Add(enemy);
+                var gruntStateMachine = other.GetComponent<GruntStateMachine>();
+                nearbyEnemies.Add(gruntStateMachine);
             }
         }
     }
