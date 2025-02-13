@@ -4,6 +4,7 @@ public class AttackUpdater : MonoBehaviour
 {
     //elements
     //Direction??
+    public GameObject player = null;
     public SpellCraft.Aspect element = SpellCraft.Aspect.none;
     public int aspect = 0;
     public Spell[] spells;
