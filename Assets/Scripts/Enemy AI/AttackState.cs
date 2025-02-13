@@ -42,6 +42,7 @@ public class AttackState : SimpleState
         }
 
         attackTimer = attackDuration;
+        cooldownTimer = 0f;
     }
 
     public override void UpdateState(float _dt)
@@ -59,9 +60,9 @@ public class AttackState : SimpleState
             {
                 if (cooldownTimer <= 0f)
                 {
+                    attack.Invoke();
                     isAttacking = true;
                     anim.SetBool("isAttacking", true);
-                    attack.Invoke();
 
                     cooldownTimer = 1.0f;
                 }
@@ -79,5 +80,10 @@ public class AttackState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+    }
+
+    public void Message()
+    {
+        Debug.Log("Enemy Attacked?!?");
     }
 }

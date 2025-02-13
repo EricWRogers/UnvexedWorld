@@ -26,6 +26,11 @@ public class StunState : SimpleState
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             anim = gruntStateMachine.anim;
         }
+        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            anim = meleeStateMachine.anim;
+        }
 
         ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
 
@@ -48,6 +53,21 @@ public class StunState : SimpleState
                 stateMachine.ChangeState(nameof(InRangeState));
             }
             else if(stunTimer <= 0 && gruntStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
+        }
+        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            if(stunTimer > 0)
+            {
+                stunTimer -= _dt;
+            }
+            if (stunTimer <= 0 && meleeStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(stunTimer <= 0 && meleeStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
