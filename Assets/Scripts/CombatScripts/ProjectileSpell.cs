@@ -173,7 +173,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             else
             {
                 RaycastHit hit;
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition + new Vector3(0,100,0));
 
                 if (Physics.Raycast(ray, out hit))
                 {
