@@ -44,6 +44,10 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         m_timer.StartTimer(lifeTime);
         // set init position
         m_lastPosition = transform.position;
+        if(going)
+        {
+            Target();
+        }
         
         StartParticle();
     }
