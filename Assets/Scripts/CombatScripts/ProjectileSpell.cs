@@ -12,6 +12,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
 {
     [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
     public int knockBackType;
+    public bool going = true;
     public int damage = 1;
     public float speed = 20f;
     public float lifeTime = 10f;
@@ -48,9 +49,12 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     }
     private void FixedUpdate()
     {
-        Move();
-        CollisionCheck();
-        m_lastPosition = transform.position;
+        if(going)
+        {
+            Move();
+            CollisionCheck();
+            m_lastPosition = transform.position;
+        }
     }
     private void Move()
     {
@@ -145,5 +149,23 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     public int GetDamage()
     {
         return damage;
+    }
+
+    public void Launch()
+    {
+        Target();
+        going = true;
+    }
+    
+    public void Target()
+    {
+        if (gameObject.GetComponentInParent<AttackUpdater>()?.player.GetComponent<MeleeRangedAttack>() != null)
+        {
+            MeleeRangedAttack temp =  gameObject.GetComponentInParent<AttackUpdater>().player.GetComponent<MeleeRangedAttack>();
+            if (temp.direction)
+            {
+                gameObject.transform.LookAt(temp.target.transform);
+            }
+        }
     }
 }
