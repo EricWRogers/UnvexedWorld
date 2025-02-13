@@ -5,7 +5,7 @@ using System.Linq;
 public class AudioManager : MonoBehaviour
 {
     public SoundData[] sounds;  // Array of sound settings (Set in Unity Inspector)
-    public AudioSoundData audioSoundData;
+    //public AudioSoundData audioSoundData;
     public SoundPool soundPool; // Reference to the SoundPool (Assign in Unity)
     private AudioSource audioSource;
     [SerializeField] private AudioSource backgroundMusicSource;
@@ -25,9 +25,10 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    // 🎵 Play a Sound by Name
+    // Play a Sound by Name
     public void Play(string name)
     {
+        Debug.Log("AudioManager: Play " + name);
         SoundData sound = sounds.FirstOrDefault(s => s.name == name);
         if (sound != null && soundPool != null)
         {
@@ -79,6 +80,36 @@ public class AudioManager : MonoBehaviour
     public bool IsBackgroundMusicPlaying()
     {
         return backgroundMusicSource != null && backgroundMusicSource.isPlaying;
+    }
+
+    // Crossfade Function for music
+    public void CrossfadeBattleToBackground(float fadeDuration = 2f)
+    {
+        StartCoroutine(Crossfade(fadeDuration));
+    }
+
+    // Coroutine for fading
+    private IEnumerator Crossfade(float fadeDuration)
+    {
+        float startTime = Time.time;
+        float battleMusicStartVolume = battleMusicSource.volume;
+        float backgroundMusicStartVolume = backgroundMusicSource.volume;
+
+        //Battle music fade
+        while (Time.time - startTime < fadeDuration)
+        {
+            float t = (Time.time - startTime) / fadeDuration;
+            battleMusicSource.volume = Mathf.Lerp(battleMusicStartVolume, 0f, t);
+            backgroundMusicSource.volume = Mathf.Lerp(backgroundMusicStartVolume, 1f, t);
+            yield return null;
+        }
+
+        //final volumes
+        battleMusicSource.volume = 0f;
+        backgroundMusicSource.volume = 1f;
+
+        //Stop battle music after fade out
+        battleMusicSource.Stop();
     }
 
     // Stop a Specific Sound
