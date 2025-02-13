@@ -47,19 +47,26 @@ public class SurroundState : SimpleState
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            //wait a for a sec or two then send the FIFO enemy to the player
+            if (attackQueue.Count == 0)
+            {
+                InitializeQueue(); 
+            }
+
             if (waitTimer > 0)
             {
                 waitTimer -= _dt;
             }
+
             if (waitTimer <= 0 && !isReady && attackQueue.Count > 0)
             {
                 isReady = true;
                 SimpleStateMachine attacker = attackQueue.Dequeue();
                 stateMachine.ChangeState(nameof(ChargeState));
+
+                waitTimer = waitDuration;
+                isReady = false;  
             }
         }
-        
     }
 
     public override void OnExit()
