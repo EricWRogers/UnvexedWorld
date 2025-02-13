@@ -4,7 +4,7 @@ using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
-    public SoundData[] sounds;  // Array of sound settings (Set in Unity Inspector)
+    public AudioCollection[] audioCollections;  // Array of sound settings (Set in Unity Inspector)
     //public AudioSoundData audioSoundData;
     public SoundPool soundPool; // Reference to the SoundPool (Assign in Unity)
     private AudioSource audioSource;
@@ -22,16 +22,16 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
     }
 
     // Play a Sound by Name
     public void Play(string name, bool _varyPitch = false)
     {
         Debug.Log("AudioManager: Play " + name);
-        SoundData sound = sounds.FirstOrDefault(s => s.name == name);
-        if (sound != null && soundPool != null)
+        AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
+        if (ac != null && soundPool != null)
         {
+            SoundData sound = ac.sounds[Random.Range(0, ac.sounds.Length)];
             GameObject audioObject = soundPool.GetPooledObject();
             if (audioObject != null)
             {
@@ -116,11 +116,13 @@ public class AudioManager : MonoBehaviour
     }*/
 
     // Stop a Specific Sound
+    // Needs more work in future
     public void Stop(string name)
     {
-        SoundData sound = sounds.FirstOrDefault(s => s.name == name);
-        if (sound != null)
+        AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
+        if (ac != null)
         {
+            SoundData sound = ac.sounds[Random.Range(0, ac.sounds.Length)];
             foreach (GameObject obj in soundPool.pooledObjects)
             {
                 AudioSource audioSource = obj.GetComponent<AudioSource>();
