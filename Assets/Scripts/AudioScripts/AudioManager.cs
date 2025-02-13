@@ -26,7 +26,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Play a Sound by Name
-    public void Play(string name)
+    public void Play(string name, bool _varyPitch = false)
     {
         Debug.Log("AudioManager: Play " + name);
         SoundData sound = sounds.FirstOrDefault(s => s.name == name);
@@ -38,7 +38,10 @@ public class AudioManager : MonoBehaviour
                 AudioSource audioSource = audioObject.GetComponent<AudioSource>();
                 audioSource.clip = sound.clip;
                 audioSource.volume = sound.volume;
-                audioSource.pitch = sound.pitch;
+                if (_varyPitch)
+                    audioSource.pitch = sound.pitch + Random.Range(-0.3f, 0.3f);
+                else
+                    audioSource.pitch = sound.pitch;
                 audioSource.loop = sound.loop;
                 audioObject.SetActive(true);
                 audioSource.Play();
@@ -83,7 +86,7 @@ public class AudioManager : MonoBehaviour
     }
 
     // Crossfade Function for music
-    public void CrossfadeBattleToBackground(float fadeDuration = 2f)
+    /*public void CrossfadeBattleToBackground(float fadeDuration = 2f)
     {
         StartCoroutine(Crossfade(fadeDuration));
     }
@@ -110,7 +113,7 @@ public class AudioManager : MonoBehaviour
 
         //Stop battle music after fade out
         battleMusicSource.Stop();
-    }
+    }*/
 
     // Stop a Specific Sound
     public void Stop(string name)
@@ -148,7 +151,8 @@ public class AudioManager : MonoBehaviour
     }
 
     // 🎵 Quick Play Methods for Specific Sounds
-    public void PlayPunchSound() => Play("PunchSound");
-    public void PlayDashSound() => Play("DashSound");
-    public void PlayLandingSound() => Play("LandingSound");
+    public void PlayPunchSound() => Play("Punch", true);
+    public void PlayDashSound() => Play("Dash");
+    public void PlayLandingSound() => Play("Landing");
+    public void PlayEnemyHurtSound() => Play("EnemyHurt");
 }
