@@ -170,6 +170,23 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             {
                 gameObject.transform.LookAt(temp.target.transform);
             }
+            else
+            {
+                RaycastHit hit;
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.rigidbody != null)
+                    {
+                        gameObject.transform.LookAt(hit.point);
+                    }
+                    else
+                    {
+                        gameObject.transform.LookAt(hit.point);
+                    }
+                }
+            }
         }
     }
 }
