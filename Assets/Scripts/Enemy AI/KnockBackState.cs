@@ -40,6 +40,11 @@ public class KnockBackState : SimpleState
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             rb = gruntStateMachine.GetComponent<Rigidbody>();
         }
+        else if(stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            rb = meleeStateMachine.GetComponent<Rigidbody>();
+        }
         
         rb.isKinematic = false;
         switch(kbType)
@@ -78,6 +83,22 @@ public class KnockBackState : SimpleState
                 stateMachine.ChangeState(nameof(InRangeState));
             }
             else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
+        }
+
+        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        {
+            if(knockBackTimer > 0)
+            {
+                knockBackTimer -= dt;
+            }
+            if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }

@@ -54,8 +54,8 @@ public class RagdollEnabler : MonoBehaviour
 
     public void EnableRagdoll()
     {
-        center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-        power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+        center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
+        power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();

@@ -12,6 +12,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
 {
     [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
     public int knockBackType;
+    public bool going = true;
     public int damage = 1;
     public float speed = 20f;
     public float lifeTime = 10f;
@@ -43,14 +44,21 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         m_timer.StartTimer(lifeTime);
         // set init position
         m_lastPosition = transform.position;
+        if(going)
+        {
+            Target();
+        }
         
         StartParticle();
     }
     private void FixedUpdate()
     {
-        Move();
-        CollisionCheck();
-        m_lastPosition = transform.position;
+        if(going)
+        {
+            Move();
+            CollisionCheck();
+            m_lastPosition = transform.position;
+        }
     }
     private void Move()
     {
@@ -145,5 +153,40 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     public int GetDamage()
     {
         return damage;
+    }
+
+    public void Launch()
+    {
+        Target();
+        going = true;
+    }
+    
+    public void Target()
+    {
+        if (gameObject.GetComponentInParent<AttackUpdater>()?.player.GetComponent<MeleeRangedAttack>() != null)
+        {
+            MeleeRangedAttack temp =  gameObject.GetComponentInParent<AttackUpdater>().player.GetComponent<MeleeRangedAttack>();
+            if (temp.direction)
+            {
+                gameObject.transform.LookAt(temp.target.transform);
+            }
+            else
+            {
+                RaycastHit hit;
+                var ray = Camera.main.ScreenPointToRay(Input.mousePosition + new Vector3(0,100,0));
+
+                if (Physics.Raycast(ray, out hit))
+                {
+                    if (hit.rigidbody != null)
+                    {
+                        gameObject.transform.LookAt(hit.point);
+                    }
+                    else
+                    {
+                        gameObject.transform.LookAt(hit.point);
+                    }
+                }
+            }
+        }
     }
 }
