@@ -1,23 +1,45 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 public class AudioManager : MonoBehaviour
 {
     // Music and Sound Effect clips
+    [Header("Music")]
     public AudioClip backgroundMusic;
     public AudioClip battleMusic;
-    public AudioClip playerDash;
+
+    [Header("SFX")]
+    public List<AudioClip> playerDash;
     public List<AudioClip> punchSounds;
-    public AudioClip landing;
-    public AudioClip hurt;
+    public List<AudioClip> landing;
+    public List<AudioClip> hurt;
+    public List<AudioClip> orb;
+    public List<AudioClip> enemyHurt;
 
-     public AudioClip orb;
-
-     public AudioClip enemyHurt;
-
+    // AudioSources for music and SFX
     private AudioSource musicSource;
     private AudioSource sfxSource;
+
+    // Equalizer settings for Music
+    [Header("Music Equalizer")]
+    public Equalizer musicEqualizer;
+
+    // Equalizer settings for SFX
+    [Header("SFX Equalizer")]
+    public Equalizer dashEqualizer;
+    public Equalizer punchEqualizer;
+    public Equalizer landingEqualizer;
+    public Equalizer hurtEqualizer;
+    public Equalizer orbEqualizer;
+    public Equalizer enemyHurtEqualizer;
+
+    [System.Serializable]
+    public class Equalizer
+    {
+        [Range(0f, 1f)] public float bass = 0.5f;
+        [Range(0f, 1f)] public float mid = 0.5f;
+        [Range(0f, 1f)] public float treble = 0.5f;
+    }
 
     void Awake()
     {
@@ -28,9 +50,9 @@ public class AudioManager : MonoBehaviour
         musicSource.loop = true; // Music source should loop for background/battle music
     }
 
+    // Music playback
     public void PlayBackgroundMusic()
     {
-        // Only play background music if it's not already playing
         if (musicSource.clip != backgroundMusic || !musicSource.isPlaying)
         {
             musicSource.Stop(); // Ensure previous music stops before playing new one
@@ -41,7 +63,6 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBattleMusic()
     {
-        // Only play battle music if it's not already playing
         if (musicSource.clip != battleMusic || !musicSource.isPlaying)
         {
             musicSource.Stop(); // Ensure previous music stops before playing new one
@@ -50,9 +71,10 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayDashSound()
+    // SFX playback
+    public void PlayDashSound(int i)
     {
-        sfxSource.PlayOneShot(playerDash);
+        sfxSource.PlayOneShot(playerDash[i]);
     }
 
     public void PlayPunchSound(int i)
@@ -60,25 +82,27 @@ public class AudioManager : MonoBehaviour
         sfxSource.PlayOneShot(punchSounds[i]);
     }
 
-    public void PlayLandingSound()
+    public void PlayLandingSound(int i)
     {
-        sfxSource.PlayOneShot(landing);
+        sfxSource.PlayOneShot(landing[i]);
     }
 
-    public void PlayHurtSound()
+    public void PlayHurtSound(int i)
     {
-        sfxSource.PlayOneShot(hurt);
-    }
-     public void PlayOrbSound()
-    {
-        sfxSource.PlayOneShot(orb);
+        sfxSource.PlayOneShot(hurt[i]);
     }
 
-     public void PlayEnemyHurtSound()
+    public void PlayOrbSound(int i)
     {
-        sfxSource.PlayOneShot(enemyHurt);
+        sfxSource.PlayOneShot(orb[i]);
     }
 
+    public void PlayEnemyHurtSound(int i)
+    {
+        sfxSource.PlayOneShot(enemyHurt[i]);
+    }
+
+    // Stop music
     public void StopMusic()
     {
         musicSource.Stop();
@@ -88,5 +112,28 @@ public class AudioManager : MonoBehaviour
     public bool IsBattleMusicPlaying()
     {
         return musicSource.clip == battleMusic && musicSource.isPlaying;
+    }
+
+    // Equalizer control for Music (bass, mid, treble adjustments)
+    void UpdateMusicEqualizer()
+    {
+        // Adjust the bass, mid, and treble ranges for music
+        musicSource.pitch = Mathf.Lerp(0.5f, 2f, musicEqualizer.bass); // Example: adjust pitch for bass
+        // The actual frequency ranges for mid and treble can be mapped similarly
+    }
+
+    // Equalizer control for each SFX category
+    void UpdateSFXEqualizer()
+    {
+        // Adjust the bass, mid, and treble ranges for SFX
+        sfxSource.pitch = Mathf.Lerp(0.5f, 2f, dashEqualizer.bass); // Example: adjust pitch for dash sound
+        // Similarly adjust for other SFX like punch, landing, etc.
+    }
+
+    // Call the equalizer updates in Update to continuously adjust the audio properties
+    void Update()
+    {
+        UpdateMusicEqualizer();
+        UpdateSFXEqualizer();
     }
 }

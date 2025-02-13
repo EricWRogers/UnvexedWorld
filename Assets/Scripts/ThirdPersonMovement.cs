@@ -188,7 +188,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
             dashStartTime = Time.time;
             dashLines.SetActive(true);
-            audioManager.PlayDashSound();
+            audioManager.PlayDashSound(0);
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
         }
@@ -211,6 +211,11 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("Grounded", rayGround);
         
         UpdateSlopeSliding();
+
+        if(inText == false)
+        {
+            nextLine = false;
+        }
 
         
         if (!isGrounded && jumpCount == 0)
@@ -397,7 +402,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(!lastraygrounded && rayGround == true)
         {
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
-             audioManager.PlayLandingSound();
+             audioManager.PlayLandingSound(0);
         }
     }
 }

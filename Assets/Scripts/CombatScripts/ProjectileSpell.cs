@@ -75,7 +75,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             {
                 if(gameObject.GetComponent<Spell>() !=null)
                 {
-                    if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
                     {
                         gameObject.GetComponent<Spell>().SpellEffect(gameObject);
                     }
@@ -92,12 +92,12 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         if(gameObject.GetComponent<Spell>() != null)
         {
-            if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.scavenge)
+            if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
-            else if(gameObject.GetComponent<Spell>().mainAspect == SpellCraft.Aspect.splendor)
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
