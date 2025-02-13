@@ -152,6 +152,24 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cycleaspect"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ca03b32-9a26-4b4f-91ef-cffe3d3c3ded"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Cycleelement"",
+                    ""type"": ""Button"",
+                    ""id"": ""9cd593c2-e2d6-4217-b1b1-ba318c78a4cc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -308,6 +326,28 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
                     ""action"": ""Text"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1547f5b7-7277-45c4-8ac7-0aa6e13d5abc"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cycleaspect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""205ede32-6857-44f4-8fba-db3974ea3c70"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Cycleelement"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -330,6 +370,8 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         m_GamePlay_LockOn = m_GamePlay.FindAction("LockOn", throwIfNotFound: true);
         m_GamePlay_MeleeHeavy = m_GamePlay.FindAction("MeleeHeavy", throwIfNotFound: true);
         m_GamePlay_Text = m_GamePlay.FindAction("Text", throwIfNotFound: true);
+        m_GamePlay_Cycleaspect = m_GamePlay.FindAction("Cycleaspect", throwIfNotFound: true);
+        m_GamePlay_Cycleelement = m_GamePlay.FindAction("Cycleelement", throwIfNotFound: true);
     }
 
     ~@PlayerGamepad()
@@ -410,6 +452,8 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
     private readonly InputAction m_GamePlay_LockOn;
     private readonly InputAction m_GamePlay_MeleeHeavy;
     private readonly InputAction m_GamePlay_Text;
+    private readonly InputAction m_GamePlay_Cycleaspect;
+    private readonly InputAction m_GamePlay_Cycleelement;
     public struct GamePlayActions
     {
         private @PlayerGamepad m_Wrapper;
@@ -428,6 +472,8 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         public InputAction @LockOn => m_Wrapper.m_GamePlay_LockOn;
         public InputAction @MeleeHeavy => m_Wrapper.m_GamePlay_MeleeHeavy;
         public InputAction @Text => m_Wrapper.m_GamePlay_Text;
+        public InputAction @Cycleaspect => m_Wrapper.m_GamePlay_Cycleaspect;
+        public InputAction @Cycleelement => m_Wrapper.m_GamePlay_Cycleelement;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -479,6 +525,12 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Text.started += instance.OnText;
             @Text.performed += instance.OnText;
             @Text.canceled += instance.OnText;
+            @Cycleaspect.started += instance.OnCycleaspect;
+            @Cycleaspect.performed += instance.OnCycleaspect;
+            @Cycleaspect.canceled += instance.OnCycleaspect;
+            @Cycleelement.started += instance.OnCycleelement;
+            @Cycleelement.performed += instance.OnCycleelement;
+            @Cycleelement.canceled += instance.OnCycleelement;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -525,6 +577,12 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
             @Text.started -= instance.OnText;
             @Text.performed -= instance.OnText;
             @Text.canceled -= instance.OnText;
+            @Cycleaspect.started -= instance.OnCycleaspect;
+            @Cycleaspect.performed -= instance.OnCycleaspect;
+            @Cycleaspect.canceled -= instance.OnCycleaspect;
+            @Cycleelement.started -= instance.OnCycleelement;
+            @Cycleelement.performed -= instance.OnCycleelement;
+            @Cycleelement.canceled -= instance.OnCycleelement;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -558,5 +616,7 @@ public partial class @PlayerGamepad: IInputActionCollection2, IDisposable
         void OnLockOn(InputAction.CallbackContext context);
         void OnMeleeHeavy(InputAction.CallbackContext context);
         void OnText(InputAction.CallbackContext context);
+        void OnCycleaspect(InputAction.CallbackContext context);
+        void OnCycleelement(InputAction.CallbackContext context);
     }
 }
