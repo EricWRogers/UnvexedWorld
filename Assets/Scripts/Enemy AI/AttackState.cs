@@ -17,7 +17,9 @@ public class AttackState : SimpleState
     private NavMeshAgent agent;
     private Animator anim;
     private float attackRange;
-    private bool playerInRange;
+    public float attackTimer;
+    public float cooldownTimer = 3f;
+    private float attackDuration = 3f;
     public bool isAttacking;
 
     public override void OnStart()
@@ -38,34 +40,41 @@ public class AttackState : SimpleState
         {
             attack = new UnityEvent();
         }
+
+        attackTimer = attackDuration;
     }
 
-    public override void UpdateState(float dt)
+    public override void UpdateState(float _dt)
     {
+        base.UpdateState(_dt);
+
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             gruntStateMachine.transform.LookAt(gruntStateMachine.target);
             
-            if (gruntStateMachine.LOS && !isAttacking)
-            {
-                //Debug.Log("Attacking");
-                isAttacking = true;
-                anim.SetBool("isAttacking", true);
-                attack.Invoke();
-            }
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
 
-            if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange)
+            if (gruntStateMachine.LOS && attackTimer > 0f)
             {
-                time.autoRestart = false;
-                if (time.timeLeft <= 0)
+                if (cooldownTimer <= 0f)
                 {
-                    isAttacking = false;
-                    anim.SetBool("isAttacking", false);
-                    stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(RetreatState));
+                    isAttacking = true;
+                    anim.SetBool("isAttacking", true);
+                    attack.Invoke();
+
+                    cooldownTimer = 1.0f;
                 }
             }
-        }    }
+            else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
+            {
+                isAttacking = false;
+                anim.SetBool("isAttacking", false);
+                stopAttacking.Invoke();
+                stateMachine.ChangeState(nameof(RetreatState));
+            }
+        }
+    }
     
     public override void OnExit()
     {
