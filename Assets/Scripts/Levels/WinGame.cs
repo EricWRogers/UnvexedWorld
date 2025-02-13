@@ -26,7 +26,7 @@ public class WinGame : MonoBehaviour
         {   
             eventSystem.enabled = false;
             collectableTracker = other.gameObject.GetComponent<CollectableTracker>();
-            if(collectableTracker.collectedOrbs >= 3)
+            if(collectableTracker.collectedOrbs >= 1)
             {
                 //This is from me attempting to save progress between scenes
                 //PlayerPrefs.setInt(collectableTracker.collectedOrbs, collectableTracker.collectedOrbs);
