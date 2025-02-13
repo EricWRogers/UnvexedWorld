@@ -52,20 +52,12 @@ public class RagdollEnabler : MonoBehaviour
             EnableAnimator();
         }
 
-        if(isGrunt)
-        {
-            center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
-        }
-        else
-        {
-            center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
-        }
+        PowerAmount();
     }
 
     public void EnableRagdoll()
     {
+        PowerAmount();
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
@@ -135,5 +127,19 @@ public class RagdollEnabler : MonoBehaviour
         }
 
         enemy.GetComponent<Health>().DestroyGameObject();
+    }
+
+    public void PowerAmount()
+    {
+        if(isGrunt)
+        {
+            center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+        }
+        else
+        {
+            center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
+        }
     }
 }
