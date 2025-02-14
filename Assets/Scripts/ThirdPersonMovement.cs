@@ -190,7 +190,7 @@ public class ThirdPersonMovement : MonoBehaviour
             
             dashStartTime = Time.time;
             dashLines.SetActive(true);
-            audioManager.PlayDashSound(0);
+            audioManager.PlayDashSound();
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
         }
@@ -405,8 +405,9 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if(!lastraygrounded && rayGround == true)
         {
+            Debug.Log("Land no play");
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
-             audioManager.PlayLandingSound(0);
+             AudioManager.instance.PlayLandingSound();
         }
     }
 }

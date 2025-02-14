@@ -205,7 +205,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindFirstObjectByType<AudioManager>().PlayPunchSound(punchSoundIndex);
+            audioManager.PlayPunchSound();
         }
         else
         {
