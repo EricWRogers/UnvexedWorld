@@ -61,6 +61,7 @@ public class CameraLockon : MonoBehaviour
     {
         tg.RemoveMember(lockOn.target.transform);
         tg.RemoveMember(player.transform);
+        tg.m_Targets = new CinemachineTargetGroup.Target[0];
     }
 
     void AddM()
