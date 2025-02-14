@@ -89,6 +89,30 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
+            if (enemy.GetComponent<GruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
+                
+                switch (knockBackType)
+                {
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+
             punchTarget.Invoke(enemy);
             
            
@@ -181,7 +205,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindFirstObjectByType<AudioManager>().PlayPunchSound(punchSoundIndex);
+            audioManager.PlayPunchSound();
         }
         else
         {
