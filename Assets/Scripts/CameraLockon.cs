@@ -49,8 +49,8 @@ public class CameraLockon : MonoBehaviour
         if (lockOn.direction == false && lockOn.target != null)
        {
             lockCamera.LookAt = player.transform;
-            tg.RemoveMember(lockOn.target.transform);
-            tg.RemoveMember(player.transform);
+            
+            tg.m_Targets = new CinemachineTargetGroup.Target[0];
         }
 
       
@@ -59,8 +59,7 @@ public class CameraLockon : MonoBehaviour
 
     public void Remove()
     {
-        tg.RemoveMember(lockOn.target.transform);
-        tg.RemoveMember(player.transform);
+        
         tg.m_Targets = new CinemachineTargetGroup.Target[0];
     }
 
@@ -68,7 +67,7 @@ public class CameraLockon : MonoBehaviour
     {
         if (lockOn.target && lockOn.direction == true && oneTime == true)
         {
-            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange * 3)
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange * 4)
             {
                 
                     tg.AddMember(lockOn.target.transform, 1, 10);
