@@ -32,6 +32,10 @@ public class GruntStateMachine : SimpleStateMachine
     public bool isInsideCollider = false;
     public bool canStun;
     public bool isIdling;
+    public bool isGrounded = false;
+    public float groundCheckDistance;
+    public float bufferCheckDistance = 1f;
+
 
     public float inAttackRange = 1.0f;
 
@@ -103,6 +107,27 @@ public class GruntStateMachine : SimpleStateMachine
         else
         {
             anim.SetBool("isWalking", false);
+        }
+
+        groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
+
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, -transform.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+        }else
+        {
+            isGrounded = false;
+        }
+
+        if(!isGrounded)
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }else
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
         }
     }
     

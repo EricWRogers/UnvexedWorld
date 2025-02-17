@@ -2,11 +2,12 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using SuperPupSystems.Helper;
-using Mono.Cecil.Cil;
+
 
 public class RagdollEnabler : MonoBehaviour
 {
     public float power = 100f;
+    public bool isGrunt;
     public Vector3 center;
     [SerializeField]
     private GameObject enemy;
@@ -50,12 +51,13 @@ public class RagdollEnabler : MonoBehaviour
         {
             EnableAnimator();
         }
+
+        PowerAmount();
     }
 
     public void EnableRagdoll()
     {
-        center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-        power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+        PowerAmount();
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
@@ -125,5 +127,19 @@ public class RagdollEnabler : MonoBehaviour
         }
 
         enemy.GetComponent<Health>().DestroyGameObject();
+    }
+
+    public void PowerAmount()
+    {
+        if(isGrunt)
+        {
+            center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+        }
+        else
+        {
+            center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
+        }
     }
 }

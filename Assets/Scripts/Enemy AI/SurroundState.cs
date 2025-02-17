@@ -15,8 +15,8 @@ public class SurroundState : SimpleState
     public EnemyFinder enemyFinder;
     public float minRadius = 4f;
     public float maxRadius = 8f;
-    public float waitDuration = 2.0f;
-    private float waitTimer;
+    private float waitDuration = 2.0f;
+    public float waitTimer;
     private Queue<SimpleStateMachine> attackQueue = new Queue<SimpleStateMachine>();
     private bool isReady = false;
     private Transform target;
@@ -25,6 +25,7 @@ public class SurroundState : SimpleState
     
     public override void OnStart()
     {
+        Debug.Log("Entering Surround State");
         base.OnStart();
         if(stateMachine is GruntStateMachine gruntStateMachine)
         {
@@ -40,22 +41,31 @@ public class SurroundState : SimpleState
         waitTimer = waitDuration;
     }
 
-    public override void UpdateState(float dt)
+    public override void UpdateState(float _dt)
     {
-        if (isReady || attackQueue.Count == 0)
+        base.UpdateState(_dt);
+
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            return;
-        }
-        //wait a for a sec or two then send the FIFO enemy to the player
-        if (waitTimer > 0)
-        {
-            waitTimer -= dt;
-        }
-        else if(waitTimer <= 0)
-        {
-            isReady = true;
-            SimpleStateMachine attacker = attackQueue.Dequeue();
-            stateMachine.ChangeState(nameof(ChargeState));
+            if (attackQueue.Count == 0)
+            {
+                InitializeQueue(); 
+            }
+
+            if (waitTimer > 0)
+            {
+                waitTimer -= _dt;
+            }
+
+            if (waitTimer <= 0 && !isReady && attackQueue.Count > 0)
+            {
+                isReady = true;
+                SimpleStateMachine attacker = attackQueue.Dequeue();
+                stateMachine.ChangeState(nameof(ChargeState));
+
+                waitTimer = waitDuration;
+                isReady = false;  
+            }
         }
     }
 
@@ -89,9 +99,9 @@ public class SurroundState : SimpleState
             if (unit is SimpleStateMachine enemyState)
             {
                 Vector3 position = new Vector3(
-                    target.position.x + Random.Range(minRadius, maxRadius) * Mathf.Cos(2 * Mathf.PI * index / count),
+                    target.position.x + (Random.Range(minRadius, maxRadius) * Mathf.Cos(2 * Mathf.PI * index / count)),
                     target.position.y,
-                    target.position.z + Random.Range(minRadius, maxRadius) * Mathf.Sin(2 * Mathf.PI * index / count)
+                    target.position.z + (Random.Range(minRadius, maxRadius) * Mathf.Sin(2 * Mathf.PI * index / count))
                 );
 
                 enemyState.transform.LookAt(((GruntStateMachine)stateMachine).target);
