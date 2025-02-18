@@ -174,7 +174,8 @@ public class MeleeRangedAttack : MonoBehaviour
     
     void Update()
     {
-        animator.SetBool("Lock", isAttacking);
+        lockOnCanvas.transform.LookAt(Camera.main.transform);
+        //animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
