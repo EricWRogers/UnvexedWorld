@@ -53,6 +53,8 @@ public class MeleeRangedAttack : MonoBehaviour
         Blitz
     }
 
+    public Style currentStyle = Style.Bruiser;
+
 
     void Awake()
     {
@@ -323,6 +325,12 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             activeProjectile.GetComponent<ProjectileSpell>().activate.Invoke(); 
         }
+    }
+
+    public void ChangeStyle(Style newStyle)
+    {
+        currentStyle = newStyle;
+        GetComponent<Animator>().SetInteger("Style", (int)currentStyle);
     }
    
 }
