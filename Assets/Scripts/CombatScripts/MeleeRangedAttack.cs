@@ -44,6 +44,16 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public GameObject activeProjectile;
 
+
+
+    public enum Style
+    {
+        Bruiser,
+        Breaker,
+        Blitz
+    }
+
+
     void Awake()
     {
         gamepad = new PlayerGamepad();

@@ -177,8 +177,9 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition + new Vector3(0,100,0));
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, float.MaxValue ,mask))
                 {
+                    Debug.Log("TARGET" + hit.collider.gameObject.name + " Layer: " + hit.collider.gameObject.layer);
                     if (hit.rigidbody != null)
                     {
                         gameObject.transform.LookAt(hit.point);
