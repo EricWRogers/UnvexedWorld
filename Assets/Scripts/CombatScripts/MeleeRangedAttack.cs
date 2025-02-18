@@ -110,16 +110,19 @@ public class MeleeRangedAttack : MonoBehaviour
 
     void LockOn()
     {
+        if( Vector3.Distance(target.transform.position, transform.position) < attackRange * 4){
         direction = true;
         cameraLockon.oneTime = true;
         FindNewTarget();
-        if(target != null)
+        if(target != null )
         {
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
             
         }
         unLock = true;
+
+        }
        
        
     }
