@@ -74,6 +74,25 @@ public class KnockBackState : SimpleState
         
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
+            gruntStateMachine.groundCheckDistance = (gruntStateMachine.GetComponent<CapsuleCollider>().height/2) + gruntStateMachine.bufferCheckDistance;
+
+            RaycastHit hit;
+            if(Physics.Raycast(gruntStateMachine.transform.position, -gruntStateMachine.transform.up, out hit, gruntStateMachine.groundCheckDistance))
+            {
+                gruntStateMachine.isGrounded = true;
+            }else
+            {
+                gruntStateMachine.isGrounded = false;
+            }
+
+            if(!gruntStateMachine.isGrounded)
+            {
+                rb.useGravity = true;
+            }else
+            {
+                rb.useGravity = false;
+            }
+
             if(knockBackTimer > 0)
             {
                 knockBackTimer -= dt;
@@ -110,7 +129,32 @@ public class KnockBackState : SimpleState
         base.OnExit();
 
         agent.enabled = true;
-        rb.isKinematic = true;
+        if (stateMachine is GruntStateMachine gruntStateMachine)
+        {
+            gruntStateMachine.groundCheckDistance = (gruntStateMachine.GetComponent<CapsuleCollider>().height/2) + gruntStateMachine.bufferCheckDistance;
+
+            RaycastHit hit;
+            if(Physics.Raycast(gruntStateMachine.transform.position, -gruntStateMachine.transform.up, out hit, gruntStateMachine.groundCheckDistance))
+            {
+                gruntStateMachine.isGrounded = true;
+            }else
+            {
+                gruntStateMachine.isGrounded = false;
+            }
+
+            if(!gruntStateMachine.isGrounded)
+            {
+                rb.useGravity = true;
+                //speed up gravity
+                rb.isKinematic = false;
+            }else
+            {
+                rb.useGravity = false;
+                rb.isKinematic = true;
+            }    
+        }
+
+        //possible function to check ground
 
     }
 }
