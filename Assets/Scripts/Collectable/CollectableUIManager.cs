@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CollectableUIManager : MonoBehaviour
 {
@@ -11,9 +12,15 @@ public class CollectableUIManager : MonoBehaviour
     private CollectableTracker collectableTracker;
     private CollectableOrb collectableOrb;
 
+
     //collectBlock.GetComponent<RawImage>().texture = texture;
 
     //All of the above code functionality needs to be moved from CollectableOrbs to here
+
+    public void RevealOrb()
+    {
+        
+    }
 
     // Start is called before the first frame update
     void Start()

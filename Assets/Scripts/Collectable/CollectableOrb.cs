@@ -13,6 +13,8 @@ public class CollectableOrb : MonoBehaviour
     public GameObject collectBlock;
     public GameObject collectBlock2;
 
+    private CollectableUIManager collectableUIManager;
+
     private AudioManager audioManager;
 
     public void Start()
