@@ -16,6 +16,7 @@ public class GruntStateMachine : SimpleStateMachine
     public ChargeState charge;
     public AttackState melee;
     public RetreatState retreat;
+    public DeathState dead;
 
     public Transform target;
     
@@ -50,6 +51,7 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(charge);
         states.Add(melee);
         states.Add(retreat);
+        states.Add(dead);
 
         foreach (SimpleState s in states)
         {
@@ -82,12 +84,13 @@ public class GruntStateMachine : SimpleStateMachine
     // Update is called once per frame
     void Update()
     {
-        if(health.currentHealth > 0)
+        if(health.currentHealth > 1)
         {
             isAlive = true;
         }else
         {
             isAlive = false;
+            ChangeState(nameof(DeathState));
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
