@@ -92,9 +92,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             if (enemy.GetComponent<GruntStateMachine>() != null)
             {
                 var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
-                
+                Debug.Log("Grunt Getting Knocked Back");
                 switch (knockBackType)
                 {
+                    case 0:
+                        Debug.Log("0 gives no knock back");
+                        break;
                     case 1:
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
