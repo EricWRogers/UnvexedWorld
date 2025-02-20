@@ -163,9 +163,11 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     
     public void Target()
     {
+        Debug.Log("target");
         if (gameObject.GetComponentInParent<AttackUpdater>()?.player.GetComponent<MeleeRangedAttack>() != null)
         {
             MeleeRangedAttack temp =  gameObject.GetComponentInParent<AttackUpdater>().player.GetComponent<MeleeRangedAttack>();
+            Debug.Log(temp.gameObject.name);
             if (temp.direction)
             {
                 gameObject.transform.LookAt(temp.target.transform);
@@ -175,8 +177,9 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 RaycastHit hit;
                 var ray = Camera.main.ScreenPointToRay(Input.mousePosition + new Vector3(0,100,0));
 
-                if (Physics.Raycast(ray, out hit))
+                if (Physics.Raycast(ray, out hit, float.MaxValue ,mask))
                 {
+                    Debug.Log("TARGET" + hit.collider.gameObject.name + " Layer: " + hit.collider.gameObject.layer);
                     if (hit.rigidbody != null)
                     {
                         gameObject.transform.LookAt(hit.point);
@@ -187,6 +190,11 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                     }
                 }
             }
+            
+        }
+        else if (gameObject.GetComponentInParent<AttackUpdater>() == null)
+        {
+            Debug.Log("Attack Updater is null");
         }
     }
 }

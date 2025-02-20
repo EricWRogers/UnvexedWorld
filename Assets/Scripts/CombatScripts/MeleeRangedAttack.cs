@@ -44,6 +44,18 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public GameObject activeProjectile;
 
+
+
+    public enum Style
+    {
+        Bruiser,
+        Breaker,
+        Blitz
+    }
+
+    public Style currentStyle = Style.Bruiser;
+
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -313,6 +325,12 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             activeProjectile.GetComponent<ProjectileSpell>().activate.Invoke(); 
         }
+    }
+
+    public void ChangeStyle(Style newStyle)
+    {
+        currentStyle = newStyle;
+        GetComponent<Animator>().SetInteger("Style", (int)currentStyle);
     }
    
 }
