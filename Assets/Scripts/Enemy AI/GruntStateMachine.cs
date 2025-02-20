@@ -34,6 +34,7 @@ public class GruntStateMachine : SimpleStateMachine
     public bool canStun;
     public bool isIdling;
     public bool isGrounded = false;
+    public float maxSpeed = 75f;
     public float groundCheckDistance;
     public float bufferCheckDistance = 1f;
     public float gravityScale = 1.0f;
@@ -113,6 +114,21 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        }
+    }
+
+    new void FixedUpdate()
+    {
+        base.FixedUpdate();
+        transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
+
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        }
         
         Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
         groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
@@ -120,6 +136,7 @@ public class GruntStateMachine : SimpleStateMachine
         RaycastHit hit;
         if(Physics.Raycast(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -Vector3.up, out hit, groundCheckDistance))
         {
+            Debug.Log("Hit: " + hit.collider.gameObject.name + hit.point);
             isGrounded = true;
         }else
         {
@@ -128,6 +145,7 @@ public class GruntStateMachine : SimpleStateMachine
 
         if(!isGrounded)
         {
+            rb.isKinematic = false;
             rb.AddForce(gravity, ForceMode.Acceleration);
             if(!agent.isOnNavMesh)
             {
@@ -136,9 +154,20 @@ public class GruntStateMachine : SimpleStateMachine
             {
                 agent.enabled = true;
             }
+        }else
+        {
+            rb.isKinematic = true;
         }
     }
-    
+
+    void LateUpdate()
+    {
+        if (rb.linearVelocity.magnitude > maxSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+        }
+    }
+
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
         knockBack.dir = direction;
