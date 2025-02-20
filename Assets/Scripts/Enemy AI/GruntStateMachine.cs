@@ -36,7 +36,8 @@ public class GruntStateMachine : SimpleStateMachine
     public bool isGrounded = false;
     public float groundCheckDistance;
     public float bufferCheckDistance = 1f;
-
+    public float gravityScale = 1.0f;
+    public static float enemyGravity = -9.81f;
 
     public float inAttackRange = 1.0f;
 
@@ -112,20 +113,30 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        // groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
+        
+        Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
+        groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
+        Debug.DrawRay(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -transform.up, Color.red, groundCheckDistance);
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -Vector3.up, out hit, groundCheckDistance))
+        {
+            isGrounded = true;
+        }else
+        {
+            isGrounded = false;
+        }
 
-        // RaycastHit hit;
-        // if(Physics.Raycast(transform.position, -transform.up, out hit, groundCheckDistance))
-        // {
-        //     isGrounded = true;
-        // }else
-        // {
-        //     isGrounded = false;
-        // }
-        // if(isGrounded == true)
-        // {
-        //     rb.isKinematic = true;
-        // }
+        if(!isGrounded)
+        {
+            rb.AddForce(gravity, ForceMode.Acceleration);
+            if(!agent.isOnNavMesh)
+            {
+                agent.enabled = false;
+            }else
+            {
+                agent.enabled = true;
+            }
+        }
     }
     
     public void TypeOneKnockBack(Vector3 direction, float power)

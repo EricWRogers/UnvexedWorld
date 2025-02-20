@@ -65,43 +65,21 @@ public class KnockBackState : SimpleState
 
         knockBackTimer = knockBackDuration;  
         agent.enabled = false;
-
-        
     }
 
     public override void UpdateState(float dt)
-    {
-        
+    {   
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            gruntStateMachine.groundCheckDistance = (gruntStateMachine.GetComponent<CapsuleCollider>().height/2) + gruntStateMachine.bufferCheckDistance;
-
-            RaycastHit hit;
-            if(Physics.Raycast(gruntStateMachine.transform.position, -gruntStateMachine.transform.up, out hit, gruntStateMachine.groundCheckDistance))
-            {
-                gruntStateMachine.isGrounded = true;
-            }else
-            {
-                gruntStateMachine.isGrounded = false;
-            }
-
-            if(!gruntStateMachine.isGrounded)
-            {
-                rb.useGravity = true;
-            }else
-            {
-                rb.useGravity = false;
-            }
-
             if(knockBackTimer > 0)
             {
                 knockBackTimer -= dt;
             }
-            if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false)
+            if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
-            else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true)
+            else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
@@ -129,32 +107,6 @@ public class KnockBackState : SimpleState
         base.OnExit();
 
         agent.enabled = true;
-        if (stateMachine is GruntStateMachine gruntStateMachine)
-        {
-            gruntStateMachine.groundCheckDistance = (gruntStateMachine.GetComponent<CapsuleCollider>().height/2) + gruntStateMachine.bufferCheckDistance;
-
-            RaycastHit hit;
-            if(Physics.Raycast(gruntStateMachine.transform.position, -gruntStateMachine.transform.up, out hit, gruntStateMachine.groundCheckDistance))
-            {
-                gruntStateMachine.isGrounded = true;
-            }else
-            {
-                gruntStateMachine.isGrounded = false;
-            }
-
-            if(!gruntStateMachine.isGrounded)
-            {
-                rb.useGravity = true;
-                //speed up gravity
-                rb.isKinematic = false;
-            }else
-            {
-                rb.useGravity = false;
-                rb.isKinematic = true;
-            }    
-        }
-
-        //possible function to check ground
-
+        rb.isKinematic = true;
     }
 }
