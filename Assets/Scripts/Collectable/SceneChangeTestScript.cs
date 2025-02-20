@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,6 +17,7 @@ public class SceneChangeTestScript : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         if (collider.gameObject.CompareTag("Player"))
-            gameObject.GetComponent<GameManager>().LoadScene(nextSceneName);
+            //gameObject.GetComponent<GameManager>().LoadScene(nextSceneName);
+            SceneManager.LoadScene(nextSceneName, LoadSceneMode.Single);
     }
 }
