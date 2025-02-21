@@ -28,6 +28,8 @@ public class GruntStateMachine : SimpleStateMachine
     [HideInInspector]
     public Animator anim;
 
+    public LayerMask mask;
+
     public bool LOS;
     public bool isAlive;
     public bool isInsideCollider = false;
@@ -134,7 +136,7 @@ public class GruntStateMachine : SimpleStateMachine
         groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
         Debug.DrawRay(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -transform.up, Color.red, groundCheckDistance);
         RaycastHit hit;
-        if(Physics.Raycast(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -Vector3.up, out hit, groundCheckDistance))
+        if(Physics.Raycast(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
         {
             Debug.Log("Hit: " + hit.collider.gameObject.name + hit.point);
             isGrounded = true;
