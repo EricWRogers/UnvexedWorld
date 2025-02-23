@@ -18,14 +18,14 @@ public class OpenDoor : MonoBehaviour
                 {
                     Debug.Log("Player Unlocks on Door");
                     col.enabled = false;
-                    anim.SetBool("isOpen", true);
+                    anim.SetBool("IsOpen", true);
                 }
             }
             else
             {
                 Debug.Log("Player Unlocks on Door");
                 col.enabled = false;
-                anim.SetBool("isOpen", true);
+                anim.SetBool("IsOpen", true);
             }
         }
     }

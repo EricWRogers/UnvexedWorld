@@ -10,7 +10,7 @@ public class CloseDoor : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             col.enabled = true;
-            anim.SetBool("isOpen", false);
+            anim.SetBool("IsOpen", false);
             Destroy(this, .3f);
         }
     }

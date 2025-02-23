@@ -21,6 +21,7 @@ public class GruntStateMachine : SimpleStateMachine
     public Transform target;
     
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
     private Health health;
     
     [HideInInspector]
@@ -37,8 +38,7 @@ public class GruntStateMachine : SimpleStateMachine
     public bool isIdling;
     public bool isGrounded = false;
     public float maxSpeed = 75f;
-    public float groundCheckDistance;
-    public float bufferCheckDistance = 1f;
+    public float groundCheckDistance = .4f;
     public float gravityScale = 1.0f;
     public static float enemyGravity = -9.81f;
 
@@ -67,6 +67,8 @@ public class GruntStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
+
+        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
         
@@ -116,9 +118,9 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
 
@@ -127,16 +129,15 @@ public class GruntStateMachine : SimpleStateMachine
         base.FixedUpdate();
         transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
 
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
         
         Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
-        groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
-        Debug.DrawRay(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -transform.up, Color.red, groundCheckDistance);
+        Debug.DrawRay(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, Color.red, groundCheckDistance);
         RaycastHit hit;
-        if(Physics.Raycast(transform.position - (Vector3.up * (GetComponent<CapsuleCollider>().height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
+        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
         {
             Debug.Log("Hit: " + hit.collider.gameObject.name + hit.point);
             isGrounded = true;
@@ -164,14 +165,18 @@ public class GruntStateMachine : SimpleStateMachine
 
     void LateUpdate()
     {
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude > maxSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
 
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
+        if(stateName == nameof(KnockBackState))
+        {
+            return;
+        }
         knockBack.dir = direction;
         knockBack.power = power;
         knockBack.kbType = KnockBackState.KnockBackType.One;
@@ -180,7 +185,11 @@ public class GruntStateMachine : SimpleStateMachine
 
     public void TypeTwoKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
+        if(stateName == nameof(KnockBackState))
+        {
+            return;
+        }
+        float mag = rb.velocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
         knockBack.mag = mag;
         knockBack.dir = dir;
@@ -191,7 +200,11 @@ public class GruntStateMachine : SimpleStateMachine
 
     public void TypeThreeKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
+        if(stateName == nameof(KnockBackState))
+        {
+            return;
+        }
+        float mag = rb.velocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
         knockBack.mag = mag;
         knockBack.dir = dir;

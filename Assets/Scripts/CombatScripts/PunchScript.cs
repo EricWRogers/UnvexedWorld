@@ -12,8 +12,6 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     public int knockBackType;
     public int damage = 1;
     public float impactValue = 25f;
-    public bool doKnockBack;
-
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
@@ -28,9 +26,10 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public int punchSoundIndex = 0;
     
-    //Temp 
+    //Aiden's Additions for Knockback 
     public Transform direction;
     public float forceAmount = 4f;
+    private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +53,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {
             return;
         }
-        if (other.GetComponent<Rigidbody>().isKinematic == true && other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
+        if ((other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy") && other.GetComponent<Rigidbody>().isKinematic == true)
         {
             Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
@@ -64,7 +63,13 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
-            Rigidbody enemyRigidbody = enemy.GetComponent<Rigidbody>();
+
+            if(hitEnemies.Contains(enemy))
+            {
+                return;
+            }
+            hitEnemies.Add(enemy);
+            StartCoroutine(RemoveFromList(enemy));
 
             if (enemy.GetComponent<MeleeStateMachine>() != null)
             {
@@ -214,5 +219,11 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {
             Debug.Log("AudioManager not found! Punch no play");
         }
+    }
+
+    private IEnumerator RemoveFromList(GameObject enemy)
+    {
+        yield return new WaitForSeconds(0.25f);
+        hitEnemies.Remove(enemy);
     }
 }
