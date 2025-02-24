@@ -37,7 +37,7 @@ public class GruntStateMachine : SimpleStateMachine
     public bool canStun;
     public bool isIdling;
     public bool isGrounded = false;
-    public float maxSpeed = 75f;
+    public float maxForceSpeed = 75f;
     public float groundCheckDistance = .4f;
     public float gravityScale = 1.0f;
     public static float enemyGravity = -9.81f;
@@ -118,9 +118,9 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
         }
     }
 
@@ -129,17 +129,16 @@ public class GruntStateMachine : SimpleStateMachine
         base.FixedUpdate();
         transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
 
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
         }
         
         Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
-        Debug.DrawRay(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, Color.red, groundCheckDistance);
         RaycastHit hit;
         if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
         {
-            Debug.Log("Hit: " + hit.collider.gameObject.name + hit.point);
+            
             isGrounded = true;
         }else
         {
@@ -173,9 +172,9 @@ public class GruntStateMachine : SimpleStateMachine
 
     void LateUpdate()
     {
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
         {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
         }
     }
 

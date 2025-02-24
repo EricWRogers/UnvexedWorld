@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
 /*In this state the enemies begin to surround the player
 a certain radius given some room for variation, but they 
@@ -15,7 +16,7 @@ public class SurroundState : SimpleState
     public EnemyFinder enemyFinder;
     public float minRadius = 4f;
     public float maxRadius = 8f;
-    private float waitDuration = 2.0f;
+    private float waitDuration = 4.0f;
     public float waitTimer;
     private Queue<SimpleStateMachine> attackQueue = new Queue<SimpleStateMachine>();
     private bool isReady = false;
@@ -31,12 +32,13 @@ public class SurroundState : SimpleState
         {
             target = gruntStateMachine.target;
             agent = gruntStateMachine.agent;
-            gruntStateMachine.transform.LookAt(gruntStateMachine.target);
+            gruntStateMachine.transform.LookAt(target);
         }
         //start adding to the queue 
 
         InitializeQueue();
-        CircleTarget();
+        GetRandomTargetPos(minRadius, maxRadius);
+        
 
         waitTimer = waitDuration;
     }
@@ -47,6 +49,7 @@ public class SurroundState : SimpleState
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
+            gruntStateMachine.transform.LookAt(target);
             if (attackQueue.Count == 0)
             {
                 InitializeQueue(); 
@@ -59,9 +62,10 @@ public class SurroundState : SimpleState
 
             if (waitTimer <= 0 && !isReady && attackQueue.Count > 0)
             {
+                gruntStateMachine.transform.LookAt(target);
                 isReady = true;
                 SimpleStateMachine attacker = attackQueue.Dequeue();
-                stateMachine.ChangeState(nameof(ChargeState));
+                attacker.ChangeState(nameof(ChargeState));
 
                 waitTimer = waitDuration;
                 isReady = false;  
@@ -77,8 +81,10 @@ public class SurroundState : SimpleState
 
     private void InitializeQueue()
     {
+        attackQueue.Clear(); // Prevent duplicates
         if (enemyFinder != null)
         {
+            Debug.Log("Initializing Attack Queue. Nearby enemies: " + enemyFinder.nearbyEnemies.Count);
             foreach (var enemy in enemyFinder.nearbyEnemies)
             {
                 if (enemy is SimpleStateMachine ai)
@@ -86,7 +92,28 @@ public class SurroundState : SimpleState
                     attackQueue.Enqueue(ai);
                 }
             }
+            
+            Debug.Log("Final Queue Count: " + attackQueue.Count);
+            PrintQueue(); // Print queue to debug
         }
+    }
+
+    private void PrintQueue()
+    {
+        string queueContents = "Queue Elements: ";
+        foreach (var item in attackQueue)
+        {
+            queueContents += item.name + " -> ";
+        }
+        Debug.Log(queueContents);
+    }
+
+    private void GetRandomTargetPos(float minRadius, float maxRadius)
+    {
+        Vector2 randPos = Random.insideUnitCircle * (maxRadius - minRadius);
+        randPos += randPos.normalized * minRadius;
+        Vector3 position = new Vector3(target.position.x + randPos.x, target.position.y, target.position.z + randPos.y);
+        agent.SetDestination(position);
     }
 
     private void CircleTarget()

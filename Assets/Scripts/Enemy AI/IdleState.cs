@@ -23,7 +23,7 @@ public class IdleState : SimpleState
     {
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {    
-            if (gruntStateMachine.isInsideCollider == true && gruntStateMachine.isAlive == true)
+            if (gruntStateMachine.isAlive == true)
             {   
                 if(gruntStateMachine.LOS == true)
                 {

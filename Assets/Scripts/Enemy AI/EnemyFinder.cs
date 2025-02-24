@@ -32,9 +32,9 @@ public class EnemyFinder : MonoBehaviour
     {
         if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
         {
-            if (other.GetComponent<GruntStateMachine>() != null)
+            var gruntStateMachine = other.GetComponent<GruntStateMachine>();
+            if (gruntStateMachine != null && !nearbyEnemies.Contains(gruntStateMachine))
             {
-                var gruntStateMachine = other.GetComponent<GruntStateMachine>();
                 nearbyEnemies.Add(gruntStateMachine);
 
                 Health enemyHealth = gruntStateMachine.GetComponent<Health>();

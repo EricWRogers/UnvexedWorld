@@ -31,6 +31,7 @@ public class ChargeState : SimpleState
             {
                 if(agent.enabled == true)
                 {
+                    gruntStateMachine.transform.LookAt(gruntStateMachine.target);
                     agent.SetDestination(gruntStateMachine.target.position);
                 
                     if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
