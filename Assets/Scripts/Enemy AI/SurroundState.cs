@@ -105,10 +105,13 @@ public class SurroundState : SimpleState
                 );
 
                 enemyState.transform.LookAt(((GruntStateMachine)stateMachine).target);
-
+                
                 if (enemyState.TryGetComponent(out NavMeshAgent enemyAgent))
                 {
-                    enemyAgent.SetDestination(position);
+                    if(enemyAgent.enabled == true)
+                    {
+                        enemyAgent.SetDestination(position);
+                    }
                 }
 
                 index++;

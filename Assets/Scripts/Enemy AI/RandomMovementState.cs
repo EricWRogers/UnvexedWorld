@@ -37,11 +37,14 @@ public class RandomMovementState : SimpleState
             {
                 moveTimer += dt; 
 
-                if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                if(agent.enabled == true)
                 {
-                    moveTimer = 0f; 
-                    moveDelay = Random.Range(minDelay, maxDelay);
-                    MoveToRandomPoint();
+                    if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                    {
+                        moveTimer = 0f; 
+                        moveDelay = Random.Range(minDelay, maxDelay);
+                        MoveToRandomPoint();
+                    }
                 }
             }
    
@@ -61,9 +64,12 @@ public class RandomMovementState : SimpleState
     private void MoveToRandomPoint()
     {
         Vector3 point;
-        if (GetRandomPoint(circleCenterObject.position, range, out point))
+        if(agent.enabled == true)
         {
-            agent.SetDestination(point);
+            if (GetRandomPoint(circleCenterObject.position, range, out point))
+            {
+                agent.SetDestination(point);
+            }
         }
     }
 

@@ -56,23 +56,26 @@ public class AttackState : SimpleState
             attackTimer -= _dt; 
             cooldownTimer -= _dt;
 
-            if (gruntStateMachine.LOS && attackTimer > 0f)
+            if(agent.enabled == true)
             {
-                if (cooldownTimer <= 0f)
+                if (gruntStateMachine.LOS && attackTimer > 0f)
                 {
-                    attack.Invoke();
-                    isAttacking = true;
-                    anim.SetBool("isAttacking", true);
+                    if (cooldownTimer <= 0f)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+                        anim.SetBool("isAttacking", true);
 
-                    cooldownTimer = 1.0f;
+                        cooldownTimer = 1.0f;
+                    }
                 }
-            }
-            else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
-            {
-                isAttacking = false;
-                anim.SetBool("isAttacking", false);
-                stopAttacking.Invoke();
-                stateMachine.ChangeState(nameof(RetreatState));
+                else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
+                {
+                    isAttacking = false;
+                    anim.SetBool("isAttacking", false);
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(RetreatState));
+                }
             }
         }
     }
@@ -80,10 +83,5 @@ public class AttackState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-    }
-
-    public void Message()
-    {
-        Debug.Log("Enemy Attacked?!?");
     }
 }

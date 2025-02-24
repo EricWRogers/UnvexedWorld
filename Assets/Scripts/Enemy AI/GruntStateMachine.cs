@@ -118,9 +118,9 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
     }
 
@@ -129,9 +129,9 @@ public class GruntStateMachine : SimpleStateMachine
         base.FixedUpdate();
         transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
 
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
         
         Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
@@ -146,7 +146,7 @@ public class GruntStateMachine : SimpleStateMachine
             isGrounded = false;
         }
 
-        if(!isGrounded)
+        if(isGrounded == false)
         {
             rb.isKinematic = false;
             rb.AddForce(gravity, ForceMode.Acceleration);
@@ -157,26 +157,30 @@ public class GruntStateMachine : SimpleStateMachine
             {
                 agent.enabled = true;
             }
-        }else
+        }
+        else
         {
-            rb.isKinematic = true;
+            if(stateName == nameof(KnockBackState))
+            {
+                rb.isKinematic = false;
+            }
+            else
+            {
+                rb.isKinematic = true;
+            }
         }
     }
 
     void LateUpdate()
     {
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > maxSpeed)
         {
-            rb.velocity = rb.velocity.normalized * maxSpeed;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
         }
     }
 
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
-        if(stateName == nameof(KnockBackState))
-        {
-            return;
-        }
         knockBack.dir = direction;
         knockBack.power = power;
         knockBack.kbType = KnockBackState.KnockBackType.One;
@@ -185,11 +189,7 @@ public class GruntStateMachine : SimpleStateMachine
 
     public void TypeTwoKnockBack(Transform direction, float power)
     {
-        if(stateName == nameof(KnockBackState))
-        {
-            return;
-        }
-        float mag = rb.velocity.magnitude;
+        float mag = rb.linearVelocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
         knockBack.mag = mag;
         knockBack.dir = dir;
@@ -200,11 +200,7 @@ public class GruntStateMachine : SimpleStateMachine
 
     public void TypeThreeKnockBack(Transform direction, float power)
     {
-        if(stateName == nameof(KnockBackState))
-        {
-            return;
-        }
-        float mag = rb.velocity.magnitude;
+        float mag = rb.linearVelocity.magnitude;
         Vector3 dir = (transform.position - direction.transform.position).normalized;
         knockBack.mag = mag;
         knockBack.dir = dir;

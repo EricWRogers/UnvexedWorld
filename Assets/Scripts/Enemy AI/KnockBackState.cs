@@ -64,7 +64,10 @@ public class KnockBackState : SimpleState
         }
 
         knockBackTimer = knockBackDuration;  
-        agent.enabled = false;
+        if(agent.enabled == true)
+        {
+            agent.enabled = false;
+        }
     }
 
     public override void UpdateState(float dt)
@@ -106,7 +109,10 @@ public class KnockBackState : SimpleState
     {
         base.OnExit();
 
-        agent.enabled = true;
+        if(agent.enabled == true)
+        {
+            agent.enabled = true;
+        }
         rb.isKinematic = true;
     }
 }
