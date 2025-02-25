@@ -8,6 +8,7 @@ using SuperPupSystems.StateMachine;
 public class RandomMovementState : SimpleState
 {
     private NavMeshAgent agent;
+    private Animator anim;
     private float moveDelay = 2.0f; 
     private float moveTimer = 0f;
     private float minDelay = 3.0f; 
@@ -24,6 +25,7 @@ public class RandomMovementState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            anim = ((GruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
         }
 
         MoveToRandomPoint();
@@ -50,6 +52,7 @@ public class RandomMovementState : SimpleState
    
             if(gruntStateMachine.LOS == true)
             {
+                anim.SetTrigger("LOS");
                 stateMachine.ChangeState(nameof(InRangeState));
             }
         }
