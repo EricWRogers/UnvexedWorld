@@ -118,6 +118,9 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
+        //Debug.Log("Velocity: " + agent.velocity.magnitude * 2);
+        anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
+
         if (rb.linearVelocity.magnitude > maxForceSpeed)
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
