@@ -19,8 +19,8 @@ public class TargetingSystem : MonoBehaviour
         foreach(GameObject pt in posibleTargets)
         {
             float distance = Vector3.Distance(pt.transform.position, transform.position);
-
-            if(distance < range)
+        if(pt.GetComponent<Health>()){
+            if(distance < range && pt.GetComponent<Health>().currentHealth > 0)
             {
                 if (distance < closetDistance)
                 {
@@ -28,6 +28,7 @@ public class TargetingSystem : MonoBehaviour
                     target = pt;
                 }
             }
+        }
         }
 
         return target;

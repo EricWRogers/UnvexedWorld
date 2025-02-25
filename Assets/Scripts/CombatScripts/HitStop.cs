@@ -12,6 +12,8 @@ public class HitStop : MonoBehaviour
 
     public float scaleTime = 0.0f;
 
+    private bool isSlow = false;
+
 
     public void Start()
     {
@@ -19,6 +21,9 @@ public class HitStop : MonoBehaviour
     }
     public void Stop(float duration)
     {
+        if(isSlow)
+            return;
+            isSlow = true;
         if (waiting)
             return;
         Time.timeScale = scaleTime;
