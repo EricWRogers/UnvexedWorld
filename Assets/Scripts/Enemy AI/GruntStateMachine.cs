@@ -127,7 +127,6 @@ public class GruntStateMachine : SimpleStateMachine
     new void FixedUpdate()
     {
         base.FixedUpdate();
-        transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
 
         if (rb.linearVelocity.magnitude > maxForceSpeed)
         {
@@ -147,6 +146,7 @@ public class GruntStateMachine : SimpleStateMachine
 
         if(isGrounded == false)
         {
+            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
             rb.isKinematic = false;
             rb.AddForce(gravity, ForceMode.Acceleration);
             if(!agent.isOnNavMesh)
