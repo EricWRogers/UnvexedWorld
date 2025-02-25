@@ -11,7 +11,8 @@ public class OptionsMenuManager : MonoBehaviour
     public Slider sfxVolumeSlider;
 
     [Header("Camera Sliders")]
-    public Slider cameraSensitivitySlider;  // Slider for controlling camera sensitivity
+    public Slider cameraSensitivitySliderX;  // Slider for controlling camera sensitivity X
+    public Slider cameraSensitivitySliderY;  // Slider for controlling camera sensitivity Y
 
     [Header("Cinemachine Cameras")]
     public CinemachineFreeLook mainView;
@@ -29,7 +30,8 @@ public class OptionsMenuManager : MonoBehaviour
         masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
         musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
         sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        cameraSensitivitySlider.value = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
+        cameraSensitivitySliderX.value = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
+        cameraSensitivitySliderY.value = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
 
         ApplyVolumeSettings();
         ApplyCameraSensitivity();
@@ -38,7 +40,8 @@ public class OptionsMenuManager : MonoBehaviour
         masterVolumeSlider.onValueChanged.AddListener(delegate { SetMasterVolume(); });
         musicVolumeSlider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
         sfxVolumeSlider.onValueChanged.AddListener(delegate { SetSFXVolume(); });
-        cameraSensitivitySlider.onValueChanged.AddListener(delegate { SetCameraSensitivity(); });
+        cameraSensitivitySliderX.onValueChanged.AddListener(delegate { SetCameraSensitivity(); });
+        cameraSensitivitySliderY.onValueChanged.AddListener(delegate { SetCameraSensitivity(); });
     }
 
     // Master Volume
@@ -65,19 +68,21 @@ public class OptionsMenuManager : MonoBehaviour
     // Camera Sensitivity
     public void SetCameraSensitivity()
     {
-        float sensitivity = cameraSensitivitySlider.value;
+        float sensitivityX = cameraSensitivitySliderX.value;
+        float sensitivityY = cameraSensitivitySliderY.value;
 
         // Set the sensitivity on all the camera views (if they are using Cinemachine)
-        mainView.m_XAxis.m_MaxSpeed = sensitivity;
-        mainView.m_YAxis.m_MaxSpeed = sensitivity;
+        mainView.m_XAxis.m_MaxSpeed = sensitivityX;
+        mainView.m_YAxis.m_MaxSpeed = sensitivityY;
 
-        dashView.m_XAxis.m_MaxSpeed = sensitivity;
-        dashView.m_YAxis.m_MaxSpeed = sensitivity;
+        dashView.m_XAxis.m_MaxSpeed = sensitivityX;
+        dashView.m_YAxis.m_MaxSpeed = sensitivityY;
 
-        meleeView.m_XAxis.m_MaxSpeed = sensitivity;
-        meleeView.m_YAxis.m_MaxSpeed = sensitivity;
+        meleeView.m_XAxis.m_MaxSpeed = sensitivityX;
+        meleeView.m_YAxis.m_MaxSpeed = sensitivityY;
 
-        PlayerPrefs.SetFloat("CameraSensitivity", sensitivity);
+        PlayerPrefs.SetFloat("CameraSensitivityX", sensitivityX);
+        PlayerPrefs.SetFloat("CameraSensitivityY", sensitivityY);
     }
 
     private void ApplyVolumeSettings()
@@ -89,15 +94,23 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void ApplyCameraSensitivity()
     {
-        float sensitivity = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
+        float sensitivityX = PlayerPrefs.GetFloat("CameraSensitivity", 300f);
+        float sensitivityY = PlayerPrefs.GetFloat("CameraSensitivityY", 8f);
 
-        mainView.m_XAxis.m_MaxSpeed = sensitivity;
-        mainView.m_YAxis.m_MaxSpeed = sensitivity;
+        mainView.m_XAxis.m_MaxSpeed = sensitivityX;
+        mainView.m_YAxis.m_MaxSpeed = sensitivityY;
 
-        dashView.m_XAxis.m_MaxSpeed = sensitivity;
-        dashView.m_YAxis.m_MaxSpeed = sensitivity;
+        dashView.m_XAxis.m_MaxSpeed = sensitivityX;
+        dashView.m_YAxis.m_MaxSpeed = sensitivityY;
 
-        meleeView.m_XAxis.m_MaxSpeed = sensitivity;
-        meleeView.m_YAxis.m_MaxSpeed = sensitivity;
+        meleeView.m_XAxis.m_MaxSpeed = sensitivityX;
+        meleeView.m_YAxis.m_MaxSpeed = sensitivityY;
+    }
+
+    private void Update()
+    {
+        ApplyCameraSensitivity();
+        SetCameraSensitivity();
     }
 }
+//350 X 12 Y
