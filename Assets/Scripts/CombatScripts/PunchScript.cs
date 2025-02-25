@@ -89,6 +89,30 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
+            if (enemy.GetComponent<GruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
+                
+                switch (knockBackType)
+                {
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+
             punchTarget.Invoke(enemy);
             
            
@@ -118,7 +142,22 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        
+        if(other.gameObject.CompareTag("Breakable"))
+        {
+            other.GetComponent<Rigidbody>().Sleep();
+            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
+            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
+            
+            if(other.GetComponent<BreakableObject>().rb != null)
+            {
+                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
+                {
+                    float mag = rigidbodies.linearVelocity.magnitude;
+                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
+                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
+                }
+            }
+        }
 
     }
    
@@ -166,7 +205,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         if (audioManager != null)
         {
-            FindFirstObjectByType<AudioManager>().PlayPunchSound(punchSoundIndex);
+            audioManager.PlayPunchSound();
         }
         else
         {
