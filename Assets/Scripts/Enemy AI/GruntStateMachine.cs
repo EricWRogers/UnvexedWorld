@@ -30,6 +30,7 @@ public class GruntStateMachine : SimpleStateMachine
     public Animator anim;
 
     public LayerMask mask;
+    public LayerMask rotationMask;
 
     public bool LOS;
     public bool isAlive;
@@ -145,6 +146,11 @@ public class GruntStateMachine : SimpleStateMachine
         }else
         {
             isGrounded = false;
+        }
+
+        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -transform.up, out hit, groundCheckDistance, rotationMask))
+        {
+            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
         }
 
         if(isGrounded == false)
