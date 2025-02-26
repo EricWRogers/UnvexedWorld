@@ -35,7 +35,7 @@ public class FogManager : MonoBehaviour
         {
             gameObject.SetActive(false);
             fogArea.SetActive(false);
-            hudManager.HideHUD();
+            //hudManager.HideHUD();
         }
     }
 

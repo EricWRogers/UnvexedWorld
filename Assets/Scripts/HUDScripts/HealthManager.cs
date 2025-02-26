@@ -17,13 +17,20 @@ public class HealthManager : MonoBehaviour
 
     public HUDManager hud;
 
+    // Shake effect variables
+    public float shakeDuration = 0.3f; // Duration of the shake effect
+    public float shakeMagnitude = 5f;  // How much the health bar moves
+    private Vector3 originalPosition;  // To store the original position of the health bar
+
     void Start()
     {
         playerHealth = GameObject.FindWithTag("Player").GetComponent<Health>();
+
         // Initialize the health slider with max health
         healthSlider.maxValue = playerHealth.maxHealth;
         SetHealth(playerHealth.currentHealth);
-       
+
+        originalPosition = healthSlider.transform.localPosition; // Store the original position of the health bar
 
         // Subscribe to the healthChanged event
         playerHealth.healthChanged.AddListener(OnHealthChanged);
@@ -33,18 +40,17 @@ public class HealthManager : MonoBehaviour
     public void OnHealthChanged(HealthChangedObject healthObj)
     {
         SetHealth(healthObj.currentHealth);
+        StartCoroutine(ShakeHealthBar()); // Start the shake effect when hit
     }
 
     // Updates the health bar based on current health
     public void SetHealth(int currentHealth)
     {
         healthSlider.value = currentHealth;
-        //Debug.Log("Health updated: " + currentHealth); // Debug log for checking health updates
-        
-        // Check if the health is below 25%, start flashing if necessary
+
+        // Check if the health is below 35%, start flashing if necessary
         if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing && hud.stop == true)
         {
-            //Debug.Log("Health is below 25%, starting flash..."); // Debug log for flashing condition
             StartCoroutine(FlashHealthBar());
         }
         else if (currentHealth / (float)playerHealth.maxHealth >= 0.35f && isFlashing)
@@ -59,7 +65,7 @@ public class HealthManager : MonoBehaviour
     private IEnumerator FlashHealthBar()
     {
         isFlashing = true; // Mark that flashing has started
-       
+
         while (playerHealth.currentHealth / (float)playerHealth.maxHealth < 0.35f)
         {
             // Flash to white
@@ -74,5 +80,24 @@ public class HealthManager : MonoBehaviour
         }
 
         isFlashing = false; // Stop flashing once health is above 35%
+    }
+
+    // Coroutine to shake the health bar when the player takes damage
+    private IEnumerator ShakeHealthBar()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            float x = Random.Range(-shakeMagnitude, shakeMagnitude);
+            float y = Random.Range(-shakeMagnitude, shakeMagnitude);
+
+            healthSlider.transform.localPosition = originalPosition + new Vector3(x, y, 0);
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        healthSlider.transform.localPosition = originalPosition; // Reset to the original position
     }
 }
