@@ -44,6 +44,18 @@ public class MeleeRangedAttack : MonoBehaviour
 
     public GameObject activeProjectile;
 
+
+
+    public enum Style
+    {
+        Bruiser,
+        Breaker,
+        Blitz
+    }
+
+    public Style currentStyle = Style.Bruiser;
+
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -110,16 +122,19 @@ public class MeleeRangedAttack : MonoBehaviour
 
     void LockOn()
     {
+        if( Vector3.Distance(target.transform.position, transform.position) < attackRange * 4){
         direction = true;
         cameraLockon.oneTime = true;
         FindNewTarget();
-        if(target != null)
+        if(target != null )
         {
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
             
         }
         unLock = true;
+
+        }
        
        
     }
@@ -174,7 +189,8 @@ public class MeleeRangedAttack : MonoBehaviour
     
     void Update()
     {
-        animator.SetBool("Lock", isAttacking);
+        lockOnCanvas.transform.LookAt(Camera.main.transform);
+        //animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
@@ -312,6 +328,12 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             activeProjectile.GetComponent<ProjectileSpell>().activate.Invoke(); 
         }
+    }
+
+    public void ChangeStyle(Style newStyle)
+    {
+        currentStyle = newStyle;
+        GetComponent<Animator>().SetInteger("Style", (int)currentStyle);
     }
    
 }

@@ -16,10 +16,12 @@ public class GruntStateMachine : SimpleStateMachine
     public ChargeState charge;
     public AttackState melee;
     public RetreatState retreat;
+    public DeathState dead;
 
     public Transform target;
     
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
     private Health health;
     
     [HideInInspector]
@@ -27,11 +29,19 @@ public class GruntStateMachine : SimpleStateMachine
     [HideInInspector]
     public Animator anim;
 
+    public LayerMask mask;
+    public LayerMask rotationMask;
+
     public bool LOS;
     public bool isAlive;
     public bool isInsideCollider = false;
     public bool canStun;
     public bool isIdling;
+    public bool isGrounded = false;
+    public float maxForceSpeed = 75f;
+    public float groundCheckDistance = .4f;
+    public float gravityScale = 1.0f;
+    public static float enemyGravity = -9.81f;
 
     public float inAttackRange = 1.0f;
 
@@ -46,6 +56,7 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(charge);
         states.Add(melee);
         states.Add(retreat);
+        states.Add(dead);
 
         foreach (SimpleState s in states)
         {
@@ -57,6 +68,8 @@ public class GruntStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
+
+        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
         
@@ -78,12 +91,13 @@ public class GruntStateMachine : SimpleStateMachine
     // Update is called once per frame
     void Update()
     {
-        if(health.currentHealth > 0)
+        if(health.currentHealth > 1)
         {
             isAlive = true;
         }else
         {
             isAlive = false;
+            ChangeState(nameof(DeathState));
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
@@ -104,8 +118,75 @@ public class GruntStateMachine : SimpleStateMachine
         {
             anim.SetBool("isWalking", false);
         }
+
+        //Debug.Log("Velocity: " + agent.velocity.magnitude * 2);
+        anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
+
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
+        }
     }
-    
+
+    new void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
+        }
+        
+        Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
+        {
+            
+            isGrounded = true;
+        }else
+        {
+            isGrounded = false;
+        }
+
+        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -transform.up, out hit, groundCheckDistance, rotationMask))
+        {
+            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
+        }
+
+        if(isGrounded == false)
+        {
+            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
+            rb.isKinematic = false;
+            rb.AddForce(gravity, ForceMode.Acceleration);
+            if(!agent.isOnNavMesh)
+            {
+                agent.enabled = false;
+            }else
+            {
+                agent.enabled = true;
+            }
+        }
+        else
+        {
+            if(stateName == nameof(KnockBackState))
+            {
+                rb.isKinematic = false;
+            }
+            else
+            {
+                rb.isKinematic = true;
+            }
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (rb.linearVelocity.magnitude > maxForceSpeed)
+        {
+            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
+        }
+    }
+
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
         knockBack.dir = direction;

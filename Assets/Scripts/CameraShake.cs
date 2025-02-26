@@ -24,7 +24,7 @@ public void DoShake()
     StartCoroutine(Shake());
 }
 
-public void DoShake(HealthChangedObject healthChangedObject)
+public void DoShake(HealthChangedObject Hurt)
 {
     StartCoroutine(Shake());
 }
