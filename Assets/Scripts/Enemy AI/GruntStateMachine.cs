@@ -189,6 +189,7 @@ public class GruntStateMachine : SimpleStateMachine
 
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
+        //Debug.Log("");
         knockBack.dir = direction;
         knockBack.power = power;
         knockBack.kbType = KnockBackState.KnockBackType.One;

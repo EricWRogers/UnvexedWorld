@@ -28,6 +28,15 @@ public class EnemyFinder : MonoBehaviour
             }
         }
     }
+
+    void Update()
+    {
+        if(nearbyEnemies.Count == 0)
+        {
+            openDoor = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
@@ -54,11 +63,6 @@ public class EnemyFinder : MonoBehaviour
             defeatedEnemies++;
 
             Debug.Log($"Enemy defeated! {defeatedEnemies}/{totalEnemies} eliminated.");
-
-            if (defeatedEnemies >= totalEnemies)
-            {
-                openDoor = true;
-            }
         }
     }
 

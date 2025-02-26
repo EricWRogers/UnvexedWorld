@@ -64,7 +64,7 @@ public class AttackState : SimpleState
                     {
                         attack.Invoke();
                         isAttacking = true;
-                        anim.SetBool("isAttacking", true);
+                        //anim.SetBool("isAttacking", true);
 
                         cooldownTimer = 1.0f;
                     }
@@ -72,7 +72,7 @@ public class AttackState : SimpleState
                 else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
                 {
                     isAttacking = false;
-                    anim.SetBool("isAttacking", false);
+                    //anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(RetreatState));
                 }

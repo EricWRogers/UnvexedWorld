@@ -5,7 +5,6 @@ public class OpenDoor : MonoBehaviour
 {
     public Animator anim;
     public EnemyFinder enemies;
-    public float timeOff = 1f;
 
     void OnTriggerEnter(Collider other)
     {
