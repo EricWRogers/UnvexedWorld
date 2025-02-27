@@ -10,6 +10,7 @@ public class SuperPunch : MonoBehaviour
     void Start()
     {
         spellBonus = (energy[1]+energy[2])/5;
+        SetUpSpells();
     }
 
     // Update is called once per frame
@@ -47,11 +48,11 @@ public class SuperPunch : MonoBehaviour
             if(energy[2]>20)
             {
                 Spell tempsplenspell = gameObject.AddComponent<Spell>();
-                tempsplenspell.CurrentElement= SpellCraft.Aspect.scavenge;
+                tempsplenspell.CurrentElement= SpellCraft.Aspect.splendor;
                 tempsplenspell.subAspect= 0;
                 hitEvent.AddListener(tempsplenspell.SpellEffect);
                 Spell tempsplenspell2 = gameObject.AddComponent<Spell>();
-                tempsplenspell2.CurrentElement= SpellCraft.Aspect.scavenge;
+                tempsplenspell2.CurrentElement= SpellCraft.Aspect.splendor;
                 tempsplenspell2.subAspect= 1;
                 hitEvent.AddListener(tempsplenspell2.SpellEffect);
             }
