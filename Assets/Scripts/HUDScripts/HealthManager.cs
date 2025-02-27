@@ -40,7 +40,10 @@ public class HealthManager : MonoBehaviour
     public void OnHealthChanged(HealthChangedObject healthObj)
     {
         SetHealth(healthObj.currentHealth);
-        StartCoroutine(ShakeHealthBar()); // Start the shake effect when hit
+        if (healthSlider.gameObject.activeInHierarchy) // Check if HealthBar is active
+        {
+            StartCoroutine(ShakeHealthBar()); // Start the shake effect when hit
+        }
     }
 
     // Updates the health bar based on current health
@@ -49,7 +52,7 @@ public class HealthManager : MonoBehaviour
         healthSlider.value = currentHealth;
 
         // Check if the health is below 35%, start flashing if necessary
-        if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing && hud.stop == true)
+        if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing && !hud.stop)
         {
             StartCoroutine(FlashHealthBar());
         }
