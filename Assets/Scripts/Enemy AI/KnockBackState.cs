@@ -64,25 +64,25 @@ public class KnockBackState : SimpleState
         }
 
         knockBackTimer = knockBackDuration;  
-        agent.enabled = false;
-
-        
+        if(agent.enabled == true)
+        {
+            agent.enabled = false;
+        }
     }
 
     public override void UpdateState(float dt)
-    {
-        
+    {   
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             if(knockBackTimer > 0)
             {
                 knockBackTimer -= dt;
             }
-            if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false)
+            if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
-            else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true)
+            else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
@@ -109,8 +109,10 @@ public class KnockBackState : SimpleState
     {
         base.OnExit();
 
-        agent.enabled = true;
+        if(agent.enabled == true)
+        {
+            agent.enabled = true;
+        }
         rb.isKinematic = true;
-
     }
 }

@@ -29,11 +29,15 @@ public class ChargeState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                agent.SetDestination(gruntStateMachine.target.position);
-                
-                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                if(agent.enabled == true)
                 {
-                    stateMachine.ChangeState(nameof(AttackState));
+                    gruntStateMachine.transform.LookAt(gruntStateMachine.target);
+                    agent.SetDestination(gruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
                 }
             }
         }
