@@ -281,17 +281,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthChanged:
     m_PersistentCalls:
-      m_Calls: []
-  healed:
-    m_PersistentCalls:
-      m_Calls: []
-  hurt:
-    m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1677764455944319388}
-        m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
-        m_MethodName: Hurt
-        m_Mode: 1
+      - m_Target: {fileID: 1869418296035243272}
+        m_TargetAssemblyTypeName: Scripts.HUDScripts.MessageSystem.MessageSpawner,
+          Assembly-CSharp
+        m_MethodName: ShowFloatingMessage
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -300,6 +295,12 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  healed:
+    m_PersistentCalls:
+      m_Calls: []
+  hurt:
+    m_PersistentCalls:
+      m_Calls: []
   outOfHealth:
     m_PersistentCalls:
       m_Calls: []
