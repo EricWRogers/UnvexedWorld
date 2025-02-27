@@ -64,6 +64,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -141,11 +144,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d692e5c9d1c32f44b1f4ec574948a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockBackType: 0
+  going: 1
   damage: 5
+  spellBonus: 3
+  spellCost: 1
   speed: 20
   lifeTime: 10
   destroyOnImpact: 1
   hitTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls: []
+  activate:
     m_PersistentCalls:
       m_Calls: []
   mask:
@@ -155,6 +168,9 @@ MonoBehaviour:
   - Enemy
   - GroundEnemy
   particle: {fileID: 0}
+  enemy: {fileID: 0}
+  direction: {fileID: 0}
+  forceAmount: 4
 --- !u!114 &4147772869820690133
 MonoBehaviour:
   m_ObjectHideFlags: 0
