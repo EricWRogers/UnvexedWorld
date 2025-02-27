@@ -4,6 +4,7 @@ using UnityEngine;
 using SuperPupSystems.StateMachine;
 using SuperPupSystems.Helper;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class StunState : SimpleState
@@ -34,8 +35,11 @@ public class StunState : SimpleState
 
         ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
 
-        stunTimer = stunDuration;  
-        agent.isStopped = true;
+        stunTimer = stunDuration;
+        if(agent.enabled == true)
+        {
+            agent.isStopped = true;
+        }  
         Debug.Log("Entering Stun State");
     }
 
@@ -77,7 +81,10 @@ public class StunState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-        agent.isStopped = false;   // Allow movement again
+        if(agent.enabled == true)
+        {
+            agent.isStopped = false;
+        }
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
         ParticleManager.Instance.DestroyStunParticles();
         if (stateMachine is GruntStateMachine gruntStateMachine)

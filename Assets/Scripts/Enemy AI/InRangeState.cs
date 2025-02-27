@@ -29,11 +29,14 @@ public class InRangeState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                agent.SetDestination(gruntStateMachine.target.position);
-                
-                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) <= surroundRange)
+                if(agent.enabled == true)
                 {
-                    stateMachine.ChangeState(nameof(SurroundState));
+                    agent.SetDestination(gruntStateMachine.target.position);
+                    
+                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) <= surroundRange)
+                    {
+                        stateMachine.ChangeState(nameof(SurroundState));
+                    }
                 }
             }
         }
