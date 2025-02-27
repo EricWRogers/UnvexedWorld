@@ -7,10 +7,22 @@ using System;
 public class GameManager : MonoBehaviour
 {
 
-    int coinVal = 0;
+    public static GameManager instance;
+
+    public int coinVal = 0;
 
     void Awake()
     {
+
+        if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
         GameObject.DontDestroyOnLoad(gameObject);
     }
 
@@ -53,6 +65,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateCoins ()
     {
+        //coinVal = WalletManager.instance.Coin;
         WalletManager.instance.Earn(coinVal);
 
     }
