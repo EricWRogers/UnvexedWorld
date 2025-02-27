@@ -15,8 +15,9 @@ public class AttackHitBox : MonoBehaviour
 
     private IEnumerator Attacking()
     {
+        yield return new WaitForSeconds(0.75f);
         GameObject obj = Instantiate(hitBox, transform.position, Quaternion.identity);
         Destroy(obj, timeLeft);
-        yield return new WaitForSeconds(timeLeft);
+        //yield return new WaitForSeconds(timeLeft);
     }
 }
