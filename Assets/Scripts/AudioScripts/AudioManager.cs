@@ -1,16 +1,21 @@
 using UnityEngine;
 using System.Collections;
 using System.Linq;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public AudioCollection[] audioCollections;  // Array of sound settings (Set in Unity Inspector)
-    //public AudioSoundData audioSoundData;
     public SoundPool soundPool; // Reference to the SoundPool (Assign in Unity)
     private AudioSource audioSource;
     [SerializeField] private AudioSource backgroundMusicSource;
     [SerializeField] private AudioSource battleMusicSource;
     public static AudioManager instance;
+
+    [Header("Audio Mixers")]
+    public AudioMixer masterMixer;
+    public AudioMixer musicMixer;
+    public AudioMixer sfxMixer;
 
     private void Awake()
     {
@@ -22,6 +27,21 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        masterMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        musicMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        sfxMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
     }
 
     // Play a Sound by Name
@@ -49,7 +69,7 @@ public class AudioManager : MonoBehaviour
                 // Disable the object after the sound finishes playing
                 if (!sound.loop)
                 {
-                    StartCoroutine(DeactivateAfterPlay(audioSource));  // Fix here
+                    StartCoroutine(DeactivateAfterPlay(audioSource));
                 }
             }
         }
@@ -85,38 +105,7 @@ public class AudioManager : MonoBehaviour
         return backgroundMusicSource != null && backgroundMusicSource.isPlaying;
     }
 
-    // Crossfade Function for music
-    /*public void CrossfadeBattleToBackground(float fadeDuration = 2f)
-    {
-        StartCoroutine(Crossfade(fadeDuration));
-    }
-
-    // Coroutine for fading
-    private IEnumerator Crossfade(float fadeDuration)
-    {
-        float startTime = Time.time;
-        float battleMusicStartVolume = battleMusicSource.volume;
-        float backgroundMusicStartVolume = backgroundMusicSource.volume;
-
-        //Battle music fade
-        while (Time.time - startTime < fadeDuration)
-        {
-            float t = (Time.time - startTime) / fadeDuration;
-            battleMusicSource.volume = Mathf.Lerp(battleMusicStartVolume, 0f, t);
-            backgroundMusicSource.volume = Mathf.Lerp(backgroundMusicStartVolume, 1f, t);
-            yield return null;
-        }
-
-        //final volumes
-        battleMusicSource.volume = 0f;
-        backgroundMusicSource.volume = 1f;
-
-        //Stop battle music after fade out
-        battleMusicSource.Stop();
-    }*/
-
     // Stop a Specific Sound
-    // Needs more work in future
     public void Stop(string name)
     {
         AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
@@ -146,13 +135,13 @@ public class AudioManager : MonoBehaviour
     }
 
     // Deactivate Pooled Object After Sound Finishes
-    private IEnumerator DeactivateAfterPlay(AudioSource source)  // Fix here
+    private IEnumerator DeactivateAfterPlay(AudioSource source)
     {
-        yield return new WaitForSeconds(source.clip.length);  // Correct reference to `source`
-        source.gameObject.SetActive(false);  // Correct reference to `source`
+        yield return new WaitForSeconds(source.clip.length);
+        source.gameObject.SetActive(false);
     }
 
-    // 🎵 Quick Play Methods for Specific Sounds
+    // Quick Play Methods for Specific Sounds
     public void PlayPunchSound() => Play("Punch", true);
     public void PlayDashSound() => Play("Dash");
     public void PlayLandingSound() => Play("Landing");

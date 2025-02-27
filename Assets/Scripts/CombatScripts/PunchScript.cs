@@ -11,10 +11,15 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
     public int knockBackType;
     public int damage = 1;
+    
+    public int spellBonus = 3;
+    public int spellCost = 1;
     public float impactValue = 25f;
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
+    
+    public UnityEvent<int> spendMana;
     public GameObject particle;
 
     public ComboManager comboManager;
@@ -38,6 +43,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
          
         comboManager = FindFirstObjectByType<ComboManager>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        punchTarget.AddListener(SpendMana);
     }
 
     // Update is called once per frame
@@ -128,8 +134,14 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
-            
-            other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            if(gameObject.GetComponent<Spell>()?.CurrentElement==SpellCraft.Aspect.none)
+                {  
+                    other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+                }
+                else
+                {
+                    other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage+spellBonus);
+                }
             MessageSpawner messageSpawner = enemy.GetComponentInChildren<MessageSpawner>();
             if (messageSpawner != null)
             {
@@ -225,5 +237,10 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     {
         yield return new WaitForSeconds(0.25f);
         hitEnemies.Remove(enemy);
+    }
+
+    public void SpendMana(GameObject ignoreMe)
+    {
+        spendMana.Invoke(spellCost);
     }
 }
