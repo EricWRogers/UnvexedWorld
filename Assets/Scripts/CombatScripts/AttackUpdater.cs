@@ -7,6 +7,7 @@ public class AttackUpdater : MonoBehaviour
     public GameObject player = null;
     public SpellCraft.Aspect element = SpellCraft.Aspect.none;
     public int aspect = 0;
+    public int spellCost = 5;
     public Spell[] spells;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
