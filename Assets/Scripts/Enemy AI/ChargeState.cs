@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class ChargeState : SimpleState
 {
     private NavMeshAgent agent;
-    private float attackRange;
+    private float range;
 
     public override void OnStart()
     {
@@ -19,7 +19,8 @@ public class ChargeState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            attackRange = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            agent.SetDestination(((GruntStateMachine)stateMachine).target.position);
         }
     }
 
@@ -34,7 +35,7 @@ public class ChargeState : SimpleState
                     gruntStateMachine.transform.LookAt(gruntStateMachine.target);
                     agent.SetDestination(gruntStateMachine.target.position);
                 
-                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < range)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
                     }
