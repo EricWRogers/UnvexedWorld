@@ -18,7 +18,7 @@ public class ManaTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        splendorMana.text = ("%"+(int)spellCraft.splendorMana);
-        scavengeMana.text = ("%"+(int)spellCraft.scavengeMana);
+        splendorMana.text = ("%"+(int)spellCraft.energy[2]);
+        scavengeMana.text = ("%"+(int)spellCraft.energy[1]);
     }
 }

@@ -25,4 +25,9 @@ public class AttackUpdater : MonoBehaviour
     {
         
     }
+
+    public void SpendEnergy(int CostMod)
+    {
+        player.GetComponent<SpellCraft>().SpendEnergy(element, CostMod);
+    }
 }
