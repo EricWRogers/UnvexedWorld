@@ -108,6 +108,11 @@ public class MeleeRangedAttack : MonoBehaviour
                 FindNewTarget();
             }
         }
+        else
+        {
+            isAttacking = true;
+            MeleeLight();
+        }
 
 
 
