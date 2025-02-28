@@ -311,9 +311,17 @@ public class MeleeRangedAttack : MonoBehaviour
         GameObject temp = Instantiate(AttackManager.Instance.attackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
         if(temp.GetComponent<AttackUpdater>() != null)
         {
-            temp.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
-            temp.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
-            temp.GetComponent<AttackUpdater>().player = gameObject;
+            AttackUpdater temp2 = temp.GetComponent<AttackUpdater>();
+            if (temp2.spellCost <= spellCraft.energy[(int)spellCraft.CurrentElement])
+            {
+                temp2.element = spellCraft.CurrentElement;
+            }
+            else
+            {
+                temp2.element = SpellCraft.Aspect.none;
+            }
+            temp2.aspect = spellCraft.subAspect;
+            temp2.player = gameObject;
         }
     }
 
@@ -324,9 +332,17 @@ public class MeleeRangedAttack : MonoBehaviour
             activeProjectile = Instantiate(AttackManager.Instance.rangeAttackPrefabs[index],firePoint.position + (1f * gameObject.transform.forward), transform.rotation);
             if(activeProjectile.GetComponent<AttackUpdater>() != null)
             {
-                activeProjectile.GetComponent<AttackUpdater>().element = spellCraft.CurrentElement;
-                activeProjectile.GetComponent<AttackUpdater>().aspect = spellCraft.subAspect;
-                activeProjectile.GetComponent<AttackUpdater>().player = gameObject;
+                AttackUpdater temp2 = activeProjectile.GetComponent<AttackUpdater>();
+                if (temp2.spellCost <= spellCraft.energy[(int)spellCraft.CurrentElement])
+                {
+                    temp2.element = spellCraft.CurrentElement;
+                }
+                else
+                {
+                    temp2.element = SpellCraft.Aspect.none;
+                }
+                temp2.aspect = spellCraft.subAspect;
+                temp2.player = gameObject;
             }
         }
         else
@@ -340,5 +356,17 @@ public class MeleeRangedAttack : MonoBehaviour
         currentStyle = newStyle;
         GetComponent<Animator>().SetInteger("Style", (int)currentStyle);
     }
+
+    public void SuperPunch(int index)
+    {
+        GameObject temp = Instantiate(AttackManager.Instance.superAttackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponentInChildren<SuperPunch>() != null)
+        {
+            SuperPunch temp2 = temp.GetComponentInChildren<SuperPunch>();
+            temp2.energy[1] -= gameObject.GetComponent<SpellCraft>().energy[1];
+            temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
+        }
+    }
+    
    
 }

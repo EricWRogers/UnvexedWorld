@@ -6,6 +6,7 @@ public class AttackManager : MonoBehaviour
 
     public GameObject[] attackPrefabs;
     public GameObject[] rangeAttackPrefabs;
+    public GameObject[] superAttackPrefabs;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
