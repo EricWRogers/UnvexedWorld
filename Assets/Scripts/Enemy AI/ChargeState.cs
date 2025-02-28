@@ -20,7 +20,7 @@ public class ChargeState : SimpleState
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.enabled = true;
-            attackRange = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
     }
 
