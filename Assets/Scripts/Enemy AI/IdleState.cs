@@ -14,7 +14,7 @@ public class IdleState : SimpleState
     private Animator anim;
     public override void OnStart()
     {
-        Debug.Log("Idle State");
+        //Debug.Log("Idle State");
         base.OnStart();
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {    

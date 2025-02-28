@@ -32,9 +32,9 @@ public class SurroundState : SimpleState
         {
             target = gruntStateMachine.target;
             agent = gruntStateMachine.agent;
+            agent.enabled = true;
             gruntStateMachine.transform.LookAt(target);
         }
-        //start adding to the queue 
 
         InitializeQueue();
         GetRandomTargetPos(minRadius, maxRadius);
@@ -93,8 +93,8 @@ public class SurroundState : SimpleState
                 }
             }
             
-            Debug.Log("Final Queue Count: " + attackQueue.Count);
-            PrintQueue(); // Print queue to debug
+            //Debug.Log("Final Queue Count: " + attackQueue.Count);
+            //PrintQueue(); // Print queue to debug
         }
     }
 
@@ -114,35 +114,5 @@ public class SurroundState : SimpleState
         randPos += randPos.normalized * minRadius;
         Vector3 position = new Vector3(target.position.x + randPos.x, target.position.y, target.position.z + randPos.y);
         agent.SetDestination(position);
-    }
-
-    private void CircleTarget()
-    {
-        int count = attackQueue.Count;
-        int index = 0;
-
-        foreach (var unit in attackQueue)
-        {
-            if (unit is SimpleStateMachine enemyState)
-            {
-                Vector3 position = new Vector3(
-                    target.position.x + (Random.Range(minRadius, maxRadius) * Mathf.Cos(2 * Mathf.PI * index / count)),
-                    target.position.y,
-                    target.position.z + (Random.Range(minRadius, maxRadius) * Mathf.Sin(2 * Mathf.PI * index / count))
-                );
-
-                enemyState.transform.LookAt(((GruntStateMachine)stateMachine).target);
-                
-                if (enemyState.TryGetComponent(out NavMeshAgent enemyAgent))
-                {
-                    if(enemyAgent.enabled == true)
-                    {
-                        enemyAgent.SetDestination(position);
-                    }
-                }
-
-                index++;
-            }
-        }
     }
 }
