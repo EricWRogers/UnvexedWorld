@@ -14,7 +14,7 @@ public class BreakObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Breakable")
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("Breakable"))
         {
             UnBrokenObject.SetActive(false);
             BrokenObject.SetActive(true);
