@@ -147,6 +147,7 @@ public class MeleeRangedAttack : MonoBehaviour
     public void LockOff()
     {
         direction = false;
+       
         lockOnCanvas.SetActive(false);
         unLock = false;
     }
@@ -244,6 +245,13 @@ public class MeleeRangedAttack : MonoBehaviour
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
         }
+
+         if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
+            {
+                
+
+                FindNewTarget();
+            }
 
      
 
