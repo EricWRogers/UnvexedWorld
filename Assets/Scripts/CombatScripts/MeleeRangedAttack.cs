@@ -356,5 +356,17 @@ public class MeleeRangedAttack : MonoBehaviour
         currentStyle = newStyle;
         GetComponent<Animator>().SetInteger("Style", (int)currentStyle);
     }
+
+    public void SuperPunch(int index)
+    {
+        GameObject temp = Instantiate(AttackManager.Instance.superAttackPrefabs[index],transform.position + (1f * gameObject.transform.forward), transform.rotation);
+        if(temp.GetComponentInChildren<SuperPunch>() != null)
+        {
+            SuperPunch temp2 = temp.GetComponentInChildren<SuperPunch>();
+            temp2.energy[1] -= gameObject.GetComponent<SpellCraft>().energy[1];
+            temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
+        }
+    }
+    
    
 }
