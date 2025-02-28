@@ -11,7 +11,7 @@ public class ComboManager : MonoBehaviour
 
     // Slider for the combo meter
     public Slider comboSlider; // One slider for all grades
-    public Image comboFill;
+    //public Image comboFill;
     public int tier = 0;
 
     public TMP_Text comboCountText;  // Text to display combo count
@@ -64,14 +64,14 @@ public class ComboManager : MonoBehaviour
     {
         tier = 0;
         comboCount = 0; // Reset to 0
-        ResetComboUI();  // Reset UI after resetting
+        //ResetComboUI();  // Reset UI after resetting
     }
 
     void ResetComboUI()
     {
         // Update the combo count text
         comboCountText.text = "Combo: " + comboCount;
-        comboSlider.value = 0;  // Reset the slider
+        //comboSlider.value = 0;  // Reset the slider
         int multiplier = CalculateMultiplier(comboCount);
         multiplierText.text = "x1";  // Reset multiplier text
 
@@ -97,27 +97,27 @@ public class ComboManager : MonoBehaviour
         gradeBImage.gameObject.SetActive(false);
         gradeAImage.gameObject.SetActive(false);
         gradeSImage.gameObject.SetActive(false);
-        UpdateSlider(25);
-        comboFill.color = Color.grey;
+        //UpdateSlider(25);
+        //comboFill.color = Color.grey;
 
         switch (multiplier)
         {
             case 2:
                 gradeCImage.gameObject.SetActive(true);
-                comboFill.color = Color.white;
+                //comboFill.color = Color.white;
                 break;
             case 3:
                 gradeBImage.gameObject.SetActive(true);
-                comboFill.color = Color.blue;
+                //comboFill.color = Color.blue;
                 break;
             case 4:
                 gradeAImage.gameObject.SetActive(true);
-                comboFill.color = Color.green;
+                //comboFill.color = Color.green;
                 break;
             case 5:
                 gradeSImage.gameObject.SetActive(true);
-                comboFill.color = Color.red;
-                comboSlider.value = comboSlider.maxValue;
+                //comboFill.color = Color.red;
+                //comboSlider.value = comboSlider.maxValue;
                 break;
         }
 
@@ -129,8 +129,8 @@ public class ComboManager : MonoBehaviour
             gradeBImage.gameObject.SetActive(false);
             gradeAImage.gameObject.SetActive(false);
             gradeSImage.gameObject.SetActive(false);
-            UpdateSlider(25);
-            comboFill.color = Color.white;
+            //UpdateSlider(25);
+            //comboFill.color = Color.white;
         }
         else if (CalculateMultiplier(comboCount) == 3)
         {
@@ -139,8 +139,8 @@ public class ComboManager : MonoBehaviour
             gradeBImage.gameObject.SetActive(true);
             gradeAImage.gameObject.SetActive(false);
             gradeSImage.gameObject.SetActive(false);
-            UpdateSlider(25);
-            comboFill.color = Color.blue;
+            //UpdateSlider(25);
+            //comboFill.color = Color.blue;
         }
         else if (CalculateMultiplier(comboCount) == 4)
         {
@@ -149,8 +149,8 @@ public class ComboManager : MonoBehaviour
             gradeBImage.gameObject.SetActive(false);
             gradeAImage.gameObject.SetActive(true);
             gradeSImage.gameObject.SetActive(false);
-            UpdateSlider(25);
-            comboFill.color = Color.green;
+            //UpdateSlider(25);
+            //comboFill.color = Color.green;
         }
         else if (CalculateMultiplier(comboCount) == 5)
         {
@@ -159,8 +159,8 @@ public class ComboManager : MonoBehaviour
             gradeBImage.gameObject.SetActive(false);
             gradeAImage.gameObject.SetActive(false);
             gradeSImage.gameObject.SetActive(true);
-            UpdateSlider(25);
-            comboFill.color = Color.red;
+            //UpdateSlider(25);
+            //comboFill.color = Color.red;
         }
     }
 
@@ -169,11 +169,11 @@ public class ComboManager : MonoBehaviour
         // Prevent S tier stacking
         if (tier >= 4)
         {
-            comboSlider.value = comboSlider.maxValue;  // Set the slider to the current combo count
+            //comboSlider.value = comboSlider.maxValue;  // Set the slider to the current combo count
             return;
         }
 
-        comboSlider.value = comboCount;
+        //comboSlider.value = comboCount;
 
         // Check if we've reached a threshold
         if (comboCount >= threshold)
@@ -181,7 +181,7 @@ public class ComboManager : MonoBehaviour
             // Reset slider value for the next grade
             tier++;
             comboCount -= threshold;  // Move to next grade
-            comboSlider.value = 0;  // Reset slider value for new grade
+            //comboSlider.value = 0;  // Reset slider value for new grade
         }
     }
 
@@ -223,22 +223,22 @@ public class ComboManager : MonoBehaviour
         {
             case 1:
                 gradeCImage.gameObject.SetActive(true);
-                comboFill.color = Color.white;
+                //comboFill.color = Color.white;
                 break;
             case 2:
                 gradeBImage.gameObject.SetActive(true);
-                comboFill.color = Color.blue;
+                //comboFill.color = Color.blue;
                 break;
             case 3:
                 gradeAImage.gameObject.SetActive(true);
-                comboFill.color = Color.green;
+               //comboFill.color = Color.green;
                 break;
             case 4:
                 gradeSImage.gameObject.SetActive(true);
-                comboFill.color = Color.red;
-                comboSlider.value = comboSlider.maxValue;
+                //comboFill.color = Color.red;
+                //comboSlider.value = comboSlider.maxValue;
                 break;
         }
-        comboSlider.value = comboCount;
+        //comboSlider.value = comboCount;
     }
 }

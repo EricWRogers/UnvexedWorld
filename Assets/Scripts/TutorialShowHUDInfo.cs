@@ -15,7 +15,7 @@ public class TutorialShowHUDInfo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        HUD.ShowHUD();
+        //HUD.ShowHUD();
         isHUDShowing = true;
     }
 
@@ -24,7 +24,7 @@ public class TutorialShowHUDInfo : MonoBehaviour
     {
         if(isHUDShowing)
         {
-            HUD.ShowHUD();
+            //HUD.ShowHUD();
             isHUDShowing = false;
         }
     }
