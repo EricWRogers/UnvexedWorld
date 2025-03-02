@@ -24,18 +24,17 @@ public class AttackState : SimpleState
 
     public override void OnStart()
     {
-        //Debug.Log("Attack State");
         base.OnStart();
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
             anim = gruntStateMachine.GetComponentInChildren<Animator>();
             agent.SetDestination(gruntStateMachine.transform.position);
             attackRange = gruntStateMachine.inAttackRange + 0.5f;
         }
 
-        //time.StartTimer(2, true);
         if (attack == null)
         {
             attack = new UnityEvent();
@@ -56,7 +55,7 @@ public class AttackState : SimpleState
             attackTimer -= _dt; 
             cooldownTimer -= _dt;
 
-            if(agent.enabled == true)
+            if(agent.isOnNavMesh == true)
             {
                 if (gruntStateMachine.LOS && attackTimer > 0f)
                 {
@@ -71,7 +70,6 @@ public class AttackState : SimpleState
                 else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
                 {
                     isAttacking = false;
-                    //anim.SetBool("isAttacking", false);
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(RetreatState));
                 }

@@ -25,6 +25,7 @@ public class RandomMovementState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            agent.enabled = true;
             anim = ((GruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
         }
 
@@ -39,7 +40,7 @@ public class RandomMovementState : SimpleState
             {
                 moveTimer += dt; 
 
-                if(agent.enabled == true)
+                if(agent.isOnNavMesh == true)
                 {
                     if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
                     {

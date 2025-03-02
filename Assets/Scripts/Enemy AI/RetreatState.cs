@@ -26,8 +26,9 @@ public class RetreatState : SimpleState
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
             retreatPosition = CalculateRetreatPosition(gruntStateMachine);
-            if(agent.enabled == true)
+            if(agent.isOnNavMesh == true)
             {
                 agent.SetDestination(retreatPosition);
             }
@@ -40,7 +41,7 @@ public class RetreatState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                if(agent.enabled == true)
+                if(agent.isOnNavMesh == true)
                 {
                     if (!reachedRetreatPoint && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
                     {

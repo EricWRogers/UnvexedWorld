@@ -141,30 +141,23 @@ public class GruntStateMachine : SimpleStateMachine
         RaycastHit hit;
         if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
         {
-            
             isGrounded = true;
         }else
         {
             isGrounded = false;
         }
 
-        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -transform.up, out hit, groundCheckDistance, rotationMask))
-        {
-            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
-        }
+        transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
 
         if(isGrounded == false)
         {
-            transform.localEulerAngles = new Vector3(0f, 0f, transform.localEulerAngles.z);
-            rb.isKinematic = false;
-            rb.AddForce(gravity, ForceMode.Acceleration);
-            if(!agent.isOnNavMesh)
+            
+            if(agent.isOnNavMesh == false)
             {
                 agent.enabled = false;
-            }else
-            {
-                agent.enabled = true;
             }
+            rb.isKinematic = false;
+            rb.AddForce(gravity, ForceMode.Acceleration);
         }
         else
         {
@@ -176,6 +169,10 @@ public class GruntStateMachine : SimpleStateMachine
             {
                 rb.isKinematic = true;
             }
+            if(agent.isOnNavMesh)
+            {
+                agent.enabled = true;
+            }
         }
     }
 
@@ -185,11 +182,11 @@ public class GruntStateMachine : SimpleStateMachine
         {
             rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
         }
+        transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
     }
 
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
-        //Debug.Log("");
         knockBack.dir = direction;
         knockBack.power = power;
         knockBack.kbType = KnockBackState.KnockBackType.One;

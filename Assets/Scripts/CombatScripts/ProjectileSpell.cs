@@ -119,6 +119,28 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                             break;
                     }
                 }
+                if (enemy.GetComponent<GruntStateMachine>() != null)
+                {
+                    var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
+                    
+                    switch (knockBackType)
+                    {
+                        case 1:
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 2:
+                            //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                            direction.LookAt(enemy.transform);
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 3:
+                            enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                            break;
+                        default:
+                            Debug.Log("Incorrect Knock back type please use 1-3.");
+                            break;
+                    }
+                }
             }
             if (destroyOnImpact)
             {
