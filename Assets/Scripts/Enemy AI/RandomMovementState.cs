@@ -53,7 +53,6 @@ public class RandomMovementState : SimpleState
    
             if(gruntStateMachine.LOS == true)
             {
-                Debug.Log("Has LOS");
                 anim.SetTrigger("LOS");
                 stateMachine.ChangeState(nameof(InRangeState));
             }

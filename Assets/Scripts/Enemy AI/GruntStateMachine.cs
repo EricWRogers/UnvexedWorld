@@ -30,7 +30,6 @@ public class GruntStateMachine : SimpleStateMachine
     public Animator anim;
 
     public LayerMask mask;
-    public LayerMask rotationMask;
 
     public bool LOS;
     public bool isAlive;
@@ -139,12 +138,26 @@ public class GruntStateMachine : SimpleStateMachine
         
         Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
         RaycastHit hit;
-        if(Physics.Raycast(transform.position - (Vector3.up * (capsuleCollider.height/2)), -Vector3.up, out hit, groundCheckDistance, mask))
+        Vector3 sphereCastOrigin = transform.position - (Vector3.up * (capsuleCollider.height / 2 - capsuleCollider.radius));
+        float sphereRadius = capsuleCollider.radius;
+        Vector3 direction = -Vector3.up;
+        float sphereCastDistance = groundCheckDistance;
+
+        // Draw the sphere cast using Debug.DrawRay and Debug.DrawLine
+        // Debug.DrawRay(sphereCastOrigin, direction * sphereCastDistance, Color.red); // Show the downward cast
+        // Debug.DrawLine(sphereCastOrigin + Vector3.left * sphereRadius, sphereCastOrigin + Vector3.left * sphereRadius + direction * sphereCastDistance, Color.green);
+        // Debug.DrawLine(sphereCastOrigin + Vector3.right * sphereRadius, sphereCastOrigin + Vector3.right * sphereRadius + direction * sphereCastDistance, Color.green);
+        // Debug.DrawLine(sphereCastOrigin + Vector3.forward * sphereRadius, sphereCastOrigin + Vector3.forward * sphereRadius + direction * sphereCastDistance, Color.green);
+        // Debug.DrawLine(sphereCastOrigin + Vector3.back * sphereRadius, sphereCastOrigin + Vector3.back * sphereRadius + direction * sphereCastDistance, Color.green);
+
+        if (Physics.SphereCast(sphereCastOrigin, sphereRadius, direction, out hit, sphereCastDistance, mask))
         {
             isGrounded = true;
+            Debug.Log($"Hit: " + hit.collider.gameObject.name);
         }else
         {
             isGrounded = false;
+            Debug.Log("Did not hit ground");
         }
 
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
