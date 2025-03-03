@@ -27,6 +27,7 @@ public class RandomMovementState : SimpleState
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.enabled = true;
             anim = ((GruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
+            circleCenterObject = agent.transform.parent;
         }
 
         MoveToRandomPoint();
