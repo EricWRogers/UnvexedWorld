@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class PortalToNextLevel : MonoBehaviour
 {
+    public string nextScene;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,7 +31,7 @@ public class PortalToNextLevel : MonoBehaviour
         {
              
             
-                PlayGame("BlightsGraspMenu");
+                PlayGame(nextScene);
             
               
               
