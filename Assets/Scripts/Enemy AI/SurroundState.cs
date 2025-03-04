@@ -93,8 +93,11 @@ public class SurroundState : SimpleState
             {
                 isReady = true;
                 SimpleStateMachine attacker = attackQueue.Dequeue();
-                slotManager.Release(slotIndex);
-                attacker.ChangeState(nameof(ChargeState));
+                if (attacker != null && attacker.gameObject != null)
+                {
+                    slotManager.Release(slotIndex);
+                    attacker.ChangeState(nameof(ChargeState));
+                }
 
                 waitTimer = waitDuration;
                 isReady = false;

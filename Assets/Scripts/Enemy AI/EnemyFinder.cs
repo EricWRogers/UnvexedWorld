@@ -35,6 +35,8 @@ public class EnemyFinder : MonoBehaviour
 
     void Update()
     {
+        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null);
+
         if(nearbyEnemies.Count == 0)
         {
             openDoor = true;
