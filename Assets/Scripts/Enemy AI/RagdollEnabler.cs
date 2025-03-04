@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using SuperPupSystems.Helper;
+using System.Linq;
 
 
 public class RagdollEnabler : MonoBehaviour
@@ -34,15 +35,19 @@ public class RagdollEnabler : MonoBehaviour
     private Collider[] colliders;
     private float fadeOutDelay = 3f;
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     rb = ragdollRoot.GetComponentsInChildren<Rigidbody>();
+    //     joints = ragdollRoot.GetComponentsInChildren<CharacterJoint>();
+    //     colliders = ragdollRoot.GetComponentsInChildren<Collider>();
+    // }
+
+    private void Start()
     {
         rb = ragdollRoot.GetComponentsInChildren<Rigidbody>();
         joints = ragdollRoot.GetComponentsInChildren<CharacterJoint>();
         colliders = ragdollRoot.GetComponentsInChildren<Collider>();
-    }
 
-    private void Start()
-    {
         if (startRagdoll)
         {
             EnableRagdoll();
@@ -121,8 +126,8 @@ public class RagdollEnabler : MonoBehaviour
         {
             transform.position += Vector3.down * Time.deltaTime;
             time += Time.deltaTime;
-            float cv = enemyMat.GetComponent<Renderer>().material.GetFloat("_ClippingValue");
-            enemyMat.GetComponent<Renderer>().material.SetFloat("_ClippingValue", cv + Time.deltaTime);
+            //float cv = enemyMat.GetComponent<Renderer>().material.GetFloat("_ClippingValue");
+            //enemyMat.GetComponent<Renderer>().material.SetFloat("_ClippingValue", cv + Time.deltaTime);
             yield return null;
         }
 

@@ -11,12 +11,16 @@ public class EnemyFinder : MonoBehaviour
     private int totalEnemies; // Track total number of enemies
     private int defeatedEnemies; // Track number of defeated enemies
 
+    private SlotManager slotManager;
+
     public bool openDoor;
 
     void Start()
     {
         totalEnemies = nearbyEnemies.Count; // Set the total number of enemies in the zone
         defeatedEnemies = 0; // Initialize defeated enemies count
+
+        slotManager = FindFirstObjectByType<SlotManager>();
 
         foreach (var enemy in nearbyEnemies)
         {
@@ -28,13 +32,22 @@ public class EnemyFinder : MonoBehaviour
             }
         }
     }
+
+    void Update()
+    {
+        if(nearbyEnemies.Count == 0)
+        {
+            openDoor = true;
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
         {
-            if (other.GetComponent<GruntStateMachine>() != null)
+            var gruntStateMachine = other.GetComponent<GruntStateMachine>();
+            if (gruntStateMachine != null && !nearbyEnemies.Contains(gruntStateMachine))
             {
-                var gruntStateMachine = other.GetComponent<GruntStateMachine>();
                 nearbyEnemies.Add(gruntStateMachine);
 
                 Health enemyHealth = gruntStateMachine.GetComponent<Health>();
@@ -42,6 +55,13 @@ public class EnemyFinder : MonoBehaviour
                 {
                     enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(gruntStateMachine));
                 }
+            }
+        }
+        if(other.gameObject.CompareTag("Player"))
+        {
+            if(slotManager != null)
+            {
+                slotManager.count = nearbyEnemies.Count;
             }
         }
     }
@@ -54,11 +74,6 @@ public class EnemyFinder : MonoBehaviour
             defeatedEnemies++;
 
             Debug.Log($"Enemy defeated! {defeatedEnemies}/{totalEnemies} eliminated.");
-
-            if (defeatedEnemies >= totalEnemies)
-            {
-                openDoor = true;
-            }
         }
     }
 
