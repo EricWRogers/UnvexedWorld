@@ -17,7 +17,7 @@ public class LifeStealOrb : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         targetTime -= Time.deltaTime;
         transform.position += transform.forward * 25f * Time.deltaTime;
@@ -33,7 +33,6 @@ public class LifeStealOrb : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Is Player");
             player.GetComponent<Health>().Heal(1);
             Destroy(gameObject);
         }

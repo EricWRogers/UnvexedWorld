@@ -6,6 +6,9 @@ using SuperPupSystems.Helper;
 public class MeleeDamage : MonoBehaviour
 {
     public int dmg;
+    private float damageCooldown = 0.5f;
+    private float lastDamageTime;
+    public bool didDamage;
     public Health playerHealth;
 
     private void Start()
@@ -18,13 +21,15 @@ public class MeleeDamage : MonoBehaviour
 
     public void OnTriggerEnter(Collider col)
     {
-        if(col.gameObject.CompareTag("Player"))
+        if(col.gameObject.CompareTag("Player") && Time.time > lastDamageTime + damageCooldown)
         {
             // Calculate the hit direction
             Vector3 hitDir = col.gameObject.transform.position - gameObject.transform.position;
 
             // Apply damage to the player
             col.gameObject.GetComponent<Health>().Damage(dmg);
+            lastDamageTime = Time.time;
+            Destroy(gameObject);
 
             // Apply knockback to the player
             PlayerKnockback playerKnockback = col.gameObject.GetComponent<PlayerKnockback>();

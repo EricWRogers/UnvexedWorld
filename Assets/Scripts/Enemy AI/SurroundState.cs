@@ -1,43 +1,57 @@
 using SuperPupSystems.StateMachine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-/*In this state the enemies begin to surround the player
-a certain radius given some room for variation, but they 
-will enter a queue that will send one enemy after another*/
-
 [System.Serializable]
 public class SurroundState : SimpleState
 {
-    
     public EnemyFinder enemyFinder;
-    public float minRadius = 4f;
-    public float maxRadius = 8f;
-    private float waitDuration = 2.0f;
-    public float waitTimer;
-    private Queue<SimpleStateMachine> attackQueue = new Queue<SimpleStateMachine>();
-    private bool isReady = false;
     private Transform target;
     private NavMeshAgent agent;
-    //queue list
-    
+    private SlotManager slotManager;
+    private int slotIndex = -1;
+    private float waitDuration = 4.0f;
+    private float waitTimer;
+    private Queue<SimpleStateMachine> attackQueue = new Queue<SimpleStateMachine>();
+    private bool isReady = false;
+
     public override void OnStart()
     {
-        Debug.Log("Entering Surround State");
         base.OnStart();
-        if(stateMachine is GruntStateMachine gruntStateMachine)
+        
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             target = gruntStateMachine.target;
             agent = gruntStateMachine.agent;
-            gruntStateMachine.transform.LookAt(gruntStateMachine.target);
+            slotManager = target.GetComponent<SlotManager>();
+
+            if (slotManager == null)
+            {
+                Debug.LogError("SlotManager is missing on the player!");
+                return;
+            }
+
+            agent.enabled = true;
+            gruntStateMachine.transform.LookAt(target);
+
+            // If there are 2 or fewer enemies, skip surrounding logic (Eric's Request)
+            if (enemyFinder.nearbyEnemies.Count <= 2)
+            {
+                stateMachine.ChangeState(nameof(ChargeState));
+                return;
+            }
+
+            // Assign slot for this enemy
+            slotIndex = slotManager.Reserve(gruntStateMachine.gameObject);
+            if (slotIndex != -1)
+            {
+                Vector3 slotPosition = slotManager.GetSlotPosition(slotIndex);
+                agent.SetDestination(slotPosition);
+            }
         }
-        //start adding to the queue 
 
         InitializeQueue();
-        CircleTarget();
-
         waitTimer = waitDuration;
     }
 
@@ -47,9 +61,18 @@ public class SurroundState : SimpleState
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
+            gruntStateMachine.transform.LookAt(target);
+
+            // Reposition enemy to its slot if it has one
+            if (slotIndex != -1)
+            {
+                Vector3 slotPosition = slotManager.GetSlotPosition(slotIndex);
+                agent.SetDestination(slotPosition);
+            }
+
             if (attackQueue.Count == 0)
             {
-                InitializeQueue(); 
+                InitializeQueue();
             }
 
             if (waitTimer > 0)
@@ -61,10 +84,10 @@ public class SurroundState : SimpleState
             {
                 isReady = true;
                 SimpleStateMachine attacker = attackQueue.Dequeue();
-                stateMachine.ChangeState(nameof(ChargeState));
+                attacker.ChangeState(nameof(ChargeState));
 
                 waitTimer = waitDuration;
-                isReady = false;  
+                isReady = false;
             }
         }
     }
@@ -72,11 +95,16 @@ public class SurroundState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+        if (slotIndex != -1 && slotManager != null)
+        {
+            slotManager.Release(slotIndex); // Free up slot
+        }
         attackQueue.Clear();
     }
 
     private void InitializeQueue()
     {
+        attackQueue.Clear();
         if (enemyFinder != null)
         {
             foreach (var enemy in enemyFinder.nearbyEnemies)
@@ -85,33 +113,6 @@ public class SurroundState : SimpleState
                 {
                     attackQueue.Enqueue(ai);
                 }
-            }
-        }
-    }
-
-    private void CircleTarget()
-    {
-        int count = attackQueue.Count;
-        int index = 0;
-
-        foreach (var unit in attackQueue)
-        {
-            if (unit is SimpleStateMachine enemyState)
-            {
-                Vector3 position = new Vector3(
-                    target.position.x + (Random.Range(minRadius, maxRadius) * Mathf.Cos(2 * Mathf.PI * index / count)),
-                    target.position.y,
-                    target.position.z + (Random.Range(minRadius, maxRadius) * Mathf.Sin(2 * Mathf.PI * index / count))
-                );
-
-                enemyState.transform.LookAt(((GruntStateMachine)stateMachine).target);
-
-                if (enemyState.TryGetComponent(out NavMeshAgent enemyAgent))
-                {
-                    enemyAgent.SetDestination(position);
-                }
-
-                index++;
             }
         }
     }
