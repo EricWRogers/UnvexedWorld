@@ -10,7 +10,8 @@ public class KeyOrbCollect : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-         //gainedOrb = GetComponent<keyOrbGainedScript>();
+        popupText = FindFirstObjectByType<PopupText>();
+         gainedOrb = FindFirstObjectByType<keyOrbGainedScript>();
     }
 
     // Update is called once per frame
