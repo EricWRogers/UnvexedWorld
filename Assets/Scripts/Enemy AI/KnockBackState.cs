@@ -35,22 +35,12 @@ public class KnockBackState : SimpleState
         Debug.Log("Knock Back State");
         base.OnStart();
 
-        agent = stateMachine.GetComponent<NavMeshAgent>();
-        rb = stateMachine.GetComponent<Rigidbody>();
-        
-        rb.isKinematic = false;
-        
-
-        knockBackTimer = knockBackDuration;  
-        if(agent.enabled == true)
+        if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent.enabled = false;
+            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            rb = gruntStateMachine.GetComponent<Rigidbody>();
         }
-    }
-
-    public override void UpdateState(float dt)
-    {
-        if (knockBackTimer == knockBackDuration)
+        else if(stateMachine is MeleeStateMachine meleeStateMachine)
         {
             agent = meleeStateMachine.GetComponent<NavMeshAgent>();
             rb = meleeStateMachine.GetComponent<Rigidbody>();
@@ -74,13 +64,14 @@ public class KnockBackState : SimpleState
                 break;
             }
         }
-        }
 
         Debug.Log("The enemy's speed is " + rb.linearVelocity.magnitude);
 
         knockBackTimer = knockBackDuration;
     }
 
+    public override void UpdateState(float dt)
+    {   
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             if (gruntStateMachine.isGrounded && rb.linearVelocity.y < 0)
@@ -100,8 +91,13 @@ public class KnockBackState : SimpleState
                 stateMachine.ChangeState(nameof(IdleState));
             }
         }
+
         else if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
+            if(knockBackTimer > 0)
+            {
+                knockBackTimer -= dt;
+            }
             if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
