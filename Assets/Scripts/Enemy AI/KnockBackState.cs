@@ -35,19 +35,24 @@ public class KnockBackState : SimpleState
         Debug.Log("Knock Back State");
         base.OnStart();
 
-        if (stateMachine is GruntStateMachine gruntStateMachine)
-        {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            rb = gruntStateMachine.GetComponent<Rigidbody>();
-        }
-        else if(stateMachine is MeleeStateMachine meleeStateMachine)
-        {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            rb = meleeStateMachine.GetComponent<Rigidbody>();
-        }
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        rb = stateMachine.GetComponent<Rigidbody>();
         
         rb.isKinematic = false;
-        switch(kbType)
+        
+
+        knockBackTimer = knockBackDuration;  
+        if(agent.enabled == true)
+        {
+            agent.enabled = false;
+        }
+    }
+
+    public override void UpdateState(float dt)
+    {
+        if (knockBackTimer == knockBackDuration)
+        {
+            switch(kbType)
         {
             case KnockBackType.One: {
                 rb.AddForce(dir * power, ForceMode.Impulse);
@@ -62,22 +67,15 @@ public class KnockBackState : SimpleState
                 break;
             }
         }
-
-        knockBackTimer = knockBackDuration;  
-        if(agent.enabled == true)
-        {
-            agent.enabled = false;
         }
-    }
 
-    public override void UpdateState(float dt)
-    {   
+        if(knockBackTimer > 0)
+        {
+            knockBackTimer -= dt;
+        }
+
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            if(knockBackTimer > 0)
-            {
-                knockBackTimer -= dt;
-            }
             if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -87,13 +85,8 @@ public class KnockBackState : SimpleState
                 stateMachine.ChangeState(nameof(IdleState));
             }
         }
-
         else if (stateMachine is MeleeStateMachine meleeStateMachine)
         {
-            if(knockBackTimer > 0)
-            {
-                knockBackTimer -= dt;
-            }
             if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
