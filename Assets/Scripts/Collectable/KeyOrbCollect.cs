@@ -25,6 +25,7 @@ public class KeyOrbCollect : MonoBehaviour
         {
             popupText.AddToQueue("Key Orb");
             gainedOrb.HasKeyOrb = true;
+            gameObject.SetActive(false);
 
 
         }
