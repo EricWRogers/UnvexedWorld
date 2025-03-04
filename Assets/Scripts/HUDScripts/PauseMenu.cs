@@ -18,6 +18,9 @@ public class PauseMenu : MonoBehaviour
 
     PlayerGamepad gamepad;
 
+    private ThirdPersonMovement playerMovement;
+    private MeleeRangedAttack playerAttack;
+
     private bool isMoveSetOpen = false; // Track MoveSet visibility
     public bool isPaused = false;
 
@@ -39,6 +42,9 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        playerMovement = FindFirstObjectByType<ThirdPersonMovement>();
+        playerAttack = FindFirstObjectByType<MeleeRangedAttack>();
+
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Ensure MoveSet is hidden at start
 
@@ -76,7 +82,8 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        Debug.Log("Game Paused");
+        playerMovement.enabled = false;
+        playerAttack.enabled = false;
         pauseMenuUI.SetActive(true);
         moveSet.SetActive(false); // Ensure MoveSet stays hidden on pause
         Cursor.lockState = CursorLockMode.None;
@@ -90,7 +97,8 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        Debug.Log("Game Resumed");
+        playerMovement.enabled = true;
+        playerAttack.enabled = true;
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Hide MoveSet when resuming
         Cursor.lockState = CursorLockMode.Locked;

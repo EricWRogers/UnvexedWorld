@@ -10,6 +10,8 @@ public class EnemyFinder : MonoBehaviour
     public List<SimpleStateMachine> nearbyEnemies = new List<SimpleStateMachine>();
     private int totalEnemies; // Track total number of enemies
     private int defeatedEnemies; // Track number of defeated enemies
+    [SerializeField]
+    private SlotManager slotManager;
 
     public bool openDoor;
 
@@ -17,6 +19,8 @@ public class EnemyFinder : MonoBehaviour
     {
         totalEnemies = nearbyEnemies.Count; // Set the total number of enemies in the zone
         defeatedEnemies = 0; // Initialize defeated enemies count
+
+        slotManager = FindFirstObjectByType<SlotManager>();
 
         foreach (var enemy in nearbyEnemies)
         {
@@ -31,6 +35,8 @@ public class EnemyFinder : MonoBehaviour
 
     void Update()
     {
+        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null);
+
         if(nearbyEnemies.Count == 0)
         {
             openDoor = true;
@@ -51,6 +57,13 @@ public class EnemyFinder : MonoBehaviour
                 {
                     enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(gruntStateMachine));
                 }
+            }
+        }
+        if(other.gameObject.CompareTag("Player"))
+        {
+            if(slotManager != null)
+            {
+                slotManager.SetSlotCount(nearbyEnemies.Count);
             }
         }
     }

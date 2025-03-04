@@ -52,7 +52,14 @@ public class KnockBackState : SimpleState
     {
         if (knockBackTimer == knockBackDuration)
         {
-            switch(kbType)
+            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
+            rb = meleeStateMachine.GetComponent<Rigidbody>();
+        }
+        
+        agent.enabled = false;
+        rb.isKinematic = false;
+
+        switch(kbType)
         {
             case KnockBackType.One: {
                 rb.AddForce(dir * power, ForceMode.Impulse);
@@ -69,13 +76,21 @@ public class KnockBackState : SimpleState
         }
         }
 
-        if(knockBackTimer > 0)
-        {
-            knockBackTimer -= dt;
-        }
+        Debug.Log("The enemy's speed is " + rb.linearVelocity.magnitude);
+
+        knockBackTimer = knockBackDuration;
+    }
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
+            if (gruntStateMachine.isGrounded && rb.linearVelocity.y < 0)
+            {
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            }
+            if(knockBackTimer > 0)
+            {
+                knockBackTimer -= dt;
+            }
             if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
@@ -102,10 +117,16 @@ public class KnockBackState : SimpleState
     {
         base.OnExit();
 
-        if(agent.enabled == true)
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        if(agent.isOnNavMesh == true)
         {
             agent.enabled = true;
         }
+
+        agent.Warp(agent.transform.position);
+
         rb.isKinematic = true;
     }
 }

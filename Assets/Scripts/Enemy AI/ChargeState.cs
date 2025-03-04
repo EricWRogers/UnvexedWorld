@@ -19,8 +19,8 @@ public class ChargeState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            agent.enabled = true;
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
-            agent.SetDestination(((GruntStateMachine)stateMachine).target.position);
         }
     }
 
@@ -30,7 +30,7 @@ public class ChargeState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                if(agent.enabled == true)
+                if(agent.isOnNavMesh == true)
                 {
                     gruntStateMachine.transform.LookAt(gruntStateMachine.target);
                     agent.SetDestination(gruntStateMachine.target.position);

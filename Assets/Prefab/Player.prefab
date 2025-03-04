@@ -135,7 +135,6 @@ MonoBehaviour:
   spellBonus: 3
   spellCost: 1
   impactValue: 25
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -238,7 +237,6 @@ MonoBehaviour:
   spellBonus: 3
   spellCost: 1
   impactValue: 25
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -516,6 +514,7 @@ GameObject:
   - component: {fileID: 2088814457685935502}
   - component: {fileID: 1344879855165251017}
   - component: {fileID: 8190081988878602575}
+  - component: {fileID: 3835466610039345583}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -541,7 +540,6 @@ Transform:
   - {fileID: 7756106815954976046}
   - {fileID: 3664396929940847429}
   - {fileID: 7455555112761746012}
-  - {fileID: 7765232128652950886}
   - {fileID: 6957575151249253694}
   - {fileID: 2304284894545198196}
   - {fileID: 8541461649529827610}
@@ -921,6 +919,20 @@ MonoBehaviour:
   alphaVal: 0
   leftHand: {fileID: 0}
   rightHand: {fileID: 0}
+--- !u!114 &3835466610039345583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3428488077517617266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77a7fe0b07fcf4f4997dc6062c639010, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  count: 0
+  distance: 3
 --- !u!1 &3494920844570013469
 GameObject:
   m_ObjectHideFlags: 0
@@ -1220,7 +1232,6 @@ MonoBehaviour:
   spellBonus: 3
   spellCost: 1
   impactValue: 25
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -1363,64 +1374,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &5344626808957306902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7765232128652950886}
-  - component: {fileID: 2979158791374647195}
-  m_Layer: 10
-  m_Name: LoadBearingFish
-  m_TagString: GroundEnemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7765232128652950886
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5344626808957306902}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 100, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8423083024635871786}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2979158791374647195
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5344626808957306902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 604dfbbf654f92618bc36972daaa4968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  healed:
-    m_PersistentCalls:
-      m_Calls: []
-  hurt:
-    m_PersistentCalls:
-      m_Calls: []
-  outOfHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  maxHealth: 100000000
-  currentHealth: 1
 --- !u!1 &5424640572031330783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1778,7 +1731,6 @@ MonoBehaviour:
   spellBonus: 3
   spellCost: 1
   impactValue: 25
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:

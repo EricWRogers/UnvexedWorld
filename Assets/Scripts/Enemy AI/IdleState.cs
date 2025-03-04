@@ -14,7 +14,7 @@ public class IdleState : SimpleState
     private Animator anim;
     public override void OnStart()
     {
-        Debug.Log("Idle State");
+        //Debug.Log("Idle State");
         base.OnStart();
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {    
@@ -30,7 +30,6 @@ public class IdleState : SimpleState
             {   
                 if(gruntStateMachine.LOS == true)
                 {
-                    Debug.Log("Has LOS");
                     anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(InRangeState));
                 }

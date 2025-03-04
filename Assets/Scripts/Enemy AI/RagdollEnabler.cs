@@ -58,8 +58,6 @@ public class RagdollEnabler : MonoBehaviour
         }
 
         PowerAmount();
-
-        Debug.Log("Joints: " + joints.Length);
     }
 
     public void EnableRagdoll()
