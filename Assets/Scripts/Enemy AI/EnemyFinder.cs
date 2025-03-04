@@ -11,12 +11,16 @@ public class EnemyFinder : MonoBehaviour
     private int totalEnemies; // Track total number of enemies
     private int defeatedEnemies; // Track number of defeated enemies
 
+    private SlotManager slotManager;
+
     public bool openDoor;
 
     void Start()
     {
         totalEnemies = nearbyEnemies.Count; // Set the total number of enemies in the zone
         defeatedEnemies = 0; // Initialize defeated enemies count
+
+        slotManager = FindFirstObjectByType<SlotManager>();
 
         foreach (var enemy in nearbyEnemies)
         {
@@ -51,6 +55,13 @@ public class EnemyFinder : MonoBehaviour
                 {
                     enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(gruntStateMachine));
                 }
+            }
+        }
+        if(other.gameObject.CompareTag("Player"))
+        {
+            if(slotManager != null)
+            {
+                slotManager.count = nearbyEnemies.Count;
             }
         }
     }

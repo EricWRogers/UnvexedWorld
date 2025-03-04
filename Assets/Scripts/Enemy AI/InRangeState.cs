@@ -21,7 +21,6 @@ public class InRangeState : SimpleState
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.enabled = true;
-            surroundRange = Vector3.Distance(agent.transform.position, ((GruntStateMachine)stateMachine).target.position)  + 5.0f;
         }
     }
 
@@ -34,8 +33,11 @@ public class InRangeState : SimpleState
                 if(agent.isOnNavMesh == true)
                 {
                     agent.SetDestination(gruntStateMachine.target.position);
+
+                    float distanceToTarget = Vector3.Distance(agent.transform.position, gruntStateMachine.target.position);
+                    float buffer = surroundRange + 1.5f;
                     
-                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) <= surroundRange)
+                    if (distanceToTarget <= buffer)
                     {
                         stateMachine.ChangeState(nameof(SurroundState));
                     }

@@ -46,7 +46,9 @@ public class KnockBackState : SimpleState
             rb = meleeStateMachine.GetComponent<Rigidbody>();
         }
         
+        agent.enabled = false;
         rb.isKinematic = false;
+
         switch(kbType)
         {
             case KnockBackType.One: {
@@ -63,14 +65,19 @@ public class KnockBackState : SimpleState
             }
         }
 
-        knockBackTimer = knockBackDuration;  
-        agent.enabled = false;
+        Debug.Log("The enemy's speed is " + rb.linearVelocity.magnitude);
+
+        knockBackTimer = knockBackDuration;
     }
 
     public override void UpdateState(float dt)
     {   
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
+            if (gruntStateMachine.isGrounded && rb.linearVelocity.y < 0)
+            {
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+            }
             if(knockBackTimer > 0)
             {
                 knockBackTimer -= dt;

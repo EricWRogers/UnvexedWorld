@@ -27,6 +27,7 @@ public class RandomMovementState : SimpleState
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
             agent.enabled = true;
             anim = ((GruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
+            circleCenterObject = agent.transform.parent;
         }
 
         MoveToRandomPoint();
@@ -53,7 +54,6 @@ public class RandomMovementState : SimpleState
    
             if(gruntStateMachine.LOS == true)
             {
-                Debug.Log("Has LOS");
                 anim.SetTrigger("LOS");
                 stateMachine.ChangeState(nameof(InRangeState));
             }
