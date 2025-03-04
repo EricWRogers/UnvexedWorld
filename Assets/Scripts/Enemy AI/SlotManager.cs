@@ -52,7 +52,11 @@ public class SlotManager : MonoBehaviour
 
 	public void Release(int slot)
 	{
-		slots [slot] = null;
+		if (slot < 0 || slot >= slots.Count)
+		{
+			return;
+		}
+		slots[slot] = null;
 	}
 
 	public void SetSlotCount(int newCount)

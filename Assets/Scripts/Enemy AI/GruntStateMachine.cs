@@ -143,13 +143,6 @@ public class GruntStateMachine : SimpleStateMachine
         Vector3 direction = -Vector3.up;
         float sphereCastDistance = groundCheckDistance;
 
-        // Draw the sphere cast using Debug.DrawRay and Debug.DrawLine
-        // Debug.DrawRay(sphereCastOrigin, direction * sphereCastDistance, Color.red); // Show the downward cast
-        // Debug.DrawLine(sphereCastOrigin + Vector3.left * sphereRadius, sphereCastOrigin + Vector3.left * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.right * sphereRadius, sphereCastOrigin + Vector3.right * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.forward * sphereRadius, sphereCastOrigin + Vector3.forward * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.back * sphereRadius, sphereCastOrigin + Vector3.back * sphereRadius + direction * sphereCastDistance, Color.green);
-
         if (Physics.SphereCast(sphereCastOrigin, sphereRadius, direction, out hit, sphereCastDistance, mask))
         {
             isGrounded = true;
