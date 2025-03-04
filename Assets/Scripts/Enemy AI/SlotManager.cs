@@ -55,6 +55,16 @@ public class SlotManager : MonoBehaviour
 		slots [slot] = null;
 	}
 
+	public void SetSlotCount(int newCount)
+	{
+		count = newCount;
+		slots = new List<GameObject>(newCount);
+		for (int i = 0; i < count; i++)
+		{
+			slots.Add(null);
+		}
+	}
+
 	void OnDrawGizmos()
 	{
 		for (int index = 0; index < count; ++index)
