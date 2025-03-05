@@ -153,11 +153,11 @@ public class GruntStateMachine : SimpleStateMachine
         if (Physics.SphereCast(sphereCastOrigin, sphereRadius, direction, out hit, sphereCastDistance, mask))
         {
             isGrounded = true;
-            Debug.Log($"Hit: " + hit.collider.gameObject.name);
+            //Debug.Log($"Hit: " + hit.collider.gameObject.name);
         }else
         {
             isGrounded = false;
-            Debug.Log("Did not hit ground");
+            //Debug.Log("Did not hit ground");
         }
 
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);

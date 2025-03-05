@@ -12,6 +12,8 @@ so the AI needs to return to surround state and reenter into the queue*/
 public class RetreatState : SimpleState
 {
     private NavMeshAgent agent;
+    [SerializeField]
+    private EnemyFinder enemyTatic;
     public float attackRange;
     public float retreatDistance = 8f;
     private Vector3 retreatPosition;
@@ -27,10 +29,16 @@ public class RetreatState : SimpleState
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             agent.enabled = true;
+            enemyTatic = agent.GetComponentInParent<EnemyFinder>();
             retreatPosition = CalculateRetreatPosition(gruntStateMachine);
             if(agent.isOnNavMesh == true)
             {
                 agent.SetDestination(retreatPosition);
+            }
+
+            if(enemyTatic.nearbyEnemies.Count <= 2)
+            {
+                stateMachine.ChangeState(nameof(ChargeState));
             }
         }
     }
