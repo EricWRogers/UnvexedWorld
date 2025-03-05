@@ -19,7 +19,8 @@ public class KnockBackState : SimpleState
         Two,
         Three
     }
-
+    [SerializeField]
+    private GameObject prefab;
     private Rigidbody rb;
     private NavMeshAgent agent;
 
@@ -47,82 +48,86 @@ public class KnockBackState : SimpleState
         }
         
         agent.enabled = false;
-        rb.isKinematic = false;
+        rb.Sleep();
+        ((GruntStateMachine)stateMachine).enabled = false;
+
+        //Spawn Hamester for Knockback
+        GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);
+        //Set the obj to be the parent of the agent
+        agent.transform.parent = obj.transform;
 
         switch(kbType)
         {
             case KnockBackType.One: {
-                rb.AddForce(dir * power, ForceMode.Impulse);
+                obj.GetComponent<Rigidbody>().AddForce(dir * power, ForceMode.Impulse);
                 break;
             }
             case KnockBackType.Two: {
-                rb.AddForce(dir * (power + mag), ForceMode.Impulse);
+                obj.GetComponent<Rigidbody>().AddForce(dir * (power + mag), ForceMode.Impulse);
                 break;
             }
             case KnockBackType.Three: {
-                rb.AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+                obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
                 break;
             }
         }
 
-        Debug.Log("The enemy's speed is " + rb.linearVelocity.magnitude);
-
-        knockBackTimer = knockBackDuration;
+        obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
     }
 
     public override void UpdateState(float dt)
     {   
-        if (stateMachine is GruntStateMachine gruntStateMachine)
-        {
-            if (gruntStateMachine.isGrounded && rb.linearVelocity.y < 0)
-            {
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            }
-            if(knockBackTimer > 0)
-            {
-                knockBackTimer -= dt;
-            }
-            if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
-            {
-                stateMachine.ChangeState(nameof(InRangeState));
-            }
-            else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true && gruntStateMachine.isGrounded == true)
-            {
-                stateMachine.ChangeState(nameof(IdleState));
-            }
-        }
+        // if (stateMachine is GruntStateMachine gruntStateMachine)
+        // {
+        //     if (gruntStateMachine.isGrounded && rb.linearVelocity.y < 0)
+        //     {
+        //         rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+        //     }
+        //     if(knockBackTimer > 0)
+        //     {
+        //         knockBackTimer -= dt;
+        //     }
+        //     if (knockBackTimer <= 0 && gruntStateMachine.isIdling == false && gruntStateMachine.isGrounded == true)
+        //     {
+        //         stateMachine.ChangeState(nameof(InRangeState));
+        //     }
+        //     else if(knockBackTimer <= 0 && gruntStateMachine.isIdling == true && gruntStateMachine.isGrounded == true)
+        //     {
+        //         stateMachine.ChangeState(nameof(IdleState));
+        //     }
+        // }
 
-        else if (stateMachine is MeleeStateMachine meleeStateMachine)
-        {
-            if(knockBackTimer > 0)
-            {
-                knockBackTimer -= dt;
-            }
-            if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
-            {
-                stateMachine.ChangeState(nameof(InRangeState));
-            }
-            else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
-            {
-                stateMachine.ChangeState(nameof(IdleState));
-            }
-        }
+        // else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        // {
+        //     if(knockBackTimer > 0)
+        //     {
+        //         knockBackTimer -= dt;
+        //     }
+        //     if (knockBackTimer <= 0 && meleeStateMachine.isIdling == false)
+        //     {
+        //         stateMachine.ChangeState(nameof(InRangeState));
+        //     }
+        //     else if(knockBackTimer <= 0 && meleeStateMachine.isIdling == true)
+        //     {
+        //         stateMachine.ChangeState(nameof(IdleState));
+        //     }
+        // }
     }
     
     public override void OnExit()
     {
         base.OnExit();
 
-        rb.linearVelocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
+        // rb.linearVelocity = Vector3.zero;
+        // rb.angularVelocity = Vector3.zero;
 
-        if(agent.isOnNavMesh == true)
-        {
-            agent.enabled = true;
-        }
+        // if(agent.isOnNavMesh == true)
+        // {
+        //     agent.enabled = true;
+        // }
 
-        agent.Warp(agent.transform.position);
+        // agent.Warp(agent.transform.position);
 
-        rb.isKinematic = true;
+        // rb.isKinematic = true;
     }
 }
