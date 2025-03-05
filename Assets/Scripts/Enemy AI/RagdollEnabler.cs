@@ -63,6 +63,10 @@ public class RagdollEnabler : MonoBehaviour
     public void EnableRagdoll()
     {
         PowerAmount();
+        if(power == 0)
+        {
+            power = 20;
+        }
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();

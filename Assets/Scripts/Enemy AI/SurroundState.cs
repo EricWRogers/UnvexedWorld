@@ -48,7 +48,8 @@ public class SurroundState : SimpleState
             }
             else if(slotIndex == -1)
             {
-                Debug.LogError($"{gruntStateMachine.name} could not reserve a slot!");
+                //Debug.LogError($"{gruntStateMachine.name} could not reserve a slot!");
+                stateMachine.ChangeState(nameof(ChargeState));
                 return;
             }
 
