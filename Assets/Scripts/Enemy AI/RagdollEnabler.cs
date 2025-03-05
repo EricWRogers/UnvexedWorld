@@ -63,6 +63,10 @@ public class RagdollEnabler : MonoBehaviour
     public void EnableRagdoll()
     {
         PowerAmount();
+        if(power == 0)
+        {
+            power = 20;
+        }
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
@@ -139,7 +143,7 @@ public class RagdollEnabler : MonoBehaviour
         if(isGrunt)
         {
             center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power * 4;
         }
         else
         {
