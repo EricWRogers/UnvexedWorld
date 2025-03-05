@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
-    public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
     public GameObject moveSet; // MoveSet GameObject
@@ -82,7 +81,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         healthBar.SetActive(false);
-        powerSystem.SetActive(false);
         comboInfo.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
@@ -96,7 +94,6 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         healthBar.SetActive(true);
-        powerSystem.SetActive(true);
         comboInfo.SetActive(true);
         Time.timeScale = 1f;
         isPaused = false;

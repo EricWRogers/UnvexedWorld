@@ -1,97 +1,145 @@
-using UnityEngine;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-public class RadialMenu : MonoBehaviour
+public class RadialMenuManager : MonoBehaviour
 {
-    public Transform center;
-    public Transform selectobject;
+    public GameObject radialMenu; // Parent object of the menu
+    public List<RadialSection> radialSections; // List of radial sections (styles)
+    
+    private int currentStyleIndex = 0;
+    private int currentAttributeIndex = 0;
+    private bool menuActive = false;
+    
+    private PlayerGamepad gamepad;
 
-    public GameObject RadialMenuRoot;
-
-    bool isRadialMenuActive;
-
-    public Text HighlightedMove;
-    public Text selectMove;
-
-    public string[] MoveSelect;
-    public Transform[] itemSlots;
-    public Transform min, max;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
-        isRadialMenuActive = false;
+        // Initialize the Gamepad
+        gamepad = new PlayerGamepad();
+        gamepad.GamePlay.Casting.performed += ctx => ToggleMenu(true);
+        gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
+        gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
+        gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
     }
 
-    // Update is called once per frame
+    void OnEnable()
+    {
+        gamepad.GamePlay.Enable();
+    }
+
+    void OnDisable()
+    {
+        gamepad.GamePlay.Disable();
+    }
+    
     void Update()
     {
+        // Keyboard Input for toggling the radial menu
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            isRadialMenuActive = !isRadialMenuActive;
-            if (isRadialMenuActive)
-            {
-                RadialMenuRoot.SetActive(true);
-            }
-            else
-            {
-                RadialMenuRoot.SetActive(false);
-            }
+            ToggleMenu(true);
         }
-
-        if (isRadialMenuActive)
+        if (Input.GetKeyUp(KeyCode.Q))
         {
-            if(Vector3.Distance(Input.mousePosition,center.position)< Vector3.Distance(max.position, center.position)&& Vector3.Distance(Input.mousePosition, center.position) > Vector3.Distance(min.position, center.position))
-            {
-                //Formula for calculating angle
-                Vector2 delta = center.position - Input.mousePosition;
-                float angle = Mathf.Atan2(delta.y, delta.x) * Mathf.Rad2Deg;
-                angle += 100;
-
-                int currentMove = 0;
-                for (int i = 0; i < 360; i += 45)
-                {
-                    if (angle >= i && angle < i + 45)
-                    {
-                        selectobject.eulerAngles = new Vector3(0, 0, i);
-                        HighlightedMove.text = MoveSelect[currentMove];
-
-
-                        foreach (Transform t in itemSlots)
-                        {
-                            t.transform.localScale = new Vector3(1, 1, 1);
-                        }
-
-                        itemSlots[currentMove].transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
-
-
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            selectMove.text = MoveSelect[currentMove];
-                            isRadialMenuActive = false;
-                            RadialMenuRoot.SetActive(false);
-                        }
-                    }
-                    currentMove++;
-                }
-            }
+            ToggleMenu(false);
         }
 
+        // If the menu is active and 'E' is pressed, cycle the radial sections
+        if (menuActive && Input.GetKeyDown(KeyCode.E))
+        {
+            CycleRadial();
+        }
+
+        // Debugging the menu state
+        Debug.Log("Menu Active: " + menuActive);
+    }
+
+    void ToggleMenu(bool state)
+    {
+        Debug.Log("Toggle Menu: " + state); // Debug log to check if it's being triggered
+        radialMenu.SetActive(state);
+        menuActive = state;
+        if (state)
+        {
+            HighlightCurrentStyle();
+        }
+    }
+
+    void CycleRadial()
+    {
+        // Cycle through the attributes and styles of the radial sections
+        if (currentAttributeIndex < radialSections[currentStyleIndex].attributes.Count - 1)
+        {
+            currentAttributeIndex++;
+        }
         else
         {
-            HighlightedMove.text = "None";
-            foreach (Transform t in itemSlots)
-            {
-                t.transform.localScale = new Vector3(1, 1, 1);
-            }
+            currentAttributeIndex = 0;
+            currentStyleIndex = (currentStyleIndex + 1) % radialSections.Count;
+        }
+        HighlightCurrentStyle();
+    }
 
-            if (Input.GetMouseButtonDown(0))
-            {
-                selectMove.text = "None";
-                isRadialMenuActive = false;
-                RadialMenuRoot.SetActive(false);
-            }
+    void HighlightCurrentStyle()
+    {
+        // Highlight the current radial style and show the corresponding attribute
+        for (int i = 0; i < radialSections.Count; i++)
+        {
+            radialSections[i].SetHighlight(i == currentStyleIndex);
+        }
+        radialSections[currentStyleIndex].ShowAttribute(currentAttributeIndex);
+    }
+
+    void CycleElementUp()
+    {
+        // Cycle through the elements (e.g., aspects or spells)
+        if (currentAttributeIndex + 1 < radialSections[currentStyleIndex].attributes.Count)
+        {
+            currentAttributeIndex++;
+        }
+        else
+        {
+            currentAttributeIndex = 0;
+        }
+        HighlightCurrentStyle();
+    }
+
+    void CycleAspect()
+    {
+        // Cycle through different aspects or states
+        if (currentStyleIndex == 0)
+        {
+            currentStyleIndex = 1;
+        }
+        else
+        {
+            currentStyleIndex = 0;
+        }
+        HighlightCurrentStyle();
+    }
+}
+
+[System.Serializable]
+public class RadialSection
+{
+    public GameObject sectionObject;
+    public List<GameObject> attributes;
+    public Image highlightImage;
+
+    public void SetHighlight(bool active)
+    {
+        highlightImage.enabled = active;
+    }
+
+    public void ShowAttribute(int index)
+    {
+        // Show the currently selected attribute in the radial section
+        for (int i = 0; i < attributes.Count; i++)
+        {
+            attributes[i].SetActive(i == index);
         }
     }
 }
