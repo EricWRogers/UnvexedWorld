@@ -5,10 +5,17 @@ public class OpenDoor : MonoBehaviour
 {
     public Animator anim;
     public EnemyFinder enemies;
+    public float openDoorDistance = 2.5f;
+    private Transform player;
 
-    void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if(other.gameObject.CompareTag("Player"))
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+
+    void FixedUpdate()
+    {
+        if(Vector3.Distance(transform.position, player.position) < openDoorDistance)
         {
             if(enemies != null)
             {
