@@ -143,7 +143,7 @@ public class RagdollEnabler : MonoBehaviour
         if(isGrunt)
         {
             center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power * 4;
         }
         else
         {
