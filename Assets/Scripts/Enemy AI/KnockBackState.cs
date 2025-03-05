@@ -41,7 +41,7 @@ public class KnockBackState : SimpleState
             rb = gruntStateMachine.GetComponent<Rigidbody>();
             col = gruntStateMachine.GetComponent<CapsuleCollider>();
 
-            if (!gruntStateMachine.isAlive)
+            if (!gruntStateMachine.isAlive || gruntStateMachine.GetComponent<Health>().currentHealth <= 0)
             {
                 stateMachine.ChangeState(nameof(DeathState));
                 return; 
@@ -54,32 +54,32 @@ public class KnockBackState : SimpleState
         }
 
         //Spawn Hamester for Knockback
-            GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);
-            //Set the obj to be the parent of the agent
-            agent.transform.parent = obj.transform;
+        GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);
+        //Set the obj to be the parent of the agent
+        agent.transform.parent = obj.transform;
 
-            switch(kbType)
-            {
-                case KnockBackType.One: {
-                    obj.GetComponent<Rigidbody>().AddForce(dir * power, ForceMode.Impulse);
-                    break;
-                }
-                case KnockBackType.Two: {
-                    obj.GetComponent<Rigidbody>().AddForce(dir * (power + mag), ForceMode.Impulse);
-                    break;
-                }
-                case KnockBackType.Three: {
-                    obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
-                    break;
-                }
+        switch(kbType)
+        {
+            case KnockBackType.One: {
+                obj.GetComponent<Rigidbody>().AddForce(dir * power, ForceMode.Impulse);
+                break;
             }
+            case KnockBackType.Two: {
+                obj.GetComponent<Rigidbody>().AddForce(dir * (power + mag), ForceMode.Impulse);
+                break;
+            }
+            case KnockBackType.Three: {
+            obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+                break;
+            }
+        }
 
-            obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
+        obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
 
-            agent.enabled = false;
-            col.enabled = false;
-            ((GruntStateMachine)stateMachine).enabled = false;
-            rb.Sleep(); 
+        agent.enabled = false;
+        col.enabled = false;
+        ((GruntStateMachine)stateMachine).enabled = false;
+        rb.Sleep(); 
     }
 
     public override void UpdateState(float dt)

@@ -20,6 +20,7 @@ public class ReactivateAI : MonoBehaviour
         if (transform.childCount > 0)
         {
             enemy = transform.GetChild(0).gameObject;
+            enemy.transform.localPosition = Vector3.zero;
         }
         else
         {
