@@ -319,6 +319,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
+    prefab: {fileID: 66303039158351526, guid: 368ef30af82eba440bb683a481c24291, type: 3}
     mag: 0
     power: 0
     dir: {x: 0, y: 0, z: 0}
@@ -340,10 +341,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    enemyFinder: {fileID: 0}
-    minRadius: 2
-    maxRadius: 6
-    waitTimer: 0
+    slotManager: {fileID: 0}
   charge:
     stateStart:
       m_PersistentCalls:
@@ -402,6 +400,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
+    enemyTatic: {fileID: 0}
     attackRange: 0
     retreatDistance: 8
   dead:
@@ -451,12 +450,10 @@ MonoBehaviour:
   target: {fileID: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
+  ogParent: {fileID: 0}
   mask:
     serializedVersion: 2
     m_Bits: 64
-  rotationMask:
-    serializedVersion: 2
-    m_Bits: 16319
   LOS: 0
   isAlive: 0
   isInsideCollider: 0
