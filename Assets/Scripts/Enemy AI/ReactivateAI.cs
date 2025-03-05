@@ -8,6 +8,7 @@ public class ReactivateAI : MonoBehaviour
     private GruntStateMachine gruntStateMachine;
     private NavMeshAgent agent;
     private Rigidbody rb;
+    private CapsuleCollider enemyCollider;
     public GameObject enemy;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,6 +27,7 @@ public class ReactivateAI : MonoBehaviour
             gruntStateMachine = enemy.GetComponent<GruntStateMachine>();
             agent = enemy.GetComponent<NavMeshAgent>(); 
             rb = enemy.GetComponent<Rigidbody>(); 
+            enemyCollider = enemy.GetComponent<CapsuleCollider>();
         } 
     }
 
@@ -37,6 +39,8 @@ public class ReactivateAI : MonoBehaviour
     public void SelfDestruct()
     {
         enemy.transform.parent = null;
+        enemy.transform.parent = gruntStateMachine.ogParent.transform;
+        enemyCollider.enabled = true;
         gruntStateMachine.enabled = true;
         gruntStateMachine.ChangeState(nameof(InRangeState));
         agent.enabled = true;

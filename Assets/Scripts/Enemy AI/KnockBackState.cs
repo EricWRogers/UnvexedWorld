@@ -23,6 +23,7 @@ public class KnockBackState : SimpleState
     private GameObject prefab;
     private Rigidbody rb;
     private NavMeshAgent agent;
+    private CapsuleCollider col;
 
     public float mag, power;
     public Vector3 dir;
@@ -40,6 +41,7 @@ public class KnockBackState : SimpleState
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             rb = gruntStateMachine.GetComponent<Rigidbody>();
+            col = gruntStateMachine.GetComponent<CapsuleCollider>();
         }
         else if(stateMachine is MeleeStateMachine meleeStateMachine)
         {
@@ -48,8 +50,9 @@ public class KnockBackState : SimpleState
         }
         
         agent.enabled = false;
-        rb.Sleep();
+        col.enabled = false;
         ((GruntStateMachine)stateMachine).enabled = false;
+        rb.Sleep();
 
         //Spawn Hamester for Knockback
         GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);

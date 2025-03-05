@@ -28,6 +28,7 @@ public class GruntStateMachine : SimpleStateMachine
     public NavMeshAgent agent;
     [HideInInspector]
     public Animator anim;
+    public GameObject ogParent;
 
     public LayerMask mask;
 
@@ -77,6 +78,8 @@ public class GruntStateMachine : SimpleStateMachine
         agent = GetComponent<NavMeshAgent>();
 
         rb = GetComponent<Rigidbody>();
+
+        ogParent  = transform.parent != null ? transform.parent.gameObject : null;
 
         if(isIdling)
         {
