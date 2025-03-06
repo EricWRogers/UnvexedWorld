@@ -83,6 +83,40 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayIndexed(string name, int index, bool _varyPitch = false)
+    {
+        Debug.Log("AudioManager: Play " + name);
+        AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
+        if (ac != null && soundPool != null)
+        {
+            SoundData sound = ac.sounds[index];
+            GameObject audioObject = soundPool.GetPooledObject();
+            if (audioObject != null)
+            {
+                AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+                audioSource.clip = sound.clip;
+                audioSource.volume = sound.volume;
+                if (_varyPitch)
+                    audioSource.pitch = sound.pitch + Random.Range(-0.3f, 0.3f);
+                else
+                    audioSource.pitch = sound.pitch;
+                audioSource.loop = sound.loop;
+                audioObject.SetActive(true);
+                audioSource.Play();
+
+                // Disable the object after the sound finishes playing
+                if (!sound.loop)
+                {
+                    StartCoroutine(DeactivateAfterPlay(audioSource));
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Sound '{name}' was not found!");
+        }
+    }
+
     public void PlayBackgroundMusic()
     {
         if (backgroundMusicSource != null && !backgroundMusicSource.isPlaying)
@@ -155,6 +189,9 @@ public class AudioManager : MonoBehaviour
 
     // Quick Play Methods for Specific Sounds
     public void PlayPunchSound() => Play("Punch", true);
+    public void PlayRangedSound() => Play("Ranged", true);
+    
+    public void PlayRangedSound(int index) => PlayIndexed("Ranged", index, true);
     public void PlayDashSound() => Play("Dash");
     public void PlayLandingSound() => Play("Landing");
     public void PlayEnemyHurtSound() => Play("EnemyHurt");
