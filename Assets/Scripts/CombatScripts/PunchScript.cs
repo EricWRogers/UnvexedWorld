@@ -190,22 +190,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        if(other.gameObject.CompareTag("Breakable"))
-        {
-            other.GetComponent<Rigidbody>().Sleep();
-            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
-            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
-            
-            if(other.GetComponent<BreakableObject>().rb != null)
-            {
-                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
-                {
-                    float mag = rigidbodies.linearVelocity.magnitude;
-                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
-                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
-                }
-            }
-        }
+     
 
     }
    
