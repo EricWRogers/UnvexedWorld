@@ -12,8 +12,7 @@ public class PortalTransitionScript : MonoBehaviour
 
     public GameObject cylinder1;
     public GameObject cylinder2;
-    public GameObject cylinder3;
-    public GameObject cylinder4;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -49,8 +48,7 @@ public class PortalTransitionScript : MonoBehaviour
                  portalOn = true;
                  cylinder1.SetActive(true);
                 cylinder2.SetActive(true);
-                cylinder3.SetActive(true);
-                cylinder4.SetActive(true);
+              
 
                  
             }

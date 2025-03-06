@@ -77,29 +77,6 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             hitEnemies.Add(enemy);
             StartCoroutine(RemoveFromList(enemy));
 
-            if (enemy.GetComponent<MeleeStateMachine>() != null)
-            {
-                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
-                
-                switch (knockBackType)
-                {
-                    case 1:
-                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
-                        break;
-                    case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
-                        direction.LookAt(other.transform);
-                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
-                        break;
-                    case 3:
-                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
-                        break;
-                    default:
-                        Debug.Log("Incorrect Knock back type please use 1-3.");
-                        break;
-                }
-                
-            }
             if (enemy.GetComponent<GruntStateMachine>() != null)
             {
                 var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
@@ -110,14 +87,17 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                         Debug.Log("0 gives no knock back");
                         break;
                     case 1:
+                        Debug.Log("CASE 1 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
                         //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        Debug.Log("CASE 2 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 3:
+                        Debug.Log("CASE 3 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
                         break;
                     default:
@@ -235,7 +215,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     private IEnumerator RemoveFromList(GameObject enemy)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(5.25f);
         hitEnemies.Remove(enemy);
     }
 

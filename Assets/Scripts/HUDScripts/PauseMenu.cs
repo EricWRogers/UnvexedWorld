@@ -6,17 +6,20 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
-    public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
     public GameObject moveSet; // MoveSet GameObject
     public Button resumeButton;
     public Button quitButton;
     public Button moveSetButton; // Add MoveSet button reference
+    public GameObject HealthStyle;
 
     public WinMenuScript win;
 
     PlayerGamepad gamepad;
+
+    private ThirdPersonMovement playerMovement;
+    private MeleeRangedAttack playerAttack;
 
     private bool isMoveSetOpen = false; // Track MoveSet visibility
     public bool isPaused = false;
@@ -39,6 +42,9 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        playerMovement = FindFirstObjectByType<ThirdPersonMovement>();
+        playerAttack = FindFirstObjectByType<MeleeRangedAttack>();
+
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Ensure MoveSet is hidden at start
 
@@ -76,28 +82,30 @@ public class PauseMenu : MonoBehaviour
 
     void Pause()
     {
-        Debug.Log("Game Paused");
+        playerMovement.enabled = false;
+        playerAttack.enabled = false;
         pauseMenuUI.SetActive(true);
         moveSet.SetActive(false); // Ensure MoveSet stays hidden on pause
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         healthBar.SetActive(false);
-        powerSystem.SetActive(false);
         comboInfo.SetActive(false);
+        HealthStyle.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
     }
 
     public void Resume()
     {
-        Debug.Log("Game Resumed");
+        playerMovement.enabled = true;
+        playerAttack.enabled = true;
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Hide MoveSet when resuming
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         healthBar.SetActive(true);
-        powerSystem.SetActive(true);
         comboInfo.SetActive(true);
+        HealthStyle.SetActive(true);
         Time.timeScale = 1f;
         isPaused = false;
     }

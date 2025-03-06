@@ -11,7 +11,7 @@ public class MultishotProjectile : MonoBehaviour
     void Start()
     {
         gameObject.transform.SetParent(gameObject.GetComponent<AttackUpdater>().player.transform);
-        
+        AudioManager.instance.PlayRangedSound(0);
     }
 
     // Update is called once per frame

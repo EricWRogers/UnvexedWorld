@@ -6,8 +6,12 @@ using TMPro;
 
 public class ManaTracker : MonoBehaviour
 {
-    public TMP_Text splendorMana;
-    public TMP_Text scavengeMana;
+    public TMP_Text manaText;
+
+    public List<Sprite> elementSprites;
+
+    public GameObject box;
+    
     public SpellCraft spellCraft;
     // Start is called before the first frame update
     void Start()
@@ -18,7 +22,8 @@ public class ManaTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        splendorMana.text = ("%"+(int)spellCraft.energy[2]);
-        scavengeMana.text = ("%"+(int)spellCraft.energy[1]);
+        manaText.text = spellCraft.CurrentElement+"%"+(int)spellCraft.energy[(int)spellCraft.CurrentElement];
+        box.GetComponent<Image>().sprite = elementSprites[(int)spellCraft.CurrentElement];
+        
     }
 }

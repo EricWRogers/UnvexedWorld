@@ -28,6 +28,7 @@ public class GruntStateMachine : SimpleStateMachine
     public NavMeshAgent agent;
     [HideInInspector]
     public Animator anim;
+    public GameObject ogParent;
 
     public LayerMask mask;
 
@@ -77,6 +78,8 @@ public class GruntStateMachine : SimpleStateMachine
         agent = GetComponent<NavMeshAgent>();
 
         rb = GetComponent<Rigidbody>();
+
+        ogParent  = transform.parent != null ? transform.parent.gameObject : null;
 
         if(isIdling)
         {
@@ -143,21 +146,14 @@ public class GruntStateMachine : SimpleStateMachine
         Vector3 direction = -Vector3.up;
         float sphereCastDistance = groundCheckDistance;
 
-        // Draw the sphere cast using Debug.DrawRay and Debug.DrawLine
-        // Debug.DrawRay(sphereCastOrigin, direction * sphereCastDistance, Color.red); // Show the downward cast
-        // Debug.DrawLine(sphereCastOrigin + Vector3.left * sphereRadius, sphereCastOrigin + Vector3.left * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.right * sphereRadius, sphereCastOrigin + Vector3.right * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.forward * sphereRadius, sphereCastOrigin + Vector3.forward * sphereRadius + direction * sphereCastDistance, Color.green);
-        // Debug.DrawLine(sphereCastOrigin + Vector3.back * sphereRadius, sphereCastOrigin + Vector3.back * sphereRadius + direction * sphereCastDistance, Color.green);
-
         if (Physics.SphereCast(sphereCastOrigin, sphereRadius, direction, out hit, sphereCastDistance, mask))
         {
             isGrounded = true;
-            Debug.Log($"Hit: " + hit.collider.gameObject.name);
+            //Debug.Log($"Hit: " + hit.collider.gameObject.name);
         }else
         {
             isGrounded = false;
-            Debug.Log("Did not hit ground");
+            //Debug.Log("Did not hit ground");
         }
 
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);

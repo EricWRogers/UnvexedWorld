@@ -21,7 +21,7 @@ public class Diologue : MonoBehaviour
     void Start()
     {
         
-       
+       movement = FindFirstObjectByType<ThirdPersonMovement>();
         
     }
 
@@ -77,6 +77,7 @@ public class Diologue : MonoBehaviour
         else
         {
             gameObject.SetActive(false);
+            movement.inText = false;
         }
     }
 }

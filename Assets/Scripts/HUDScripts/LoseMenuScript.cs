@@ -18,12 +18,17 @@ public class LoseMenuScript : MonoBehaviour
 
     private Health playerHealth;
     private PauseMenu pauseMenu;
+    private ThirdPersonMovement playerMovement;
+    private MeleeRangedAttack playerAttack;
 
     public EventSystem eventSystem;
     
 
     void Start()
     {
+        playerMovement = FindFirstObjectByType<ThirdPersonMovement>();
+        playerAttack = FindFirstObjectByType<MeleeRangedAttack>();
+
         loseSection.SetActive(false);
 
         pauseMenu = FindFirstObjectByType<PauseMenu>();
@@ -35,8 +40,10 @@ public class LoseMenuScript : MonoBehaviour
         playerHealth.outOfHealth.AddListener(Lose);    
     }
 
-     public void Lose()
+    public void Lose()
     {
+        playerMovement.enabled = false;
+        playerAttack.enabled = false;
         eventSystem.enabled = false;
         didLose = true;
         pauseMenu.enabled = false;
@@ -51,6 +58,8 @@ public class LoseMenuScript : MonoBehaviour
 
     public void Retry()
     {
+        playerMovement.enabled = true;
+        playerAttack.enabled = true;
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
