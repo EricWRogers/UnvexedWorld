@@ -5,22 +5,21 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-public class GruntStateMachine : SimpleStateMachine
+public class RangeGruntStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
-    public InRangeState chase;
-    public SurroundState surround;
     public ChargeState charge;
-    public AttackState melee;
+    public AttackState range;
     public RetreatState retreat;
     public DeathState dead;
 
     public Transform target;
     
     private Rigidbody rb;
+    private CapsuleCollider capsuleCollider;
     private Health health;
     
     [HideInInspector]
@@ -41,10 +40,8 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
-        states.Add(chase);
-        states.Add(surround);
         states.Add(charge);
-        states.Add(melee);
+        states.Add(range);
         states.Add(retreat);
         states.Add(dead);
 
@@ -58,6 +55,8 @@ public class GruntStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
+
+        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
         

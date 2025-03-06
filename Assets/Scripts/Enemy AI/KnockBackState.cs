@@ -47,10 +47,29 @@ public class KnockBackState : SimpleState
                 return; 
             }
         }
-        else if(stateMachine is MeleeStateMachine meleeStateMachine)
+        else if(stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            rb = meleeStateMachine.GetComponent<Rigidbody>();
+            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
+            rb = agroGruntStateMachine.GetComponent<Rigidbody>();
+            col = agroGruntStateMachine.GetComponent<CapsuleCollider>();
+
+            if (!agroGruntStateMachine.isAlive || agroGruntStateMachine.GetComponent<Health>().currentHealth <= 0)
+            {
+                stateMachine.ChangeState(nameof(DeathState));
+                return; 
+            }
+        }
+        else if(stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
+            rb = rangeGruntStateMachine.GetComponent<Rigidbody>();
+            col = rangeGruntStateMachine.GetComponent<CapsuleCollider>();
+
+            if (!rangeGruntStateMachine.isAlive || rangeGruntStateMachine.GetComponent<Health>().currentHealth <= 0)
+            {
+                stateMachine.ChangeState(nameof(DeathState));
+                return; 
+            }
         }
 
         //Spawn Hamester for Knockback
@@ -74,11 +93,24 @@ public class KnockBackState : SimpleState
             }
         }
 
-        obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
-
         agent.enabled = false;
         col.enabled = false;
-        ((GruntStateMachine)stateMachine).enabled = false;
+        if(stateMachine is GruntStateMachine)
+        {
+            obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
+            ((GruntStateMachine)stateMachine).enabled = false;
+        }
+        if(stateMachine is AgroGruntStateMachine)
+        {
+            obj.transform.LookAt(((AgroGruntStateMachine)stateMachine).target);
+            ((AgroGruntStateMachine)stateMachine).enabled = false;
+        }
+        if(stateMachine is RangeGruntStateMachine)
+        {
+            obj.transform.LookAt(((RangeGruntStateMachine)stateMachine).target);
+            ((RangeGruntStateMachine)stateMachine).enabled = false;
+        }
+        
         rb.Sleep(); 
     }
 

@@ -5,17 +5,14 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-public class GruntStateMachine : SimpleStateMachine
+public class AgroGruntStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
-    public InRangeState chase;
-    public SurroundState surround;
     public ChargeState charge;
     public AttackState melee;
-    public RetreatState retreat;
     public DeathState dead;
 
     public Transform target;
@@ -41,11 +38,8 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
-        states.Add(chase);
-        states.Add(surround);
         states.Add(charge);
         states.Add(melee);
-        states.Add(retreat);
         states.Add(dead);
 
         foreach (SimpleState s in states)
