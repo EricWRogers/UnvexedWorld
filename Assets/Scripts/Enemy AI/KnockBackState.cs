@@ -35,41 +35,14 @@ public class KnockBackState : SimpleState
         Debug.Log("Knock Back State");
         base.OnStart();
 
-        if (stateMachine is GruntStateMachine gruntStateMachine)
-        {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            rb = gruntStateMachine.GetComponent<Rigidbody>();
-            col = gruntStateMachine.GetComponent<CapsuleCollider>();
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        rb = stateMachine.GetComponent<Rigidbody>();
+        col = stateMachine.GetComponent<CapsuleCollider>();
 
-            if (!gruntStateMachine.isAlive || gruntStateMachine.GetComponent<Health>().currentHealth <= 0)
-            {
-                stateMachine.ChangeState(nameof(DeathState));
-                return; 
-            }
-        }
-        else if(stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        if (stateMachine.GetComponent<Health>().currentHealth <= 0)
         {
-            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
-            rb = agroGruntStateMachine.GetComponent<Rigidbody>();
-            col = agroGruntStateMachine.GetComponent<CapsuleCollider>();
-
-            if (!agroGruntStateMachine.isAlive || agroGruntStateMachine.GetComponent<Health>().currentHealth <= 0)
-            {
-                stateMachine.ChangeState(nameof(DeathState));
-                return; 
-            }
-        }
-        else if(stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
-        {
-            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
-            rb = rangeGruntStateMachine.GetComponent<Rigidbody>();
-            col = rangeGruntStateMachine.GetComponent<CapsuleCollider>();
-
-            if (!rangeGruntStateMachine.isAlive || rangeGruntStateMachine.GetComponent<Health>().currentHealth <= 0)
-            {
-                stateMachine.ChangeState(nameof(DeathState));
-                return; 
-            }
+            stateMachine.ChangeState(nameof(DeathState));
+            return; 
         }
 
         //Spawn Hamester for Knockback
@@ -88,7 +61,7 @@ public class KnockBackState : SimpleState
                 break;
             }
             case KnockBackType.Three: {
-            obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+                obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
                 break;
             }
         }
@@ -98,18 +71,17 @@ public class KnockBackState : SimpleState
         if(stateMachine is GruntStateMachine)
         {
             obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
-            ((GruntStateMachine)stateMachine).enabled = false;
         }
         if(stateMachine is AgroGruntStateMachine)
         {
             obj.transform.LookAt(((AgroGruntStateMachine)stateMachine).target);
-            ((AgroGruntStateMachine)stateMachine).enabled = false;
         }
         if(stateMachine is RangeGruntStateMachine)
         {
             obj.transform.LookAt(((RangeGruntStateMachine)stateMachine).target);
-            ((RangeGruntStateMachine)stateMachine).enabled = false;
         }
+
+        stateMachine.enabled = false;
         
         rb.Sleep(); 
     }
