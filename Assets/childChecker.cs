@@ -25,6 +25,7 @@ public class childChecker : MonoBehaviour
         if(transform.childCount == 0)
         {
             Debug.Log("Dead Children");
+            begin = true;
             if(begin == true){
             elapsedTime += Time.deltaTime;
             float percentageComplete = elapsedTime / desiredDuration;
