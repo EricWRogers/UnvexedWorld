@@ -46,7 +46,7 @@ public class KnockBackState : SimpleState
         }
 
         //Spawn Hamester for Knockback
-        GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);
+        GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation, agent.transform.parent);
         //Set the obj to be the parent of the agent
         agent.transform.parent = obj.transform;
 
