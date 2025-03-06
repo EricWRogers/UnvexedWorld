@@ -21,12 +21,15 @@ public class HitStop : MonoBehaviour
     }
     public void Stop(float duration)
     {
+        if (duration == 0.0f)
+            return;
         if(isSlow)
             return;
             isSlow = true;
         if (waiting)
             return;
         Time.timeScale = scaleTime;
+        StopAllCoroutines();
         StartCoroutine(Wait(duration));
     }
 
