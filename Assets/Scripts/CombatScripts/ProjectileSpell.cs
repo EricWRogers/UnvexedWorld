@@ -49,6 +49,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         if(going)
         {
             Target();
+            AudioManager.instance.PlayRangedSound(1);
         }
         
         StartParticle();
@@ -60,6 +61,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             Move();
             CollisionCheck();
             m_lastPosition = transform.position;
+
         }
     }
     private void Move()
@@ -190,6 +192,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         Target();
         going = true;
+        AudioManager.instance.PlayRangedSound(1);
     }
     
     public void Target()
