@@ -469,18 +469,6 @@ MonoBehaviour:
     stateStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3872021290073882660}
-          m_TargetAssemblyTypeName: RagdollEnabler, Assembly-CSharp
-          m_MethodName: EnableRagdoll
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 5036944347510156140}
           m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
           m_MethodName: set_enabled
@@ -513,18 +501,10 @@ MonoBehaviour:
   agent: {fileID: 0}
   anim: {fileID: 0}
   ogParent: {fileID: 0}
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
   LOS: 0
   isAlive: 0
-  isInsideCollider: 0
   canStun: 0
   isIdling: 0
-  isGrounded: 0
-  maxForceSpeed: 40
-  groundCheckDistance: 0.4
-  gravityScale: 1.75
   inAttackRange: 1
 --- !u!114 &959047918777663014
 MonoBehaviour:
@@ -1421,6 +1401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 10
   isGrunt: 1
+  isRange: 0
   center: {x: 0, y: 0, z: 0}
   enemy: {fileID: 7323832619770725306}
   animator: {fileID: 7753075965116590986}

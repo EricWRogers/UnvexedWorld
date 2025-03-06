@@ -55,14 +55,12 @@ public class ReactivateAI : MonoBehaviour
     void FixedUpdate()
     {
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
-        Debug.Log("The Y velocity: " + Mathf.Abs(knockbackRB.linearVelocity.y));
     }
 
     public void SelfDestruct()
     {
         if(Mathf.Abs(knockbackRB.linearVelocity.y) > speedAmount)
         {
-            Debug.Log("Pile of Papers");
             knockbackTimer.StartTimer(0.1f, false);
             return;
         }
@@ -70,18 +68,22 @@ public class ReactivateAI : MonoBehaviour
         if(enemy.GetComponent<GruntStateMachine>() != null)
         {
             enemy.transform.parent = gruntStateMachine.ogParent.transform;
+            gruntStateMachine.enabled = true;
+            gruntStateMachine.ChangeState(nameof(InRangeState));
         }
         if(enemy.GetComponent<AgroGruntStateMachine>() != null)
         {
             enemy.transform.parent = agroGruntStateMachine.ogParent.transform;
+            agroGruntStateMachine.enabled = true;
+            agroGruntStateMachine.ChangeState(nameof(ChargeState));
         }
         if(enemy.GetComponent<RangeGruntStateMachine>() != null)
         {
             enemy.transform.parent = rangeGruntStateMachine.ogParent.transform;
+            rangeGruntStateMachine.enabled = true;
+            rangeGruntStateMachine.ChangeState(nameof(ChargeState));
         }
         enemyCollider.enabled = true;
-        gruntStateMachine.enabled = true;
-        gruntStateMachine.ChangeState(nameof(InRangeState));
         agent.enabled = true;
         rb.WakeUp();
         Destroy(gameObject, 1.0f);

@@ -80,24 +80,66 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             if (enemy.GetComponent<GruntStateMachine>() != null)
             {
                 var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
-                Debug.Log("Grunt Getting Knocked Back");
                 switch (knockBackType)
                 {
                     case 0:
                         Debug.Log("0 gives no knock back");
                         break;
                     case 1:
-                        Debug.Log("CASE 1 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
-                        Debug.Log("CASE 2 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 3:
-                        Debug.Log("CASE 3 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+            if (enemy.GetComponent<RangeGruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<RangeGruntStateMachine>();
+                switch (knockBackType)
+                {
+                    case 0:
+                        Debug.Log("0 gives no knock back");
+                        break;
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+            if (enemy.GetComponent<AgroGruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<AgroGruntStateMachine>();
+                switch (knockBackType)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
                         enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
                         break;
                     default:
