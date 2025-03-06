@@ -9,7 +9,7 @@ public class RadialMenuManager : MonoBehaviour
     public GameObject radialMenu; // Parent object of the menu
     public List<RadialSection> radialSections; // List of radial sections (styles)
     
-    private int currentStyleIndex = 0;
+    private int currentStyleIndex = 2;
     private int currentAttributeIndex = 0;
     private bool menuActive = false;
     
@@ -23,6 +23,7 @@ public class RadialMenuManager : MonoBehaviour
         gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
         gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
         gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
+        ToggleMenu(false);
     }
 
     void OnEnable()
@@ -40,6 +41,7 @@ public class RadialMenuManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ToggleMenu(true);
+            HighlightCurrentStyle();
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
@@ -48,24 +50,34 @@ public class RadialMenuManager : MonoBehaviour
 
         if (menuActive && Input.GetKeyDown(KeyCode.E))
         {
-            CycleRadial();
+            //CycleRadial();
+        }
+        
+        if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
+        {
+            CycleAspect();
         }
     }
 
     void ToggleMenu(bool state)
     {
         Debug.Log("Toggle Menu: " + state);
-        radialMenu.SetActive(state);
         menuActive = state;
 
         // Show all sections when menu is opened
         if (state)
         {
-            foreach (RadialSection section in radialSections)
+            for(int i = 0; i < transform.childCount; i++)
             {
-                section.sectionObject.SetActive(true);
+                transform.GetChild(i).gameObject.SetActive(true);
             }
             HighlightCurrentStyle();
+        } 
+        else {
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 
@@ -83,13 +95,19 @@ public class RadialMenuManager : MonoBehaviour
         for (int i = 0; i < radialSections.Count; i++)
         {
             bool isActive = (i == currentStyleIndex);
-            radialSections[i].SetHighlight(isActive);
+            radialSections[i].SetHighlight(true);
             radialSections[i].ShowAttribute(currentAttributeIndex);
 
             if (isActive)
             {
                 // Apply color shift when selected
-                Color newColor = Color.HSVToRGB((i * 0.2f) % 1, 1, 1); // Shifts hue based on index
+                Color newColor = new Color(1.0f, 1.0f, 1.0f); // Shifts hue based on index
+                radialSections[i].highlightImage.color = newColor;
+            }
+            else 
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(0.4f, 0.4f, 0.4f); // Shifts hue based on index
                 radialSections[i].highlightImage.color = newColor;
             }
         }
@@ -110,7 +128,7 @@ public class RadialMenuManager : MonoBehaviour
 
     void CycleAspect()
     {
-        currentStyleIndex = (currentStyleIndex + 1) % radialSections.Count;
+        currentAttributeIndex = (currentAttributeIndex + 1) % radialSections[currentStyleIndex].attributes.Count;
         HighlightCurrentStyle();
     }
 }
@@ -124,14 +142,28 @@ public class RadialSection
 
     public void SetHighlight(bool active)
     {
-        highlightImage.enabled = active;
+        highlightImage.enabled = active; // jank
+        highlightImage.gameObject.SetActive(active);
     }
 
     public void ShowAttribute(int index)
     {
         for (int i = 0; i < attributes.Count; i++)
         {
-            attributes[i].SetActive(i == index);
+            attributes[i].SetActive(true); // jank
+
+            if (i == index)
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(1.0f, 1.0f, 1.0f); // Shifts hue based on index
+                attributes[i].GetComponent<Image>().color = newColor;
+            }
+            else 
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(0.4f, 0.4f, 0.4f); // Shifts hue based on index
+                attributes[i].GetComponent<Image>().color = newColor;
+            }
         }
     }
 }
