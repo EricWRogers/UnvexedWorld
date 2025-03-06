@@ -11,7 +11,7 @@ public class KeyOrbCollect : MonoBehaviour
     void Start()
     {
         popupText = FindFirstObjectByType<PopupText>();
-         gainedOrb = FindFirstObjectByType<keyOrbGainedScript>();
+        gainedOrb = FindFirstObjectByType<keyOrbGainedScript>();
     }
 
     // Update is called once per frame
