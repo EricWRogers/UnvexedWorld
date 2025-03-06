@@ -27,6 +27,10 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if(IsBackgroundMusicPlaying()&&IsBattleMusicPlaying())
+        {
+            battleMusicSource.Stop();
+        }
     }
 
     public void SetMasterVolume(float volume)
@@ -84,6 +88,10 @@ public class AudioManager : MonoBehaviour
         if (backgroundMusicSource != null && !backgroundMusicSource.isPlaying)
         {
             backgroundMusicSource.Play();
+            if(IsBattleMusicPlaying())
+            {
+                backgroundMusicSource.Stop();
+            }
         }
     }
 
@@ -92,6 +100,10 @@ public class AudioManager : MonoBehaviour
         if (battleMusicSource != null && !battleMusicSource.isPlaying)
         {
             battleMusicSource.Play();
+            if(IsBackgroundMusicPlaying())
+            {
+                backgroundMusicSource.Stop();
+            }
         }
     }
 
