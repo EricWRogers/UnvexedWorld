@@ -33,6 +33,25 @@ public class HitStop : MonoBehaviour
         StartCoroutine(Wait(duration));
     }
 
+    void OnDestroy()
+    {
+        StopAllCoroutines();
+
+        if (gamePaused != null)
+        {
+            if(gamePaused.isPaused == false)
+            {
+                Time.timeScale = 1.0f;
+            }
+        }
+        else
+        {
+            Time.timeScale = 1.0f;
+        }
+        
+        waiting = false;
+    }
+
     IEnumerator Wait(float duration)
     {
         waiting = true;
