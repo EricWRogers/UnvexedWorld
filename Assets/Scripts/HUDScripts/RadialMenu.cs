@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
-public class RadialMenuManager : MonoBehaviour
+public class RadialMenuManager : MonoBehaviour 
 {
     public GameObject radialMenu; // Parent object of the menu
     public List<RadialSection> radialSections; // List of radial sections (styles)
     
-    private int currentStyleIndex = 0;
+    private int currentStyleIndex = 2;
     private int currentAttributeIndex = 0;
     private bool menuActive = false;
     
@@ -23,6 +23,7 @@ public class RadialMenuManager : MonoBehaviour
         gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
         gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
         gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
+        ToggleMenu(false);
     }
 
     void OnEnable()
@@ -37,65 +38,83 @@ public class RadialMenuManager : MonoBehaviour
     
     void Update()
     {
-        // Keyboard Input for toggling the radial menu
         if (Input.GetKeyDown(KeyCode.Q))
         {
             ToggleMenu(true);
+            HighlightCurrentStyle();
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
             ToggleMenu(false);
         }
 
-        // If the menu is active and 'E' is pressed, cycle the radial sections
         if (menuActive && Input.GetKeyDown(KeyCode.E))
         {
-            CycleRadial();
+            //CycleRadial();
         }
-
-        // Debugging the menu state
-        Debug.Log("Menu Active: " + menuActive);
+        
+        if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
+        {
+            CycleAspect();
+        }
     }
 
     void ToggleMenu(bool state)
     {
-        Debug.Log("Toggle Menu: " + state); // Debug log to check if it's being triggered
-        radialMenu.SetActive(state);
+        Debug.Log("Toggle Menu: " + state);
         menuActive = state;
+
+        // Show all sections when menu is opened
         if (state)
         {
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(true);
+            }
             HighlightCurrentStyle();
+        } 
+        else {
+            for(int i = 0; i < transform.childCount; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
         }
     }
 
     void CycleRadial()
     {
-        // Cycle through the attributes and styles of the radial sections
-        if (currentAttributeIndex < radialSections[currentStyleIndex].attributes.Count - 1)
-        {
-            currentAttributeIndex++;
-        }
-        else
-        {
-            currentAttributeIndex = 0;
-            currentStyleIndex = (currentStyleIndex + 1) % radialSections.Count;
-        }
+        // Cycle through styles
+        currentStyleIndex = (currentStyleIndex + 1) % radialSections.Count;
+        currentAttributeIndex = 0; // Reset attribute index when changing styles
         HighlightCurrentStyle();
     }
 
     void HighlightCurrentStyle()
     {
-        // Highlight the current radial style and show the corresponding attribute
+        // Highlight the correct section and apply a hue shift
         for (int i = 0; i < radialSections.Count; i++)
         {
-            radialSections[i].SetHighlight(i == currentStyleIndex);
+            bool isActive = (i == currentStyleIndex);
+            radialSections[i].SetHighlight(true);
+            radialSections[i].ShowAttribute(currentAttributeIndex);
+
+            if (isActive)
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(1.0f, 1.0f, 1.0f); // Shifts hue based on index
+                radialSections[i].highlightImage.color = newColor;
+            }
+            else 
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(0.4f, 0.4f, 0.4f); // Shifts hue based on index
+                radialSections[i].highlightImage.color = newColor;
+            }
         }
-        radialSections[currentStyleIndex].ShowAttribute(currentAttributeIndex);
     }
 
     void CycleElementUp()
     {
-        // Cycle through the elements (e.g., aspects or spells)
         if (currentAttributeIndex + 1 < radialSections[currentStyleIndex].attributes.Count)
         {
             currentAttributeIndex++;
@@ -109,15 +128,7 @@ public class RadialMenuManager : MonoBehaviour
 
     void CycleAspect()
     {
-        // Cycle through different aspects or states
-        if (currentStyleIndex == 0)
-        {
-            currentStyleIndex = 1;
-        }
-        else
-        {
-            currentStyleIndex = 0;
-        }
+        currentAttributeIndex = (currentAttributeIndex + 1) % radialSections[currentStyleIndex].attributes.Count;
         HighlightCurrentStyle();
     }
 }
@@ -131,15 +142,28 @@ public class RadialSection
 
     public void SetHighlight(bool active)
     {
-        highlightImage.enabled = active;
+        highlightImage.enabled = active; // jank
+        highlightImage.gameObject.SetActive(active);
     }
 
     public void ShowAttribute(int index)
     {
-        // Show the currently selected attribute in the radial section
         for (int i = 0; i < attributes.Count; i++)
         {
-            attributes[i].SetActive(i == index);
+            attributes[i].SetActive(true); // jank
+
+            if (i == index)
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(1.0f, 1.0f, 1.0f); // Shifts hue based on index
+                attributes[i].GetComponent<Image>().color = newColor;
+            }
+            else 
+            {
+                // Apply color shift when selected
+                Color newColor = new Color(0.4f, 0.4f, 0.4f); // Shifts hue based on index
+                attributes[i].GetComponent<Image>().color = newColor;
+            }
         }
     }
 }
