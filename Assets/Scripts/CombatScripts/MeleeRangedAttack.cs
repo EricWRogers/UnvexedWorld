@@ -243,11 +243,14 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
+        
         if(direction == true && target != null)
         {
             lockOnCanvas.transform.position = target.transform.position;
             lockOnCanvas.SetActive(true);
         }
+
+        if(unLock == false){
         if(target != null ){
          if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
@@ -256,6 +259,8 @@ public class MeleeRangedAttack : MonoBehaviour
                 FindNewTarget();
             }
         }
+        }
+        
 
      
 

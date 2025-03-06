@@ -65,7 +65,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             PlayPunch();
             hitStop.Stop(duration);
 
-            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
@@ -87,14 +87,17 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                         Debug.Log("0 gives no knock back");
                         break;
                     case 1:
+                        Debug.Log("CASE 1 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
                         //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        Debug.Log("CASE 2 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 3:
+                        Debug.Log("CASE 3 " + enemyGrunt.name + " " + direction.forward + " " + forceAmount);
                         enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
                         break;
                     default:
@@ -212,7 +215,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     private IEnumerator RemoveFromList(GameObject enemy)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(5.25f);
         hitEnemies.Remove(enemy);
     }
 

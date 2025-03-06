@@ -6,13 +6,13 @@ using UnityEngine.InputSystem;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pauseMenuUI;
-    public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
     public GameObject moveSet; // MoveSet GameObject
     public Button resumeButton;
     public Button quitButton;
     public Button moveSetButton; // Add MoveSet button reference
+    public GameObject HealthStyle;
 
     public WinMenuScript win;
 
@@ -89,8 +89,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         healthBar.SetActive(false);
-        powerSystem.SetActive(false);
         comboInfo.SetActive(false);
+        HealthStyle.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -104,8 +104,8 @@ public class PauseMenu : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         healthBar.SetActive(true);
-        powerSystem.SetActive(true);
         comboInfo.SetActive(true);
+        HealthStyle.SetActive(true);
         Time.timeScale = 1f;
         isPaused = false;
     }
