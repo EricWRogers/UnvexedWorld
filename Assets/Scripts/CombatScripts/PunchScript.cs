@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Scripts.HUDScripts.MessageSystem;
+using SuperPupSystems.Helper;
 
 
 
@@ -61,8 +62,13 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         }
         if ((other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy") && other.GetComponent<Rigidbody>().isKinematic == true)
         {
+            if (other.gameObject.GetComponent<Health>() == null)
+               return;
+            
             Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
+
+            
             hitStop.Stop(duration);
 
             Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
