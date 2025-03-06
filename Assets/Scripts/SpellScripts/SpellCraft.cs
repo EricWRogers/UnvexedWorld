@@ -19,8 +19,7 @@ public class SpellCraft : MonoBehaviour
     }
     public Aspect CurrentElement = Aspect.none;
     public List<Aspect> unlockedElements = new List<Aspect>{Aspect.none};
-    public float scavengeMana = 100f;
-    public float splendorMana = 100f;
+    public int[] energy ={0,100,100,100};
     public int elementIndex = 0;
     public int subAspect = 0;
     public bool casting = false;
@@ -151,7 +150,7 @@ public class SpellCraft : MonoBehaviour
     }
 
     //setting listeners for populating list on hit
-    public void AddTheListenerMain(SpellCraft.Aspect aspect)
+    public void AddTheListenerMain(Aspect aspect)
     {
         //gameObject.GetComponentsInChildren<PunchScript>()[1].punchTarget.AddListener(delegate{SetMain(aspect);});
     }
@@ -166,4 +165,21 @@ public class SpellCraft : MonoBehaviour
     {
         Instantiate(ParticleManager.Instance.AOE, gameObject.transform.position, transform.rotation).AddComponent<HitListener>();
     }
+
+    public void SpendEnergy(Aspect element, int amount)
+    {
+        if(element!=Aspect.none)
+        {
+            energy[(int)element]-=amount;
+            if(energy[(int)element]<0)
+            {
+                energy[(int)element]=0;
+            } 
+        }
+    }
+
+    public void ResetEnergy()
+    {
+        energy =  new int[] {0,100,100,100};
+    } 
 }

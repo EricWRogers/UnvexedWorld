@@ -27,10 +27,15 @@ public class StunState : SimpleState
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             anim = gruntStateMachine.anim;
         }
-        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        else if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = meleeStateMachine.anim;
+            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = agroGruntStateMachine.anim;
+        }
+        else if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = rangeGruntStateMachine.anim;
         }
 
         ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
@@ -61,17 +66,32 @@ public class StunState : SimpleState
                 stateMachine.ChangeState(nameof(IdleState));
             }
         }
-        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        else if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
             if(stunTimer > 0)
             {
                 stunTimer -= _dt;
             }
-            if (stunTimer <= 0 && meleeStateMachine.isIdling == false)
+            if (stunTimer <= 0 && agroGruntStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
-            else if(stunTimer <= 0 && meleeStateMachine.isIdling == true)
+            else if(stunTimer <= 0 && agroGruntStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
+        }
+        else if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            if(stunTimer > 0)
+            {
+                stunTimer -= _dt;
+            }
+            if (stunTimer <= 0 && rangeGruntStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(stunTimer <= 0 && rangeGruntStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
@@ -90,6 +110,14 @@ public class StunState : SimpleState
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             gruntStateMachine.canStun = false;
+        }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            agroGruntStateMachine.canStun = false;
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            rangeGruntStateMachine.canStun = false;
         }
         Debug.Log("Exiting Stun State");
     }

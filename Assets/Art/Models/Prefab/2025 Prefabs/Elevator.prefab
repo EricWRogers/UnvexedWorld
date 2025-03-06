@@ -209,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 4592587754425945535}
-  col: {fileID: 0}
 --- !u!1 &4000486778152769567
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,7 +326,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2778003750205716590}
-  - component: {fileID: 5041428949118070712}
   - component: {fileID: 7336436240111743167}
   m_Layer: 6
   m_Name: OpenDoor
@@ -351,27 +349,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5838690608508270486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5041428949118070712
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6211890442781229324}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.0974796, y: 1, z: 1}
-  m_Center: {x: -0.54874134, y: 0, z: -1.6160467e-16}
 --- !u!114 &7336436240111743167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -385,9 +362,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 4592587754425945535}
-  col: {fileID: 0}
   enemies: {fileID: 0}
-  timeOff: 1
+  openDoorDistance: 6
 --- !u!1 &6506824604839521580
 GameObject:
   m_ObjectHideFlags: 0

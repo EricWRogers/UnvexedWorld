@@ -51,7 +51,7 @@ void Noise(float amplitude,float frequency)
    public void Update()
    {
         
-         player.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(DoShake);
+         player.GetComponent<SuperPupSystems.Helper.Health>()?.hurt.AddListener(DoShake);
    }
 
 }

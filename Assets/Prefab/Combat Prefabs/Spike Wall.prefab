@@ -71,12 +71,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 2
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 1401711529906405081}
@@ -190,12 +206,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 3
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 5940640408612574668}
@@ -309,12 +341,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 3
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 5331345390148031777}
@@ -428,12 +476,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 2054831663534967622}
@@ -528,6 +592,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   duration: 5
+  onStart: 1
 --- !u!95 &3064719865596312514
 Animator:
   serializedVersion: 7
@@ -562,8 +627,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   element: 0
   aspect: 0
+  spellCost: 5
   spells: []
 --- !u!1 &922871494913781920
 GameObject:
@@ -636,12 +703,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 2
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 4337011843437339687}
@@ -749,7 +832,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -862,10 +945,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 0
   damage: 5
+  spellBonus: 3
+  spellCost: 1
   impactValue: 25
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
+    m_PersistentCalls:
+      m_Calls: []
+  spendMana:
     m_PersistentCalls:
       m_Calls: []
   particle: {fileID: 0}
@@ -955,7 +1042,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1069,12 +1156,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 1409600758519699127}
@@ -1182,7 +1285,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1296,12 +1399,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 2
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 1945202258090825940}
@@ -1415,12 +1534,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 8337196355033629404}
@@ -1528,7 +1663,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1636,7 +1771,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1750,12 +1885,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 1277006087321690220}
@@ -1863,7 +2014,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1971,7 +2122,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2079,7 +2230,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2193,12 +2344,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 1129409071278214355}
@@ -2306,7 +2473,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2528,12 +2695,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 5395711393052618613}
@@ -2641,7 +2824,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2749,7 +2932,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2857,7 +3040,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3039,7 +3222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3147,7 +3330,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3261,12 +3444,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 3
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 2040582661037533202}
@@ -3374,7 +3573,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3488,12 +3687,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 8395250486917577123}
@@ -3607,12 +3822,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 2
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 7930092067370289320}
@@ -3720,7 +3951,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 3890a19a8a66bdd428c9bca12e3d4e4f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3834,12 +4065,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 8015727054462901749}
@@ -3988,12 +4235,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 2
   damage: 5
+  spellBonus: 3
+  spellCost: 3
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8088364117850296361}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 8592856008189311135}

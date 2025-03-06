@@ -14,10 +14,13 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     public int knockBackType;
     public bool going = true;
     public int damage = 1;
+    public int spellBonus = 3;
+    public int spellCost = 1;
     public float speed = 20f;
     public float lifeTime = 10f;
     public bool destroyOnImpact = true;
     public UnityEvent<GameObject> hitTarget;
+    public UnityEvent<int> spendMana;
     public UnityEvent activate;
     public LayerMask mask;
     public List<string> tags;
@@ -32,21 +35,21 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     public float forceAmount = 4f;
     private void Awake()
     {
-        if (hitTarget == null)
-        {
-            hitTarget = new UnityEvent<GameObject>();
-        }
+        hitTarget ??= new UnityEvent<GameObject>();
+        spendMana ??= new UnityEvent<int>();
     }
     private void Start()
     {
         m_timer = GetComponent<Timer>();
         m_timer.timeout.AddListener(DestroyBullet);
+        hitTarget.AddListener(SpendMana);
         m_timer.StartTimer(lifeTime);
         // set init position
         m_lastPosition = transform.position;
         if(going)
         {
             Target();
+            AudioManager.instance.PlayRangedSound(1);
         }
         
         StartParticle();
@@ -58,6 +61,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             Move();
             CollisionCheck();
             m_lastPosition = transform.position;
+
         }
     }
     private void Move()
@@ -76,7 +80,14 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 {
                     enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
                 }
-                m_info.transform.GetComponent<Health>()?.Damage(damage);
+                if(gameObject.GetComponent<Spell>()?.CurrentElement==SpellCraft.Aspect.none)
+                {  
+                    m_info.transform.GetComponent<Health>()?.Damage(damage);
+                }
+                else
+                {
+                    m_info.transform.GetComponent<Health>()?.Damage(damage+spellBonus);
+                }
                 m_info.transform.GetComponent<Knockback>()?.OnHurt();
                 MessageSpawner messageSpawner = m_info.transform.GetComponentInChildren<MessageSpawner>();
                 if (messageSpawner != null)
@@ -91,6 +102,28 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 if (enemy.GetComponent<MeleeStateMachine>() != null)
                 {
                     var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
+                    
+                    switch (knockBackType)
+                    {
+                        case 1:
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 2:
+                            //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                            direction.LookAt(enemy.transform);
+                            enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                            break;
+                        case 3:
+                            enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                            break;
+                        default:
+                            Debug.Log("Incorrect Knock back type please use 1-3.");
+                            break;
+                    }
+                }
+                if (enemy.GetComponent<GruntStateMachine>() != null)
+                {
+                    var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
                     
                     switch (knockBackType)
                     {
@@ -159,6 +192,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         Target();
         going = true;
+        AudioManager.instance.PlayRangedSound(1);
     }
     
     public void Target()
@@ -196,5 +230,9 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         {
             Debug.Log("Attack Updater is null");
         }
+    }
+    public void SpendMana(GameObject ignoreMe)
+    {
+        spendMana.Invoke(spellCost);
     }
 }
