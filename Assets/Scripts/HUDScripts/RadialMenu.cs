@@ -7,10 +7,10 @@ using UnityEngine.InputSystem;
 public class RadialMenuManager : MonoBehaviour 
 {
     public GameObject radialMenu; // Parent object of the menu
+    public SpellCraft spellCraft;
     public List<RadialSection> radialSections; // List of radial sections (styles)
     
     private int currentStyleIndex = 2;
-    private int currentAttributeIndex = 0;
     private bool menuActive = false;
     
     private PlayerGamepad gamepad;
@@ -21,9 +21,15 @@ public class RadialMenuManager : MonoBehaviour
         gamepad = new PlayerGamepad();
         gamepad.GamePlay.Casting.performed += ctx => ToggleMenu(true);
         gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
-        gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
-        gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
+        //gamepad.GamePlay.Cycleaspect.performed += ctx => CycleAspect();
+       // gamepad.GamePlay.Cycleelement.performed += ctx => CycleElementUp();
         ToggleMenu(false);
+    }
+
+    void Start()
+    {
+        //elementIndex
+        spellCraft = FindAnyObjectByType<SpellCraft>();
     }
 
     void OnEnable()
@@ -57,6 +63,11 @@ public class RadialMenuManager : MonoBehaviour
         {
             CycleAspect();
         }
+
+        if (menuActive)
+        {
+            HighlightCurrentStyle();
+        }
     }
 
     void ToggleMenu(bool state)
@@ -85,7 +96,7 @@ public class RadialMenuManager : MonoBehaviour
     {
         // Cycle through styles
         currentStyleIndex = (currentStyleIndex + 1) % radialSections.Count;
-        currentAttributeIndex = 0; // Reset attribute index when changing styles
+        // TODO: CALL SPELLCRAFT Reset attribute index when changing styles
         HighlightCurrentStyle();
     }
 
@@ -96,7 +107,7 @@ public class RadialMenuManager : MonoBehaviour
         {
             bool isActive = (i == currentStyleIndex);
             radialSections[i].SetHighlight(true);
-            radialSections[i].ShowAttribute(currentAttributeIndex);
+            radialSections[i].ShowAttribute((int)spellCraft.CurrentElement-1);
 
             if (isActive)
             {
@@ -113,23 +124,10 @@ public class RadialMenuManager : MonoBehaviour
         }
     }
 
-    void CycleElementUp()
-    {
-        if (currentAttributeIndex + 1 < radialSections[currentStyleIndex].attributes.Count)
-        {
-            currentAttributeIndex++;
-        }
-        else
-        {
-            currentAttributeIndex = 0;
-        }
-        HighlightCurrentStyle();
-    }
 
     void CycleAspect()
     {
-        currentAttributeIndex = (currentAttributeIndex + 1) % radialSections[currentStyleIndex].attributes.Count;
-        HighlightCurrentStyle();
+        
     }
 }
 

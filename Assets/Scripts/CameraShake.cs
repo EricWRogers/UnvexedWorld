@@ -17,6 +17,8 @@ public GameObject player;
 public void Start()
 {
   player = GameObject.FindGameObjectWithTag("Player");
+  player.GetComponent<SuperPupSystems.Helper.Health>()?.hurt.AddListener(DoShake);
+   
 }
 
 public void DoShake()
@@ -51,7 +53,6 @@ void Noise(float amplitude,float frequency)
    public void Update()
    {
         
-         player.GetComponent<SuperPupSystems.Helper.Health>()?.hurt.AddListener(DoShake);
    }
 
 }

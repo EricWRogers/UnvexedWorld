@@ -86,6 +86,6 @@ public class ReactivateAI : MonoBehaviour
         enemyCollider.enabled = true;
         agent.enabled = true;
         rb.WakeUp();
-        Destroy(gameObject, 1.0f);
+        Destroy(gameObject);
     }
 }
