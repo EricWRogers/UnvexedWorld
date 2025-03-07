@@ -10,7 +10,7 @@ using UnityEngine.AI;
 public class ChargeState : SimpleState
 {
     private NavMeshAgent agent;
-    private float attackRange;
+    private float range;
 
     public override void OnStart()
     {
@@ -19,7 +19,22 @@ public class ChargeState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            attackRange = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            agent.enabled = true;
+            range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is AgroGruntStateMachine)
+        {
+            agent = ((AgroGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is RangeGruntStateMachine)
+        {
+            agent = ((RangeGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
     }
 
@@ -29,11 +44,47 @@ public class ChargeState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                agent.SetDestination(gruntStateMachine.target.position);
-                
-                if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < attackRange)
+                if(agent.isOnNavMesh == true)
                 {
-                    stateMachine.ChangeState(nameof(AttackState));
+                    gruntStateMachine.transform.LookAt(gruntStateMachine.target);
+                    agent.SetDestination(gruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            if (agroGruntStateMachine.isAlive && agroGruntStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
+                    agent.SetDestination(agroGruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            if (rangeGruntStateMachine.isAlive && rangeGruntStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+                    agent.SetDestination(rangeGruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
                 }
             }
         }

@@ -16,9 +16,14 @@ public class WinMenuScript : MonoBehaviour
 
     private WinGame winGameObj;
     private PauseMenu pauseMenu;
+    private ThirdPersonMovement playerMovement;
+    private MeleeRangedAttack playerAttack;
     
     void Start()
     {
+        playerMovement = FindFirstObjectByType<ThirdPersonMovement>();
+        playerAttack = FindFirstObjectByType<MeleeRangedAttack>();
+
         winSection.SetActive(false);
 
         winGameObj = GameObject.FindFirstObjectByType<WinGame>();
@@ -40,7 +45,8 @@ public class WinMenuScript : MonoBehaviour
     }
     public void Win()
     {
-        Debug.Log("You have WON!");
+        playerMovement.enabled = false;
+        playerAttack.enabled = false;
         didWin = true;
         pauseMenu.enabled = false;
         Cursor.lockState = CursorLockMode.None;
@@ -52,9 +58,10 @@ public class WinMenuScript : MonoBehaviour
         Time.timeScale = 0.0f;
     }
 
-     public void Retry()
+    public void Retry()
     {
-        
+        playerMovement.enabled = true;
+        playerAttack.enabled = true;
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
@@ -62,9 +69,11 @@ public class WinMenuScript : MonoBehaviour
 
     public void MainMenu()
     {
+        playerMovement.enabled = true;
+        playerAttack.enabled = true;
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
-        SceneManager.LoadSceneAsync("MainMenu");
+        SceneManager.LoadScene("BlightsGraspMenu");
     }
     
     public void QuitGame()

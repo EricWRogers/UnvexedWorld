@@ -16,6 +16,7 @@ public class GruntStateMachine : SimpleStateMachine
     public ChargeState charge;
     public AttackState melee;
     public RetreatState retreat;
+    public DeathState dead;
 
     public Transform target;
     
@@ -26,17 +27,12 @@ public class GruntStateMachine : SimpleStateMachine
     public NavMeshAgent agent;
     [HideInInspector]
     public Animator anim;
+    public GameObject ogParent;
 
     public bool LOS;
     public bool isAlive;
-    public bool isInsideCollider = false;
     public bool canStun;
     public bool isIdling;
-    public bool isGrounded = false;
-    public float groundCheckDistance;
-    public float bufferCheckDistance = 1f;
-
-
     public float inAttackRange = 1.0f;
 
     void Awake()
@@ -50,6 +46,7 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(charge);
         states.Add(melee);
         states.Add(retreat);
+        states.Add(dead);
 
         foreach (SimpleState s in states)
         {
@@ -70,6 +67,8 @@ public class GruntStateMachine : SimpleStateMachine
 
         rb = GetComponent<Rigidbody>();
 
+        ogParent  = transform.parent != null ? transform.parent.gameObject : null;
+
         if(isIdling)
         {
             ChangeState(nameof(IdleState));
@@ -82,12 +81,13 @@ public class GruntStateMachine : SimpleStateMachine
     // Update is called once per frame
     void Update()
     {
-        if(health.currentHealth > 0)
+        if(health.currentHealth > 1)
         {
             isAlive = true;
         }else
         {
             isAlive = false;
+            ChangeState(nameof(DeathState));
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
@@ -109,28 +109,10 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
-
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -transform.up, out hit, groundCheckDistance))
-        {
-            isGrounded = true;
-        }else
-        {
-            isGrounded = false;
-        }
-
-        if(!isGrounded)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-        }else
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
-        }
+        //Debug.Log("Velocity: " + agent.velocity.magnitude * 2);
+        anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
     }
-    
+
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
         knockBack.dir = direction;

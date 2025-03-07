@@ -26,7 +26,7 @@ public class EncounterTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hudManager?.ShowHUD();
+            //hudManager?.ShowHUD();
             audioManager?.PlayBattleMusic(); // Start battle music on entering
         }
     }
@@ -35,7 +35,7 @@ public class EncounterTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            hudManager?.HideHUD();
+            //hudManager?.HideHUD();
             audioManager?.PlayBackgroundMusic(); // Switch back to background music
         }
     }

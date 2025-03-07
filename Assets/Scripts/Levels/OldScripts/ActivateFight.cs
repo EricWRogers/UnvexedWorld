@@ -79,7 +79,7 @@ public class ActivateFight : MonoBehaviour
         {
             on = true;
             fogArea?.SetActive(true); // Activate fog area if specified
-            hudManager.ShowHUD();
+            //hudManager.ShowHUD();
 
             // Start battle music when entering
             audioManager?.PlayBattleMusic();
@@ -114,7 +114,7 @@ public class ActivateFight : MonoBehaviour
         {
             on = false;
             fogArea?.SetActive(false); // Deactivate fog area
-            hudManager.HideHUD();
+            //hudManager.HideHUD();
 
             // Return to background music after exiting fight area
             if (!audioManager.IsBattleMusicPlaying())

@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   duration: 0.2
+  onStart: 1
 --- !u!114 &7975382670444127978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,8 +61,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   element: 0
   aspect: 0
+  spellCost: 5
   spells: []
 --- !u!1 &1331124837978744468
 GameObject:
@@ -165,19 +168,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   knockBackType: 1
   damage: 25
+  spellBonus: 3
+  spellCost: 5
   impactValue: 25
-  doKnockBack: 1
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
       m_Calls: []
+  spendMana:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7975382670444127978}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   particle: {fileID: 0}
   comboManager: {fileID: 0}
   hitStop: {fileID: 2566194921841682518}
-  duration: 0
+  duration: 0.2
   punchSoundIndex: 1
   direction: {fileID: 3785231127419956687}
-  forceAmount: 100
+  forceAmount: 20
 --- !u!114 &2566194921841682518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,7 +282,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4629087411539590639}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

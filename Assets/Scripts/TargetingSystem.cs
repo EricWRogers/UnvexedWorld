@@ -11,6 +11,7 @@ public class TargetingSystem : MonoBehaviour
     public bool targetPriority = false;
     public GameObject FindTarget()
     {
+        
         GameObject target = null;
 
         List<GameObject> posibleTargets = GameObject.FindGameObjectsWithTag(targetTag).ToList<GameObject>();

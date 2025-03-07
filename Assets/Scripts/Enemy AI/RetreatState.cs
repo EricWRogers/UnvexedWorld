@@ -12,6 +12,8 @@ so the AI needs to return to surround state and reenter into the queue*/
 public class RetreatState : SimpleState
 {
     private NavMeshAgent agent;
+    [SerializeField]
+    private EnemyFinder enemyTatic;
     public float attackRange;
     public float retreatDistance = 8f;
     private Vector3 retreatPosition;
@@ -26,8 +28,35 @@ public class RetreatState : SimpleState
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            enemyTatic = agent.GetComponentInParent<EnemyFinder>();
             retreatPosition = CalculateRetreatPosition(gruntStateMachine);
-            agent.SetDestination(retreatPosition);
+            if(agent.isOnNavMesh == true)
+            {
+                agent.SetDestination(retreatPosition);
+            }
+
+            if(enemyTatic.nearbyEnemies.Count <= 2)
+            {
+                stateMachine.ChangeState(nameof(ChargeState));
+            }
+        }
+
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            enemyTatic = agent.GetComponentInParent<EnemyFinder>();
+            retreatPosition = CalculateRetreatPosition(rangeGruntStateMachine);
+            if(agent.isOnNavMesh == true)
+            {
+                agent.SetDestination(retreatPosition);
+            }
+
+            if(enemyTatic.nearbyEnemies.Count <= 2)
+            {
+                stateMachine.ChangeState(nameof(ChargeState));
+            }
         }
     }
 
@@ -37,10 +66,28 @@ public class RetreatState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
-                if (!reachedRetreatPoint && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+                if(agent.isOnNavMesh == true)
                 {
-                    reachedRetreatPoint = true;
-                    stateMachine.ChangeState(nameof(SurroundState));
+                    if (!reachedRetreatPoint && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+                    {
+                        reachedRetreatPoint = true;
+                        stateMachine.ChangeState(nameof(SurroundState));
+                    }
+                }
+            }
+        }
+
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            if (rangeGruntStateMachine.isAlive && rangeGruntStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    if (!reachedRetreatPoint && !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+                    {
+                        reachedRetreatPoint = true;
+                        stateMachine.ChangeState(nameof(ChargeState));
+                    }
                 }
             }
         }
@@ -51,9 +98,27 @@ public class RetreatState : SimpleState
         base.OnExit();
     }
 
-    private Vector3 CalculateRetreatPosition(GruntStateMachine gruntStateMachine)
+    private Vector3 CalculateRetreatPosition(SimpleStateMachine stateMachine)
     {
-        Vector3 directionAway = (gruntStateMachine.transform.position - gruntStateMachine.target.position).normalized;
-        return gruntStateMachine.transform.position + directionAway * retreatDistance;
+        Transform target = null;
+
+        if (stateMachine is GruntStateMachine grunt)
+        {
+            target = grunt.target;
+        }
+        else if (stateMachine is RangeGruntStateMachine rangeGrunt)
+        {
+            target = rangeGrunt.target;
+        }
+        Vector3 directionAway = (stateMachine.transform.position - target.position).normalized;
+        Vector3 proposedPosition = stateMachine.transform.position + directionAway * retreatDistance;
+
+        NavMeshHit hit;
+        if (NavMesh.SamplePosition(proposedPosition, out hit, 2f, NavMesh.AllAreas))
+        {
+            return hit.position;
+        }
+
+        return proposedPosition;
     }
 }

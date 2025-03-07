@@ -11,22 +11,61 @@ This verison of the Idle does nothing for now execpt after going to and form kno
 [System.Serializable]
 public class IdleState : SimpleState
 {
-
+    private Animator anim;
     public override void OnStart()
     {
-        Debug.Log("Idle State");
+        //Debug.Log("Idle State");
         base.OnStart();
+        if (stateMachine is GruntStateMachine gruntStateMachine)
+        {    
+            anim = gruntStateMachine.GetComponentInChildren<Animator>();
+        }
         
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {    
+            anim = agroGruntStateMachine.GetComponentInChildren<Animator>();
+        }
+
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {    
+            anim = rangeGruntStateMachine.GetComponentInChildren<Animator>();
+        }
     }
 
     public override void UpdateState(float dt)
     {
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {    
-            if (gruntStateMachine.isInsideCollider == true && gruntStateMachine.isAlive == true)
+            if (gruntStateMachine.isAlive == true)
             {   
                 if(gruntStateMachine.LOS == true)
                 {
+                    anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
+            }
+            
+        }
+
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {    
+            if (agroGruntStateMachine.isAlive == true)
+            {   
+                if(agroGruntStateMachine.LOS == true)
+                {
+                    anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(InRangeState));
+                }
+            }
+        }
+
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {    
+            if (rangeGruntStateMachine.isAlive == true)
+            {   
+                if(rangeGruntStateMachine.LOS == true)
+                {
+                    anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
             }
