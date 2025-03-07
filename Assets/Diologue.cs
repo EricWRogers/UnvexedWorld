@@ -13,6 +13,8 @@ public class Diologue : MonoBehaviour
 
     public ThirdPersonMovement movement;
 
+
+
     
 
    
@@ -61,7 +63,7 @@ public class Diologue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            yield return new WaitForSecondsRealtime(textSpeed);
         }
 
     }
@@ -78,6 +80,9 @@ public class Diologue : MonoBehaviour
         {
             gameObject.SetActive(false);
             movement.inText = false;
+            Time.timeScale = 1.0f;
         }
     }
+
+    
 }

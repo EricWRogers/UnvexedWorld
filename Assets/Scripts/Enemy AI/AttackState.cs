@@ -34,6 +34,14 @@ public class AttackState : SimpleState
             agent.SetDestination(gruntStateMachine.transform.position);
             attackRange = gruntStateMachine.inAttackRange + 0.5f;
         }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            anim = agroGruntStateMachine.GetComponentInChildren<Animator>();
+            agent.SetDestination(agroGruntStateMachine.transform.position);
+            attackRange = agroGruntStateMachine.inAttackRange + 0.5f;
+        }
 
         if (attack == null)
         {
@@ -72,6 +80,33 @@ public class AttackState : SimpleState
                     isAttacking = false;
                     stopAttacking.Invoke();
                     stateMachine.ChangeState(nameof(RetreatState));
+                }
+            }
+        }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if(agent.isOnNavMesh == true)
+            {
+                if (agroGruntStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) > agroGruntStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
         }

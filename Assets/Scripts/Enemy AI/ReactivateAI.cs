@@ -8,6 +8,8 @@ public class ReactivateAI : MonoBehaviour
 {
     public float speedAmount = 0.5f;
     private GruntStateMachine gruntStateMachine;
+    private AgroGruntStateMachine agroGruntStateMachine;
+    private RangeGruntStateMachine rangeGruntStateMachine;
     private NavMeshAgent agent;
     private Rigidbody rb;
     private Rigidbody knockbackRB;
@@ -20,6 +22,7 @@ public class ReactivateAI : MonoBehaviour
         if (transform.childCount > 0)
         {
             enemy = transform.GetChild(0).gameObject;
+            enemy.transform.localPosition = Vector3.zero;
         }
         else
         {
@@ -28,7 +31,18 @@ public class ReactivateAI : MonoBehaviour
 
         if (enemy != null)
         {
-            gruntStateMachine = enemy.GetComponent<GruntStateMachine>();
+            if(enemy.GetComponent<GruntStateMachine>() != null)
+            {
+                gruntStateMachine = enemy.GetComponent<GruntStateMachine>();
+            }
+            if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+            {
+                agroGruntStateMachine = enemy.GetComponent<AgroGruntStateMachine>();
+            }
+            if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+            {
+                rangeGruntStateMachine = enemy.GetComponent<RangeGruntStateMachine>();
+            }
             agent = enemy.GetComponent<NavMeshAgent>(); 
             rb = enemy.GetComponent<Rigidbody>(); 
             enemyCollider = enemy.GetComponent<CapsuleCollider>();
@@ -41,24 +55,37 @@ public class ReactivateAI : MonoBehaviour
     void FixedUpdate()
     {
         transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
-        Debug.Log("The Y velocity: " + Mathf.Abs(knockbackRB.linearVelocity.y));
     }
 
     public void SelfDestruct()
     {
         if(Mathf.Abs(knockbackRB.linearVelocity.y) > speedAmount)
         {
-            Debug.Log("Pile of Papers");
             knockbackTimer.StartTimer(0.1f, false);
             return;
         }
         enemy.transform.parent = null;
-        enemy.transform.parent = gruntStateMachine.ogParent.transform;
+        if(enemy.GetComponent<GruntStateMachine>() != null)
+        {
+            enemy.transform.parent = gruntStateMachine.ogParent.transform;
+            gruntStateMachine.enabled = true;
+            gruntStateMachine.ChangeState(nameof(InRangeState));
+        }
+        if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+        {
+            enemy.transform.parent = agroGruntStateMachine.ogParent.transform;
+            agroGruntStateMachine.enabled = true;
+            agroGruntStateMachine.ChangeState(nameof(ChargeState));
+        }
+        if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+        {
+            enemy.transform.parent = rangeGruntStateMachine.ogParent.transform;
+            rangeGruntStateMachine.enabled = true;
+            rangeGruntStateMachine.ChangeState(nameof(ChargeState));
+        }
         enemyCollider.enabled = true;
-        gruntStateMachine.enabled = true;
-        gruntStateMachine.ChangeState(nameof(InRangeState));
         agent.enabled = true;
         rb.WakeUp();
-        Destroy(gameObject, 1.0f);
+        Destroy(gameObject);
     }
 }

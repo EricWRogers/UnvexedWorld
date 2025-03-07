@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BreakObject : MonoBehaviour
@@ -21,6 +22,9 @@ public class BreakObject : MonoBehaviour
             audiosource = GetComponent<AudioSource>();
             audiosource.clip = BreakSound;
             audiosource.Play();
+             Destroy(gameObject, 4f);
         }
     }
+
+    
 }
