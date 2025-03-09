@@ -25,38 +25,18 @@ public class RetreatState : SimpleState
 
         reachedRetreatPoint = false;
 
-        if (stateMachine is GruntStateMachine gruntStateMachine)
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+        enemyTatic = agent.GetComponentInParent<EnemyFinder>();
+        retreatPosition = CalculateRetreatPosition(stateMachine);
+        if(agent.isOnNavMesh == true)
         {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            enemyTatic = agent.GetComponentInParent<EnemyFinder>();
-            retreatPosition = CalculateRetreatPosition(gruntStateMachine);
-            if(agent.isOnNavMesh == true)
-            {
-                agent.SetDestination(retreatPosition);
-            }
-
-            if(enemyTatic.nearbyEnemies.Count <= 2)
-            {
-                stateMachine.ChangeState(nameof(ChargeState));
-            }
+            agent.SetDestination(retreatPosition);
         }
 
-        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        if(enemyTatic.nearbyEnemies.Count <= 2)
         {
-            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            enemyTatic = agent.GetComponentInParent<EnemyFinder>();
-            retreatPosition = CalculateRetreatPosition(rangeGruntStateMachine);
-            if(agent.isOnNavMesh == true)
-            {
-                agent.SetDestination(retreatPosition);
-            }
-
-            if(enemyTatic.nearbyEnemies.Count <= 2)
-            {
-                stateMachine.ChangeState(nameof(ChargeState));
-            }
+            stateMachine.ChangeState(nameof(ChargeState));
         }
     }
 

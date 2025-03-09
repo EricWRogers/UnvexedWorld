@@ -16,25 +16,22 @@ public class ChargeState : SimpleState
     {
         base.OnStart();
 
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+
         if (stateMachine is GruntStateMachine)
         {
-            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is AgroGruntStateMachine)
         {
-            agent = ((AgroGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
             range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is RangeGruntStateMachine)
         {
-            agent = ((RangeGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 5.0f; //Needs to be more deverse
         }
     }
 
