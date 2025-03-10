@@ -22,27 +22,10 @@
             //Debug.Log("Wander State");
             base.OnStart();
 
-            if (stateMachine is GruntStateMachine)
-            {
-                agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-                agent.enabled = true;
-                anim = ((GruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
-                circleCenterObject = agent.transform.parent;
-            }
-            else if (stateMachine is AgroGruntStateMachine)
-            {
-                agent = ((AgroGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-                agent.enabled = true;
-                anim = ((AgroGruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
-                circleCenterObject = agent.transform.parent;
-            }
-            else if (stateMachine is RangeGruntStateMachine)
-            {
-                agent = ((RangeGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-                agent.enabled = true;
-                anim = ((RangeGruntStateMachine)stateMachine).GetComponentInChildren<Animator>();
-                circleCenterObject = agent.transform.parent;
-            }
+            agent = stateMachine.GetComponent<NavMeshAgent>();
+            agent.enabled = true;
+            anim = stateMachine.GetComponentInChildren<Animator>();
+            circleCenterObject = agent.transform.parent;
 
             MoveToRandomPoint();
         }
