@@ -6,9 +6,11 @@ using UnityEngine.Events;
 public class NextLevel : MonoBehaviour
 {
     private Transform player;
+    [SerializeField] Animator doorAnim;
     [SerializeField] Animator transitionAnim;
 
     public float doorDistance = 1.5f;
+    public float offset = 2.0f;
     public string nextScene;
     public UnityEvent nextLevel;
 
@@ -36,9 +38,21 @@ public class NextLevel : MonoBehaviour
         StartCoroutine(LoadLevel());
     }
 
+    void Update()
+    {
+        if(keyOrbGainedScript.instance.HasKeyOrb == true)
+        {
+            doorAnim.SetBool("isOpen", false);
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate()
     {
+        if(keyOrbGainedScript.instance.HasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance+offset)
+        {
+            doorAnim.SetBool("isOpen", true);
+        }
         if(keyOrbGainedScript.instance.HasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance)
         {
             nextLevel.Invoke();

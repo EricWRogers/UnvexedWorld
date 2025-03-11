@@ -14,6 +14,7 @@ public class NewMainMenu : MonoBehaviour
     public void PlayGame(string sceneName)
     {
         Debug.Log("Next Scene");
+        keyOrbGainedScript.instance.HasKeyOrb = false;
         SceneManager.LoadScene(sceneName);
     }
 
