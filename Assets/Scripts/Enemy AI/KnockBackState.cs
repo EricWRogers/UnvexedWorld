@@ -35,51 +35,55 @@ public class KnockBackState : SimpleState
         Debug.Log("Knock Back State");
         base.OnStart();
 
-        if (stateMachine is GruntStateMachine gruntStateMachine)
-        {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            rb = gruntStateMachine.GetComponent<Rigidbody>();
-            col = gruntStateMachine.GetComponent<CapsuleCollider>();
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        rb = stateMachine.GetComponent<Rigidbody>();
+        col = stateMachine.GetComponent<CapsuleCollider>();
 
-            if (!gruntStateMachine.isAlive)
-            {
-                stateMachine.ChangeState(nameof(DeathState));
-                return; 
-            }
-        }
-        else if(stateMachine is MeleeStateMachine meleeStateMachine)
+        if (stateMachine.GetComponent<Health>().currentHealth <= 0)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            rb = meleeStateMachine.GetComponent<Rigidbody>();
+            stateMachine.ChangeState(nameof(DeathState));
+            return; 
         }
 
         //Spawn Hamester for Knockback
-            GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation);
-            //Set the obj to be the parent of the agent
-            agent.transform.parent = obj.transform;
+        GameObject obj = GameObject.Instantiate(prefab, agent.transform.position, agent.transform.rotation, agent.transform.parent);
+        //Set the obj to be the parent of the agent
+        agent.transform.parent = obj.transform;
 
-            switch(kbType)
-            {
-                case KnockBackType.One: {
-                    obj.GetComponent<Rigidbody>().AddForce(dir * power, ForceMode.Impulse);
-                    break;
-                }
-                case KnockBackType.Two: {
-                    obj.GetComponent<Rigidbody>().AddForce(dir * (power + mag), ForceMode.Impulse);
-                    break;
-                }
-                case KnockBackType.Three: {
-                    obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
-                    break;
-                }
+        switch(kbType)
+        {
+            case KnockBackType.One: {
+                obj.GetComponent<Rigidbody>().AddForce(dir * power, ForceMode.Impulse);
+                break;
             }
+            case KnockBackType.Two: {
+                obj.GetComponent<Rigidbody>().AddForce(dir * (power + mag), ForceMode.Impulse);
+                break;
+            }
+            case KnockBackType.Three: {
+                obj.GetComponent<Rigidbody>().AddForce(-(dir * (power + mag)), ForceMode.Impulse);
+                break;
+            }
+        }
 
+        agent.enabled = false;
+        col.enabled = false;
+        if(stateMachine is GruntStateMachine)
+        {
             obj.transform.LookAt(((GruntStateMachine)stateMachine).target);
+        }
+        if(stateMachine is AgroGruntStateMachine)
+        {
+            obj.transform.LookAt(((AgroGruntStateMachine)stateMachine).target);
+        }
+        if(stateMachine is RangeGruntStateMachine)
+        {
+            obj.transform.LookAt(((RangeGruntStateMachine)stateMachine).target);
+        }
 
-            agent.enabled = false;
-            col.enabled = false;
-            ((GruntStateMachine)stateMachine).enabled = false;
-            rb.Sleep(); 
+        stateMachine.enabled = false;
+        
+        rb.Sleep(); 
     }
 
     public override void UpdateState(float dt)

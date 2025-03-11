@@ -21,7 +21,6 @@ public class GruntStateMachine : SimpleStateMachine
     public Transform target;
     
     private Rigidbody rb;
-    private CapsuleCollider capsuleCollider;
     private Health health;
     
     [HideInInspector]
@@ -30,19 +29,10 @@ public class GruntStateMachine : SimpleStateMachine
     public Animator anim;
     public GameObject ogParent;
 
-    public LayerMask mask;
-
     public bool LOS;
     public bool isAlive;
-    public bool isInsideCollider = false;
     public bool canStun;
     public bool isIdling;
-    public bool isGrounded = false;
-    public float maxForceSpeed = 75f;
-    public float groundCheckDistance = .4f;
-    public float gravityScale = 1.0f;
-    public static float enemyGravity = -9.81f;
-
     public float inAttackRange = 1.0f;
 
     void Awake()
@@ -68,8 +58,6 @@ public class GruntStateMachine : SimpleStateMachine
     void Start()
     {
         health = gameObject.GetComponent<Health>();
-
-        capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
         
@@ -123,75 +111,6 @@ public class GruntStateMachine : SimpleStateMachine
 
         //Debug.Log("Velocity: " + agent.velocity.magnitude * 2);
         anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
-
-        if (rb.linearVelocity.magnitude > maxForceSpeed)
-        {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
-        }
-    }
-
-    new void FixedUpdate()
-    {
-        base.FixedUpdate();
-
-        if (rb.linearVelocity.magnitude > maxForceSpeed)
-        {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
-        }
-        
-        Vector3 gravity = enemyGravity * gravityScale * Vector3.up;
-        RaycastHit hit;
-        Vector3 sphereCastOrigin = transform.position - (Vector3.up * (capsuleCollider.height / 2 - capsuleCollider.radius));
-        float sphereRadius = capsuleCollider.radius;
-        Vector3 direction = -Vector3.up;
-        float sphereCastDistance = groundCheckDistance;
-
-        if (Physics.SphereCast(sphereCastOrigin, sphereRadius, direction, out hit, sphereCastDistance, mask))
-        {
-            isGrounded = true;
-            //Debug.Log($"Hit: " + hit.collider.gameObject.name);
-        }else
-        {
-            isGrounded = false;
-            //Debug.Log("Did not hit ground");
-        }
-
-        transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
-
-        if(isGrounded == false)
-        {
-            
-            if(agent.isOnNavMesh == false)
-            {
-                agent.enabled = false;
-            }
-            rb.isKinematic = false;
-            rb.AddForce(gravity, ForceMode.Acceleration);
-        }
-        else
-        {
-            if(stateName == nameof(KnockBackState))
-            {
-                rb.isKinematic = false;
-            }
-            else
-            {
-                rb.isKinematic = true;
-            }
-            if(agent.isOnNavMesh)
-            {
-                agent.enabled = true;
-            }
-        }
-    }
-
-    void LateUpdate()
-    {
-        if (rb.linearVelocity.magnitude > maxForceSpeed)
-        {
-            rb.linearVelocity = rb.linearVelocity.normalized * maxForceSpeed;
-        }
-        transform.localEulerAngles = new Vector3(0f, transform.localEulerAngles.y, 0f);
     }
 
     public void TypeOneKnockBack(Vector3 direction, float power)

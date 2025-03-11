@@ -16,11 +16,22 @@ public class ChargeState : SimpleState
     {
         base.OnStart();
 
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+
         if (stateMachine is GruntStateMachine)
         {
-            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is AgroGruntStateMachine)
+        {
+            range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
+
+        if (stateMachine is RangeGruntStateMachine)
+        {
+            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 5.0f; //Needs to be more deverse
         }
     }
 
@@ -36,6 +47,38 @@ public class ChargeState : SimpleState
                     agent.SetDestination(gruntStateMachine.target.position);
                 
                     if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            if (agroGruntStateMachine.isAlive && agroGruntStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
+                    agent.SetDestination(agroGruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            if (rangeGruntStateMachine.isAlive && rangeGruntStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+                    agent.SetDestination(rangeGruntStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < range)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
                     }

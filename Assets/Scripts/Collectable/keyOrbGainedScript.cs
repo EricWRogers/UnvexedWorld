@@ -12,13 +12,14 @@ public class keyOrbGainedScript : MonoBehaviour
         if (instance == null)
             {
                 instance = this;
+                GameObject.DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Destroy(gameObject);
             }
 
-        GameObject.DontDestroyOnLoad(gameObject);
+        
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

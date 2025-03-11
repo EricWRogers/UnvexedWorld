@@ -73,7 +73,7 @@ public class WinMenuScript : MonoBehaviour
         playerAttack.enabled = true;
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
-        SceneManager.LoadSceneAsync("MainMenu");
+        SceneManager.LoadScene("BlightsGraspMenu");
     }
     
     public void QuitGame()

@@ -2,16 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class Diologue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
+
+    public TextMeshProUGUI skipText;
     public string[] lines;
     public float textSpeed;
 
     private int index;
 
     public ThirdPersonMovement movement;
+
+
 
     
 
@@ -27,6 +32,16 @@ public class Diologue : MonoBehaviour
 
       void Update()
     {
+
+       if(movement.hasGamePad == true)
+       {
+            skipText.text = ("Press A");
+       }
+       if(movement.hasGamePad == false)
+       {
+            skipText.text = ("Space");
+       }
+        
         if(movement.nextLine == true)
         {
             LineSkip();   
@@ -61,7 +76,7 @@ public class Diologue : MonoBehaviour
         foreach (char c in lines[index].ToCharArray())
         {
             textComponent.text += c;
-            yield return new WaitForSeconds(textSpeed);
+            yield return new WaitForSecondsRealtime(textSpeed);
         }
 
     }
@@ -78,6 +93,9 @@ public class Diologue : MonoBehaviour
         {
             gameObject.SetActive(false);
             movement.inText = false;
+            Time.timeScale = 1.0f;
         }
     }
+
+    
 }

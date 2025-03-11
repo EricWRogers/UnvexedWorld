@@ -7,7 +7,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance;
+    public static GameManager instance = null;
 
     public int coinVal = 0;
 
@@ -17,13 +17,14 @@ public class GameManager : MonoBehaviour
         if (instance == null)
             {
                 instance = this;
+                GameObject.DontDestroyOnLoad(gameObject);
             }
             else
             {
                 Destroy(gameObject);
             }
 
-        GameObject.DontDestroyOnLoad(gameObject);
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
