@@ -243,6 +243,10 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
+        GetComponentsInChildren<Animator>()[1].SetBool("CheckDirection", direction);
+        GetComponentsInChildren<Animator>()[1].SetFloat("Forward-back",Input.GetAxisRaw("Vertical"));
+        GetComponentsInChildren<Animator>()[1].SetFloat("side-to-side",Input.GetAxisRaw("Horizontal"));
+
         
         if(direction == true && target != null)
         {
