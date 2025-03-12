@@ -25,7 +25,7 @@ public class RangeProjectile : MonoBehaviour
     private LayerMask collisionMask;
 
     [SerializeField]
-    private bool isThrowing = false;
+    private bool isThrowing = true;
     [SerializeField]
     private Transform player;
 
@@ -43,11 +43,13 @@ public class RangeProjectile : MonoBehaviour
 
     public void TurnOffObject()
     {
+        isThrowing = true;
         ball.SetActive(false);
     }
 
     public void TurnOnObject()
     {
+        isThrowing = false;
         ball.SetActive(true);
     }
 
@@ -56,7 +58,6 @@ public class RangeProjectile : MonoBehaviour
         firePoint.LookAt(player);
 
         Debug.Log("ThrowProjectile");
-        isThrowing = true;
 
         Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(firePoint.forward * throwStrength, ForceMode.Impulse);

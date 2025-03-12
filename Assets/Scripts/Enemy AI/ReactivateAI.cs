@@ -83,9 +83,17 @@ public class ReactivateAI : MonoBehaviour
             rangeGruntStateMachine.enabled = true;
             rangeGruntStateMachine.ChangeState(nameof(ChargeState));
         }
-        enemyCollider.enabled = true;
-        agent.enabled = true;
-        rb.WakeUp();
+        if(enemy.GetComponent<Health>().currentHealth > 0)
+        {
+            enemyCollider.enabled = true;
+            agent.enabled = true;
+            rb.WakeUp();
+        }else
+        {
+            enemyCollider.enabled = false;
+            agent.enabled = false;
+            rb.Sleep();
+        }
         Destroy(gameObject);
     }
 }
