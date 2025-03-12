@@ -5,10 +5,20 @@ public class OpenDoor : MonoBehaviour
 {
     public Animator anim;
     public EnemyFinder enemies;
+    public float openDoorDistance = 2.5f;
+    private Transform player;
+    [SerializeField]
+    private Collider doorCol;
 
-    void OnTriggerEnter(Collider other)
+    void Start()
     {
-        if(other.gameObject.CompareTag("Player"))
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+        doorCol = GetComponentInParent<Collider>();
+    }
+
+    void FixedUpdate()
+    {
+        if(Vector3.Distance(transform.position, player.position) < openDoorDistance)
         {
             if(enemies != null)
             {
@@ -24,6 +34,7 @@ public class OpenDoor : MonoBehaviour
                 //Debug.Log("Player Unlocks on Door");
                 anim.SetBool("IsOpen", true);
             }
+            doorCol.enabled = false;
         }
     }
 }

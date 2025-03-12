@@ -29,6 +29,15 @@ public class SlotManager : MonoBehaviour
 
 	public int Reserve(GameObject attacker)
 	{
+		// for (int i = 0; i < slots.Count; i++)
+		// {
+		// 	if (slots[i] == null)
+		// 	{
+		// 		slots[i] = attacker;
+		// 		return i;
+		// 	}
+		// }
+		// return -1;
 		var bestPosition = transform.position;
 		var offset = (attacker.transform.position - bestPosition).normalized * distance;
 		bestPosition += offset;
@@ -52,7 +61,21 @@ public class SlotManager : MonoBehaviour
 
 	public void Release(int slot)
 	{
-		slots [slot] = null;
+		if (slot < 0 || slot >= slots.Count)
+		{
+			return;
+		}
+		slots[slot] = null;
+	}
+
+	public void SetSlotCount(int newCount)
+	{
+		count = newCount;
+		slots = new List<GameObject>(newCount);
+		for (int i = 0; i < count; i++)
+		{
+			slots.Add(null);
+		}
 	}
 
 	void OnDrawGizmos()

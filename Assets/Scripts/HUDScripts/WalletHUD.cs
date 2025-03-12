@@ -8,7 +8,13 @@ public class WalletHUD : MonoBehaviour
 
     public void CountUp(int _amountGained, int _totalCoins)
     {
+        if(count!=null){
         count.text = "Points: " + _totalCoins.ToString();
+        }
+        else
+        {
+            return;
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

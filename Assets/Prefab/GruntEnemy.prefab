@@ -108,8 +108,8 @@ GameObject:
   - component: {fileID: 5036944347510156140}
   - component: {fileID: 7736612065269255876}
   - component: {fileID: 2910487374956717299}
-  - component: {fileID: 3057545468980896349}
   - component: {fileID: 6875194166442507180}
+  - component: {fileID: 3057545468980896349}
   - component: {fileID: 959047918777663014}
   - component: {fileID: 9170891259317054466}
   - component: {fileID: 1677764455944319388}
@@ -130,7 +130,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7323832619770725306}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 22.370974, y: -40.38856, z: -13.248859}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -267,6 +267,69 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &6875194166442507180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7323832619770725306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604dfbbf654f92618bc36972daaa4968, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1869418296035243272}
+        m_TargetAssemblyTypeName: Scripts.HUDScripts.MessageSystem.MessageSpawner,
+          Assembly-CSharp
+        m_MethodName: ShowFloatingMessage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  healed:
+    m_PersistentCalls:
+      m_Calls: []
+  hurt:
+    m_PersistentCalls:
+      m_Calls: []
+  outOfHealth:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3057545468980896349}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 3872021290073882660}
+        m_TargetAssemblyTypeName: RagdollEnabler, Assembly-CSharp
+        m_MethodName: EnableRagdoll
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  maxHealth: 60
+  currentHealth: 1
 --- !u!114 &3057545468980896349
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,7 +352,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    range: 30
+    range: 13.75
     circleCenterObject: {fileID: 0}
   idle:
     stateStart:
@@ -319,11 +382,11 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
+    prefab: {fileID: 66303039158351526, guid: 368ef30af82eba440bb683a481c24291, type: 3}
     mag: 0
     power: 0
     dir: {x: 0, y: 0, z: 0}
     kbType: 0
-    knockBackDuration: 1
   chase:
     stateStart:
       m_PersistentCalls:
@@ -340,10 +403,7 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-    enemyFinder: {fileID: 0}
-    minRadius: 2
-    maxRadius: 6
-    waitTimer: 0
+    slotManager: {fileID: 0}
   charge:
     stateStart:
       m_PersistentCalls:
@@ -402,24 +462,13 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
+    enemyTatic: {fileID: 0}
     attackRange: 0
     retreatDistance: 8
   dead:
     stateStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3872021290073882660}
-          m_TargetAssemblyTypeName: RagdollEnabler, Assembly-CSharp
-          m_MethodName: EnableRagdoll
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
         - m_Target: {fileID: 5036944347510156140}
           m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
           m_MethodName: set_enabled
@@ -451,61 +500,12 @@ MonoBehaviour:
   target: {fileID: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
-  mask:
-    serializedVersion: 2
-    m_Bits: 64
-  rotationMask:
-    serializedVersion: 2
-    m_Bits: 16319
+  ogParent: {fileID: 0}
   LOS: 0
   isAlive: 0
-  isInsideCollider: 0
   canStun: 0
   isIdling: 0
-  isGrounded: 0
-  maxForceSpeed: 40
-  groundCheckDistance: 0.4
-  gravityScale: 1.75
   inAttackRange: 1
---- !u!114 &6875194166442507180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323832619770725306}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 604dfbbf654f92618bc36972daaa4968, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthChanged:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1869418296035243272}
-        m_TargetAssemblyTypeName: Scripts.HUDScripts.MessageSystem.MessageSpawner,
-          Assembly-CSharp
-        m_MethodName: ShowFloatingMessage
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  healed:
-    m_PersistentCalls:
-      m_Calls: []
-  hurt:
-    m_PersistentCalls:
-      m_Calls: []
-  outOfHealth:
-    m_PersistentCalls:
-      m_Calls: []
-  maxHealth: 60
-  currentHealth: 1
 --- !u!114 &959047918777663014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1401,6 +1401,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   power: 10
   isGrunt: 1
+  isRange: 0
   center: {x: 0, y: 0, z: 0}
   enemy: {fileID: 7323832619770725306}
   animator: {fileID: 7753075965116590986}

@@ -5,11 +5,15 @@ using UnityEngine;
 public class RangeProjectile : MonoBehaviour
 {
     [SerializeField] 
+    private GameObject ball;
+    [SerializeField] 
     private GameObject prefab;
     [SerializeField] 
     private Transform firePoint;
     [SerializeField] 
     private float throwStrength = 10f;
+    [SerializeField] 
+    private float time = 2f;
 
     [SerializeField] 
     private LineRenderer lineRenderer;
@@ -21,7 +25,14 @@ public class RangeProjectile : MonoBehaviour
     private LayerMask collisionMask;
 
     [SerializeField]
-    private bool isThrowing = false;
+    private bool isThrowing = true;
+    [SerializeField]
+    private Transform player;
+
+    void Start()
+    {
+        player = GameObject.Find("HitFlashTimer").transform;
+    }
 
     private void Update()
     {
@@ -30,10 +41,23 @@ public class RangeProjectile : MonoBehaviour
         DrawProjection();
     }
 
-    public void ThrowProjectile()
+    public void TurnOffObject()
     {
-        Debug.Log("ThrowProjectile");
         isThrowing = true;
+        ball.SetActive(false);
+    }
+
+    public void TurnOnObject()
+    {
+        isThrowing = false;
+        ball.SetActive(true);
+    }
+
+    public void ThrowProjectile()
+    {   
+        firePoint.LookAt(player);
+
+        Debug.Log("ThrowProjectile");
 
         Rigidbody projectile = Instantiate(prefab, firePoint.position, Quaternion.identity).GetComponent<Rigidbody>();
         projectile.AddForce(firePoint.forward * throwStrength, ForceMode.Impulse);
@@ -41,6 +65,8 @@ public class RangeProjectile : MonoBehaviour
 
     private void DrawProjection()
     {
+        firePoint.LookAt(player);
+
         lineRenderer.enabled = true;
         lineRenderer.positionCount = Mathf.CeilToInt(linePoints / timeBetweenPoints) + 1;
 

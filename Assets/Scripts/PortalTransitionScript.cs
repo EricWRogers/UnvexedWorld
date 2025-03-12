@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class PortalTransitionScript : MonoBehaviour
 {
-    public keyOrbGainedScript orbGained;
+    // public keyOrbGainedScript orbGained;
     public PopupText popupText;
 
      public bool portalOn = false;
@@ -12,14 +12,12 @@ public class PortalTransitionScript : MonoBehaviour
 
     public GameObject cylinder1;
     public GameObject cylinder2;
-    public GameObject cylinder3;
-    public GameObject cylinder4;
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
       popupText = FindFirstObjectByType<PopupText>();
-      orbGained = FindFirstObjectByType<keyOrbGainedScript>();
         
     }
 
@@ -41,20 +39,19 @@ public class PortalTransitionScript : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-             if(orbGained.HasKeyOrb == true)
+             if(keyOrbGainedScript.instance.HasKeyOrb == true)
             {
                  portal.SetActive(true);
                  popupText.AddToQueue("Portal Active");
-                 orbGained.HasKeyOrb = false;
+                 keyOrbGainedScript.instance.HasKeyOrb = false;
                  portalOn = true;
                  cylinder1.SetActive(true);
                 cylinder2.SetActive(true);
-                cylinder3.SetActive(true);
-                cylinder4.SetActive(true);
+              
 
                  
             }
-              if(orbGained.HasKeyOrb == false)
+              if(keyOrbGainedScript.instance.HasKeyOrb == false)
               {
                 if(portalOn == false){
                   popupText.AddToQueue("Need Key Orb");

@@ -9,6 +9,7 @@ public class RagdollEnabler : MonoBehaviour
 {
     public float power = 100f;
     public bool isGrunt;
+    public bool isRange;
     public Vector3 center;
     [SerializeField]
     private GameObject enemy;
@@ -63,10 +64,15 @@ public class RagdollEnabler : MonoBehaviour
     public void EnableRagdoll()
     {
         PowerAmount();
+        if(power == 0)
+        {
+            power = 20;
+        }
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
         enemiesCollider.enabled = false;
+        Debug.Log("enemiesCollider " + enemiesCollider.enabled);
         foreach (CharacterJoint joint in joints)
         {
             joint.enableCollision = true;
@@ -139,12 +145,17 @@ public class RagdollEnabler : MonoBehaviour
         if(isGrunt)
         {
             center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power * 4;
+        }
+        else if (isRange)
+        {
+            center = enemyKnockBack.GetComponent<RangeGruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<RangeGruntStateMachine>().knockBack.power;
         }
         else
         {
-            center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
+            center = enemyKnockBack.GetComponent<AgroGruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<AgroGruntStateMachine>().knockBack.power;
         }
     }
 }

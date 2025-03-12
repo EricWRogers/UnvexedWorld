@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Scripts.HUDScripts.MessageSystem;
+using SuperPupSystems.Helper;
 
 
 
@@ -61,11 +62,16 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         }
         if ((other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy") && other.GetComponent<Rigidbody>().isKinematic == true)
         {
+            if (other.gameObject.GetComponent<Health>() == null)
+               return;
+            
             Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
             PlayPunch();
+
+            
             hitStop.Stop(duration);
 
-            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
@@ -77,17 +83,18 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             hitEnemies.Add(enemy);
             StartCoroutine(RemoveFromList(enemy));
 
-            if (enemy.GetComponent<MeleeStateMachine>() != null)
+            if (enemy.GetComponent<GruntStateMachine>() != null)
             {
-                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
-                
+                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
                 switch (knockBackType)
                 {
+                    case 0:
+                        Debug.Log("0 gives no knock back");
+                        break;
                     case 1:
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
@@ -100,10 +107,9 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
-            if (enemy.GetComponent<GruntStateMachine>() != null)
+            if (enemy.GetComponent<RangeGruntStateMachine>() != null)
             {
-                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
-                Debug.Log("Grunt Getting Knocked Back");
+                var enemyGrunt = enemy.GetComponent<RangeGruntStateMachine>();
                 switch (knockBackType)
                 {
                     case 0:
@@ -113,7 +119,29 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+            if (enemy.GetComponent<AgroGruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<AgroGruntStateMachine>();
+                switch (knockBackType)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
@@ -162,22 +190,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        if(other.gameObject.CompareTag("Breakable"))
-        {
-            other.GetComponent<Rigidbody>().Sleep();
-            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
-            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
-            
-            if(other.GetComponent<BreakableObject>().rb != null)
-            {
-                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
-                {
-                    float mag = rigidbodies.linearVelocity.magnitude;
-                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
-                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
-                }
-            }
-        }
+     
 
     }
    
@@ -235,7 +248,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     private IEnumerator RemoveFromList(GameObject enemy)
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(5.25f);
         hitEnemies.Remove(enemy);
     }
 
