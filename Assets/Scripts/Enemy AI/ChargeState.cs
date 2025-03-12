@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder.MeshOperations;
 
 /*The now chase state*/
 
@@ -11,6 +12,8 @@ public class ChargeState : SimpleState
 {
     private NavMeshAgent agent;
     private float range;
+    private float maxRange = 12f;
+    private float minRange = 4f;
 
     public override void OnStart()
     {
@@ -76,11 +79,18 @@ public class ChargeState : SimpleState
                 if(agent.isOnNavMesh == true)
                 {
                     rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
-                    agent.SetDestination(rangeGruntStateMachine.target.position);
                 
-                    if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < range)
+                    if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > maxRange)
+                    {
+                        agent.SetDestination(rangeGruntStateMachine.target.position);
+                    }
+                    else if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > minRange && Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < maxRange)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
+                    }
+                    else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < minRange)
+                    {
+                        stateMachine.ChangeState(nameof(RetreatState));
                     }
                 }
             }
