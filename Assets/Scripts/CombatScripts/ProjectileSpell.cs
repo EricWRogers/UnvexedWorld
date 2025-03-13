@@ -148,7 +148,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             {
                 if(gameObject.GetComponent<Spell>() !=null)
                 {
-                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
+                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor&& gameObject.GetComponent<Spell>().subAspect==0&&!tags.Contains(m_info.transform.tag))
                     {
                         gameObject.GetComponent<Spell>().SpellEffect(gameObject);
                     }
