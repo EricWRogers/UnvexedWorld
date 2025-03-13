@@ -16,6 +16,7 @@ public class RadialMenuManager : MonoBehaviour
     private bool menuActive = false;
 
     private PlayerGamepad gamepad;
+    private AudioManager audioManager;
 
     void Awake()
     {
@@ -29,6 +30,7 @@ public class RadialMenuManager : MonoBehaviour
     void Start()
     {
         spellCraft = FindAnyObjectByType<SpellCraft>();
+        audioManager = FindFirstObjectByType<AudioManager>();
     }
 
     void OnEnable()
@@ -47,10 +49,12 @@ public class RadialMenuManager : MonoBehaviour
         {
             ToggleMenu(true);
             HighlightCurrentStyle();
+            audioManager.PlayRadialPopInSound();
         }
         if (Input.GetKeyUp(KeyCode.Q))
         {
             ToggleMenu(false);
+            audioManager.PlayRadialPopOutSound();
         }
 
         if (menuActive && Input.GetKeyDown(KeyCode.E))
@@ -61,6 +65,7 @@ public class RadialMenuManager : MonoBehaviour
         if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
         {
             CycleAspect();
+            audioManager.PlayRadialSwitchSound();
         }
 
         if (menuActive)

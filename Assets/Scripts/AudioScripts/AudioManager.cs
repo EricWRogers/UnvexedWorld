@@ -195,4 +195,7 @@ public class AudioManager : MonoBehaviour
     public void PlayDashSound() => Play("Dash");
     public void PlayLandingSound() => Play("Landing");
     public void PlayEnemyHurtSound() => Play("EnemyHurt");
+    public void PlayRadialPopInSound() => Play("Pop-In");
+    public void PlayRadialPopOutSound() => Play("Pop-Out");
+    public void PlayRadialSwitchSound() => Play("RadialSwitch");
 }
