@@ -34,7 +34,7 @@ public class DialogueInteraction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")&& pauseGame == false)
+        if (other.gameObject.CompareTag("Player")&& pauseGame == false && once == false)
         { 
             DiologueBox.SetActive(true);
           
