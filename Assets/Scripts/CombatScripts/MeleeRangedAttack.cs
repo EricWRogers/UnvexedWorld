@@ -388,6 +388,12 @@ public class MeleeRangedAttack : MonoBehaviour
             temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
         }
     }
+
+    public void SetAttack()
+    {
+        GetComponent<Animator>().SetTrigger("Light");
+    }
     
    
 }
+
