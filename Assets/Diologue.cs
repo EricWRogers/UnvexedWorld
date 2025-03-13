@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class Diologue : MonoBehaviour
 {
     public TextMeshProUGUI textComponent;
+
+    public TextMeshProUGUI skipText;
     public string[] lines;
     public float textSpeed;
 
@@ -29,6 +32,16 @@ public class Diologue : MonoBehaviour
 
       void Update()
     {
+
+       if(movement.hasGamePad == true)
+       {
+            skipText.text = ("Press A");
+       }
+       if(movement.hasGamePad == false)
+       {
+            skipText.text = ("Space");
+       }
+        
         if(movement.nextLine == true)
         {
             LineSkip();   

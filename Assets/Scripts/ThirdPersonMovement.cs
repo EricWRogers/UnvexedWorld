@@ -86,6 +86,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public bool nextLine = false;
 
+    public bool hasGamePad = false;
+
    
 
 
@@ -209,6 +211,7 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         CollisionCheck();
         animator.SetBool("Grounded", rayGround);
         
@@ -248,6 +251,16 @@ public class ThirdPersonMovement : MonoBehaviour
             velocity.y += gravitySecondJump * Time.deltaTime;
             controller.Move(velocity * Time.deltaTime);
             speed = airSpeed;
+        }
+
+        //Controller Check
+         if(Gamepad.current == null)
+        {
+            hasGamePad = false;
+        }
+        else
+        {
+            hasGamePad = true;
         }
         
         //Movement
