@@ -11,6 +11,8 @@ public class CameraManager : MonoBehaviour
 
     public  CinemachineFreeLook meleeCamera;
     private CinemachineFreeLook currentCam;
+
+    public CinemachineVirtualCamera ObjCam;
     
 
     private void Start()
@@ -44,4 +46,17 @@ public class CameraManager : MonoBehaviour
             }
         }
     }
+
+    public void OBJCamera()
+    {
+        currentCam.Priority = 10;
+         ObjCam.Priority = 20;
+
+    }
+
+   public void backCamera()
+   {
+        currentCam.Priority = 20;
+        ObjCam.Priority = 10;
+   }
 }
