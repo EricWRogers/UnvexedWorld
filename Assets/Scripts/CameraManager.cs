@@ -54,7 +54,7 @@ public class CameraManager : MonoBehaviour
 
     }
 
-   public void ReturnCamera()
+   public void backCamera()
    {
         currentCam.Priority = 20;
         ObjCam.Priority = 10;
