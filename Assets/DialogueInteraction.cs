@@ -15,6 +15,8 @@ public class DialogueInteraction : MonoBehaviour
 
      public bool once = false;
 
+     public bool notAgain = false;
+
      
 
      
@@ -34,7 +36,7 @@ public class DialogueInteraction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player")&& pauseGame == false && once == false)
+        if (other.gameObject.CompareTag("Player")&& pauseGame == false && once == false && notAgain == false)
         { 
             DiologueBox.SetActive(true);
           
@@ -43,7 +45,7 @@ public class DialogueInteraction : MonoBehaviour
             
         }
 
-        if (other.gameObject.CompareTag("Player")&& pauseGame == true && once ==false){
+        if (other.gameObject.CompareTag("Player")&& pauseGame == true && once == false){
              DiologueBox.SetActive(true);
            
             text.StartDiolague();
@@ -51,6 +53,15 @@ public class DialogueInteraction : MonoBehaviour
             Time.timeScale = 0.0f;
             once = true;
 
+        }
+
+        if(other.gameObject.CompareTag("Player")&& notAgain == true && once == false)
+        {
+            DiologueBox.SetActive(true);
+            text.StartDiolague();
+            Debug.Log("InText");
+            
+            once = true;
         }
 
        

@@ -345,7 +345,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //lock on
         if (lockOn.target)
         {
-            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*3)
+            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*4)
             {
 
                 if (lockOn.target == null){
@@ -361,7 +361,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 5)
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 4)
             {
                 lockOn.LockOff();
             }

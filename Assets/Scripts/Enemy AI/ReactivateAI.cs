@@ -35,11 +35,11 @@ public class ReactivateAI : MonoBehaviour
             {
                 gruntStateMachine = enemy.GetComponent<GruntStateMachine>();
             }
-            if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+            else if(enemy.GetComponent<AgroGruntStateMachine>() != null)
             {
                 agroGruntStateMachine = enemy.GetComponent<AgroGruntStateMachine>();
             }
-            if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+            else if(enemy.GetComponent<RangeGruntStateMachine>() != null)
             {
                 rangeGruntStateMachine = enemy.GetComponent<RangeGruntStateMachine>();
             }
@@ -71,13 +71,13 @@ public class ReactivateAI : MonoBehaviour
             gruntStateMachine.enabled = true;
             gruntStateMachine.ChangeState(nameof(InRangeState));
         }
-        if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+        else if(enemy.GetComponent<AgroGruntStateMachine>() != null)
         {
             enemy.transform.parent = agroGruntStateMachine.ogParent.transform;
             agroGruntStateMachine.enabled = true;
             agroGruntStateMachine.ChangeState(nameof(ChargeState));
         }
-        if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+        else if(enemy.GetComponent<RangeGruntStateMachine>() != null)
         {
             enemy.transform.parent = rangeGruntStateMachine.ogParent.transform;
             rangeGruntStateMachine.enabled = true;
