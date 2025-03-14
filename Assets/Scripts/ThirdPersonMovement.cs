@@ -219,10 +219,10 @@ public class ThirdPersonMovement : MonoBehaviour
         animator.SetBool("Grounded", rayGround);
 
         Vector3 deltaPosition = (transform.position - lastPosition) / Time.deltaTime;
-        var localVelocity = transform.forward * Vector3.Dot(transform.forward, deltaPosition);
+        var angleb = Vector2.Angle(new Vector2(deltaPosition.x,deltaPosition.z),new Vector2(transform.forward.x,transform.forward.z));
         
-        animator.SetFloat("Forward-back", localVelocity.z);
-        animator.SetFloat("side-to-side", localVelocity.x);
+        animator.SetFloat("Forward-back", Mathf.Cos(angleb)*1);
+        animator.SetFloat("side-to-side", Mathf.Sin(angleb)*1);
 
         lastPosition = transform.position;
         
