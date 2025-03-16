@@ -40,6 +40,10 @@ public class HealthManager : MonoBehaviour
     public void OnHealthChanged(HealthChangedObject healthObj)
     {
         SetHealth(healthObj.currentHealth);
+
+        if (healthObj.delta > 0.0f) // will not shake on heal
+            return;
+
         if (healthSlider.gameObject.activeInHierarchy) // Check if HealthBar is active
         {
             StartCoroutine(ShakeHealthBar()); // Start the shake effect when hit

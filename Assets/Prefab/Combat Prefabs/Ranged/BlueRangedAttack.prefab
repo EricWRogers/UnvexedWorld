@@ -209,9 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d692e5c9d1c32f44b1f4ec574948a1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  knockBackType: 0
+  knockBackType: 1
   going: 1
-  damage: 1
+  damage: 5
   spellBonus: 3
   spellCost: 1
   speed: 20
@@ -220,10 +220,22 @@ MonoBehaviour:
   hitTarget:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: DetonateProjectile, Assembly-CSharp
-        m_MethodName: Activate
-        m_Mode: 1
+      - m_Target: {fileID: 5133252889311382910}
+        m_TargetAssemblyTypeName: Spell, Assembly-CSharp
+        m_MethodName: SpellEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8364585697252412541}
+        m_TargetAssemblyTypeName: ProjectileSpell, Assembly-CSharp
+        m_MethodName: SpendMana
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -234,7 +246,19 @@ MonoBehaviour:
         m_CallState: 2
   spendMana:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6073549766464555043}
+        m_TargetAssemblyTypeName: AttackUpdater, Assembly-CSharp
+        m_MethodName: SpendEnergy
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   activate:
     m_PersistentCalls:
       m_Calls:
@@ -258,7 +282,7 @@ MonoBehaviour:
   - Enemy
   particle: {fileID: 0}
   enemy: {fileID: 0}
-  direction: {fileID: 0}
+  direction: {fileID: 2196909863075772576}
   forceAmount: 4
 --- !u!114 &5133252889311382910
 MonoBehaviour:
