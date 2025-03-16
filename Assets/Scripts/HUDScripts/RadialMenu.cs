@@ -18,6 +18,7 @@ public class RadialMenuManager : MonoBehaviour
     private PauseMenu pauseMenu;
     private LoseMenuScript loseMenu;
     private PlayerGamepad gamepad;
+    private AudioManager audioManager;
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class RadialMenuManager : MonoBehaviour
     void Start()
     {
         spellCraft = FindAnyObjectByType<SpellCraft>();
+        audioManager = FindFirstObjectByType<AudioManager>();
 
         pauseMenu = FindAnyObjectByType<PauseMenu>();
 
@@ -53,23 +55,26 @@ public class RadialMenuManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                ToggleMenu(true);
-                HighlightCurrentStyle();
-            }
-            if (Input.GetKeyUp(KeyCode.Q))
-            {
-                ToggleMenu(false);
-            }
+            ToggleMenu(true);
+            HighlightCurrentStyle();
+            audioManager.PlayRadialPopInSound();
+        }
+        if (Input.GetKeyUp(KeyCode.Q))
+        {
+            ToggleMenu(false);
+            audioManager.PlayRadialPopOutSound();
+        }
 
             if (menuActive && Input.GetKeyDown(KeyCode.E))
             {
                 //CycleRadial();
             }
 
-            if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
-            {
-                CycleAspect();
-            }
+        if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
+        {
+            CycleAspect();
+            audioManager.PlayRadialSwitchSound();
+        }
 
             if (menuActive)
             {
