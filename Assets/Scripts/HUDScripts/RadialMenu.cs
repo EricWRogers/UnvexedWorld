@@ -55,26 +55,26 @@ public class RadialMenuManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Q))
             {
-            ToggleMenu(true);
-            HighlightCurrentStyle();
-            audioManager.PlayRadialPopInSound();
-        }
-        if (Input.GetKeyUp(KeyCode.Q))
-        {
-            ToggleMenu(false);
-            audioManager.PlayRadialPopOutSound();
-        }
+                ToggleMenu(true);
+                HighlightCurrentStyle();
+                audioManager.PlayRadialPopInSound();
+            }
+            if (Input.GetKeyUp(KeyCode.Q))
+            {
+                ToggleMenu(false);
+                audioManager.PlayRadialPopOutSound();
+            }
 
             if (menuActive && Input.GetKeyDown(KeyCode.E))
             {
                 //CycleRadial();
             }
 
-        if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
-        {
-            CycleAspect();
-            audioManager.PlayRadialSwitchSound();
-        }
+            if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
+            {
+                CycleAspect();
+                audioManager.PlayRadialSwitchSound();
+            }
 
             if (menuActive)
             {
