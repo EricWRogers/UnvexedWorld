@@ -12,8 +12,10 @@ public class LoseMenuScript : MonoBehaviour
     public bool didLose = false;
 
     public GameObject loseSection;
+    public GameObject healthStyle;
     public GameObject healthBar;
     public GameObject comboInfo;
+    public GameObject radialMenu;
 
     private Health playerHealth;
     [SerializeField]
@@ -51,8 +53,10 @@ public class LoseMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loseSection.SetActive(true);
+        healthStyle.SetActive(false);
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
+        radialMenu.SetActive(false);
         Time.timeScale = 0.0f;
     }
 
