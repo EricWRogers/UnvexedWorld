@@ -4,12 +4,13 @@ public class HUDManager : MonoBehaviour
 {
     //public GameObject hud; // The main HUD object
     public GameObject dashLines; // Reference to the DashLines
+    public GameObject radialMenu;
 
     public bool stop =  false;
 
     void Start()
     {
-        //HideHUD(); // Hide HUD at the start
+        radialMenu.SetActive(true);
     }
 
     /*public void ShowHUD()
