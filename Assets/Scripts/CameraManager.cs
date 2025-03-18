@@ -10,7 +10,7 @@ public class CameraManager : MonoBehaviour
     public CinemachineFreeLook startCamera;
 
     public  CinemachineFreeLook meleeCamera;
-    private CinemachineFreeLook currentCam;
+    public CinemachineFreeLook currentCam;
 
     public CinemachineVirtualCamera ObjCam;
     

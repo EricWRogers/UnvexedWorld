@@ -10,11 +10,11 @@ public class WinMenuScript : MonoBehaviour
     public bool didWin = false;
 
     public GameObject winSection;
-    public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
 
     private WinGame winGameObj;
+    [SerializeField]
     private PauseMenu pauseMenu;
     private ThirdPersonMovement playerMovement;
     private MeleeRangedAttack playerAttack;
@@ -27,12 +27,13 @@ public class WinMenuScript : MonoBehaviour
         winSection.SetActive(false);
 
         winGameObj = GameObject.FindFirstObjectByType<WinGame>();
+        //This is a null reference
+        pauseMenu = FindFirstObjectByType<PauseMenu>();
         if (winGameObj == null)
         {
             return;
         }
         
-        pauseMenu = FindFirstObjectByType<PauseMenu>();
         if (pauseMenu == null)
         {
             return;
@@ -52,7 +53,6 @@ public class WinMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         winSection.SetActive(true);
-        powerSystem.SetActive(false);
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
         Time.timeScale = 0.0f;
