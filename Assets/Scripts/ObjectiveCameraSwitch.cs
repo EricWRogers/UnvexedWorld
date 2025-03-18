@@ -21,6 +21,10 @@ public class ObjectiveCameraSwitch : MonoBehaviour
      public float returnTime;
 
      public PauseMenu pauseMenu;
+
+     public GameObject currentObject;
+
+     public CinemachineVirtualCamera objCam;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,6 +45,8 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        objCam.LookAt = currentObject.transform;
+        objCam.Follow = currentObject.transform;
         if (other.gameObject.tag == "Player")
         {
             if(GameManager.instance.doNothing == true)
