@@ -24,6 +24,7 @@ public class VisabilityCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(lockOn.target!=null){
         if(isVisible() && lockOn.direction == true)
         {
             Debug.Log("fr");
@@ -40,12 +41,15 @@ public class VisabilityCheck : MonoBehaviour
                 thisView.m_RecenterToTargetHeading.m_enabled = false;
             }
         }
+        }
     }
 
     private bool isVisible()
     {
+        
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
         return planes.All(plane => plane.GetDistanceToPoint(lockOn.target.transform.position) >= 0);
+        
     }
 
     

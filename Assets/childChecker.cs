@@ -15,6 +15,8 @@ public class childChecker : MonoBehaviour
 
     [SerializeField]
     private AnimationCurve curve;
+
+    bool callOnce = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -26,7 +28,11 @@ public class childChecker : MonoBehaviour
     {
         if(transform.childCount == 0)
         {
-            objCam.camMan.OBJCamera();
+            if (callOnce == false)
+            {
+                objCam.CamForEmpty();
+                callOnce = true;
+            }
             begin = true;
             if(begin == true){
             elapsedTime += Time.deltaTime;

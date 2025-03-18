@@ -19,12 +19,16 @@ public class ObjectiveCameraSwitch : MonoBehaviour
      public bool once = false;
 
      public float returnTime;
+
+     public PauseMenu pauseMenu;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         camMan = FindFirstObjectByType<CameraManager>();
 
          movement = FindFirstObjectByType<ThirdPersonMovement>();
+
+         pauseMenu = FindFirstObjectByType<PauseMenu>();
        
 
     }
@@ -39,6 +43,13 @@ public class ObjectiveCameraSwitch : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            if(GameManager.instance.doNothing == true)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+           
+
              
             
             
@@ -64,9 +75,14 @@ public class ObjectiveCameraSwitch : MonoBehaviour
         }   
     }
 
-     IEnumerator ReturnCamera()
+     public IEnumerator ReturnCamera()
     {
-        
+        if(GameManager.instance.doNothing == true && pauseMenu.isPaused == false)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+        camMan.dontChange = true;
         yield return new WaitForSecondsRealtime(returnTime);
         if(textBased == true)
         {
@@ -76,12 +92,26 @@ public class ObjectiveCameraSwitch : MonoBehaviour
             }
         }
         camMan.backCamera();
+        Debug.Log("go back");
         yield return new WaitForSecondsRealtime(returnTime);
         brain.m_DefaultBlend.m_Time = 0.2f;
+        camMan.dontChange = false;
+        if(GameManager.instance.doNothing == false)
+            {
+                brain.m_IgnoreTimeScale = false;
+
+            }
 
         if(once == true){
             Destroy(this);
         }
+    }
+
+    public void CamForEmpty()
+    {
+        Debug.Log("called");
+        camMan.OBJCamera();
+        StartCoroutine(ReturnCamera());
     }
     
 }
