@@ -6,6 +6,8 @@ public class childChecker : MonoBehaviour
     public GameObject StartPoint;
     public GameObject EndPoint;
 
+    public ObjectiveCameraSwitch objCam;
+
     public bool begin = false;
 
      private float desiredDuration = 10f;
@@ -24,7 +26,7 @@ public class childChecker : MonoBehaviour
     {
         if(transform.childCount == 0)
         {
-            Debug.Log("Dead Children");
+            objCam.camMan.OBJCamera();
             begin = true;
             if(begin == true){
             elapsedTime += Time.deltaTime;
