@@ -6983,6 +6983,9 @@ GameObject:
   - component: {fileID: 1220976179}
   - component: {fileID: 1220976178}
   - component: {fileID: 1220976177}
+  - component: {fileID: 1220976183}
+  - component: {fileID: 1220976182}
+  - component: {fileID: 1220976181}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -7073,12 +7076,75 @@ Transform:
   m_GameObject: {fileID: 1220976176}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.480158, y: 0.909, z: 10.016254}
+  m_LocalPosition: {x: -30.480158, y: 0.909, z: 16.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1220976181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220976176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba921f62f34d9ea42a0c9ff52d740046, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AOE: {fileID: 0}
+  DOTParticle: {fileID: 0}
+  LifeStealOrb: {fileID: 0}
+  BurstParticle: {fileID: 0}
+  ScavengeParticle: {fileID: 0}
+  SplendorParticle: {fileID: 0}
+  ScavengeParticleMelee: {fileID: 0}
+  SplendorParticleMelee: {fileID: 0}
+  NoSpellImpact: {fileID: 0}
+  StunParticle: {fileID: 0}
+  EnemySlashParticle: {fileID: 7049650519831530368, guid: 8b524f6f449e5a74ca446bfb8b7086c3,
+    type: 3}
+  stunPS: {fileID: 0}
+--- !u!111 &1220976182
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220976176}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 3a0256cd310fe1842a3fa9403144ea71, type: 2}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
+--- !u!95 &1220976183
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220976176}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0fa3cd82d2f0ee74f8ef17cebd074f61, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1270127550
 GameObject:
   m_ObjectHideFlags: 0

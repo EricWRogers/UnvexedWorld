@@ -18,9 +18,10 @@ public class ParticleManager : MonoBehaviour
     public GameObject NoSpellImpact;
     public GameObject StunParticle;
 
-    public GameObject EnemySlash;
+    public GameObject EnemySlashParticle;
 
-    private GameObject stunPS;
+    public GameObject stunPS;
+    private GameObject EnSlash;
     
     // Start is called before the first frame update
 
@@ -60,8 +61,13 @@ public class ParticleManager : MonoBehaviour
 
     public void spawnEnemySlash(Transform spawnLocation)
     {
-        EnemySlash = Instantiate(ParticleManager.Instance.EnemySlash, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
-        EnemySlash.transform.parent = gameObject.transform;
+        EnSlash = GameObject.Instantiate(EnemySlashParticle, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = gameObject.transform;
     }
+    public void DestroyEnemySlash()
+    {
+        Destroy(EnSlash);
+    }
+
 
 }
