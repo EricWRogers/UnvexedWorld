@@ -20,7 +20,7 @@ public class ParticleManager : MonoBehaviour
 
     public GameObject EnemySlashParticle;
 
-    public GameObject stunPS;
+    private GameObject stunPS;
     private GameObject EnSlash;
     
     // Start is called before the first frame update
@@ -51,7 +51,7 @@ public class ParticleManager : MonoBehaviour
 
     public void SpawnStunParticles(Transform spawnLocation, GameObject stuned)
     {
-        stunPS = GameObject.Instantiate(StunParticle, spawnLocation.position, spawnLocation.rotation);
+        stunPS = Instantiate(StunParticle, spawnLocation.position, spawnLocation.rotation);
         stunPS.transform.parent=stuned.transform;
     }
     public void DestroyStunParticles()
@@ -59,15 +59,12 @@ public class ParticleManager : MonoBehaviour
         Destroy(stunPS);
     }
 
-    public void spawnEnemySlash(Transform spawnLocation)
+    public void SpawnEnemySlash(Transform spawnLocation)
     {
-        EnSlash = GameObject.Instantiate(EnemySlashParticle, spawnLocation.position, spawnLocation.rotation);
-        EnSlash.transform.parent = gameObject.transform;
+        EnSlash = Instantiate(EnemySlashParticle, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = spawnLocation;
     }
-    public void DestroyEnemySlash()
-    {
-        Destroy(EnSlash);
-    }
+    
 
 
 }
