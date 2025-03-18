@@ -183,6 +183,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
+        if(GameManager.instance.doNothing == false){
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
             velocity.y -= gravity * Time.deltaTime;
@@ -195,6 +196,7 @@ public class ThirdPersonMovement : MonoBehaviour
             audioManager.PlayDashSound();
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
+        }
         }
     }
 
@@ -211,6 +213,10 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.instance.doNothing == true)
+        {
+            baseSpeed = 0.0f;
+        }
 
         CollisionCheck();
         animator.SetBool("Grounded", rayGround);
@@ -334,7 +340,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //lock on
         if (lockOn.target)
         {
-            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*3)
+            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*4)
             {
 
                 if (lockOn.target == null){
@@ -350,7 +356,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 5)
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 4)
             {
                 lockOn.LockOff();
             }

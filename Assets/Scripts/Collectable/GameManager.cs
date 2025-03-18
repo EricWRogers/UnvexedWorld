@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public int coinVal = 0;
 
+    public bool doNothing = false;
+
     void Awake()
     {
 

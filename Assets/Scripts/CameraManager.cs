@@ -10,7 +10,11 @@ public class CameraManager : MonoBehaviour
     public CinemachineFreeLook startCamera;
 
     public  CinemachineFreeLook meleeCamera;
-    private CinemachineFreeLook currentCam;
+    public CinemachineFreeLook currentCam;
+
+    public CinemachineVirtualCamera ObjCam;
+
+    public bool dontChange = false;
     
 
     private void Start()
@@ -32,16 +36,35 @@ public class CameraManager : MonoBehaviour
     }
     public void SwitchCamera(CinemachineFreeLook newCam)
     {
-        currentCam = newCam;
+        if(dontChange == false){
+            currentCam = newCam;
 
-        currentCam.Priority = 20;
+            currentCam.Priority = 20;
 
-        for (int i = 0; i < cameras.Length; i++)
-        {
-            if (cameras[i] != currentCam)
+            for (int i = 0; i < cameras.Length; i++)
             {
-                cameras[i].Priority = 10;
+                if (cameras[i] != currentCam)
+                {
+                    cameras[i].Priority = 10;
+                }
             }
         }
     }
+
+    public void OBJCamera()
+    {
+        currentCam.Priority = 10;
+         ObjCam.Priority = 20;
+         Debug.Log("OBJCamera");
+         GameManager.instance.doNothing = true;
+
+    }
+
+   public void backCamera()
+   {
+        currentCam.Priority = 20;
+        ObjCam.Priority = 10;
+        Debug.Log("Back to you");
+        GameManager.instance.doNothing = false;
+   }
 }
