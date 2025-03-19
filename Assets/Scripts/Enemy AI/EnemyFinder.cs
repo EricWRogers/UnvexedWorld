@@ -74,8 +74,6 @@ public class EnemyFinder : MonoBehaviour
         {
             nearbyEnemies.Remove(enemy);
             defeatedEnemies++;
-
-            Debug.Log($"Enemy defeated! {defeatedEnemies}/{totalEnemies} eliminated.");
         }
     }
 
