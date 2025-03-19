@@ -66,7 +66,11 @@ public class VisabilityCheck : MonoBehaviour
     private bool isVisible()
     {
         
+       
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
+        if(lockOn.target == null){
+            return false;
+        }
         return planes.All(plane => plane.GetDistanceToPoint(lockOn.target.transform.position) >= 0);
         
         
