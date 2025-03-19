@@ -18,6 +18,8 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
      public bool once = false;
 
+      public bool noRepeat = false;
+
      public float returnTime;
 
      public PauseMenu pauseMenu;
@@ -47,8 +49,9 @@ public class ObjectiveCameraSwitch : MonoBehaviour
     {
         objCam.LookAt = currentObject.transform;
         objCam.Follow = currentObject.transform;
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Player" && noRepeat == false)
         {
+            noRepeat = true;
             if(GameManager.instance.doNothing == true)
             {
                 brain.m_IgnoreTimeScale = true;
@@ -98,7 +101,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
             }
         }
         camMan.backCamera();
-        Debug.Log("go back");
+        
         yield return new WaitForSecondsRealtime(returnTime);
         brain.m_DefaultBlend.m_Time = 0.2f;
         camMan.dontChange = false;
@@ -115,7 +118,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
     public void CamForEmpty()
     {
-        Debug.Log("called");
+        
         camMan.OBJCamera();
         StartCoroutine(ReturnCamera());
     }
