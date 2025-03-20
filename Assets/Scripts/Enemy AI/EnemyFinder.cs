@@ -58,6 +58,28 @@ public class EnemyFinder : MonoBehaviour
                     enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(gruntStateMachine));
                 }
             }
+            var agroGruntStateMachine = other.GetComponent<AgroGruntStateMachine>();
+            if (agroGruntStateMachine != null && !nearbyEnemies.Contains(agroGruntStateMachine))
+            {
+                nearbyEnemies.Add(agroGruntStateMachine);
+
+                Health enemyHealth = agroGruntStateMachine.GetComponent<Health>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(agroGruntStateMachine));
+                }
+            }
+            var rangeGruntStateMachine = other.GetComponent<RangeGruntStateMachine>();
+            if (rangeGruntStateMachine != null && !nearbyEnemies.Contains(rangeGruntStateMachine))
+            {
+                nearbyEnemies.Add(rangeGruntStateMachine);
+
+                Health enemyHealth = rangeGruntStateMachine.GetComponent<Health>();
+                if (enemyHealth != null)
+                {
+                    enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(rangeGruntStateMachine));
+                }
+            }
         }
         if(other.gameObject.CompareTag("Player"))
         {
