@@ -21,6 +21,7 @@ public class ParticleManager : MonoBehaviour
     public GameObject EnemySlashParticle;
 
     public GameObject RangedHitEffect;
+    public GameObject EnemyRangeImpact;
 
     private GameObject stunPS;
     private GameObject EnSlash;
