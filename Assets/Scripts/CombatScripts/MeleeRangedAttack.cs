@@ -174,7 +174,7 @@ public class MeleeRangedAttack : MonoBehaviour
     
 
 
-    void CancelLockUp()
+    public void CancelLockUp()
     {
         isAttacking = false;
     }

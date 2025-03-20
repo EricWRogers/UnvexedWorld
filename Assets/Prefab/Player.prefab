@@ -2016,6 +2016,96 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60996326971d7334db178e61f7044f07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnMeleeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2639349014840673274}
+        m_TargetAssemblyTypeName: MeleeRangedAttack, Assembly-CSharp
+        m_MethodName: MakeHitBox
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  spawnRangeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2639349014840673274}
+        m_TargetAssemblyTypeName: MeleeRangedAttack, Assembly-CSharp
+        m_MethodName: RangedAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  spawnSuperEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2639349014840673274}
+        m_TargetAssemblyTypeName: MeleeRangedAttack, Assembly-CSharp
+        m_MethodName: SuperPunch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  resetEnergyEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1034932654391892717}
+        m_TargetAssemblyTypeName: SpellCraft, Assembly-CSharp
+        m_MethodName: ResetEnergy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  cancelLockupEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2639349014840673274}
+        m_TargetAssemblyTypeName: MeleeRangedAttack, Assembly-CSharp
+        m_MethodName: CancelLockUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  lockupEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2639349014840673274}
+        m_TargetAssemblyTypeName: MeleeRangedAttack, Assembly-CSharp
+        m_MethodName: LockUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &1068535680641007942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b88b35b692812ac4aa1c3188f873a23c,
