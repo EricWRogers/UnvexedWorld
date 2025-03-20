@@ -10,7 +10,6 @@ public class AttackHitBox : MonoBehaviour
     public void Attack()
     {
         StartCoroutine(Attacking());
-        Debug.Log("Hit Box Attack FUCK YOU");
     }
 
     private IEnumerator Attacking()
