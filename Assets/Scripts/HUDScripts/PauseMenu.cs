@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     public Button quitButton;
     public Button moveSetButton; // Add MoveSet button reference
     public GameObject HealthStyle;
+    public GameObject radialMenu;
 
     public WinMenuScript win;
 
@@ -91,6 +92,7 @@ public class PauseMenu : MonoBehaviour
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
         HealthStyle.SetActive(false);
+        radialMenu.SetActive(false);
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -106,6 +108,7 @@ public class PauseMenu : MonoBehaviour
         healthBar.SetActive(true);
         comboInfo.SetActive(true);
         HealthStyle.SetActive(true);
+        radialMenu.SetActive(true);
         Time.timeScale = 1f;
         isPaused = false;
     }
