@@ -32,7 +32,6 @@ public class KnockBackState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Knock Back State");
         base.OnStart();
 
         agent = stateMachine.GetComponent<NavMeshAgent>();

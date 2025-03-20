@@ -9,7 +9,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     public SpellCraft.Aspect CurrentElement = SpellCraft.Aspect.none;
     
     public int subAspect = 0;
-    public int burstDamage = 10;
+    public int burstDamage = 15;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;
     public int AOEDuration;

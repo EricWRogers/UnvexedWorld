@@ -72,6 +72,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         if (Physics.Linecast(m_lastPosition, transform.position, out m_info, mask))
         {
+            Instantiate(ParticleManager.Instance.RangedHitEffect, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             if (tags.Contains(m_info.transform.tag))
             {
                  enemy = m_info.transform.gameObject;

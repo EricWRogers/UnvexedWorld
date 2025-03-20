@@ -53,6 +53,12 @@ public class CameraLockon : MonoBehaviour
             tg.m_Targets = new CinemachineTargetGroup.Target[0];
         }
 
+        if(lockOn.target == null )
+        {
+             lockCamera.LookAt = player.transform;
+            tg.m_Targets = new CinemachineTargetGroup.Target[0];
+        }
+
       
         
     }
