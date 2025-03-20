@@ -10,8 +10,7 @@ public class PortalTransitionScript : MonoBehaviour
      public bool portalOn = false;
     public GameObject portal;
 
-    public GameObject cylinder1;
-    public GameObject cylinder2;
+    
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,8 +44,7 @@ public class PortalTransitionScript : MonoBehaviour
                  popupText.AddToQueue("Portal Active");
                  keyOrbGainedScript.instance.HasKeyOrb = false;
                  portalOn = true;
-                 cylinder1.SetActive(true);
-                cylinder2.SetActive(true);
+                 
               
 
                  
