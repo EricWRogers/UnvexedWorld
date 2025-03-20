@@ -18,13 +18,23 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
      public bool once = false;
 
+      public bool noRepeat = false;
+
      public float returnTime;
+
+     public PauseMenu pauseMenu;
+
+     public GameObject currentObject;
+
+     public CinemachineVirtualCamera objCam;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         camMan = FindFirstObjectByType<CameraManager>();
 
          movement = FindFirstObjectByType<ThirdPersonMovement>();
+
+         pauseMenu = FindFirstObjectByType<PauseMenu>();
        
 
     }
@@ -37,8 +47,18 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        objCam.LookAt = currentObject.transform;
+        objCam.Follow = currentObject.transform;
+        if (other.gameObject.tag == "Player" && noRepeat == false)
         {
+            noRepeat = true;
+            if(GameManager.instance.doNothing == true)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+           
+
              
             
             
@@ -64,9 +84,14 @@ public class ObjectiveCameraSwitch : MonoBehaviour
         }   
     }
 
-     IEnumerator ReturnCamera()
+     public IEnumerator ReturnCamera()
     {
-        
+        if(GameManager.instance.doNothing == true && pauseMenu.isPaused == false)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+        camMan.dontChange = true;
         yield return new WaitForSecondsRealtime(returnTime);
         if(textBased == true)
         {
@@ -76,12 +101,26 @@ public class ObjectiveCameraSwitch : MonoBehaviour
             }
         }
         camMan.backCamera();
+        
         yield return new WaitForSecondsRealtime(returnTime);
         brain.m_DefaultBlend.m_Time = 0.2f;
+        camMan.dontChange = false;
+        if(GameManager.instance.doNothing == false)
+            {
+                brain.m_IgnoreTimeScale = false;
+
+            }
 
         if(once == true){
             Destroy(this);
         }
+    }
+
+    public void CamForEmpty()
+    {
+        
+        camMan.OBJCamera();
+        StartCoroutine(ReturnCamera());
     }
     
 }

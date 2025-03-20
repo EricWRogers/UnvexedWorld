@@ -6,6 +6,8 @@ public class childChecker : MonoBehaviour
     public GameObject StartPoint;
     public GameObject EndPoint;
 
+    public ObjectiveCameraSwitch objCam;
+
     public bool begin = false;
 
      private float desiredDuration = 10f;
@@ -13,6 +15,8 @@ public class childChecker : MonoBehaviour
 
     [SerializeField]
     private AnimationCurve curve;
+
+    bool callOnce = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,7 +28,11 @@ public class childChecker : MonoBehaviour
     {
         if(transform.childCount == 0)
         {
-            Debug.Log("Dead Children");
+            if (callOnce == false)
+            {
+                objCam.CamForEmpty();
+                callOnce = true;
+            }
             begin = true;
             if(begin == true){
             elapsedTime += Time.deltaTime;
