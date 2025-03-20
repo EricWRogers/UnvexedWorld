@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using System;
 
 public class ObjectiveCameraSwitch : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class ObjectiveCameraSwitch : MonoBehaviour
      public GameObject currentObject;
 
      public CinemachineVirtualCamera objCam;
+
+     public String Key;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -35,6 +38,11 @@ public class ObjectiveCameraSwitch : MonoBehaviour
          movement = FindFirstObjectByType<ThirdPersonMovement>();
 
          pauseMenu = FindFirstObjectByType<PauseMenu>();
+
+         if(GameManager.instance.switches.Contains(Key))
+         {
+            gameObject.SetActive(false);
+         }
        
 
     }
@@ -49,6 +57,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
     {
         objCam.LookAt = currentObject.transform;
         objCam.Follow = currentObject.transform;
+        GameManager.instance.switches.Add(Key);
         if (other.gameObject.tag == "Player" && noRepeat == false)
         {
             noRepeat = true;

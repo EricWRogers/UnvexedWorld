@@ -16,6 +16,7 @@ public class NewMainMenu : MonoBehaviour
         Debug.Log("Next Scene");
         keyOrbGainedScript.instance.HasKeyOrb = false;
         SceneManager.LoadScene(sceneName);
+        GameManager.instance.switches.Clear();
     }
 
     public void QuitGame()
