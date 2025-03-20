@@ -130,6 +130,8 @@ public class ObjectiveCameraSwitch : MonoBehaviour
         
         camMan.OBJCamera();
         StartCoroutine(ReturnCamera());
+         objCam.LookAt = currentObject.transform;
+        objCam.Follow = currentObject.transform;
     }
     
 }
