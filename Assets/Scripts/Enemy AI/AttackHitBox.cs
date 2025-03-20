@@ -5,18 +5,20 @@ using UnityEngine;
 public class AttackHitBox : MonoBehaviour
 {
     public GameObject hitBox;
-    public float timeLeft;
+    public Transform attackArea;
+
+    private GameObject box;
 
     public void Attack()
     {
-        StartCoroutine(Attacking());
+        box = Instantiate(hitBox, attackArea.position, attackArea.rotation);
     }
 
-    private IEnumerator Attacking()
+    public void DestroyBox()
     {
-        yield return new WaitForSeconds(0.75f);
-        GameObject obj = Instantiate(hitBox, transform.position, Quaternion.identity);
-        Destroy(obj, timeLeft);
-        //yield return new WaitForSeconds(timeLeft);
+        Destroy(box);
     }
+
+
+
 }
