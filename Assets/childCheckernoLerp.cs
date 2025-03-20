@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class childCheckernoLerp : MonoBehaviour
 {
-    public ObjectiveCameraSwitch objCam;
+    
       bool callOnce = false;
+
+       public GameObject theThing;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,11 +17,9 @@ public class childCheckernoLerp : MonoBehaviour
     {
         if(transform.childCount == 0)
         {
-            if (callOnce == false)
-            {
-                objCam.CamForEmpty();
-                callOnce = true;
-            }
+
+            theThing.SetActive(true);
+            
         }
     }
 }
