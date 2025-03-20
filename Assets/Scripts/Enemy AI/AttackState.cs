@@ -130,11 +130,11 @@ public class AttackState : SimpleState
                         cooldownTimer = attackDuration;
                     }
                 }
-                else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > rangeGruntStateMachine.inAttackRange || attackTimer <= 0f)// Run away from that bitch of a player 
+                else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > rangeGruntStateMachine.inAttackRange || attackTimer <= 0f)
                 {
                     isAttacking = false;
                     stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(RetreatState));
+                    stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
         }
