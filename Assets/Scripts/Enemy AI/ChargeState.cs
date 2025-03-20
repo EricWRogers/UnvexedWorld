@@ -11,6 +11,7 @@ using UnityEngine.ProBuilder.MeshOperations;
 public class ChargeState : SimpleState
 {
     private NavMeshAgent agent;
+    private Transform target;
     private float range;
     private float maxRange = 12f;
     private float minRange = 4f;
@@ -24,22 +25,28 @@ public class ChargeState : SimpleState
 
         if (stateMachine is GruntStateMachine)
         {
+            target = ((GruntStateMachine)stateMachine).target; 
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is AgroGruntStateMachine)
         {
+            target = ((AgroGruntStateMachine)stateMachine).target;
             range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is RangeGruntStateMachine)
         {
-            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 5.0f; //Needs to be more deverse
+            target = ((RangeGruntStateMachine)stateMachine).target;
         }
     }
 
     public override void UpdateState(float dt)
     {
+        if(agent.enabled == true && agent.isStopped)
+        {
+            agent.SetDestination(target.position);
+        }
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
