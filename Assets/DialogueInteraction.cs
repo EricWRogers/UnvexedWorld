@@ -39,7 +39,7 @@ public class DialogueInteraction : MonoBehaviour
         if (other.gameObject.CompareTag("Player")&& pauseGame == false && once == false && notAgain == false)
         { 
             DiologueBox.SetActive(true);
-          
+           
             text.StartDiolague();
             Debug.Log("InText");
             
@@ -51,6 +51,7 @@ public class DialogueInteraction : MonoBehaviour
             text.StartDiolague();
             Debug.Log("InText");
             Time.timeScale = 0.0f;
+             GameManager.instance.doNothing = true;
             once = true;
 
         }
