@@ -146,10 +146,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("TextBox"))
+        if (other.gameObject.CompareTag("TextBox")&& GameManager.instance.doNothing == true)
         { 
            inText = true;
              
+        }
+        if(other.gameObject.CompareTag("TextBox") && GameManager.instance.doNothing == false)
+        {
+            inText = false;
         }
     }
 
