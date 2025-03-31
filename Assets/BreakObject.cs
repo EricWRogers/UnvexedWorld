@@ -7,10 +7,6 @@ public class BreakObject : MonoBehaviour
     public GameObject UnBrokenObject;
     [SerializeField]
     public GameObject BrokenObject; 
-    [SerializeField]
-    public AudioClip BreakSound;
-
-    private AudioSource audiosource;
     
 
     private void OnTriggerEnter(Collider other)
@@ -19,10 +15,7 @@ public class BreakObject : MonoBehaviour
         {
             UnBrokenObject.SetActive(false);
             BrokenObject.SetActive(true);
-            audiosource = GetComponent<AudioSource>();
-            audiosource.clip = BreakSound;
-            audiosource.Play();
-             Destroy(gameObject, 4f);
+            Destroy(gameObject, 4f);
         }
     }
 
