@@ -24,8 +24,8 @@ public class RadialMenuManager : MonoBehaviour
     {
         // Initialize the Gamepad
         gamepad = new PlayerGamepad();
-        gamepad.GamePlay.Casting.performed += ctx => ToggleMenu(true);
-        gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
+        gamepad.GamePlay.Cycleelement.performed += ctx => ToggleMenu(true);
+        gamepad.GamePlay.Cycleelement.canceled += ctx => ToggleMenu(false);
         //ToggleMenu(false);
     }
 

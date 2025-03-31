@@ -143,6 +143,7 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         nextLine = true;
     }
+   
 
     void OnTriggerEnter(Collider other)
     {
@@ -154,6 +155,7 @@ public class ThirdPersonMovement : MonoBehaviour
         if(other.gameObject.CompareTag("TextBox") && GameManager.instance.doNothing == false)
         {
             inText = false;
+            
         }
     }
 
@@ -217,6 +219,12 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+         if(inText == false)
+         {
+            GameManager.instance.doNothing = false;
+         }
+
         if(GameManager.instance.doNothing == true)
         {
             baseSpeed = 0.0f;
