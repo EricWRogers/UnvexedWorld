@@ -418,7 +418,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if(!lastraygrounded && rayGround == true)
         {
-            Debug.Log("Land no play");
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
              AudioManager.instance.PlayLandingSound();
         }
