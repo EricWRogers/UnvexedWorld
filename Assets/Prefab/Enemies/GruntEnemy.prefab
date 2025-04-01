@@ -47,7 +47,7 @@ MonoBehaviour:
   timeout:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1677764455944319388}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SuperPupSystems.Helper.DamageIndicator, Assembly-CSharp
         m_MethodName: ResetDefaultMaterial
         m_Mode: 1
@@ -112,7 +112,6 @@ GameObject:
   - component: {fileID: 3057545468980896349}
   - component: {fileID: 959047918777663014}
   - component: {fileID: 9170891259317054466}
-  - component: {fileID: 1677764455944319388}
   - component: {fileID: 9090732078651999378}
   - component: {fileID: 8915205268187213710}
   m_Layer: 10
@@ -436,7 +435,7 @@ MonoBehaviour:
             m_StringArgument: Grunt_slap
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 5231520588848740630}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: AttackHitBox, Assembly-CSharp
           m_MethodName: Attack
           m_Mode: 1
@@ -547,22 +546,6 @@ MonoBehaviour:
   autoRestart: 0
   countDownTime: 3
   timeScale: 1
---- !u!114 &1677764455944319388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323832619770725306}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34f62ce3eaabffe6398d2f2380e96881, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultMaterial: {fileID: 2100000, guid: 7734c93d1b56ab8c28132728cb3c4439, type: 2}
-  hurtMaterial: {fileID: 2100000, guid: 91bfabc0d0b3b1c4db860e90b8778a87, type: 2}
-  targetRenderer: {fileID: 0}
-  timer: {fileID: 7263508840939225629}
 --- !u!114 &9090732078651999378
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -570,7 +553,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7323832619770725306}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ed95adaae2c16463a81b65ee7a6521e, type: 3}
   m_Name: 
@@ -649,7 +632,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5114291951315634449}
-  - component: {fileID: 5231520588848740630}
   m_Layer: 10
   m_Name: AttackArea
   m_TagString: Untagged
@@ -672,20 +654,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8368835992581330143}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &5231520588848740630
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9009892263045443379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hitBox: {fileID: 775824409807465637, guid: fcf888b276feff042803dfa936dab8b5, type: 3}
-  timeLeft: 1
 --- !u!1001 &4247703872688363035
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -796,6 +764,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9202953478889595461}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2b7a8885c7d450241be039ee8bfe9ad0,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1548092282604589049}
     - targetCorrespondingSourceObject: {fileID: -6259123269792807168, guid: 2b7a8885c7d450241be039ee8bfe9ad0,
         type: 3}
       insertIndex: -1
@@ -1452,6 +1424,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2808417005efdc4980a8c4ffe843c22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1548092282604589049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3905617014578293578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitBox: {fileID: 775824409807465637, guid: fcf888b276feff042803dfa936dab8b5, type: 3}
+  attackArea: {fileID: 5114291951315634449}
 --- !u!4 &4429388467005911536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b7a8885c7d450241be039ee8bfe9ad0,

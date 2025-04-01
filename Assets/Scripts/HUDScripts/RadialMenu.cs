@@ -24,8 +24,8 @@ public class RadialMenuManager : MonoBehaviour
     {
         // Initialize the Gamepad
         gamepad = new PlayerGamepad();
-        gamepad.GamePlay.Casting.performed += ctx => ToggleMenu(true);
-        gamepad.GamePlay.Casting.canceled += ctx => ToggleMenu(false);
+        gamepad.GamePlay.Cycleelement.performed += ctx => ToggleMenu(true);
+        gamepad.GamePlay.Cycleelement.canceled += ctx => ToggleMenu(false);
         //ToggleMenu(false);
     }
 
@@ -53,16 +53,20 @@ public class RadialMenuManager : MonoBehaviour
     {
         if(pauseMenu.isPaused == false || loseMenu.didLose == false)
         {
-            if (Input.GetKeyDown(KeyCode.Q))
+            
+
+            if(Input.GetKeyDown(KeyCode.Q))
             {
-                ToggleMenu(true);
+                Debug.Log("Radial Menu Open - Play Pop In Sound");
                 HighlightCurrentStyle();
-                audioManager.PlayRadialPopInSound();
+                ToggleMenu(true);
+                audioManager.Play("RadialPopIn");
             }
             if (Input.GetKeyUp(KeyCode.Q))
             {
+                Debug.Log("Radial Menu closed - Playing Pop Out Sound");
                 ToggleMenu(false);
-                audioManager.PlayRadialPopOutSound();
+                audioManager.Play("RadialPopOut");
             }
 
             if (menuActive && Input.GetKeyDown(KeyCode.E))
@@ -72,15 +76,20 @@ public class RadialMenuManager : MonoBehaviour
 
             if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
             {
+                Debug.LogFormat("Radial Menu Switch - Play Switch Sound");
                 CycleAspect();
-                audioManager.PlayRadialSwitchSound();
+                audioManager.Play("RadialSwitch");
             }
 
-            if (menuActive)
+            
+
+            if (menuActive && radialSections[0].sectionObject.active == false)
             {
                 HighlightCurrentStyle();
+                ToggleMenu(true);
             }
         }
+
     }
 
     void ToggleMenu(bool state)
@@ -100,13 +109,14 @@ public class RadialMenuManager : MonoBehaviour
 
                 // Animate expansion using DOTween (can adjust timing and ease as needed)
                 section.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+                
             }
 
             centerRadial.transform.localScale = Vector3.zero;
             centerRadial.SetActive(true);
 
             // Animate expansion using DOTween (can adjust timing and ease as needed)
-            centerRadial.transform.DOScale(Vector3.one, 0.3f).SetEase(Ease.OutBack);
+            centerRadial.transform.DOScale(Vector3.one, 0.1f).SetEase(Ease.OutBack);
 
             HighlightCurrentStyle();
         }
@@ -118,23 +128,26 @@ public class RadialMenuManager : MonoBehaviour
                 {
 
                     Transform s = radialSections[i].sectionObject.transform;
+                    s.DOKill();
                     // Animate collapse using DOTween (can adjust timing and ease as needed)
-                    s.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack)
+                    s.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
                         .OnKill(() => s.gameObject.SetActive(false)); // Hide after animation
                 }
 
                 if (radialSections[i].highlightImage.gameObject.active)
                 {
                     Transform s = radialSections[i].highlightImage.gameObject.transform;
+                    s.DOKill();
                     // Animate collapse using DOTween (can adjust timing and ease as needed)
-                    s.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack)
+                    s.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
                         .OnKill(() => s.gameObject.SetActive(false)); // Hide after animation
                 }
             }
 
             Transform section = centerRadial.transform;
+            section.DOKill();
             // Animate collapse using DOTween (can adjust timing and ease as needed)
-            section.DOScale(Vector3.zero, 0.3f).SetEase(Ease.InBack)
+            section.DOScale(Vector3.zero, 0.1f).SetEase(Ease.InBack)
                 .OnKill(() => section.gameObject.SetActive(false)); // Hide after animation
         }
     }
