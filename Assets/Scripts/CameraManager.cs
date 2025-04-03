@@ -56,7 +56,7 @@ public class CameraManager : MonoBehaviour
         currentCam.Priority = 10;
          ObjCam.Priority = 20;
          
-         GameManager.instance.doNothing = true;
+         GameManager.Instance.doNothing = true;
 
     }
 
@@ -65,6 +65,6 @@ public class CameraManager : MonoBehaviour
         currentCam.Priority = 20;
         ObjCam.Priority = 10;
       
-        GameManager.instance.doNothing = false;
+        GameManager.Instance.doNothing = false;
    }
 }

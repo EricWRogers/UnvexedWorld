@@ -75,7 +75,7 @@ public class MeleeRangedAttack : MonoBehaviour
    
     void MeleeGamepadlight()
     {
-        if(GameManager.instance.doNothing == false){
+        if(GameManager.Instance.doNothing == false){
         isAttacking = true;
         punched = true;
 
