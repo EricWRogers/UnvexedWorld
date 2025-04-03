@@ -88,11 +88,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public bool hasGamePad = false;
 
+    private Vector3 lastPosition;
+
    
 
 
     void Awake()
     {
+        lastPosition = transform.position;
         dashLines = GameObject.Find("DashLines");
         dashLines.SetActive(false);
 
@@ -232,6 +235,14 @@ public class ThirdPersonMovement : MonoBehaviour
 
         CollisionCheck();
         animator.SetBool("Grounded", rayGround);
+
+        Vector3 deltaPosition = (transform.position - lastPosition) / Time.deltaTime;
+        deltaPosition  = transform.InverseTransformDirection(deltaPosition);
+        
+        animator.SetFloat("Forward-back", deltaPosition.z * .1f);
+        animator.SetFloat("side-to-side", deltaPosition.x * .1f);
+
+        lastPosition = transform.position;
         
         UpdateSlopeSliding();
 
