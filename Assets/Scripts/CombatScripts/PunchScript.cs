@@ -65,7 +65,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             if (other.gameObject.GetComponent<Health>() == null)
                return;
             
-            Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
+           
             PlayPunch();
 
             

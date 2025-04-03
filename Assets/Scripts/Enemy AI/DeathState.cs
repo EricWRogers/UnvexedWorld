@@ -9,7 +9,6 @@ public class DeathState : SimpleState
 {
     public override void OnStart()
     {
-        Debug.Log("Oh Shit He Dead");
         base.OnStart();
         
     }

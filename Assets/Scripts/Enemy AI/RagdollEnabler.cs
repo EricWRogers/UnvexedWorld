@@ -72,7 +72,6 @@ public class RagdollEnabler : MonoBehaviour
         agent.enabled = false;
         enemiesRigidbody.Sleep();
         enemiesCollider.enabled = false;
-        Debug.Log("enemiesCollider " + enemiesCollider.enabled);
         foreach (CharacterJoint joint in joints)
         {
             joint.enableCollision = true;

@@ -10,6 +10,8 @@ public class VisabilityCheck : MonoBehaviour
 
     public CinemachineFreeLook thisView;
 
+    public GameObject player;
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -17,6 +19,8 @@ public class VisabilityCheck : MonoBehaviour
         lockOn = GameObject.FindFirstObjectByType<MeleeRangedAttack>();
 
         mainCamera = Camera.main;
+
+        player = GameObject.FindGameObjectWithTag("Player");
 
        
     }
@@ -26,11 +30,28 @@ public class VisabilityCheck : MonoBehaviour
     {
         if(isVisible() && lockOn.direction == true)
         {
-            Debug.Log("fr");
+          
         }
         else
         {
-            Debug.Log("NOWAY");
+            
+            if(lockOn.direction == true){
+                thisView.m_RecenterToTargetHeading.m_enabled = true;
+            
+            }
+            else
+            {
+                thisView.m_RecenterToTargetHeading.m_enabled = false;
+            }
+        }
+
+        if(playerIsVisible() && lockOn.direction == true)
+        {
+          
+        }
+        else
+        {
+            
             if(lockOn.direction == true){
                 thisView.m_RecenterToTargetHeading.m_enabled = true;
             
@@ -44,9 +65,21 @@ public class VisabilityCheck : MonoBehaviour
 
     private bool isVisible()
     {
+        
+       
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
+        if(lockOn.target == null){
+            return false;
+        }
         return planes.All(plane => plane.GetDistanceToPoint(lockOn.target.transform.position) >= 0);
+        
+        
     }
+     private bool playerIsVisible()
+     {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(mainCamera);
+        return planes.All(plane => plane.GetDistanceToPoint(player.transform.position) >= 0);
+     }
 
     
 }

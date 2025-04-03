@@ -20,7 +20,6 @@ public class StunState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Stun State");
         base.OnStart();
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
@@ -44,8 +43,7 @@ public class StunState : SimpleState
         if(agent.enabled == true)
         {
             agent.isStopped = true;
-        }  
-        Debug.Log("Entering Stun State");
+        }
     }
 
     public override void UpdateState(float _dt)
@@ -119,7 +117,6 @@ public class StunState : SimpleState
         {
             rangeGruntStateMachine.canStun = false;
         }
-        Debug.Log("Exiting Stun State");
     }
 
     public bool CanEnterStunState()

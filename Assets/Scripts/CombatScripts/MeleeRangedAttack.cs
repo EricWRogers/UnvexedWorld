@@ -75,6 +75,7 @@ public class MeleeRangedAttack : MonoBehaviour
    
     void MeleeGamepadlight()
     {
+        if(GameManager.instance.doNothing == false){
         isAttacking = true;
         punched = true;
 
@@ -112,6 +113,7 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             isAttacking = true;
             MeleeLight();
+        }
         }
 
 
@@ -202,9 +204,11 @@ public class MeleeRangedAttack : MonoBehaviour
         //animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
+            
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
+            
             
         }
         else
