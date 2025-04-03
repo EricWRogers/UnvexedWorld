@@ -213,4 +213,5 @@ public class AudioManager : MonoBehaviour
     public void PlayRadialPopInSound() => Play("Pop-In");
     public void PlayRadialPopOutSound() => Play("Pop-Out");
     public void PlayRadialSwitchSound() => Play("RadialSwitch");
+    public void PlayBreakableSound() => Play("Breakable");
 }
