@@ -7,22 +7,15 @@ public class BreakObject : MonoBehaviour
     public GameObject UnBrokenObject;
     [SerializeField]
     public GameObject BrokenObject; 
-    [SerializeField]
-    public AudioClip BreakSound;
-
-    private AudioSource audiosource;
     
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy") || other.gameObject.CompareTag("GroundEnemy"))
         {
             UnBrokenObject.SetActive(false);
             BrokenObject.SetActive(true);
-            audiosource = GetComponent<AudioSource>();
-            audiosource.clip = BreakSound;
-            audiosource.Play();
-             Destroy(gameObject, 4f);
+            Destroy(gameObject, 4f);
         }
     }
 

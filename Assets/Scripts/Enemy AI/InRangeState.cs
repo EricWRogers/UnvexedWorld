@@ -11,6 +11,7 @@ ready to surround the player*/
 public class InRangeState : SimpleState
 {
     private NavMeshAgent agent;
+    private Transform target;
     private float surroundRange = 5.0f;
 
     public override void OnStart()
@@ -20,6 +21,7 @@ public class InRangeState : SimpleState
         if (stateMachine is GruntStateMachine)
         {
             agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
+            target = ((GruntStateMachine)stateMachine).target;
             agent.enabled = true;
         }
     }
@@ -30,6 +32,10 @@ public class InRangeState : SimpleState
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
             {
+                if(agent.enabled == true && agent.isStopped)
+                {
+                    agent.SetDestination(target.position);
+                }
                 if(agent.isOnNavMesh == true)
                 {
                     agent.SetDestination(gruntStateMachine.target.position);

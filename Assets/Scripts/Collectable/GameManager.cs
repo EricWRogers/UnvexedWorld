@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SuperPupSystems.Manager;
 using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class GameManager : MonoBehaviour
     public static GameManager instance = null;
 
     public int coinVal = 0;
+
+    public bool doNothing = false;
+
+    public List<String> switches;
 
     void Awake()
     {
