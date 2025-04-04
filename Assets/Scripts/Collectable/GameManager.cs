@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     public bool hasKeyOrb = false;
     public bool doNothing = false;
 
+    public bool battleOn;
+
     public List<String> switches;
 
     void Awake()
