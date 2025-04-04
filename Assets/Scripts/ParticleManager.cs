@@ -12,10 +12,11 @@ public class ParticleManager : MonoBehaviour
     public GameObject BurstParticle;
     public GameObject ScavengeParticle;
     public GameObject SplendorParticle;
+    public GameObject SunderParticle;
+    
+    public GameObject SunderParticleMelee;
+    
     public GameObject CrystalizeParticle;
-    
-    public GameObject CrystalizeParticleMelee;
-    
     public GameObject CrystalizedObject;
 
     public GameObject ScavengeParticleMelee;

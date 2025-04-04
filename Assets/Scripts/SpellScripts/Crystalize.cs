@@ -12,7 +12,7 @@ public class Crystalize : MonoBehaviour
     public float crystalization = 5;
     public bool crystalized;
     public int decayRate = 1;
-    public int duration = 10;
+    public int duration = 5;
     public GameObject particle;
     public GameObject fullCrystal;
     public Health health;

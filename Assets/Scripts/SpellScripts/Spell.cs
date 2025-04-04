@@ -10,7 +10,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     
     public int subAspect = 0;
     public int burstDamage = 15;
-    public float crystalDamage = 10;
+    public float crystalDamage = 20;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;
     public int AOEDuration;
@@ -72,6 +72,7 @@ public class Spell : MonoBehaviour, IDamageDealer
         {
             target.AddComponent<Crystalize>();
             target.GetComponent<Crystalize>().particle = ParticleManager.Instance.CrystalizeParticle;
+            target.GetComponent<Crystalize>().fullCrystal = ParticleManager.Instance.CrystalizedObject;
         }
         target.GetComponent<Crystalize>().crystalization += crystalDamage;
     }
