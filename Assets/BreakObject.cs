@@ -7,6 +7,8 @@ public class BreakObject : MonoBehaviour
     public GameObject UnBrokenObject;
     [SerializeField]
     public GameObject BrokenObject; 
+
+    private AudioManager audioManager;
     
 
     private void OnTriggerEnter(Collider other)
@@ -16,6 +18,7 @@ public class BreakObject : MonoBehaviour
             UnBrokenObject.SetActive(false);
             BrokenObject.SetActive(true);
             Destroy(gameObject, 4f);
+            AudioManager.instance.PlayBreakableSound();
         }
     }
 

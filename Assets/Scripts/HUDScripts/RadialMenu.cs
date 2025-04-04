@@ -57,14 +57,12 @@ public class RadialMenuManager : MonoBehaviour
 
             if(Input.GetKeyDown(KeyCode.Q))
             {
-                Debug.Log("Radial Menu Open - Play Pop In Sound");
                 HighlightCurrentStyle();
                 ToggleMenu(true);
                 audioManager.Play("RadialPopIn");
             }
             if (Input.GetKeyUp(KeyCode.Q))
             {
-                Debug.Log("Radial Menu closed - Playing Pop Out Sound");
                 ToggleMenu(false);
                 audioManager.Play("RadialPopOut");
             }
@@ -76,7 +74,6 @@ public class RadialMenuManager : MonoBehaviour
 
             if (menuActive && Input.GetKeyDown(KeyCode.T)) // Cycle Aspect with T
             {
-                Debug.LogFormat("Radial Menu Switch - Play Switch Sound");
                 CycleAspect();
                 audioManager.Play("RadialSwitch");
             }

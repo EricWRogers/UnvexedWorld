@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
+    public AudioMixerGroup musicMixerGroup;
+    public AudioMixerGroup sfxMixerGroup;
+
     private void Awake()
     {
         if (instance == null)
@@ -62,6 +65,12 @@ public class AudioManager : MonoBehaviour
                 AudioSource audioSource = audioObject.GetComponent<AudioSource>();
                 audioSource.clip = sound.clip;
                 audioSource.volume = sound.volume;
+
+                if (ac.type == AudioCollection.TypeOfSound.Music)
+                    audioSource.outputAudioMixerGroup = musicMixerGroup;
+                else
+                    audioSource.outputAudioMixerGroup = sfxMixerGroup;
+                    
                 if (_varyPitch)
                     audioSource.pitch = sound.pitch + Random.Range(-0.3f, 0.3f);
                 else
@@ -94,6 +103,12 @@ public class AudioManager : MonoBehaviour
             if (audioObject != null)
             {
                 AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+
+                if (ac.type == AudioCollection.TypeOfSound.Music)
+                    audioSource.outputAudioMixerGroup = musicMixerGroup;
+                else
+                    audioSource.outputAudioMixerGroup = sfxMixerGroup;
+
                 audioSource.clip = sound.clip;
                 audioSource.volume = sound.volume;
                 if (_varyPitch)
@@ -198,4 +213,5 @@ public class AudioManager : MonoBehaviour
     public void PlayRadialPopInSound() => Play("Pop-In");
     public void PlayRadialPopOutSound() => Play("Pop-Out");
     public void PlayRadialSwitchSound() => Play("RadialSwitch");
+    public void PlayBreakableSound() => Play("Breakable");
 }
