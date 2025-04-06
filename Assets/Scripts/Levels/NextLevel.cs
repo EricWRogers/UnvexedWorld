@@ -40,7 +40,7 @@ public class NextLevel : MonoBehaviour
 
     void Update()
     {
-        if(keyOrbGainedScript.instance.HasKeyOrb == true)
+        if(GameManager.Instance.hasKeyOrb == true)
         {
             doorAnim.SetBool("isOpen", false);
         }
@@ -49,11 +49,11 @@ public class NextLevel : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(keyOrbGainedScript.instance.HasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance+offset)
+        if(GameManager.Instance.hasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance+offset)
         {
             doorAnim.SetBool("isOpen", true);
         }
-        if(keyOrbGainedScript.instance.HasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance)
+        if(GameManager.Instance.hasKeyOrb == false && Vector3.Distance(transform.position, player.position) < doorDistance)
         {
             nextLevel.Invoke();
         }

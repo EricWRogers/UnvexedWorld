@@ -75,6 +75,7 @@ public class MeleeRangedAttack : MonoBehaviour
    
     void MeleeGamepadlight()
     {
+        if(GameManager.Instance.doNothing == false){
         isAttacking = true;
         punched = true;
 
@@ -112,6 +113,7 @@ public class MeleeRangedAttack : MonoBehaviour
         {
             isAttacking = true;
             MeleeLight();
+        }
         }
 
 
@@ -174,7 +176,7 @@ public class MeleeRangedAttack : MonoBehaviour
     
 
 
-    void CancelLockUp()
+    public void CancelLockUp()
     {
         isAttacking = false;
     }
@@ -202,9 +204,11 @@ public class MeleeRangedAttack : MonoBehaviour
         //animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
+            
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
+            
             
         }
         else
@@ -242,6 +246,8 @@ public class MeleeRangedAttack : MonoBehaviour
        
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
+
+        GetComponentsInChildren<Animator>()[1].SetBool("CheckDirection", direction);
 
         
         if(direction == true && target != null)
@@ -384,6 +390,12 @@ public class MeleeRangedAttack : MonoBehaviour
             temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
         }
     }
+
+    public void SetAttack()
+    {
+        GetComponent<Animator>().SetTrigger("Light");
+    }
     
    
 }
+

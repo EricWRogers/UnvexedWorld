@@ -7,6 +7,7 @@ public class BreakableObject : MonoBehaviour
     public GameObject unBrokenObject;
     public GameObject brokenObject;
     public Rigidbody[] rb;
+    private AudioManager audioManager;
 
     public float breakPower = 5f;
 
@@ -30,6 +31,7 @@ public class BreakableObject : MonoBehaviour
         {
             unBrokenObject.SetActive(false);
             brokenObject.SetActive(true);
+            AudioManager.instance.PlayBreakableSound();
 
             LanuchPieces();
 

@@ -60,12 +60,12 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {
             return;
         }
-        if ((other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy") && other.GetComponent<Rigidbody>().isKinematic == true)
+        if ((other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy")) && other.GetComponent<Rigidbody>().isKinematic == true)
         {
             if (other.gameObject.GetComponent<Health>() == null)
                return;
             
-            Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
+           
             PlayPunch();
 
             

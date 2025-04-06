@@ -9,14 +9,17 @@ public class StartPosition : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        Debug.Log("Start");
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        if(keyOrbGainedScript.instance.HasKeyOrb == false)
+        if(GameManager.Instance.hasKeyOrb == false)
         {
+            Debug.Log("PosOne");
             player.position = spawnPointOne.position;
             player.rotation = spawnPointOne.rotation;
         }else
         {
+            Debug.Log("PosTwo");
             player.position = spawnPointTwo.position;
         }
     }
@@ -24,6 +27,10 @@ public class StartPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // if(tracker > 0)
+        // {
+        //     player.position = spawnPointTwo.position;
+        //     tracker = 0;
+        // }
     }
 }

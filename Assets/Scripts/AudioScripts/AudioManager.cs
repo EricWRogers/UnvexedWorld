@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
+    public AudioMixerGroup musicMixerGroup;
+    public AudioMixerGroup sfxMixerGroup;
+
     private void Awake()
     {
         if (instance == null)
@@ -35,17 +38,17 @@ public class AudioManager : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        masterMixer.SetFloat("MasterVolume", Mathf.Log10(volume) * 20);
+        masterMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20);
     }
 
     public void SetMusicVolume(float volume)
     {
-        musicMixer.SetFloat("MusicVolume", Mathf.Log10(volume) * 20);
+        musicMixer.SetFloat("MusicVolume", Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20);
     }
 
     public void SetSFXVolume(float volume)
     {
-        sfxMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
+        sfxMixer.SetFloat("SFXVolume", Mathf.Log10(Mathf.Max(volume, 0.0001f)) * 20);
     }
 
     // Play a Sound by Name
@@ -62,6 +65,12 @@ public class AudioManager : MonoBehaviour
                 AudioSource audioSource = audioObject.GetComponent<AudioSource>();
                 audioSource.clip = sound.clip;
                 audioSource.volume = sound.volume;
+
+                if (ac.type == AudioCollection.TypeOfSound.Music)
+                    audioSource.outputAudioMixerGroup = musicMixerGroup;
+                else
+                    audioSource.outputAudioMixerGroup = sfxMixerGroup;
+                    
                 if (_varyPitch)
                     audioSource.pitch = sound.pitch + Random.Range(-0.3f, 0.3f);
                 else
@@ -94,6 +103,12 @@ public class AudioManager : MonoBehaviour
             if (audioObject != null)
             {
                 AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+
+                if (ac.type == AudioCollection.TypeOfSound.Music)
+                    audioSource.outputAudioMixerGroup = musicMixerGroup;
+                else
+                    audioSource.outputAudioMixerGroup = sfxMixerGroup;
+
                 audioSource.clip = sound.clip;
                 audioSource.volume = sound.volume;
                 if (_varyPitch)
@@ -124,7 +139,7 @@ public class AudioManager : MonoBehaviour
             backgroundMusicSource.Play();
             if(IsBattleMusicPlaying())
             {
-                backgroundMusicSource.Stop();
+                battleMusicSource.Stop();
             }
         }
     }
@@ -180,6 +195,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if(GameManager.Instance.battleOn == false){
+            
+            PlayBackgroundMusic();
+            Debug.Log("PlayingBackGround");
+            
+        }
+
+        if(GameManager.Instance.battleOn == true)
+        {
+            PlayBattleMusic();
+        }
+    }
+
     // Deactivate Pooled Object After Sound Finishes
     private IEnumerator DeactivateAfterPlay(AudioSource source)
     {
@@ -198,4 +228,5 @@ public class AudioManager : MonoBehaviour
     public void PlayRadialPopInSound() => Play("Pop-In");
     public void PlayRadialPopOutSound() => Play("Pop-Out");
     public void PlayRadialSwitchSound() => Play("RadialSwitch");
+    public void PlayBreakableSound() => Play("Breakable");
 }

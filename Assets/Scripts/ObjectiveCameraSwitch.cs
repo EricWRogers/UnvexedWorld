@@ -1,6 +1,7 @@
 using UnityEngine;
 using Cinemachine;
 using System.Collections;
+using System;
 
 public class ObjectiveCameraSwitch : MonoBehaviour
 {
@@ -18,13 +19,30 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
      public bool once = false;
 
+      public bool noRepeat = false;
+
      public float returnTime;
+
+     public PauseMenu pauseMenu;
+
+     public GameObject currentObject;
+
+     public CinemachineVirtualCamera objCam;
+
+     public String Key;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         camMan = FindFirstObjectByType<CameraManager>();
 
          movement = FindFirstObjectByType<ThirdPersonMovement>();
+
+         pauseMenu = FindFirstObjectByType<PauseMenu>();
+
+         if(GameManager.Instance.switches.Contains(Key))
+         {
+            gameObject.SetActive(false);
+         }
        
 
     }
@@ -37,8 +55,19 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        objCam.LookAt = currentObject.transform;
+        objCam.Follow = currentObject.transform;
+        GameManager.Instance.switches.Add(Key);
+        if (other.gameObject.tag == "Player" && noRepeat == false)
         {
+            noRepeat = true;
+            if(GameManager.Instance.doNothing == true)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+           
+
              
             
             
@@ -64,9 +93,14 @@ public class ObjectiveCameraSwitch : MonoBehaviour
         }   
     }
 
-     IEnumerator ReturnCamera()
+     public IEnumerator ReturnCamera()
     {
-        
+        if(GameManager.Instance.doNothing == true && pauseMenu.isPaused == false)
+            {
+                brain.m_IgnoreTimeScale = true;
+
+            }
+        camMan.dontChange = true;
         yield return new WaitForSecondsRealtime(returnTime);
         if(textBased == true)
         {
@@ -76,12 +110,28 @@ public class ObjectiveCameraSwitch : MonoBehaviour
             }
         }
         camMan.backCamera();
+        
         yield return new WaitForSecondsRealtime(returnTime);
         brain.m_DefaultBlend.m_Time = 0.2f;
+        camMan.dontChange = false;
+        if(GameManager.Instance.doNothing == false)
+            {
+                brain.m_IgnoreTimeScale = false;
+
+            }
 
         if(once == true){
             Destroy(this);
         }
+    }
+
+    public void CamForEmpty()
+    {
+        
+        camMan.OBJCamera();
+        StartCoroutine(ReturnCamera());
+         objCam.LookAt = currentObject.transform;
+        objCam.Follow = currentObject.transform;
     }
     
 }

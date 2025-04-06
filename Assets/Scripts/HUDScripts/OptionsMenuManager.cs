@@ -113,4 +113,3 @@ public class OptionsMenuManager : MonoBehaviour
         SetCameraSensitivity();
     }
 }
-//350 X 12 Y
