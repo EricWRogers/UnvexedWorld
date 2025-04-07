@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class childCheckernoLerp : MonoBehaviour
@@ -12,10 +13,12 @@ public class childCheckernoLerp : MonoBehaviour
       public bool end = false;
 
        public GameObject theThing;
+
+       public EnemyFinder eFinder;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        eFinder = GetComponent<EnemyFinder>();
     }
 
     // Update is called once per frame
@@ -28,10 +31,15 @@ public class childCheckernoLerp : MonoBehaviour
             
         }
 
-        if(transform.childCount == 0 && theMusic == true && end == false)
+      
+
+        if(eFinder != null) 
         {
-            end = true;
-            GameManager.Instance.battleOn = false;
+            if(eFinder.nearbyEnemies.Count == 0 && theMusic == true && end == false )
+            {
+                end = true;
+                GameManager.Instance.battleOn = false;
+            }
         }
     }
 }
