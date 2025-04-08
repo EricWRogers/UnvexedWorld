@@ -9,6 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5398531044076929051}
+  - component: {fileID: 187807018565238619}
+  - component: {fileID: -5250301933067428819}
+  - component: {fileID: 6762779848653795118}
+  - component: {fileID: 3410625279945116803}
   m_Layer: 0
   m_Name: CrystalShot
   m_TagString: Untagged
@@ -32,6 +36,128 @@ Transform:
   - {fileID: 6031941463121577738}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &187807018565238619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789984585074536907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad54517dc19258185960ef6d2f3a1b93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeout:
+    m_PersistentCalls:
+      m_Calls: []
+  autoStart: 0
+  autoRestart: 0
+  countDownTime: 1
+  timeScale: 1
+--- !u!114 &-5250301933067428819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789984585074536907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d692e5c9d1c32f44b1f4ec574948a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackType: 1
+  going: 1
+  damage: 5
+  spellBonus: 0
+  spellCost: 0
+  speed: 20
+  lifeTime: 10
+  destroyOnImpact: 1
+  hitTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6789984585074536907}
+        m_TargetAssemblyTypeName: Spell, Assembly-CSharp
+        m_MethodName: SpellEffect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: -5250301933067428819}
+        m_TargetAssemblyTypeName: ProjectileSpell, Assembly-CSharp
+        m_MethodName: SpendMana
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  spendMana:
+    m_PersistentCalls:
+      m_Calls: []
+  activate:
+    m_PersistentCalls:
+      m_Calls: []
+  mask:
+    serializedVersion: 2
+    m_Bits: 1472
+  tags:
+  - GroundEnemy
+  - Enemy
+  particle: {fileID: 0}
+  enemy: {fileID: 0}
+  direction: {fileID: 2196909863075772576, guid: e6a8f9129bcae494a962d3408ae5f9ef,
+    type: 3}
+  forceAmount: 4
+--- !u!114 &6762779848653795118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789984585074536907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 3
+  subAspect: 1
+  burstDamage: 15
+  crystalDamage: 20
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 0
+  ricochetCount: 0
+  comboManager: {fileID: 0}
+--- !u!114 &3410625279945116803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6789984585074536907}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aa98bb4dcb9ce842aff6ea9096aaf4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  element: 3
+  aspect: 0
+  spellCost: 0
+  spells: []
 --- !u!1001 &3963391073707266782
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
 using Scripts.HUDScripts.MessageSystem;
+using Unity.Mathematics;
 
 public class Spell : MonoBehaviour, IDamageDealer
 {
@@ -76,6 +77,16 @@ public class Spell : MonoBehaviour, IDamageDealer
             target.GetComponent<Crystalize>().fullCrystal = ParticleManager.Instance.CrystalizedObject;
         }
         target.GetComponent<Crystalize>().crystalization += crystalDamage;
+    }
+
+    public void Ricochet(GameObject target)
+    {
+        Instantiate(AttackManager.Instance.sunderCrystalPrefabs[1],transform.position + new Vector3(0,2,0),transform.rotation);
+    }
+
+    public void CrystalTrap()
+    {
+        Instantiate(AttackManager.Instance.sunderCrystalPrefabs[0],transform.position + new Vector3(0,1,0),quaternion.identity);
     }
 
     public void SpellEffect(GameObject target)

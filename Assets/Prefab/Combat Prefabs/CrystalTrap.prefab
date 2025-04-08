@@ -91,5 +91,159 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8273234229517854859}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7298003162784705921}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5974712595398789044}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6059509080753835148}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -1835719530233205716}
   m_SourcePrefab: {fileID: 100100000, guid: 00ac272bbe398f94fbb081d9ce741b49, type: 3}
+--- !u!1 &512400524969094500 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 00ac272bbe398f94fbb081d9ce741b49,
+    type: 3}
+  m_PrefabInstance: {fileID: 854839787428548661}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8273234229517854859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512400524969094500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51b5f23bf258d0248adcadce519c2e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockBackType: 0
+  damage: 10
+  spellBonus: 0
+  spellCost: 0
+  impactValue: 25
+  enemy: {fileID: 0}
+  punchTarget:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7298003162784705921}
+        m_TargetAssemblyTypeName: Spell, Assembly-CSharp
+        m_MethodName: ApplyCrystalize
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5974712595398789044}
+        m_TargetAssemblyTypeName: DestroySelf, Assembly-CSharp
+        m_MethodName: End
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  spendMana:
+    m_PersistentCalls:
+      m_Calls: []
+  particle: {fileID: 0}
+  comboManager: {fileID: 0}
+  hitStop: {fileID: -1835719530233205716}
+  duration: 0
+  punchSoundIndex: 0
+  direction: {fileID: 0}
+  forceAmount: 4
+--- !u!114 &7298003162784705921
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512400524969094500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac1d62d39b6076f4a9bb5cbd357c4764, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentElement: 0
+  subAspect: 0
+  burstDamage: 15
+  crystalDamage: 20
+  AOEDuration: 0
+  lifeSteal: 0
+  overwriteSpell: 0
+  lifeStealRatio: 1
+  ricochetCount: 2
+  comboManager: {fileID: 0}
+--- !u!114 &5974712595398789044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512400524969094500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a40ff45124fd0e4b851e5d02babed3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timer: {fileID: 0}
+  duration: 10
+  onStart: 1
+--- !u!65 &6059509080753835148
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512400524969094500}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.35634536, y: 0.69429123, z: 0.3544902}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1835719530233205716
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512400524969094500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f06c76c555d3e53499c9d3a16d6a7f05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waiting: 0
+  gamePaused: {fileID: 0}
+  scaleTime: 1
