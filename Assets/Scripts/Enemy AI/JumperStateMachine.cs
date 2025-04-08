@@ -5,7 +5,7 @@ using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
 using UnityEngine.AI;
 
-public class AgroGruntStateMachine : SimpleStateMachine
+public class JumperStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public IdleState idle;

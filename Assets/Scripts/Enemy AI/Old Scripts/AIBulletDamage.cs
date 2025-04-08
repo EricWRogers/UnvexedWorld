@@ -29,6 +29,5 @@ public class AIBulletDamage : MonoBehaviour
         if (col.gameObject.CompareTag("GroundEnemy") == false)
             Destroy(gameObject, .05f);
 
-        Debug.Log("Hit: " + col.gameObject.name + "");
     }
 }

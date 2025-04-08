@@ -5,6 +5,7 @@ public class OpenDoor : MonoBehaviour
 {
     public Animator anim;
     public EnemyFinder enemies;
+    public OrbOpenDoor openDoor;
     public float openDoorDistance = 2.5f;
     private Transform player;
     [SerializeField]
@@ -18,7 +19,7 @@ public class OpenDoor : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Vector3.Distance(transform.position, player.position) < openDoorDistance)
+        if(Vector3.Distance(transform.position, player.position) < openDoorDistance && openDoor == null)
         {
             if(enemies != null)
             {
@@ -35,6 +36,14 @@ public class OpenDoor : MonoBehaviour
                 anim.SetBool("IsOpen", true);
             }
             doorCol.enabled = false;
+        }
+        else if(openDoor != null)
+        {
+            if(openDoor.openDoor == true)
+            {
+                anim.SetBool("IsOpen", true);
+                doorCol.enabled = false;
+            }    
         }
     }
 }
