@@ -105,8 +105,9 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
+                if(direction == false){
                 FindNewTarget();
+            }
             }
         }
         else
@@ -261,8 +262,10 @@ public class MeleeRangedAttack : MonoBehaviour
          if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
-                FindNewTarget();
+                 if(direction == false)
+                 {
+                    FindNewTarget();
+                 }
             }
         }
         }
@@ -315,7 +318,6 @@ public class MeleeRangedAttack : MonoBehaviour
 
    public void FindNewTarget()
     {
-
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 
