@@ -22,7 +22,7 @@ public class KeyOrbCollect : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             popupText.AddToQueue("Key Orb");
-            keyOrbGainedScript.instance.HasKeyOrb = true;
+            GameManager.Instance.hasKeyOrb = true;
             gameObject.SetActive(false);
 
 

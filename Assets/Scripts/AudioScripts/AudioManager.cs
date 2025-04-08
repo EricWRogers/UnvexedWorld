@@ -139,7 +139,7 @@ public class AudioManager : MonoBehaviour
             backgroundMusicSource.Play();
             if(IsBattleMusicPlaying())
             {
-                backgroundMusicSource.Stop();
+                battleMusicSource.Stop();
             }
         }
     }
@@ -195,6 +195,21 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void Update()
+    {
+        if(GameManager.Instance.battleOn == false){
+            
+            PlayBackgroundMusic();
+            Debug.Log("PlayingBackGround");
+            
+        }
+
+        if(GameManager.Instance.battleOn == true)
+        {
+            PlayBattleMusic();
+        }
+    }
+
     // Deactivate Pooled Object After Sound Finishes
     private IEnumerator DeactivateAfterPlay(AudioSource source)
     {
@@ -210,7 +225,10 @@ public class AudioManager : MonoBehaviour
     public void PlayDashSound() => Play("Dash");
     public void PlayLandingSound() => Play("Landing");
     public void PlayEnemyHurtSound() => Play("EnemyHurt");
-    public void PlayRadialPopInSound() => Play("Pop-In");
-    public void PlayRadialPopOutSound() => Play("Pop-Out");
+    public void PlayRadialPopInSound() => Play("RadialPop-In");
+    public void PlayRadialPopOutSound() => Play("RadialPop-Out");
     public void PlayRadialSwitchSound() => Play("RadialSwitch");
+    public void PlayBreakableSound() => Play("Breakable");
+    public void PlayBossRoarSound() => Play("BossRoarSound");
+    public void PlayEnemyDeathSound() => Play("EnemyDeath");
 }

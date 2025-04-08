@@ -6,6 +6,8 @@ public class childChecker : MonoBehaviour
     public GameObject StartPoint;
     public GameObject EndPoint;
 
+    public GameObject OtherPoint;
+
     public ObjectiveCameraSwitch objCam;
 
     public bool begin = false;
@@ -41,6 +43,7 @@ public class childChecker : MonoBehaviour
             float percentageComplete = elapsedTime / desiredDuration;
     
             StartPoint.transform.position = Vector3.Lerp(StartPoint.transform.position, EndPoint.transform.position, curve.Evaluate(percentageComplete));
+             OtherPoint.transform.position = Vector3.Lerp(OtherPoint.transform.position, EndPoint.transform.position, curve.Evaluate(percentageComplete));
             }
         }
             

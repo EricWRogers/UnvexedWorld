@@ -43,6 +43,10 @@ public class AttackState : SimpleState
         {
             attackRange = rangeGruntStateMachine.inAttackRange + 6.0f; //I want more flexbilty with the range
         }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            attackRange = jumperStateMachine.inAttackRange + 0.5f;
+        }
 
         if (attack == null)
         {
@@ -104,6 +108,33 @@ public class AttackState : SimpleState
                     }
                 }
                 else if(Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) > agroGruntStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            jumperStateMachine.transform.LookAt(jumperStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if(agent.isOnNavMesh == true)
+            {
+                if (jumperStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, jumperStateMachine.target.position) > jumperStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
                 {
                     isAttacking = false;
                     stopAttacking.Invoke();

@@ -39,7 +39,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
          pauseMenu = FindFirstObjectByType<PauseMenu>();
 
-         if(GameManager.instance.switches.Contains(Key))
+         if(GameManager.Instance.switches.Contains(Key))
          {
             gameObject.SetActive(false);
          }
@@ -57,11 +57,11 @@ public class ObjectiveCameraSwitch : MonoBehaviour
     {
         objCam.LookAt = currentObject.transform;
         objCam.Follow = currentObject.transform;
-        GameManager.instance.switches.Add(Key);
+        GameManager.Instance.switches.Add(Key);
         if (other.gameObject.tag == "Player" && noRepeat == false)
         {
             noRepeat = true;
-            if(GameManager.instance.doNothing == true)
+            if(GameManager.Instance.doNothing == true)
             {
                 brain.m_IgnoreTimeScale = true;
 
@@ -95,7 +95,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
 
      public IEnumerator ReturnCamera()
     {
-        if(GameManager.instance.doNothing == true && pauseMenu.isPaused == false)
+        if(GameManager.Instance.doNothing == true && pauseMenu.isPaused == false)
             {
                 brain.m_IgnoreTimeScale = true;
 
@@ -114,7 +114,7 @@ public class ObjectiveCameraSwitch : MonoBehaviour
         yield return new WaitForSecondsRealtime(returnTime);
         brain.m_DefaultBlend.m_Time = 0.2f;
         camMan.dontChange = false;
-        if(GameManager.instance.doNothing == false)
+        if(GameManager.Instance.doNothing == false)
             {
                 brain.m_IgnoreTimeScale = false;
 

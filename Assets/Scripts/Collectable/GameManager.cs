@@ -8,28 +8,29 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour
 {
 
-    public static GameManager instance = null;
+    public static GameManager Instance = null;
 
     public int coinVal = 0;
 
+    public bool hasKeyOrb = false;
     public bool doNothing = false;
+
+    public bool battleOn;
 
     public List<String> switches;
 
     void Awake()
     {
 
-        if (instance == null)
-            {
-                instance = this;
-                GameObject.DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            GameObject.DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
