@@ -17,6 +17,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     public bool lifeSteal = false;
     public bool overwriteSpell = false;
     public float lifeStealRatio = 1f;
+    public int ricochetCount = 2;
 
     public ComboManager comboManager;
     
