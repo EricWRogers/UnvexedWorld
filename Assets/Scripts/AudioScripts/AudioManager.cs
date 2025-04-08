@@ -139,7 +139,7 @@ public class AudioManager : MonoBehaviour
             backgroundMusicSource.Play();
             if(IsBattleMusicPlaying())
             {
-                backgroundMusicSource.Stop();
+                battleMusicSource.Stop();
             }
         }
     }
@@ -192,6 +192,21 @@ public class AudioManager : MonoBehaviour
         foreach (GameObject obj in soundPool.pooledObjects)
         {
             obj.SetActive(false);
+        }
+    }
+
+    public void Update()
+    {
+        if(GameManager.Instance.battleOn == false){
+            
+            PlayBackgroundMusic();
+            Debug.Log("PlayingBackGround");
+            
+        }
+
+        if(GameManager.Instance.battleOn == true)
+        {
+            PlayBattleMusic();
         }
     }
 

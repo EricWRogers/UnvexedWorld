@@ -19,6 +19,7 @@ public class EventAdder : MonoBehaviour
         CL = GameObject.FindFirstObjectByType<CameraLockon>();
         gameObject.GetComponent<Health>()?.outOfHealth.AddListener(MRA.LockOffEvent);
         gameObject.GetComponent<Health>()?.outOfHealth.AddListener(CL.Remove);
+        gameObject.GetComponent<Health>()?.hurt.AddListener(AudioManager.instance.PlayEnemyHurtSound);
     }
 
     // Update is called once per frame

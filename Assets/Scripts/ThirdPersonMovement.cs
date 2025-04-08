@@ -150,12 +150,12 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("TextBox")&& GameManager.instance.doNothing == true)
+        if (other.gameObject.CompareTag("TextBox")&& GameManager.Instance.doNothing == true)
         { 
            inText = true;
              
         }
-        if(other.gameObject.CompareTag("TextBox") && GameManager.instance.doNothing == false)
+        if(other.gameObject.CompareTag("TextBox") && GameManager.Instance.doNothing == false)
         {
             inText = false;
             
@@ -192,7 +192,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
-        if(GameManager.instance.doNothing == false){
+        if(GameManager.Instance.doNothing == false){
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
             velocity.y -= gravity * Time.deltaTime;
@@ -225,10 +225,10 @@ public class ThirdPersonMovement : MonoBehaviour
 
          if(inText == false)
          {
-            GameManager.instance.doNothing = false;
+            GameManager.Instance.doNothing = false;
          }
 
-        if(GameManager.instance.doNothing == true)
+        if(GameManager.Instance.doNothing == true)
         {
             baseSpeed = 0.0f;
         }
@@ -298,7 +298,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude >= 0.1f && GameManager.instance.doNothing == false)
+        if (direction.magnitude >= 0.1f && GameManager.Instance.doNothing == false)
         {
             animator.SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
