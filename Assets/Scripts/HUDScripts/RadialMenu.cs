@@ -85,7 +85,13 @@ public class RadialMenuManager : MonoBehaviour
                 HighlightCurrentStyle();
                 ToggleMenu(true);
             }
+
+            for (int i = 0; i < radialSections.Count; i++)
+            {
+                radialSections[i].ShowAttribute((int)spellCraft.CurrentElement - 1);
+            }
         }
+        
 
     }
 

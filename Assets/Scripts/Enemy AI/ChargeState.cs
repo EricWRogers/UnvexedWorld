@@ -39,6 +39,12 @@ public class ChargeState : SimpleState
         {
             target = ((RangeGruntStateMachine)stateMachine).target;
         }
+
+        if(stateMachine is JumperStateMachine)
+        {
+            target = ((JumperStateMachine)stateMachine).target;
+            range = ((JumperStateMachine)stateMachine).inAttackRange + 0.5f;
+        }
     }
 
     public override void UpdateState(float dt)
@@ -79,6 +85,24 @@ public class ChargeState : SimpleState
                 }
             }
         }
+
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            if (jumperStateMachine.isAlive && jumperStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    jumperStateMachine.transform.LookAt(jumperStateMachine.target);
+                    agent.SetDestination(jumperStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, jumperStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+
         if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
         {
             if (rangeGruntStateMachine.isAlive && rangeGruntStateMachine.LOS)

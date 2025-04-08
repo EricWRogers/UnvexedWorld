@@ -14,6 +14,8 @@ public class childCheckernoLerp : MonoBehaviour
 
        public GameObject theThing;
 
+      
+
        public EnemyFinder eFinder;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()

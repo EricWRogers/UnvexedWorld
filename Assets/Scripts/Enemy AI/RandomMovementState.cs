@@ -103,6 +103,30 @@
                     stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
+
+            if (stateMachine is JumperStateMachine jumperStateMachine)
+            {
+                if (jumperStateMachine.isAlive == true)
+                {
+                    moveTimer += dt; 
+
+                    if(agent.isOnNavMesh == true)
+                    {
+                        if (agent.remainingDistance <= agent.stoppingDistance && moveTimer >= moveDelay) 
+                        {
+                            moveTimer = 0f; 
+                            moveDelay = Random.Range(minDelay, maxDelay);
+                            MoveToRandomPoint();
+                        }
+                    }
+                }
+    
+                if(jumperStateMachine.LOS == true)
+                {
+                    anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
         }
 
         public override void OnExit()

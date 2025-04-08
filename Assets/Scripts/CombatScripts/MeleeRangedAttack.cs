@@ -105,8 +105,9 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
+                if(direction == false){
                 FindNewTarget();
+            }
             }
         }
         else
@@ -261,8 +262,10 @@ public class MeleeRangedAttack : MonoBehaviour
          if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
-                FindNewTarget();
+                 if(direction == false)
+                 {
+                    FindNewTarget();
+                 }
             }
         }
         }
@@ -315,7 +318,6 @@ public class MeleeRangedAttack : MonoBehaviour
 
    public void FindNewTarget()
     {
-
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 
@@ -388,6 +390,7 @@ public class MeleeRangedAttack : MonoBehaviour
             SuperPunch temp2 = temp.GetComponentInChildren<SuperPunch>();
             temp2.energy[1] -= gameObject.GetComponent<SpellCraft>().energy[1];
             temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
+            temp2.energy[3] -= gameObject.GetComponent<SpellCraft>().energy[3];
         }
     }
 
