@@ -30,7 +30,6 @@ public class SurroundState : SimpleState
 
             if (slotManager == null)
             {
-                Debug.LogError("SlotManager is missing on the player!");
                 return;
             }
 

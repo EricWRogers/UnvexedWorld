@@ -58,7 +58,7 @@ public class RangeGruntStateMachine : SimpleStateMachine
 
         capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
 
-        anim = gameObject.GetComponentInChildren<Animator>();
+        anim = transform.GetChild(0).gameObject.GetComponent<Animator>();
         
         target = GameObject.FindGameObjectWithTag("Player").transform;
 

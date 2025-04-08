@@ -75,6 +75,7 @@ public class MeleeRangedAttack : MonoBehaviour
    
     void MeleeGamepadlight()
     {
+        if(GameManager.Instance.doNothing == false){
         isAttacking = true;
         punched = true;
 
@@ -104,14 +105,16 @@ public class MeleeRangedAttack : MonoBehaviour
             if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
+                if(direction == false){
                 FindNewTarget();
+            }
             }
         }
         else
         {
             isAttacking = true;
             MeleeLight();
+        }
         }
 
 
@@ -174,7 +177,7 @@ public class MeleeRangedAttack : MonoBehaviour
     
 
 
-    void CancelLockUp()
+    public void CancelLockUp()
     {
         isAttacking = false;
     }
@@ -202,9 +205,11 @@ public class MeleeRangedAttack : MonoBehaviour
         //animator.SetBool("Lock", isAttacking);
         if (isAttacking == true)
         {
+            
             cameraManager.SwitchCamera(cameraManager.meleeCamera);
             speed.baseSpeed = lockUP;
             speed.turnSmoothTime = 10.0f;
+            
             
         }
         else
@@ -243,6 +248,8 @@ public class MeleeRangedAttack : MonoBehaviour
         GetComponent<Animator>().SetBool("CheckDirection", direction);
         GetComponent<Animator>().SetFloat("Directional",Input.GetAxisRaw("Vertical"));
 
+        GetComponentsInChildren<Animator>()[1].SetBool("CheckDirection", direction);
+
         
         if(direction == true && target != null)
         {
@@ -255,8 +262,10 @@ public class MeleeRangedAttack : MonoBehaviour
          if (Vector3.Distance(target.transform.position, transform.position) > attackRange)
             {
                 
-
-                FindNewTarget();
+                 if(direction == false)
+                 {
+                    FindNewTarget();
+                 }
             }
         }
         }
@@ -309,7 +318,6 @@ public class MeleeRangedAttack : MonoBehaviour
 
    public void FindNewTarget()
     {
-
         target = gameObject.GetComponent<TargetingSystem>()?.FindTarget();
     }
 
@@ -382,8 +390,15 @@ public class MeleeRangedAttack : MonoBehaviour
             SuperPunch temp2 = temp.GetComponentInChildren<SuperPunch>();
             temp2.energy[1] -= gameObject.GetComponent<SpellCraft>().energy[1];
             temp2.energy[2] -= gameObject.GetComponent<SpellCraft>().energy[2];
+            temp2.energy[3] -= gameObject.GetComponent<SpellCraft>().energy[3];
         }
+    }
+
+    public void SetAttack()
+    {
+        GetComponent<Animator>().SetTrigger("Light");
     }
     
    
 }
+

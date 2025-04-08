@@ -9,7 +9,7 @@ public class SuperPunch : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        spellBonus = (energy[1]+energy[2])/5;
+        spellBonus = (energy[1]+energy[2]+energy[3])/5;
         SetUpSpells();
     }
 
@@ -55,6 +55,18 @@ public class SuperPunch : MonoBehaviour
                 tempsplenspell2.CurrentElement= SpellCraft.Aspect.splendor;
                 tempsplenspell2.subAspect= 1;
                 hitEvent.AddListener(tempsplenspell2.SpellEffect);
+            }
+            if(energy[3]>20)
+            {
+                Spell tempsundspell = gameObject.AddComponent<Spell>();
+                tempsundspell.CurrentElement= SpellCraft.Aspect.sunder;
+                tempsundspell.subAspect= 0;
+                hitEvent.AddListener(tempsundspell.SpellEffect);
+                Spell tempsundspell2 = gameObject.AddComponent<Spell>();
+                tempsundspell2.CurrentElement= SpellCraft.Aspect.sunder;
+                tempsundspell2.subAspect= 1;
+                tempsundspell2.crystalDamage=energy[3];
+                hitEvent.AddListener(tempsundspell2.SpellEffect);
             }
         }
     }

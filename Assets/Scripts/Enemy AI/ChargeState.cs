@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.ProBuilder.MeshOperations;
 
 /*The now chase state*/
 
@@ -10,36 +11,48 @@ using UnityEngine.AI;
 public class ChargeState : SimpleState
 {
     private NavMeshAgent agent;
+    private Transform target;
     private float range;
+    private float maxRange = 12f;
+    private float minRange = 4f;
 
     public override void OnStart()
     {
         base.OnStart();
 
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+
         if (stateMachine is GruntStateMachine)
         {
-            agent = ((GruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
+            target = ((GruntStateMachine)stateMachine).target; 
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is AgroGruntStateMachine)
         {
-            agent = ((AgroGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
+            target = ((AgroGruntStateMachine)stateMachine).target;
             range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is RangeGruntStateMachine)
         {
-            agent = ((RangeGruntStateMachine)stateMachine).GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            range = ((RangeGruntStateMachine)stateMachine).inAttackRange + 0.5f;
+            target = ((RangeGruntStateMachine)stateMachine).target;
+        }
+
+        if(stateMachine is JumperStateMachine)
+        {
+            target = ((JumperStateMachine)stateMachine).target;
+            range = ((JumperStateMachine)stateMachine).inAttackRange + 0.5f;
         }
     }
 
     public override void UpdateState(float dt)
     {
+        if(agent.enabled == true && agent.isStopped)
+        {
+            agent.SetDestination(target.position);
+        }
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             if (gruntStateMachine.isAlive && gruntStateMachine.LOS)
@@ -72,6 +85,24 @@ public class ChargeState : SimpleState
                 }
             }
         }
+
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            if (jumperStateMachine.isAlive && jumperStateMachine.LOS)
+            {
+                if(agent.isOnNavMesh == true)
+                {
+                    jumperStateMachine.transform.LookAt(jumperStateMachine.target);
+                    agent.SetDestination(jumperStateMachine.target.position);
+                
+                    if (Vector3.Distance(agent.transform.position, jumperStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(AttackState));
+                    }
+                }
+            }
+        }
+
         if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
         {
             if (rangeGruntStateMachine.isAlive && rangeGruntStateMachine.LOS)
@@ -79,11 +110,18 @@ public class ChargeState : SimpleState
                 if(agent.isOnNavMesh == true)
                 {
                     rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
-                    agent.SetDestination(rangeGruntStateMachine.target.position);
                 
-                    if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < range)
+                    if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > maxRange)
+                    {
+                        agent.SetDestination(rangeGruntStateMachine.target.position);
+                    }
+                    else if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > minRange && Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < maxRange)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
+                    }
+                    else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) < minRange)
+                    {
+                        stateMachine.ChangeState(nameof(RetreatState));
                     }
                 }
             }

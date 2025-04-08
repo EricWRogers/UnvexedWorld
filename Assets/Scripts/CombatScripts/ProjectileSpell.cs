@@ -72,6 +72,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
     {
         if (Physics.Linecast(m_lastPosition, transform.position, out m_info, mask))
         {
+            Instantiate(ParticleManager.Instance.RangedHitEffect, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             if (tags.Contains(m_info.transform.tag))
             {
                  enemy = m_info.transform.gameObject;
@@ -148,7 +149,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
             {
                 if(gameObject.GetComponent<Spell>() !=null)
                 {
-                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
+                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor&& gameObject.GetComponent<Spell>().subAspect==0&&!tags.Contains(m_info.transform.tag))
                     {
                         gameObject.GetComponent<Spell>().SpellEffect(gameObject);
                     }

@@ -12,11 +12,13 @@ public class LoseMenuScript : MonoBehaviour
     public bool didLose = false;
 
     public GameObject loseSection;
-    public GameObject powerSystem;
+    public GameObject healthStyle;
     public GameObject healthBar;
     public GameObject comboInfo;
+    public GameObject radialMenu;
 
     private Health playerHealth;
+    [SerializeField]
     private PauseMenu pauseMenu;
     private ThirdPersonMovement playerMovement;
     private MeleeRangedAttack playerAttack;
@@ -31,9 +33,10 @@ public class LoseMenuScript : MonoBehaviour
 
         loseSection.SetActive(false);
 
+        //This is a null reference
         pauseMenu = FindFirstObjectByType<PauseMenu>();
 
-         eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
+        eventSystem = GameObject.Find("EventSystem").GetComponent<EventSystem>();
 
         playerHealth = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
 
@@ -50,9 +53,10 @@ public class LoseMenuScript : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         loseSection.SetActive(true);
-        powerSystem.SetActive(false);
+        healthStyle.SetActive(false);
         healthBar.SetActive(false);
         comboInfo.SetActive(false);
+        radialMenu.SetActive(false);
         Time.timeScale = 0.0f;
     }
 

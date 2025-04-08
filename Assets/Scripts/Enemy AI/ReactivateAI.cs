@@ -21,7 +21,7 @@ public class ReactivateAI : MonoBehaviour
     {
         if (transform.childCount > 0)
         {
-            enemy = transform.GetChild(0).gameObject;
+            enemy = transform.GetChild(1).gameObject;
             enemy.transform.localPosition = Vector3.zero;
         }
         else
@@ -35,11 +35,11 @@ public class ReactivateAI : MonoBehaviour
             {
                 gruntStateMachine = enemy.GetComponent<GruntStateMachine>();
             }
-            if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+            else if(enemy.GetComponent<AgroGruntStateMachine>() != null)
             {
                 agroGruntStateMachine = enemy.GetComponent<AgroGruntStateMachine>();
             }
-            if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+            else if(enemy.GetComponent<RangeGruntStateMachine>() != null)
             {
                 rangeGruntStateMachine = enemy.GetComponent<RangeGruntStateMachine>();
             }
@@ -71,21 +71,29 @@ public class ReactivateAI : MonoBehaviour
             gruntStateMachine.enabled = true;
             gruntStateMachine.ChangeState(nameof(InRangeState));
         }
-        if(enemy.GetComponent<AgroGruntStateMachine>() != null)
+        else if(enemy.GetComponent<AgroGruntStateMachine>() != null)
         {
             enemy.transform.parent = agroGruntStateMachine.ogParent.transform;
             agroGruntStateMachine.enabled = true;
             agroGruntStateMachine.ChangeState(nameof(ChargeState));
         }
-        if(enemy.GetComponent<RangeGruntStateMachine>() != null)
+        else if(enemy.GetComponent<RangeGruntStateMachine>() != null)
         {
             enemy.transform.parent = rangeGruntStateMachine.ogParent.transform;
             rangeGruntStateMachine.enabled = true;
             rangeGruntStateMachine.ChangeState(nameof(ChargeState));
         }
-        enemyCollider.enabled = true;
-        agent.enabled = true;
-        rb.WakeUp();
+        if(enemy.GetComponent<Health>().currentHealth > 0)
+        {
+            enemyCollider.enabled = true;
+            agent.enabled = true;
+            rb.WakeUp();
+        }else
+        {
+            enemyCollider.enabled = false;
+            agent.enabled = false;
+            rb.Sleep();
+        }
         Destroy(gameObject);
     }
 }

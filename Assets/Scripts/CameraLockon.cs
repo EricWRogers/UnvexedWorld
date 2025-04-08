@@ -53,6 +53,12 @@ public class CameraLockon : MonoBehaviour
             tg.m_Targets = new CinemachineTargetGroup.Target[0];
         }
 
+        if(lockOn.target == null )
+        {
+             lockCamera.LookAt = player.transform;
+            tg.m_Targets = new CinemachineTargetGroup.Target[0];
+        }
+
       
         
     }
@@ -70,8 +76,8 @@ public class CameraLockon : MonoBehaviour
             if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange * 4)
             {
                 
-                    tg.AddMember(lockOn.target.transform, 1, 10);
-                    tg.AddMember(player.transform, 3, 2);
+                    tg.AddMember(lockOn.target.transform, 5, 15);
+                    tg.AddMember(player.transform, 10, 20);
                     oneTime = false;
 
 

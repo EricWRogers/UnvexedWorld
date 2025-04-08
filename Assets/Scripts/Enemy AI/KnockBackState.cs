@@ -32,7 +32,6 @@ public class KnockBackState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Knock Back State");
         base.OnStart();
 
         agent = stateMachine.GetComponent<NavMeshAgent>();
@@ -79,6 +78,10 @@ public class KnockBackState : SimpleState
         if(stateMachine is RangeGruntStateMachine)
         {
             obj.transform.LookAt(((RangeGruntStateMachine)stateMachine).target);
+        }
+        if(stateMachine is JumperStateMachine)
+        {
+            obj.transform.LookAt(((JumperStateMachine)stateMachine).target);
         }
 
         stateMachine.enabled = false;

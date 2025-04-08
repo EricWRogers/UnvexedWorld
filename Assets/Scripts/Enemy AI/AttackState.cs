@@ -26,21 +26,26 @@ public class AttackState : SimpleState
     {
         base.OnStart();
 
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+        anim = stateMachine.GetComponentInChildren<Animator>();
+        agent.SetDestination(stateMachine.transform.position);
+
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            anim = gruntStateMachine.GetComponentInChildren<Animator>();
-            agent.SetDestination(gruntStateMachine.transform.position);
             attackRange = gruntStateMachine.inAttackRange + 0.5f;
         }
         if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
-            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
-            agent.enabled = true;
-            anim = agroGruntStateMachine.GetComponentInChildren<Animator>();
-            agent.SetDestination(agroGruntStateMachine.transform.position);
             attackRange = agroGruntStateMachine.inAttackRange + 0.5f;
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            attackRange = rangeGruntStateMachine.inAttackRange + 6.0f; //I want more flexbilty with the range
+        }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            attackRange = jumperStateMachine.inAttackRange + 0.5f;
         }
 
         if (attack == null)
@@ -103,6 +108,60 @@ public class AttackState : SimpleState
                     }
                 }
                 else if(Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) > agroGruntStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            jumperStateMachine.transform.LookAt(jumperStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if(agent.isOnNavMesh == true)
+            {
+                if (jumperStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, jumperStateMachine.target.position) > jumperStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if (agent.isOnNavMesh)
+            {
+                if (rangeGruntStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > rangeGruntStateMachine.inAttackRange || attackTimer <= 0f)
                 {
                     isAttacking = false;
                     stopAttacking.Invoke();

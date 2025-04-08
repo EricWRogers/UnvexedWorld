@@ -14,7 +14,9 @@ public class NewMainMenu : MonoBehaviour
     public void PlayGame(string sceneName)
     {
         Debug.Log("Next Scene");
+        GameManager.Instance.hasKeyOrb = false;
         SceneManager.LoadScene(sceneName);
+        GameManager.Instance.switches.Clear();
     }
 
     public void QuitGame()

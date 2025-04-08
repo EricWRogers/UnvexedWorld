@@ -9,7 +9,8 @@ public class Spell : MonoBehaviour, IDamageDealer
     public SpellCraft.Aspect CurrentElement = SpellCraft.Aspect.none;
     
     public int subAspect = 0;
-    public int burstDamage = 10;
+    public int burstDamage = 15;
+    public float crystalDamage = 20;
     //public GameObject AOEPrefab;
     //public GameObject DOTParticle;
     public int AOEDuration;
@@ -65,6 +66,16 @@ public class Spell : MonoBehaviour, IDamageDealer
             target.GetComponent<DOT>().particle = ParticleManager.Instance.DOTParticle;
         }
     }
+    public void ApplyCrystalize(GameObject target)
+    {
+        if(target.GetComponent<Crystalize>() == null)
+        {
+            target.AddComponent<Crystalize>();
+            target.GetComponent<Crystalize>().particle = ParticleManager.Instance.CrystalizeParticle;
+            target.GetComponent<Crystalize>().fullCrystal = ParticleManager.Instance.CrystalizedObject;
+        }
+        target.GetComponent<Crystalize>().crystalization += crystalDamage;
+    }
 
     public void SpellEffect(GameObject target)
     {
@@ -89,6 +100,10 @@ public class Spell : MonoBehaviour, IDamageDealer
             if (CurrentElement == SpellCraft.Aspect.splendor)
             {
                 Burst(target);
+            }
+            if (CurrentElement == SpellCraft.Aspect.sunder)
+            {
+                ApplyCrystalize(target);
             }
         }        
     }
