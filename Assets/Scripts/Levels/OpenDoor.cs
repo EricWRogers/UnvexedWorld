@@ -30,20 +30,20 @@ public class OpenDoor : MonoBehaviour
                     anim.SetBool("IsOpen", true);
                 }
             }
+            else if(openDoor != null)
+            {
+                if(openDoor.openDoor == true)
+                {
+                    anim.SetBool("IsOpen", true);
+                    doorCol.enabled = false;
+                }    
+            }
             else
             {
                 //Debug.Log("Player Unlocks on Door");
                 anim.SetBool("IsOpen", true);
             }
             doorCol.enabled = false;
-        }
-        else if(openDoor != null)
-        {
-            if(openDoor.openDoor == true)
-            {
-                anim.SetBool("IsOpen", true);
-                doorCol.enabled = false;
-            }    
         }
     }
 }
