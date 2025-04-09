@@ -10,6 +10,7 @@ public class BossStateMachine : SimpleStateMachine
     public IdleState idle;
     public StunState stunned;
     public ChargeState charge;
+    public BossAttackState attack;
     public DeathState dead;
 
     public Transform target;
@@ -23,6 +24,13 @@ public class BossStateMachine : SimpleStateMachine
     public Animator anim;
     public GameObject ogParent;
 
+    //Attacks
+    public bool armCharge = false;
+    public bool armSwing = false;
+    public bool armSlam = false;
+    public bool legStomp = false;
+    public bool throwPuss = false;
+
     public bool LOS;
     public bool isAlive;
     public bool canStun;
@@ -32,6 +40,7 @@ public class BossStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(charge);
+        states.Add(attack);
         states.Add(dead);
 
         foreach (SimpleState s in states)
