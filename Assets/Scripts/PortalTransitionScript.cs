@@ -15,6 +15,15 @@ public class PortalTransitionScript : MonoBehaviour
     popupText = FindFirstObjectByType<PopupText>();      
   }
 
+  void Update()
+  {
+    if (portalOn == true)
+    {
+      AudioManager.instance.Play("TransportPortal");
+    }
+
+  }
+
   public void PlayGame(string sceneName)
   {    
     portal.SetActive(true);
