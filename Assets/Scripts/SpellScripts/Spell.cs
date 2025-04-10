@@ -70,6 +70,8 @@ public class Spell : MonoBehaviour, IDamageDealer
     }
     public void ApplyCrystalize(GameObject target)
     {
+        
+        Instantiate(ParticleManager.Instance.SunderImpact, target.transform.position, transform.rotation);
         if(target.GetComponent<Crystalize>() == null)
         {
             target.AddComponent<Crystalize>();
@@ -81,7 +83,10 @@ public class Spell : MonoBehaviour, IDamageDealer
 
     public void Ricochet(GameObject target)
     {
-        Instantiate(AttackManager.Instance.sunderCrystalPrefabs[1],transform.position + new Vector3(0,2,0),transform.rotation);
+        Instantiate(ParticleManager.Instance.SunderImpact, target.transform.position, transform.rotation);
+        GameObject tempRicochet = Instantiate(AttackManager.Instance.sunderCrystalPrefabs[1], target.transform.position + new Vector3(0,2,0),transform.rotation);
+        tempRicochet.GetComponent<Ricochet>().ricochetCount = 2;
+        tempRicochet.GetComponent<Ricochet>().hitEnemies = new List<GameObject>{target};
     }
 
     public void CrystalTrap()
@@ -100,6 +105,10 @@ public class Spell : MonoBehaviour, IDamageDealer
             if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 lifeSteal = true;
+            }
+            if (CurrentElement == SpellCraft.Aspect.sunder)
+            {
+                Ricochet(target);
             }
         }
         else if (subAspect == 1)

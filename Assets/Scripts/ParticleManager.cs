@@ -14,7 +14,7 @@ public class ParticleManager : MonoBehaviour
     public GameObject SplendorParticle;
     public GameObject SunderParticle;
     
-    public GameObject SunderParticleMelee;
+    public GameObject SunderImpact;
     
     public GameObject CrystalizeParticle;
     public GameObject CrystalizedObject;
