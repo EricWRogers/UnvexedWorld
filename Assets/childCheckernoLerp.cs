@@ -26,7 +26,7 @@ public class childCheckernoLerp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(transform.childCount == 0 && theText == true)
+        if(eFinder.nearbyEnemies.Count == 0 && theText == true)
         {
             if(theThing != null){
 
@@ -39,10 +39,11 @@ public class childCheckernoLerp : MonoBehaviour
 
         if(eFinder != null) 
         {
-            if(eFinder.nearbyEnemies.Count == 0 && theMusic == true && end == false )
+            if(eFinder.nearbyEnemies.Count == 0 && theMusic == true )
             {
-                end = true;
+                
                 GameManager.Instance.battleOn = false;
+                Destroy(this);
             }
         }
     }
