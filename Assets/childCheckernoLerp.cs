@@ -28,8 +28,10 @@ public class childCheckernoLerp : MonoBehaviour
     {
         if(transform.childCount == 0 && theText == true)
         {
+            if(theThing != null){
 
             theThing.SetActive(true);
+            }
             
         }
 
