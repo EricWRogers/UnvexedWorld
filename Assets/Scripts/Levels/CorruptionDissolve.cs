@@ -5,7 +5,7 @@ public class CorruptionDissolve : MonoBehaviour
 {
     public EnemyFinder enemies;
 
-    public float fadeOutDelay = 3f;
+    public float fadeOutDelay = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,13 +28,15 @@ public class CorruptionDissolve : MonoBehaviour
         yield return new WaitForSeconds(fadeOutDelay);
 
         float time = 0;
-        while (time < 1)
+        float cv = gameObject.GetComponent<Renderer>().material.GetFloat("_Clipping_Value");
+        while (time < 3)
         {
-            time += Time.deltaTime;
-            float cv = gameObject.GetComponent<Renderer>().material.GetFloat("_Clipping_Value");
             gameObject.GetComponent<Renderer>().material.SetFloat("_Clipping_Value", cv + Time.deltaTime);
+            time += Time.deltaTime;
             yield return null;
         }
+
+        yield return new WaitForSeconds(fadeOutDelay);
 
         gameObject.SetActive(false);
     }
