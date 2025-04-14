@@ -8,7 +8,7 @@ public class BreakObject : MonoBehaviour
     public float dragonForce = 2.0f;
     public float delay = 1.0f;
 
-    private AudioManager audioManager;
+    private ThirdPersonMovement player;
 
     void FixedUpdate()
     {
@@ -38,16 +38,17 @@ public class BreakObject : MonoBehaviour
             Destroy(gameObject, 4f);
             AudioManager.instance.PlayBreakableSound();
         }
-        else
+        else if(other.gameObject.CompareTag("Player"))
         {
-            if(other.gameObject.GetComponent<ThirdPersonMovement>().dashing == true)
+            player = other.gameObject.GetComponent<ThirdPersonMovement>();
+            if(player.dashing == true)
             {
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
                 BrokenObject.SetActive(true);
                 Destroy(gameObject, 4f);
                 AudioManager.instance.PlayBreakableSound();
             }
-            else if(other.gameObject.GetComponent<ThirdPersonMovement>().isJumping == true)
+            else if(player.isJumping == true)
             {
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
                 BrokenObject.SetActive(true);
