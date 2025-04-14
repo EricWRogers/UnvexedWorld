@@ -11,6 +11,16 @@ using UnityEngine.Events;
 [System.Serializable]
 public class BossAttackState : SimpleState
 {
+    public enum AttackType
+    {
+        ArmCharge,
+        ArmSlam,
+        ArmSwing,
+        LegStomp
+    }
+
+    public AttackType attackType;
+    public List<string> animNames;
     UnityEvent attack;
     NavMeshAgent agent;
     Animator anim;
