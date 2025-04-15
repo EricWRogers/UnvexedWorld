@@ -61,6 +61,7 @@ public class SuperPunch : MonoBehaviour
                 Spell tempsundspell = gameObject.AddComponent<Spell>();
                 tempsundspell.CurrentElement= SpellCraft.Aspect.sunder;
                 tempsundspell.subAspect= 0;
+                tempsundspell.ricochetCount = energy[3]/10;
                 hitEvent.AddListener(tempsundspell.SpellEffect);
                 Spell tempsundspell2 = gameObject.AddComponent<Spell>();
                 tempsundspell2.CurrentElement= SpellCraft.Aspect.sunder;
