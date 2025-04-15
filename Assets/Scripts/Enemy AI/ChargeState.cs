@@ -151,7 +151,7 @@ public class ChargeState : SimpleState
                         bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmCharge;
                         stateMachine.ChangeState(nameof(BossAttackState));
                     }
-                    else if (bossDistance > 6 && bossDistance < 10)
+                    else if (bossDistance > 0 && bossDistance < 5)
                     {
                         ChoseMeeleAttack();
                         stateMachine.ChangeState(nameof(BossAttackState));
@@ -168,7 +168,7 @@ public class ChargeState : SimpleState
 
     public void ChoseMeeleAttack()
     {
-        int a = Random.Range(0, 2);
+        int a = Random.Range(0, 3);
         switch (a)
         {
             case 0:
