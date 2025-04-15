@@ -7,13 +7,26 @@ public class Ricochet : MonoBehaviour
 {
     public int damage = 5;
     public float speed = 5;
+    public float range = 20;
     public int ricochetCount = 0;
     public List<GameObject> hitEnemies;
     public GameObject target;
+    public TargetingSystem targetingSystem;
 
     void FixedUpdate()
     {
         transform.position += transform.forward * speed * Time.fixedDeltaTime;
+    }
+
+    void Start()
+    {
+        targetingSystem = gameObject.AddComponent<TargetingSystem>();
+        targetingSystem.targetTag = "GroundEnemy";
+        target = targetingSystem.TargetExcluding(hitEnemies,range);
+        if(target != null)
+        {
+            gameObject.transform.LookAt(target.transform);
+        }
     }
     
 
@@ -50,6 +63,7 @@ public class Ricochet : MonoBehaviour
         tempRicochet.GetComponent<Ricochet>().ricochetCount = ricochetCount-1;
         tempRicochet.GetComponent<Ricochet>().hitEnemies = hitEnemies;
         tempRicochet.GetComponent<Ricochet>().hitEnemies.Insert(hitEnemies.Count,other.gameObject);
+        Destroy(gameObject);
     }
 
 }
