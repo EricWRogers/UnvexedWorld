@@ -4,6 +4,7 @@ using UnityEngine;
 using SuperPupSystems.StateMachine;
 using SuperPupSystems.Helper;
 using System;
+using System.Linq;
 
 public class EnemyFinder : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class EnemyFinder : MonoBehaviour
         defeatedEnemies = 0; // Initialize defeated enemies count
 
         slotManager = FindFirstObjectByType<SlotManager>();
+
+        nearbyEnemies = GetComponentsInChildren<SimpleStateMachine>().ToList();
 
         foreach (var enemy in nearbyEnemies)
         {
@@ -54,7 +57,7 @@ public class EnemyFinder : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
+        /*if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
         {
             var gruntStateMachine = other.GetComponent<GruntStateMachine>();
             if (gruntStateMachine != null && !nearbyEnemies.Contains(gruntStateMachine))
@@ -91,7 +94,7 @@ public class EnemyFinder : MonoBehaviour
             }
             totalEnemies = nearbyEnemies.Count;
             superTotalEnemies = nearbyEnemies.Count;
-        }
+        }*/
         if(other.gameObject.CompareTag("Player"))
         {
             if(slotManager != null)
