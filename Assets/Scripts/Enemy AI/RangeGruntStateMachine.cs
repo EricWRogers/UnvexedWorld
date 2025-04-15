@@ -11,6 +11,7 @@ public class RangeGruntStateMachine : SimpleStateMachine
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
+    public CrystallizedState crystallized;
     public ChargeState charge;
     public AttackState range;
     public RetreatState retreat;
@@ -40,6 +41,7 @@ public class RangeGruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
+        states.Add(crystallized);
         states.Add(charge);
         states.Add(range);
         states.Add(retreat);

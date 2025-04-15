@@ -4,64 +4,55 @@ using UnityEngine.SceneManagement;
 
 public class PortalTransitionScript : MonoBehaviour
 {
-    // public keyOrbGainedScript orbGained;
-    public PopupText popupText;
+  public PopupText popupText;
 
-     public bool portalOn = false;
-    public GameObject portal;
+  public bool portalOn = false;
+  public GameObject portal;
 
-    
-    
+  // Start is called once before the first execution of Update after the MonoBehaviour is created
+  void Start()
+  {
+    popupText = FindFirstObjectByType<PopupText>();      
+  }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+  void Update()
+  {
+    if (portalOn == true)
     {
-      popupText = FindFirstObjectByType<PopupText>();
-        
+      AudioManager.instance.Play("TransportPortal");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
+  }
 
-    public void PlayGame(string sceneName)
+  public void PlayGame(string sceneName)
+  {    
+    portal.SetActive(true);
+    SceneManager.LoadScene(sceneName);     
+  }
+
+  private void OnTriggerEnter(Collider other)
+  {
+    if (other.gameObject.tag == "Player")
     {
-        
+      if(GameManager.Instance.hasKeyOrb == true)
+      {
         portal.SetActive(true);
-        SceneManager.LoadScene(sceneName);
-        
-    }
-
-     private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == "Player")
+        popupText.AddToQueue("Portal Active");
+        GameManager.Instance.hasKeyOrb = false;
+        portalOn = true;
+      }
+      if(GameManager.Instance.hasKeyOrb == false)
+      {
+        if(portalOn == false)
         {
-             if(keyOrbGainedScript.instance.HasKeyOrb == true)
-            {
-                 portal.SetActive(true);
-                 popupText.AddToQueue("Portal Active");
-                 keyOrbGainedScript.instance.HasKeyOrb = false;
-                 portalOn = true;
-                 
-              
-
-                 
-            }
-              if(keyOrbGainedScript.instance.HasKeyOrb == false)
-              {
-                if(portalOn == false){
-                  popupText.AddToQueue("Need Key Orb");
-                }
-                if(portalOn == true)
-                {
-                  popupText.AddToQueue("Portal Active");
-                }
-              }
-        }   
-
-
-    }
+          popupText.AddToQueue("Need Key Orb");
+        }
+        if(portalOn == true)
+        {
+          popupText.AddToQueue("Portal Active");
+        }
+      }
+    }   
+  }
     
 }

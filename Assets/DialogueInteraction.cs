@@ -51,7 +51,7 @@ public class DialogueInteraction : MonoBehaviour
             text.StartDiolague();
             Debug.Log("InText");
             Time.timeScale = 0.0f;
-             GameManager.instance.doNothing = true;
+             GameManager.Instance.doNothing = true;
             once = true;
 
         }

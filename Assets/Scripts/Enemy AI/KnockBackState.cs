@@ -79,6 +79,10 @@ public class KnockBackState : SimpleState
         {
             obj.transform.LookAt(((RangeGruntStateMachine)stateMachine).target);
         }
+        if(stateMachine is JumperStateMachine)
+        {
+            obj.transform.LookAt(((JumperStateMachine)stateMachine).target);
+        }
 
         stateMachine.enabled = false;
         

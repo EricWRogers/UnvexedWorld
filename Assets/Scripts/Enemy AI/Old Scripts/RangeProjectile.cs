@@ -12,8 +12,6 @@ public class RangeProjectile : MonoBehaviour
     private Transform firePoint;
     [SerializeField] 
     private float throwStrength = 10f;
-    [SerializeField] 
-    private float time = 2f;
 
     [SerializeField] 
     private LineRenderer lineRenderer;

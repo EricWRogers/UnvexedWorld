@@ -30,6 +30,11 @@ public class IdleState : SimpleState
         {    
             anim = rangeGruntStateMachine.GetComponentInChildren<Animator>();
         }
+
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            anim = jumperStateMachine.GetComponentInChildren<Animator>();
+        }
     }
 
     public override void UpdateState(float dt)
@@ -54,7 +59,7 @@ public class IdleState : SimpleState
                 if(agroGruntStateMachine.LOS == true)
                 {
                     anim.SetTrigger("LOS");
-                    stateMachine.ChangeState(nameof(InRangeState));
+                    stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
         }
@@ -69,6 +74,19 @@ public class IdleState : SimpleState
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
             }
+        }
+
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {    
+            if (jumperStateMachine.isAlive == true)
+            {   
+                if(jumperStateMachine.LOS == true)
+                {
+                    anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+            
         }
     }
     

@@ -41,6 +41,8 @@ public class MeleeDamage : MonoBehaviour
             {
                 playerKnockback.ApplyKnockback(hitDir);
             }
+
+            Destroy(gameObject, damageCooldown + 0.25f);
         }
     }
 }
