@@ -9,8 +9,21 @@ public class MovingArea : MonoBehaviour
     public bool isSquare;
     public BoxCollider box;
     public SphereCollider sphere;
-    
-    #if (UNITY_EDITOR)
+
+    void Start()
+    {
+        if(isSquare)
+        {
+            box.enabled = true;
+            sphere.enabled = false;
+        }else
+        {
+            sphere.enabled = true;
+            box.enabled = false;  
+        }
+    }
+
+#if (UNITY_EDITOR)
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;

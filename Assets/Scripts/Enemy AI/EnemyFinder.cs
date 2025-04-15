@@ -36,17 +36,19 @@ public class EnemyFinder : MonoBehaviour
 
     void Update()
     {
-        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null);
+        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null || enemy.gameObject.GetComponent<Health>().currentHealth <= 0);
 
         if(defeatedEnemies == superTotalEnemies)
         {
-            GameManager.Instance.battleOn = false;
-            enabled = false;
+            //GameManager.Instance.battleOn = false;
+            //enabled = false;
         }
 
         if(nearbyEnemies.Count == 0)
         {
             openDoor = true;
+            GameManager.Instance.battleOn = false;
+            enabled = false;
         }
     }
 
