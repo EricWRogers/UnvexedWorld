@@ -11,6 +11,7 @@ public class GruntStateMachine : SimpleStateMachine
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
+    public CrystallizedState crystallized;
     public InRangeState chase;
     public SurroundState surround;
     public ChargeState charge;
@@ -40,6 +41,7 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
+        states.Add(crystallized);
         states.Add(chase);
         states.Add(surround);
         states.Add(charge);
