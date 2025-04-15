@@ -69,6 +69,8 @@ public class ChargeState : SimpleState
                     gruntStateMachine.transform.LookAt(gruntStateMachine.target);
                     agent.SetDestination(gruntStateMachine.target.position);
 
+                    gruntStateMachine.isCrystalized = false;
+
                     if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < range)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
@@ -84,6 +86,8 @@ public class ChargeState : SimpleState
                 {
                     agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
                     agent.SetDestination(agroGruntStateMachine.target.position);
+
+                    agroGruntStateMachine.isCrystalized = false;
 
                     if (Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) < range)
                     {
@@ -117,6 +121,7 @@ public class ChargeState : SimpleState
                 if (agent.isOnNavMesh == true)
                 {
                     rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+                    rangeGruntStateMachine.isCrystalized = false;
 
                     if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > maxRange)
                     {
