@@ -168,18 +168,30 @@ public class ChargeState : SimpleState
 
     public void ChoseMeeleAttack()
     {
-        int a = Random.Range(0, 3);
-        switch (a)
+        int a;
+        if (stateMachine is BossStateMachine bossStateMachine)
         {
-            case 0:
-                ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmCharge;
-                break;
-            case 1:
-                ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmSlam;
-                break;
-            case 2:
-                ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.LegStomp;
-                break;
+            if (bossStateMachine.aggroPhase)
+            {
+                a = Random.Range(0, 3);
+            }
+            else
+            {
+                a = Random.Range(0, 2);
+            }
+
+            switch (a)
+            {
+                case 0:
+                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmCharge;
+                    break;
+                case 1:
+                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmSlam;
+                    break;
+                case 2:
+                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.LegStomp;
+                    break;
+            }
         }
     }
 }

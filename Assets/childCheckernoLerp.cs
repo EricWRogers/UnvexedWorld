@@ -35,13 +35,13 @@ public class childCheckernoLerp : MonoBehaviour
 
       
 
-        if(eFinder != null) 
-        {
-            if(eFinder.nearbyEnemies.Count == 0 && theMusic == true && end == false )
-            {
-                end = true;
-                GameManager.Instance.battleOn = false;
-            }
-        }
+        // if(eFinder != null) 
+        // {
+        //     if(eFinder.nearbyEnemies.Count == 0 && theMusic == true && end == false )
+        //     {
+        //         end = true;
+        //         GameManager.Instance.battleOn = false;
+        //     }
+        // }
     }
 }

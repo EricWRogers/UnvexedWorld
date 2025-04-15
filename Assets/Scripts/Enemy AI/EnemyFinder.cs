@@ -8,8 +8,9 @@ using System;
 public class EnemyFinder : MonoBehaviour
 {
     public List<SimpleStateMachine> nearbyEnemies = new List<SimpleStateMachine>();
-    private int totalEnemies; // Track total number of enemies
-    private int defeatedEnemies; // Track number of defeated enemies
+    
+    public int totalEnemies; // Track total number of enemies
+    public int defeatedEnemies; // Track number of defeated enemies
     [SerializeField]
     private SlotManager slotManager;
 
@@ -17,7 +18,7 @@ public class EnemyFinder : MonoBehaviour
 
     void Start()
     {
-        totalEnemies = nearbyEnemies.Count; // Set the total number of enemies in the zone
+        totalEnemies = nearbyEnemies.Count + 1; // Set the total number of enemies in the zone
         defeatedEnemies = 0; // Initialize defeated enemies count
 
         slotManager = FindFirstObjectByType<SlotManager>();
@@ -36,6 +37,11 @@ public class EnemyFinder : MonoBehaviour
     void Update()
     {
         nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null);
+
+        if(defeatedEnemies == totalEnemies)
+        {
+            GameManager.Instance.battleOn = false;
+        }
 
         if(nearbyEnemies.Count == 0)
         {

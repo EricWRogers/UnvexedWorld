@@ -16,7 +16,8 @@ public class BossStateMachine : SimpleStateMachine
     public Transform target;
 
     private Rigidbody rb;
-    private Health health;
+    [HideInInspector]
+    public Health health;
     
     [HideInInspector]
     public NavMeshAgent agent;
@@ -25,11 +26,7 @@ public class BossStateMachine : SimpleStateMachine
     public GameObject ogParent;
 
     //Attacks
-    public bool armCharge = false;
-    public bool armSwing = false;
-    public bool armSlam = false;
-    public bool legStomp = false;
-    public bool throwPuss = false;
+    public bool aggroPhase;
 
     public bool LOS;
     public bool isAlive;
@@ -76,6 +73,11 @@ public class BossStateMachine : SimpleStateMachine
         {
             isAlive = false;
             ChangeState(nameof(DeathState));
+        }
+
+        if(health.currentHealth <= health.maxHealth*0.5f)
+        {
+            aggroPhase = true;
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
