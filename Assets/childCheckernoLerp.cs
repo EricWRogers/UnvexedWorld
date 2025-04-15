@@ -37,14 +37,14 @@ public class childCheckernoLerp : MonoBehaviour
 
       
 
-        if(eFinder != null) 
-        {
-            if(gameObject.transform.childCount == 0 && theMusic == true )
-            {
+        // if(eFinder != null) 
+        // {
+        //     if(gameObject.transform.childCount == 0 && theMusic == true )
+        //     {
                 
-                GameManager.Instance.battleOn = false;
-                Destroy(this);
-            }
-        }
+        //         GameManager.Instance.battleOn = false;
+        //         Destroy(this);
+        //     }
+        // }
     }
 }
