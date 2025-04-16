@@ -19,7 +19,7 @@ public class OpenDoor : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Vector3.Distance(transform.position, player.position) < openDoorDistance && openDoor == null)
+        if(Vector3.Distance(transform.position, player.position) < openDoorDistance || openDoor == null)
         {
             if(enemies != null)
             {
