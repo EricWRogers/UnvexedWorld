@@ -22,6 +22,7 @@ public class CrystallizedState : SimpleState
         base.OnStart();
 
         agent = stateMachine.GetComponent<NavMeshAgent>();
+        oldSpeed = agent.speed;
 
         if (stateMachine.GetComponent<Health>().currentHealth <= 0)
         {
@@ -42,11 +43,12 @@ public class CrystallizedState : SimpleState
             rangeGruntStateMachine.isCrystalized = true;
         }
 
-        agent.enabled = false;
+        if(agent.enabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = true;
+        }
         if (stateMachine is BossStateMachine)
         {
-            agent.enabled = true;
-            oldSpeed = agent.speed;
             agent.speed = oldSpeed / 2.0f;
         }
 
@@ -88,9 +90,13 @@ public class CrystallizedState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-        agent.enabled = true;
         agent.speed = oldSpeed;
         timer = 0f;
+
+        if(agent.enabled && agent.isOnNavMesh)
+        {
+            agent.isStopped = false;
+        }
         
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {

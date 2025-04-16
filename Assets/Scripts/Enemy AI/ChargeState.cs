@@ -55,6 +55,8 @@ public class ChargeState : SimpleState
             target = ((BossStateMachine)stateMachine).target;
             bossDistance = Vector3.Distance(((BossStateMachine)stateMachine).transform.position, target.position);
         }
+
+        agent.SetDestination(target.position);
     }
 
     public override void UpdateState(float dt)
