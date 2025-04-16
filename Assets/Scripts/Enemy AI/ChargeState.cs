@@ -26,18 +26,21 @@ public class ChargeState : SimpleState
 
         if (stateMachine is GruntStateMachine)
         {
+            ((GruntStateMachine)stateMachine).isCrystalized = false;
             target = ((GruntStateMachine)stateMachine).target;
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is AgroGruntStateMachine)
         {
+            ((AgroGruntStateMachine)stateMachine).isCrystalized = false;
             target = ((AgroGruntStateMachine)stateMachine).target;
             range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is RangeGruntStateMachine)
         {
+            ((RangeGruntStateMachine)stateMachine).isCrystalized = false;
             target = ((RangeGruntStateMachine)stateMachine).target;
         }
 
