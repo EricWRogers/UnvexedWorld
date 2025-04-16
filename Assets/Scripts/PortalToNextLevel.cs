@@ -22,8 +22,9 @@ public class PortalToNextLevel : MonoBehaviour
        public void PlayGame(string sceneName)
     {
         
-        
+         AudioManager.instance.backgroundMusicSource.Stop();
         SceneManager.LoadScene(sceneName);
+        
         
     }
 

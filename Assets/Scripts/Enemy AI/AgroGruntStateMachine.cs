@@ -10,6 +10,7 @@ public class AgroGruntStateMachine : SimpleStateMachine
     public RandomMovementState randomMovement;
     public IdleState idle;
     public KnockBackState knockBack;
+    public CrystallizedState crystallized;
     public ChargeState charge;
     public AttackState melee;
     public DeathState dead;
@@ -36,6 +37,7 @@ public class AgroGruntStateMachine : SimpleStateMachine
         states.Add(randomMovement);
         states.Add(idle);
         states.Add(knockBack);
+        states.Add(crystallized);
         states.Add(charge);
         states.Add(melee);
         states.Add(dead);

@@ -8,8 +8,8 @@ public class AudioManager : MonoBehaviour
     public AudioCollection[] audioCollections;  // Array of sound settings (Set in Unity Inspector)
     public SoundPool soundPool; // Reference to the SoundPool (Assign in Unity)
     private AudioSource audioSource;
-    [SerializeField] private AudioSource backgroundMusicSource;
-    [SerializeField] private AudioSource battleMusicSource;
+    [SerializeField] public AudioSource backgroundMusicSource;
+    [SerializeField] public AudioSource battleMusicSource;
     public static AudioManager instance;
 
     [Header("Audio Mixers")]
@@ -24,6 +24,7 @@ public class AudioManager : MonoBehaviour
     {
         if (instance == null)
         {
+            Debug.Log("Set new Instance");
             instance = this;
         }
         else

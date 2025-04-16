@@ -64,6 +64,7 @@ MonoBehaviour:
   player: {fileID: 0}
   element: 0
   aspect: 0
+  spellCost: 5
   spells: []
 --- !u!1 &1846848477704561281
 GameObject:
@@ -80,7 +81,7 @@ GameObject:
   - component: {fileID: 6775899298371220468}
   m_Layer: 10
   m_Name: hitboxMelee
-  m_TagString: Untagged
+  m_TagString: Attack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -139,7 +140,6 @@ MonoBehaviour:
   spellBonus: 3
   spellCost: 2
   impactValue: 0
-  doKnockBack: 0
   enemy: {fileID: 0}
   punchTarget:
     m_PersistentCalls:
@@ -196,6 +196,7 @@ MonoBehaviour:
   CurrentElement: 0
   subAspect: 0
   burstDamage: 10
+  crystalDamage: 20
   AOEDuration: 0
   lifeSteal: 0
   overwriteSpell: 0

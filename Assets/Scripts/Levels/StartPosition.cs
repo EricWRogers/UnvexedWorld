@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 public class StartPosition : MonoBehaviour
 {
     public Transform spawnPointOne;
     public Transform spawnPointTwo;
+    public bool hasSpawnedSecondLocation;
 
     private Transform player;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,10 +29,11 @@ public class StartPosition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if(tracker > 0)
-        // {
-        //     player.position = spawnPointTwo.position;
-        //     tracker = 0;
-        // }
+
+        if(GameManager.Instance.hasKeyOrb == true && !hasSpawnedSecondLocation)
+        {
+            hasSpawnedSecondLocation = true;
+            player.position = spawnPointTwo.position;
+        }
     }
 }

@@ -17,6 +17,7 @@ public class NewMainMenu : MonoBehaviour
         GameManager.Instance.hasKeyOrb = false;
         SceneManager.LoadScene(sceneName);
         GameManager.Instance.switches.Clear();
+        GameManager.Instance.battleOn = false;
     }
 
     public void QuitGame()
