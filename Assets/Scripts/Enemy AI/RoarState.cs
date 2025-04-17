@@ -1,9 +1,7 @@
 using UnityEngine;
-using SuperPupSystems.Helper;
 using SuperPupSystems.StateMachine;
-using UnityEngine.AI;
-using UnityEngine.Events;
 
+[System.Serializable]
 public class RoarState : SimpleState
 {
     public override void OnStart()
