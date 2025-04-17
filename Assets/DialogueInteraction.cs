@@ -65,6 +65,15 @@ public class DialogueInteraction : MonoBehaviour
             once = true;
         }
 
+        if(other.gameObject.CompareTag("Player")&& notAgain == true && once == false &&  notAgain == false)
+        {
+            DiologueBox.SetActive(true);
+            text.StartDiolague();
+            Debug.Log("InText");
+            
+            once = true;
+        }
+
        
     }
 

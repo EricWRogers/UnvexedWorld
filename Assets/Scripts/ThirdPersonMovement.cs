@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using SuperPupSystems.Helper;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -90,6 +91,8 @@ public class ThirdPersonMovement : MonoBehaviour
 
     private Vector3 lastPosition;
 
+    private Health health;
+
    
 
 
@@ -117,6 +120,8 @@ public class ThirdPersonMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;   
         lockOn = GetComponent<MeleeRangedAttack>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        health = GetComponent<Health>();
+        health.hurt.AddListener(AudioManager.instance.PlayPlayerHurtSound);
     }
 
     
