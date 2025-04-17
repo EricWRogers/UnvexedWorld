@@ -53,6 +53,7 @@ public class ChargeState : SimpleState
         if (stateMachine is BossStateMachine)
         {
             target = ((BossStateMachine)stateMachine).target;
+            range = ((BossStateMachine)stateMachine).inAttackRange + 0.5f;
             bossDistance = Vector3.Distance(((BossStateMachine)stateMachine).transform.position, target.position);
         }
 
@@ -151,21 +152,25 @@ public class ChargeState : SimpleState
                 if (agent.isOnNavMesh == true)
                 {
                     bossStateMachine.transform.LookAt(bossStateMachine.target);
+                    Debug.Log("The Boss is " + range + "units away");
 
-                    if (bossDistance > 10) //Some Random Number
+                    if (Vector3.Distance(agent.transform.position, bossStateMachine.target.position) > 10.0f) //Some Random Number
                     {
                         agent.SetDestination(bossStateMachine.target.position);
                     }
-                    else if (bossDistance > 6 && bossDistance < 10)
+                    else if(Vector3.Distance(agent.transform.position, bossStateMachine.target.position) < range)
+                    {
+                        stateMachine.ChangeState(nameof(BossAttackState));
+                    }
+                    if (bossDistance > 6 && bossDistance < 10)
                     {
                         bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmCharge;
-                        stateMachine.ChangeState(nameof(BossAttackState));
                     }
                     else if (bossDistance > 0 && bossDistance < 5)
                     {
                         ChoseMeeleAttack();
-                        stateMachine.ChangeState(nameof(BossAttackState));
                     }
+
                 }
             }
         }
