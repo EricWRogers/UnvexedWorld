@@ -9,8 +9,8 @@ public class AgroGruntStateMachine : SimpleStateMachine
 {
     public RandomMovementState randomMovement;
     public IdleState idle;
-    public StunState stunned;
     public KnockBackState knockBack;
+    public CrystallizedState crystallized;
     public ChargeState charge;
     public AttackState melee;
     public DeathState dead;
@@ -36,8 +36,8 @@ public class AgroGruntStateMachine : SimpleStateMachine
     {
         states.Add(randomMovement);
         states.Add(idle);
-        states.Add(stunned);
         states.Add(knockBack);
+        states.Add(crystallized);
         states.Add(charge);
         states.Add(melee);
         states.Add(dead);
@@ -85,14 +85,6 @@ public class AgroGruntStateMachine : SimpleStateMachine
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
-
-        if (canStun && stunned.CanEnterStunState())
-        {
-            ChangeState(nameof(StunState));
-            canStun = false;
-        }
-        
-        stunned.UpdateCooldown(Time.deltaTime);
 
         if (agent.velocity.magnitude > 0.1f) 
         {
