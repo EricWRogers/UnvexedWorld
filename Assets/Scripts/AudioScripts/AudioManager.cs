@@ -147,8 +147,9 @@ public class AudioManager : MonoBehaviour
 
     public void PlayBattleMusic()
     {
-        if (battleMusicSource != null && !battleMusicSource.isPlaying)
+        if (IsBackgroundMusicPlaying())
         {
+            Debug.Log("Battle Music");
             battleMusicSource.Play();
             if(IsBackgroundMusicPlaying())
             {
@@ -233,4 +234,6 @@ public class AudioManager : MonoBehaviour
     public void PlayBossRoarSound() => Play("BossRoar");
     public void PlayEnemyDeathSound() => Play("EnemyDeath");
     public void PlayTransportPortalSound() => Play("TransportPortal");
+
+    public void PlayPlayerHurtSound() => Play("PlayerHurt");
 }

@@ -20,7 +20,7 @@ public class BossAttackState : SimpleState
     }
 
     public AttackType attackType;
-    public List<string> animNames;
+    public List<string> attackNames = new List<string> { "ArmCharge", "ArmSlam", "ArmSwing", "LegStomp" };
     public UnityEvent attack;
     public UnityEvent stopAttacking;
     NavMeshAgent agent;
@@ -35,12 +35,9 @@ public class BossAttackState : SimpleState
     public float chargeDuration = 1.5f;
     public float chargeTimeElapsed;
     public float chargeSpeed;
-    public List<string> attackNames = new List<string>();
     public override void OnStart()
     {
         base.OnStart();
-
-        attackNames = new List<string> { "ArmCharge", "ArmSlam", "ArmSwing", "LegStomp" };
 
         anim = stateMachine.GetComponentInChildren<Animator>();
         agent = stateMachine.GetComponent<NavMeshAgent>();
