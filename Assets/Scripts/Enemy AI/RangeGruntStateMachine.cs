@@ -33,6 +33,7 @@ public class RangeGruntStateMachine : SimpleStateMachine
     public bool isAlive;
     public bool canStun;
     public bool isIdling;
+    public bool isCrystalized;
     public float inAttackRange = 1.0f;
 
     void Awake()
@@ -116,31 +117,40 @@ public class RangeGruntStateMachine : SimpleStateMachine
 
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
-        knockBack.dir = direction;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.One;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            knockBack.dir = direction;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.One;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 
     public void TypeTwoKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
-        Vector3 dir = (transform.position - direction.transform.position).normalized;
-        knockBack.mag = mag;
-        knockBack.dir = dir;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.Two;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            float mag = rb.linearVelocity.magnitude;
+            Vector3 dir = (transform.position - direction.transform.position).normalized;
+            knockBack.mag = mag;
+            knockBack.dir = dir;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.Two;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 
     public void TypeThreeKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
-        Vector3 dir = (transform.position - direction.transform.position).normalized;
-        knockBack.mag = mag;
-        knockBack.dir = dir;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.Three;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            float mag = rb.linearVelocity.magnitude;
+            Vector3 dir = (transform.position - direction.transform.position).normalized;
+            knockBack.mag = mag;
+            knockBack.dir = dir;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.Three;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 }

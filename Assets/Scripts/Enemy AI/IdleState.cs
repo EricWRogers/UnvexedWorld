@@ -35,6 +35,11 @@ public class IdleState : SimpleState
         {
             anim = jumperStateMachine.GetComponentInChildren<Animator>();
         }
+
+        if (stateMachine is BossStateMachine bossStateMachine)
+        {
+            anim = bossStateMachine.GetComponentInChildren<Animator>();
+        }
     }
 
     public override void UpdateState(float dt)
@@ -84,6 +89,18 @@ public class IdleState : SimpleState
                 {
                     anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+
+        if (stateMachine is BossStateMachine bossStateMachine)
+        {    
+            if (bossStateMachine.isAlive == true)
+            {   
+                if(bossStateMachine.LOS == true)
+                {
+                    anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(RoarState));
                 }
             }
             
