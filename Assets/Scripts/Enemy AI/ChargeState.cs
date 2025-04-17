@@ -53,7 +53,7 @@ public class ChargeState : SimpleState
         if (stateMachine is BossStateMachine)
         {
             target = ((BossStateMachine)stateMachine).target;
-            range = ((BossStateMachine)stateMachine).inAttackRange + 0.5f;
+            range = ((BossStateMachine)stateMachine).inAttackRange + 1.25f;
             bossDistance = Vector3.Distance(((BossStateMachine)stateMachine).transform.position, target.position);
         }
 
@@ -147,12 +147,14 @@ public class ChargeState : SimpleState
 
         if (stateMachine is BossStateMachine bossStateMachine)
         {
+            float distance = Vector3.Distance(bossStateMachine.target.position, agent.transform.position);
             if (bossStateMachine.isAlive && bossStateMachine.LOS)
             {
                 if (agent.isOnNavMesh == true)
                 {
                     bossStateMachine.transform.LookAt(bossStateMachine.target);
                     Debug.Log("The Boss is " + range + "units away");
+                    Debug.Log("The distance between your ass and the boss" + distance);
 
                     if (Vector3.Distance(agent.transform.position, bossStateMachine.target.position) > 10.0f) //Some Random Number
                     {
