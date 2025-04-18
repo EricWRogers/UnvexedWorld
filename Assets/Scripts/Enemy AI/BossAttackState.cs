@@ -32,10 +32,11 @@ public class BossAttackState : SimpleState
     public bool isAttacking;
     public bool agroPhase;
     private bool isCharging;
-    private bool hasAttacked;
+    private bool hasAttacked = false;
     public float chargeDuration = 1.5f;
     public float chargeTimeElapsed;
     public float chargeSpeed;
+    public float currentCooldown;
     public override void OnStart()
     {
         base.OnStart();
@@ -50,9 +51,10 @@ public class BossAttackState : SimpleState
         cooldownTimer = 0f; // Force attack immediately
 
         if (attack == null)
+        {
             attack = new UnityEvent();
-
-        attack.AddListener(WhichAttackAnim);
+            attack.AddListener(WhichAttackAnim);
+        }
 
         // Force attack for testing
         Debug.Log("Forcing boss attack on start!");
@@ -73,7 +75,7 @@ public class BossAttackState : SimpleState
 
             bossStateMachine.transform.LookAt(bossStateMachine.target);
 
-            float currentCooldown = agroPhase ? attackDuration * 0.5f : attackDuration;
+            currentCooldown = agroPhase ? attackDuration * 0.5f : attackDuration;
 
             attackTimer -= _dt;
             cooldownTimer -= _dt;
@@ -98,11 +100,11 @@ public class BossAttackState : SimpleState
                         cooldownTimer = currentCooldown;
                     }
 
-                    // // Reset attack after the animation/attack duration ends
-                    // if (isAttacking && cooldownTimer <= currentCooldown - 1f)
-                    // {
-                    //     isAttacking = false;
-                    // }
+                    // Reset attack after the animation/attack duration ends
+                    if (isAttacking && cooldownTimer <= currentCooldown - 1f)
+                    {
+                        isAttacking = false;
+                    }
                 }
                 else
                 {
@@ -168,9 +170,10 @@ public class BossAttackState : SimpleState
 
             chargeTimeElapsed += dt;
 
-            if (chargeTimeElapsed >= chargeDuration || Vector3.Distance(((BossStateMachine)stateMachine).transform.position, ((BossStateMachine)stateMachine).target.position) < attackRange)
+            if (chargeTimeElapsed >= chargeDuration /*|| Vector3.Distance(((BossStateMachine)stateMachine).transform.position, ((BossStateMachine)stateMachine).target.position) < attackRange*/)
             {
                 isCharging = false;
+                chargeTimeElapsed = 0;
                 stopAttacking.Invoke();
                 attack.Invoke();
                 stateMachine.ChangeState(nameof(ChargeState));
