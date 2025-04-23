@@ -13,14 +13,16 @@ public class CollectableOrb : MonoBehaviour
     public GameObject collectBlock;
     public GameObject collectBlock2;
 
+    private CollectableUIManager collectableUIManager;
+
     private AudioManager audioManager;
 
     public void Start()
     {
-        audioManager = FindObjectOfType<AudioManager>();
+        //audioManager = FindObjectOfType<AudioManager>();
     }
 
-    //Turns of opaque orb, turns on transparent orb for animation
+    //Turns off opaque orb, turns on transparent orb for animation
     public void opaqueToTransparent()
     {
         gameObject.transform.GetChild(1).gameObject.SetActive(true);
@@ -34,7 +36,7 @@ public class CollectableOrb : MonoBehaviour
 
     public void orbSound()
     {
-        audioManager.PlayOrbSound();
+        //audioManager.PlayOrbSound();
     }
 
     private void OnTriggerEnter(Collider other)

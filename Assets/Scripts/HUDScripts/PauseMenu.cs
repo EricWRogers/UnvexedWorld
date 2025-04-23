@@ -9,15 +9,17 @@ public class PauseMenu : MonoBehaviour
     public GameObject powerSystem;
     public GameObject healthBar;
     public GameObject comboInfo;
-    public GameObject moveSet; // Declare your MoveSet GameObject
+    public GameObject moveSet; // MoveSet GameObject
     public Button resumeButton;
     public Button quitButton;
+    public Button moveSetButton; // Add MoveSet button reference
 
     public WinMenuScript win;
 
     PlayerGamepad gamepad;
 
-    private bool isPaused = false;
+    private bool isMoveSetOpen = false; // Track MoveSet visibility
+    public bool isPaused = false;
 
     void Awake()
     {
@@ -37,18 +39,16 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        // Ensure the pause menu is hidden at the start
         pauseMenuUI.SetActive(false);
-        moveSet.SetActive(false); // Ensure MoveSet is hidden at the start
+        moveSet.SetActive(false); // Ensure MoveSet is hidden at start
 
-        // Assign button listeners
         resumeButton.onClick.AddListener(Resume);
         quitButton.onClick.AddListener(Quit);
+        moveSetButton.onClick.AddListener(ToggleMoveSet); // Add listener
     }
 
     void Update()
     {
-        // Check if the player presses the Escape key
         if (Input.GetKeyDown(KeyCode.Escape) && win.didWin != true)
         {
             if (isPaused)
@@ -77,38 +77,41 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         Debug.Log("Game Paused");
-        // Show the pause menu and freeze the game
         pauseMenuUI.SetActive(true);
-        moveSet.SetActive(true); // Show the MoveSet UI
-        Cursor.lockState = CursorLockMode.None; // Unlock cursor
-        Cursor.visible = true; // Show cursor
+        moveSet.SetActive(false); // Ensure MoveSet stays hidden on pause
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
         healthBar.SetActive(false);
         powerSystem.SetActive(false);
         comboInfo.SetActive(false);
-        Time.timeScale = 0f; // Freeze time
+        Time.timeScale = 0f;
         isPaused = true;
-        
     }
 
     public void Resume()
     {
         Debug.Log("Game Resumed");
-        // Hide the pause menu and unfreeze the game
         pauseMenuUI.SetActive(false);
-        moveSet.SetActive(false); // Hide the MoveSet UI
-        Cursor.lockState = CursorLockMode.Locked; // Lock cursor
-        Cursor.visible = false; // Hide cursor
+        moveSet.SetActive(false); // Hide MoveSet when resuming
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         healthBar.SetActive(true);
         powerSystem.SetActive(true);
         comboInfo.SetActive(true);
-        Time.timeScale = 1f; // Unfreeze time
+        Time.timeScale = 1f;
         isPaused = false;
     }
 
     public void Quit()
     {
-        // Unfreeze time (important before changing scenes) and load the MainMenu scene
         Time.timeScale = 1f;
         SceneManager.LoadScene("MainMenu");
+    }
+
+    // **Function to Toggle MoveSet UI**
+    public void ToggleMoveSet()
+    {
+        isMoveSetOpen = !isMoveSetOpen;
+        moveSet.SetActive(isMoveSetOpen);
     }
 }

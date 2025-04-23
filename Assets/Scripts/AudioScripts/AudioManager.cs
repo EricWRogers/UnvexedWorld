@@ -1,83 +1,160 @@
 using UnityEngine;
+using System.Collections;
+using System.Linq;
 
 public class AudioManager : MonoBehaviour
 {
-    // Music and Sound Effect clips
-    public AudioClip backgroundMusic;
-    public AudioClip battleMusic;
-    public AudioClip playerDash;
-    public AudioClip punch;
-    public AudioClip landing;
-    public AudioClip hurt;
+    public AudioCollection[] audioCollections;  // Array of sound settings (Set in Unity Inspector)
+    //public AudioSoundData audioSoundData;
+    public SoundPool soundPool; // Reference to the SoundPool (Assign in Unity)
+    private AudioSource audioSource;
+    [SerializeField] private AudioSource backgroundMusicSource;
+    [SerializeField] private AudioSource battleMusicSource;
+    public static AudioManager instance;
 
-     public AudioClip orb;
-
-    private AudioSource musicSource;
-    private AudioSource sfxSource;
-
-    void Awake()
+    private void Awake()
     {
-        // Initialize two AudioSources
-        musicSource = gameObject.AddComponent<AudioSource>();
-        sfxSource = gameObject.AddComponent<AudioSource>();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-        musicSource.loop = true; // Music source should loop for background/battle music
+    // Play a Sound by Name
+    public void Play(string name, bool _varyPitch = false)
+    {
+        Debug.Log("AudioManager: Play " + name);
+        AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
+        if (ac != null && soundPool != null)
+        {
+            SoundData sound = ac.sounds[Random.Range(0, ac.sounds.Length)];
+            GameObject audioObject = soundPool.GetPooledObject();
+            if (audioObject != null)
+            {
+                AudioSource audioSource = audioObject.GetComponent<AudioSource>();
+                audioSource.clip = sound.clip;
+                audioSource.volume = sound.volume;
+                if (_varyPitch)
+                    audioSource.pitch = sound.pitch + Random.Range(-0.3f, 0.3f);
+                else
+                    audioSource.pitch = sound.pitch;
+                audioSource.loop = sound.loop;
+                audioObject.SetActive(true);
+                audioSource.Play();
+
+                // Disable the object after the sound finishes playing
+                if (!sound.loop)
+                {
+                    StartCoroutine(DeactivateAfterPlay(audioSource));  // Fix here
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning($"Sound '{name}' was not found!");
+        }
     }
 
     public void PlayBackgroundMusic()
     {
-        // Only play background music if it's not already playing
-        if (musicSource.clip != backgroundMusic || !musicSource.isPlaying)
+        if (backgroundMusicSource != null && !backgroundMusicSource.isPlaying)
         {
-            musicSource.Stop(); // Ensure previous music stops before playing new one
-            musicSource.clip = backgroundMusic;
-            musicSource.Play();
+            backgroundMusicSource.Play();
         }
     }
 
     public void PlayBattleMusic()
     {
-        // Only play battle music if it's not already playing
-        if (musicSource.clip != battleMusic || !musicSource.isPlaying)
+        if (battleMusicSource != null && !battleMusicSource.isPlaying)
         {
-            musicSource.Stop(); // Ensure previous music stops before playing new one
-            musicSource.clip = battleMusic;
-            musicSource.Play();
+            battleMusicSource.Play();
         }
     }
 
-    public void PlayDashSound()
-    {
-        sfxSource.PlayOneShot(playerDash);
-    }
-
-    public void PlayPunchSound()
-    {
-        sfxSource.PlayOneShot(punch);
-    }
-
-    public void PlayLandingSound()
-    {
-        sfxSource.PlayOneShot(landing);
-    }
-
-    public void PlayHurtSound()
-    {
-        sfxSource.PlayOneShot(hurt);
-    }
-     public void PlayOrbSound()
-    {
-        sfxSource.PlayOneShot(orb);
-    }
-
-    public void StopMusic()
-    {
-        musicSource.Stop();
-    }
-
-    // New method to check if battle music is playing
     public bool IsBattleMusicPlaying()
     {
-        return musicSource.clip == battleMusic && musicSource.isPlaying;
+        return battleMusicSource != null && battleMusicSource.isPlaying;
     }
+
+    public bool IsBackgroundMusicPlaying()
+    {
+        return backgroundMusicSource != null && backgroundMusicSource.isPlaying;
+    }
+
+    // Crossfade Function for music
+    /*public void CrossfadeBattleToBackground(float fadeDuration = 2f)
+    {
+        StartCoroutine(Crossfade(fadeDuration));
+    }
+
+    // Coroutine for fading
+    private IEnumerator Crossfade(float fadeDuration)
+    {
+        float startTime = Time.time;
+        float battleMusicStartVolume = battleMusicSource.volume;
+        float backgroundMusicStartVolume = backgroundMusicSource.volume;
+
+        //Battle music fade
+        while (Time.time - startTime < fadeDuration)
+        {
+            float t = (Time.time - startTime) / fadeDuration;
+            battleMusicSource.volume = Mathf.Lerp(battleMusicStartVolume, 0f, t);
+            backgroundMusicSource.volume = Mathf.Lerp(backgroundMusicStartVolume, 1f, t);
+            yield return null;
+        }
+
+        //final volumes
+        battleMusicSource.volume = 0f;
+        backgroundMusicSource.volume = 1f;
+
+        //Stop battle music after fade out
+        battleMusicSource.Stop();
+    }*/
+
+    // Stop a Specific Sound
+    // Needs more work in future
+    public void Stop(string name)
+    {
+        AudioCollection ac = audioCollections.FirstOrDefault(s => s.name == name);
+        if (ac != null)
+        {
+            SoundData sound = ac.sounds[Random.Range(0, ac.sounds.Length)];
+            foreach (GameObject obj in soundPool.pooledObjects)
+            {
+                AudioSource audioSource = obj.GetComponent<AudioSource>();
+                if (audioSource.clip == sound.clip && obj.activeInHierarchy)
+                {
+                    audioSource.Stop();
+                    obj.SetActive(false);
+                    return;
+                }
+            }
+        }
+    }
+
+    // Stop All Sounds
+    public void StopAll()
+    {
+        foreach (GameObject obj in soundPool.pooledObjects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
+    // Deactivate Pooled Object After Sound Finishes
+    private IEnumerator DeactivateAfterPlay(AudioSource source)  // Fix here
+    {
+        yield return new WaitForSeconds(source.clip.length);  // Correct reference to `source`
+        source.gameObject.SetActive(false);  // Correct reference to `source`
+    }
+
+    // 🎵 Quick Play Methods for Specific Sounds
+    public void PlayPunchSound() => Play("Punch", true);
+    public void PlayDashSound() => Play("Dash");
+    public void PlayLandingSound() => Play("Landing");
+    public void PlayEnemyHurtSound() => Play("EnemyHurt");
 }
