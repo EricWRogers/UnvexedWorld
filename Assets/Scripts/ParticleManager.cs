@@ -12,13 +12,25 @@ public class ParticleManager : MonoBehaviour
     public GameObject BurstParticle;
     public GameObject ScavengeParticle;
     public GameObject SplendorParticle;
+    public GameObject SunderParticle;
+    
+    public GameObject SunderImpact;
+    
+    public GameObject CrystalizeParticle;
+    public GameObject CrystalizedObject;
 
     public GameObject ScavengeParticleMelee;
     public GameObject SplendorParticleMelee;
     public GameObject NoSpellImpact;
     public GameObject StunParticle;
 
+    public GameObject EnemySlashParticle;
+
+    public GameObject RangedHitEffect;
+    public GameObject EnemyRangeImpact;
+
     private GameObject stunPS;
+    private GameObject EnSlash;
     
     // Start is called before the first frame update
 
@@ -48,12 +60,20 @@ public class ParticleManager : MonoBehaviour
 
     public void SpawnStunParticles(Transform spawnLocation, GameObject stuned)
     {
-        stunPS = GameObject.Instantiate(StunParticle, spawnLocation.position, spawnLocation.rotation);
+        stunPS = Instantiate(StunParticle, spawnLocation.position, spawnLocation.rotation);
         stunPS.transform.parent=stuned.transform;
     }
     public void DestroyStunParticles()
     {
         Destroy(stunPS);
     }
+
+    public void SpawnEnemySlash(Transform spawnLocation)
+    {
+        EnSlash = Instantiate(EnemySlashParticle, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = spawnLocation;
+    }
+    
+
 
 }

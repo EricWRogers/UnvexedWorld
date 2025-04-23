@@ -4,6 +4,7 @@ using UnityEngine;
 using SuperPupSystems.StateMachine;
 using SuperPupSystems.Helper;
 using UnityEngine.AI;
+using Unity.VisualScripting;
 
 [System.Serializable]
 public class StunState : SimpleState
@@ -19,24 +20,30 @@ public class StunState : SimpleState
 
     public override void OnStart()
     {
-        Debug.Log("Stun State");
         base.OnStart();
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             agent = gruntStateMachine.GetComponent<NavMeshAgent>();
             anim = gruntStateMachine.anim;
         }
-        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        else if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
-            agent = meleeStateMachine.GetComponent<NavMeshAgent>();
-            anim = meleeStateMachine.anim;
+            agent = agroGruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = agroGruntStateMachine.anim;
+        }
+        else if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            agent = rangeGruntStateMachine.GetComponent<NavMeshAgent>();
+            anim = rangeGruntStateMachine.anim;
         }
 
         ParticleManager.Instance.SpawnStunParticles(spawnLocation,spawnLocation.gameObject);
 
-        stunTimer = stunDuration;  
-        agent.isStopped = true;
-        Debug.Log("Entering Stun State");
+        stunTimer = stunDuration;
+        if(agent.enabled == true)
+        {
+            agent.isStopped = true;
+        }
     }
 
     public override void UpdateState(float _dt)
@@ -57,17 +64,32 @@ public class StunState : SimpleState
                 stateMachine.ChangeState(nameof(IdleState));
             }
         }
-        else if (stateMachine is MeleeStateMachine meleeStateMachine)
+        else if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
             if(stunTimer > 0)
             {
                 stunTimer -= _dt;
             }
-            if (stunTimer <= 0 && meleeStateMachine.isIdling == false)
+            if (stunTimer <= 0 && agroGruntStateMachine.isIdling == false)
             {
                 stateMachine.ChangeState(nameof(InRangeState));
             }
-            else if(stunTimer <= 0 && meleeStateMachine.isIdling == true)
+            else if(stunTimer <= 0 && agroGruntStateMachine.isIdling == true)
+            {
+                stateMachine.ChangeState(nameof(IdleState));
+            }
+        }
+        else if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            if(stunTimer > 0)
+            {
+                stunTimer -= _dt;
+            }
+            if (stunTimer <= 0 && rangeGruntStateMachine.isIdling == false)
+            {
+                stateMachine.ChangeState(nameof(InRangeState));
+            }
+            else if(stunTimer <= 0 && rangeGruntStateMachine.isIdling == true)
             {
                 stateMachine.ChangeState(nameof(IdleState));
             }
@@ -77,14 +99,24 @@ public class StunState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-        agent.isStopped = false;   // Allow movement again
+        if(agent.enabled == true)
+        {
+            agent.isStopped = false;
+        }
         cooldownTimer = stunCooldown;  // Reset the cooldown timer
         ParticleManager.Instance.DestroyStunParticles();
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
             gruntStateMachine.canStun = false;
         }
-        Debug.Log("Exiting Stun State");
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            agroGruntStateMachine.canStun = false;
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            rangeGruntStateMachine.canStun = false;
+        }
     }
 
     public bool CanEnterStunState()

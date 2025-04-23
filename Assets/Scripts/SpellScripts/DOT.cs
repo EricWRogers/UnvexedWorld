@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using SuperPupSystems.Helper;
 using Scripts.HUDScripts.MessageSystem;
 
-public class DOT : MonoBehaviour, IDamageDealer
+public class DOT : MonoBehaviour
 {
     public Timer timer;
     public float damageTimer = 0;
@@ -15,7 +15,6 @@ public class DOT : MonoBehaviour, IDamageDealer
     public GameObject particle;
     public Health health;
     public MessageSpawner messageSpawner; 
-    public GameObject damageDealer;
 
     private void Start()
     {

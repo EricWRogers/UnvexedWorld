@@ -19,7 +19,7 @@ ModelImporter:
     animationImportErrors: 
     animationImportWarnings: "\nClip 'mixamo.com' has import animation warnings that
       might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'spine_02_jnt' is inbetween humanoid transforms
+      to improve retargeting quality.\n\t'spine_03_jnt' is inbetween humanoid transforms
       and has rotation animation that will be discarded.\n\t'l_ball_jnt' is inbetween
       humanoid transforms and has rotation animation that will be discarded.\n\t'r_ball_jnt'
       is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
@@ -49,9 +49,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 0
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -59,7 +59,31 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.28378305
+        functionName: SpawnEnemySlash
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: a2808417005efdc4980a8c4ffe843c22,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.3116178
+        functionName: Attack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4201954
+        functionName: DestroyBox
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}

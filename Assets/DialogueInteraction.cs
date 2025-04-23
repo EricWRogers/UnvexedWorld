@@ -11,6 +11,12 @@ public class DialogueInteraction : MonoBehaviour
 
      public Diologue text;
 
+     public bool pauseGame = false;
+
+     public bool once = false;
+
+     public bool notAgain = false;
+
      
 
      
@@ -30,21 +36,55 @@ public class DialogueInteraction : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")&& pauseGame == false && once == false && notAgain == false)
         { 
             DiologueBox.SetActive(true);
-            InRange = true;
+           
             text.StartDiolague();
             Debug.Log("InText");
-             
+            
         }
+
+        if (other.gameObject.CompareTag("Player")&& pauseGame == true && once == false){
+             DiologueBox.SetActive(true);
+           
+            text.StartDiolague();
+            Debug.Log("InText");
+            Time.timeScale = 0.0f;
+             GameManager.Instance.doNothing = true;
+            once = true;
+
+        }
+
+        if(other.gameObject.CompareTag("Player")&& notAgain == true && once == false)
+        {
+            DiologueBox.SetActive(true);
+            text.StartDiolague();
+            Debug.Log("InText");
+            
+            once = true;
+        }
+
+        if(other.gameObject.CompareTag("Player")&& notAgain == true && once == false &&  notAgain == false)
+        {
+            DiologueBox.SetActive(true);
+            text.StartDiolague();
+            Debug.Log("InText");
+            
+            once = true;
+        }
+
+       
     }
 
      void OnTriggerExit(Collider other) 
     {
-        InRange = false;
-        DiologueBox.SetActive(false);
+        if(InRange == true)
+        {
+         DiologueBox.SetActive(false);
          text.textComponent.text = string.Empty;
+        }
+        
     }
     
 }

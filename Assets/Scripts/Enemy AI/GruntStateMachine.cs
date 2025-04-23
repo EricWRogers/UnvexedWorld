@@ -11,32 +11,29 @@ public class GruntStateMachine : SimpleStateMachine
     public IdleState idle;
     public StunState stunned;
     public KnockBackState knockBack;
+    public CrystallizedState crystallized;
     public InRangeState chase;
     public SurroundState surround;
     public ChargeState charge;
     public AttackState melee;
-    public RetreatState retreat;
+    public DeathState dead;
 
     public Transform target;
-    
+
     private Rigidbody rb;
     private Health health;
-    
+
     [HideInInspector]
     public NavMeshAgent agent;
     [HideInInspector]
     public Animator anim;
+    public GameObject ogParent;
 
     public bool LOS;
     public bool isAlive;
-    public bool isInsideCollider = false;
     public bool canStun;
     public bool isIdling;
-    public bool isGrounded = false;
-    public float groundCheckDistance;
-    public float bufferCheckDistance = 1f;
-
-
+    public bool isCrystalized;
     public float inAttackRange = 1.0f;
 
     void Awake()
@@ -45,11 +42,12 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(stunned);
         states.Add(knockBack);
+        states.Add(crystallized);
         states.Add(chase);
         states.Add(surround);
         states.Add(charge);
         states.Add(melee);
-        states.Add(retreat);
+        states.Add(dead);
 
         foreach (SimpleState s in states)
         {
@@ -63,17 +61,20 @@ public class GruntStateMachine : SimpleStateMachine
         health = gameObject.GetComponent<Health>();
 
         anim = gameObject.GetComponentInChildren<Animator>();
-        
+
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         agent = GetComponent<NavMeshAgent>();
 
         rb = GetComponent<Rigidbody>();
 
-        if(isIdling)
+        ogParent = transform.parent != null ? transform.parent.gameObject : null;
+
+        if (isIdling)
         {
             ChangeState(nameof(IdleState));
-        }else
+        }
+        else
         {
             ChangeState(nameof(RandomMovementState));
         }
@@ -82,12 +83,14 @@ public class GruntStateMachine : SimpleStateMachine
     // Update is called once per frame
     void Update()
     {
-        if(health.currentHealth > 0)
+        if (health.currentHealth > 1)
         {
             isAlive = true;
-        }else
+        }
+        else
         {
             isAlive = false;
+            ChangeState(nameof(DeathState));
         }
 
         LOS = gameObject.GetComponent<LOS>().targetsInSight;
@@ -97,10 +100,10 @@ public class GruntStateMachine : SimpleStateMachine
             ChangeState(nameof(StunState));
             canStun = false;
         }
-        
+
         stunned.UpdateCooldown(Time.deltaTime);
 
-        if (agent.velocity.magnitude > 0.1f) 
+        if (agent.velocity.magnitude > 0.1f)
         {
             anim.SetBool("isWalking", true);
         }
@@ -109,55 +112,46 @@ public class GruntStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        groundCheckDistance = (GetComponent<CapsuleCollider>().height/2) + bufferCheckDistance;
-
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, -transform.up, out hit, groundCheckDistance))
-        {
-            isGrounded = true;
-        }else
-        {
-            isGrounded = false;
-        }
-
-        if(!isGrounded)
-        {
-            rb.isKinematic = false;
-            rb.useGravity = true;
-        }else
-        {
-            rb.isKinematic = true;
-            rb.useGravity = false;
-        }
+        //Debug.Log("Velocity: " + agent.velocity.magnitude * 2);
+        anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
     }
-    
+
     public void TypeOneKnockBack(Vector3 direction, float power)
     {
-        knockBack.dir = direction;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.One;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            knockBack.dir = direction;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.One;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 
     public void TypeTwoKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
-        Vector3 dir = (transform.position - direction.transform.position).normalized;
-        knockBack.mag = mag;
-        knockBack.dir = dir;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.Two;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            float mag = rb.linearVelocity.magnitude;
+            Vector3 dir = (transform.position - direction.transform.position).normalized;
+            knockBack.mag = mag;
+            knockBack.dir = dir;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.Two;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 
     public void TypeThreeKnockBack(Transform direction, float power)
     {
-        float mag = rb.linearVelocity.magnitude;
-        Vector3 dir = (transform.position - direction.transform.position).normalized;
-        knockBack.mag = mag;
-        knockBack.dir = dir;
-        knockBack.power = power;
-        knockBack.kbType = KnockBackState.KnockBackType.Three;
-        ChangeState(nameof(KnockBackState));
+        if (!isCrystalized)
+        {
+            float mag = rb.linearVelocity.magnitude;
+            Vector3 dir = (transform.position - direction.transform.position).normalized;
+            knockBack.mag = mag;
+            knockBack.dir = dir;
+            knockBack.power = power;
+            knockBack.kbType = KnockBackState.KnockBackType.Three;
+            ChangeState(nameof(KnockBackState));
+        }
     }
 }

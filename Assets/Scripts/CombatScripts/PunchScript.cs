@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Scripts.HUDScripts.MessageSystem;
+using SuperPupSystems.Helper;
 
 
 
@@ -11,12 +12,15 @@ public class PunchScript : MonoBehaviour, IDamageDealer
     [Tooltip("Please type between 1-3 for the type of Knock Back you want (1 : Push, 2 : AOE, 3 : Closer)")]
     public int knockBackType;
     public int damage = 1;
+    
+    public int spellBonus = 3;
+    public int spellCost = 1;
     public float impactValue = 25f;
-    public bool doKnockBack;
-
     public GameObject enemy;
 
     public UnityEvent<GameObject> punchTarget;
+    
+    public UnityEvent<int> spendMana;
     public GameObject particle;
 
     public ComboManager comboManager;
@@ -28,9 +32,10 @@ public class PunchScript : MonoBehaviour, IDamageDealer
 
     public int punchSoundIndex = 0;
     
-    //Temp 
+    //Aiden's Additions for Knockback 
     public Transform direction;
     public float forceAmount = 4f;
+    private HashSet<GameObject> hitEnemies = new HashSet<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +44,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
          
         comboManager = FindFirstObjectByType<ComboManager>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        punchTarget.AddListener(SpendMana);
     }
 
     // Update is called once per frame
@@ -54,29 +60,41 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {
             return;
         }
-        if (other.GetComponent<Rigidbody>().isKinematic == true && other.gameObject.tag == "GroundEnemy" || other.gameObject.tag == "Enemy")
+        if ((other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy")) && other.GetComponent<Rigidbody>().isKinematic == true)
         {
-            Debug.Log("Hit: " + other.gameObject.name + " duration " + duration);
+            if (other.gameObject.GetComponent<Health>() == null)
+               return;
+            
+           
             PlayPunch();
+
+            
             hitStop.Stop(duration);
 
-            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
-            Rigidbody enemyRigidbody = enemy.GetComponent<Rigidbody>();
 
-            if (enemy.GetComponent<MeleeStateMachine>() != null)
+            if(hitEnemies.Contains(enemy))
             {
-                var enemyGrunt = enemy.GetComponent<MeleeStateMachine>();
-                
+                return;
+            }
+            hitEnemies.Add(enemy);
+            StartCoroutine(RemoveFromList(enemy));
+
+            if (enemy.GetComponent<GruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
                 switch (knockBackType)
                 {
+                    case 0:
+                        Debug.Log("0 gives no knock back");
+                        break;
                     case 1:
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
@@ -89,17 +107,41 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 }
                 
             }
-            if (enemy.GetComponent<GruntStateMachine>() != null)
+            if (enemy.GetComponent<RangeGruntStateMachine>() != null)
             {
-                var enemyGrunt = enemy.GetComponent<GruntStateMachine>();
-                
+                var enemyGrunt = enemy.GetComponent<RangeGruntStateMachine>();
                 switch (knockBackType)
                 {
+                    case 0:
+                        Debug.Log("0 gives no knock back");
+                        break;
                     case 1:
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
                     case 2:
-                        //enemyGrunt.TypeTwoKnockBack(direction, forceAmount);
+                        direction.LookAt(other.transform);
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 3:
+                        enemyGrunt.TypeThreeKnockBack(direction, forceAmount);
+                        break;
+                    default:
+                        Debug.Log("Incorrect Knock back type please use 1-3.");
+                        break;
+                }
+                
+            }
+            if (enemy.GetComponent<AgroGruntStateMachine>() != null)
+            {
+                var enemyGrunt = enemy.GetComponent<AgroGruntStateMachine>();
+                switch (knockBackType)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
+                        break;
+                    case 2:
                         direction.LookAt(other.transform);
                         enemyGrunt.TypeOneKnockBack(direction.forward, forceAmount);
                         break;
@@ -120,8 +162,14 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             {
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.AddListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
-            
-            other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+            if(gameObject.GetComponent<Spell>()?.CurrentElement==SpellCraft.Aspect.none)
+                {  
+                    other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
+                }
+                else
+                {
+                    other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage+spellBonus);
+                }
             MessageSpawner messageSpawner = enemy.GetComponentInChildren<MessageSpawner>();
             if (messageSpawner != null)
             {
@@ -142,22 +190,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
                 enemy.GetComponent<SuperPupSystems.Helper.Health>()?.healthChanged.RemoveListener(gameObject.GetComponent<Spell>().LifeSteal);
             }
         }
-        if(other.gameObject.CompareTag("Breakable"))
-        {
-            other.GetComponent<Rigidbody>().Sleep();
-            other.GetComponent<BreakableObject>().unBrokenObject.SetActive(false);
-            other.GetComponent<BreakableObject>().brokenObject.SetActive(true);
-            
-            if(other.GetComponent<BreakableObject>().rb != null)
-            {
-                foreach(Rigidbody rigidbodies in other.GetComponent<BreakableObject>().rb)
-                {
-                    float mag = rigidbodies.linearVelocity.magnitude;
-                    Vector3 dir = (transform.position - other.GetComponent<BreakableObject>().unBrokenObject.transform.position).normalized;
-                    rigidbodies.AddForce(dir * (other.GetComponent<BreakableObject>().breakPower + mag), ForceMode.Impulse);
-                }
-            }
-        }
+     
 
     }
    
@@ -211,5 +244,16 @@ public class PunchScript : MonoBehaviour, IDamageDealer
         {
             Debug.Log("AudioManager not found! Punch no play");
         }
+    }
+
+    private IEnumerator RemoveFromList(GameObject enemy)
+    {
+        yield return new WaitForSeconds(5.25f);
+        hitEnemies.Remove(enemy);
+    }
+
+    public void SpendMana(GameObject ignoreMe)
+    {
+        spendMana.Invoke(spellCost);
     }
 }

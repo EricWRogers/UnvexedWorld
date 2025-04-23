@@ -34,7 +34,7 @@ public class UpgradeOrbs : MonoBehaviour
             Debug.Log("You picked up a point");
             gameObject.GetComponent<Animator>().Play("OrbCollectAnim");
             WalletManager.instance.Earn(1);
-            //walletManager.Earn();
+            GameManager.Instance.coinVal += 1;
 
         }
     }

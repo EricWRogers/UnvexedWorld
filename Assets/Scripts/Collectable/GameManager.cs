@@ -3,15 +3,36 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using SuperPupSystems.Manager;
 using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
 
-    int coinVal = 0;
+    public static GameManager Instance = null;
+
+    public int coinVal = 0;
+
+    public bool hasKeyOrb = false;
+    public bool doNothing = false;
+
+    public bool haveAOne = false;
+
+    public bool battleOn;
+
+    public List<String> switches;
 
     void Awake()
     {
-        GameObject.DontDestroyOnLoad(gameObject);
+
+        if (Instance == null)
+        {
+            Instance = this;
+            GameObject.DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -53,6 +74,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateCoins ()
     {
+        //coinVal = WalletManager.instance.Coin;
         WalletManager.instance.Earn(coinVal);
 
     }

@@ -2,12 +2,14 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using SuperPupSystems.Helper;
+using System.Linq;
 
 
 public class RagdollEnabler : MonoBehaviour
 {
     public float power = 100f;
     public bool isGrunt;
+    public bool isRange;
     public Vector3 center;
     [SerializeField]
     private GameObject enemy;
@@ -34,15 +36,19 @@ public class RagdollEnabler : MonoBehaviour
     private Collider[] colliders;
     private float fadeOutDelay = 3f;
 
-    private void Awake()
+    // private void Awake()
+    // {
+    //     rb = ragdollRoot.GetComponentsInChildren<Rigidbody>();
+    //     joints = ragdollRoot.GetComponentsInChildren<CharacterJoint>();
+    //     colliders = ragdollRoot.GetComponentsInChildren<Collider>();
+    // }
+
+    private void Start()
     {
         rb = ragdollRoot.GetComponentsInChildren<Rigidbody>();
         joints = ragdollRoot.GetComponentsInChildren<CharacterJoint>();
         colliders = ragdollRoot.GetComponentsInChildren<Collider>();
-    }
 
-    private void Start()
-    {
         if (startRagdoll)
         {
             EnableRagdoll();
@@ -58,6 +64,10 @@ public class RagdollEnabler : MonoBehaviour
     public void EnableRagdoll()
     {
         PowerAmount();
+        if(power == 0)
+        {
+            power = 20;
+        }
         animator.enabled = false;
         agent.enabled = false;
         enemiesRigidbody.Sleep();
@@ -121,8 +131,8 @@ public class RagdollEnabler : MonoBehaviour
         {
             transform.position += Vector3.down * Time.deltaTime;
             time += Time.deltaTime;
-            float cv = enemyMat.GetComponent<Renderer>().material.GetFloat("_ClippingValue");
-            enemyMat.GetComponent<Renderer>().material.SetFloat("_ClippingValue", cv + Time.deltaTime);
+            //float cv = enemyMat.GetComponent<Renderer>().material.GetFloat("_ClippingValue");
+            //enemyMat.GetComponent<Renderer>().material.SetFloat("_ClippingValue", cv + Time.deltaTime);
             yield return null;
         }
 
@@ -134,12 +144,17 @@ public class RagdollEnabler : MonoBehaviour
         if(isGrunt)
         {
             center = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power;
+            power = enemyKnockBack.GetComponent<GruntStateMachine>().knockBack.power * 4;
+        }
+        else if (isRange)
+        {
+            center = enemyKnockBack.GetComponent<RangeGruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<RangeGruntStateMachine>().knockBack.power;
         }
         else
         {
-            center = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.dir;
-            power = enemyKnockBack.GetComponent<MeleeStateMachine>().knockBack.power;
+            center = enemyKnockBack.GetComponent<AgroGruntStateMachine>().knockBack.dir;
+            power = enemyKnockBack.GetComponent<AgroGruntStateMachine>().knockBack.power;
         }
     }
 }

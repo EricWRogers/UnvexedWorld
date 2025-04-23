@@ -20,6 +20,6 @@ public class TempUIScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        elmText.text = "Current Element: " + cE.CurrentElement;
+        //elmText.text = "Current Element: " + cE.CurrentElement;
     }
 }

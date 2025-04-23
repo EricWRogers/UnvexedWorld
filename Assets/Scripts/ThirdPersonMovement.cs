@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using SuperPupSystems.Helper;
 
 public class ThirdPersonMovement : MonoBehaviour
 {
@@ -86,11 +87,18 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public bool nextLine = false;
 
+    public bool hasGamePad = false;
+
+    private Vector3 lastPosition;
+
+    private Health health;
+
    
 
 
     void Awake()
     {
+        lastPosition = transform.position;
         dashLines = GameObject.Find("DashLines");
         dashLines.SetActive(false);
 
@@ -112,6 +120,8 @@ public class ThirdPersonMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;   
         lockOn = GetComponent<MeleeRangedAttack>();
         audioManager = FindFirstObjectByType<AudioManager>();
+        health = GetComponent<Health>();
+        health.hurt.AddListener(AudioManager.instance.PlayPlayerHurtSound);
     }
 
     
@@ -141,13 +151,19 @@ public class ThirdPersonMovement : MonoBehaviour
     {
         nextLine = true;
     }
+   
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("TextBox"))
+        if (other.gameObject.CompareTag("TextBox")&& GameManager.Instance.doNothing == true)
         { 
            inText = true;
              
+        }
+        if(other.gameObject.CompareTag("TextBox") && GameManager.Instance.doNothing == false)
+        {
+            inText = false;
+            
         }
     }
 
@@ -181,6 +197,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
     void GamepadDash()
     {
+        if(GameManager.Instance.doNothing == false){
         if ( (!dashing) && currectDashCoolDown <= 0.0f)
         {
             velocity.y -= gravity * Time.deltaTime;
@@ -193,6 +210,7 @@ public class ThirdPersonMovement : MonoBehaviour
             audioManager.PlayDashSound();
             cameraManager.SwitchCamera(cameraManager.dashCam);
             
+        }
         }
     }
 
@@ -209,8 +227,27 @@ public class ThirdPersonMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+         if(inText == false)
+         {
+            GameManager.Instance.doNothing = false;
+         }
+
+        if(GameManager.Instance.doNothing == true)
+        {
+            baseSpeed = 0.0f;
+        }
+
         CollisionCheck();
         animator.SetBool("Grounded", rayGround);
+
+        Vector3 deltaPosition = (transform.position - lastPosition) / Time.deltaTime;
+        deltaPosition  = transform.InverseTransformDirection(deltaPosition);
+        
+        animator.SetFloat("Forward-back", deltaPosition.z * .1f);
+        animator.SetFloat("side-to-side", deltaPosition.x * .1f);
+
+        lastPosition = transform.position;
         
         UpdateSlopeSliding();
 
@@ -249,6 +286,16 @@ public class ThirdPersonMovement : MonoBehaviour
             controller.Move(velocity * Time.deltaTime);
             speed = airSpeed;
         }
+
+        //Controller Check
+         if(Gamepad.current == null)
+        {
+            hasGamePad = false;
+        }
+        else
+        {
+            hasGamePad = true;
+        }
         
         //Movement
         float horizontal = Input.GetAxisRaw("Horizontal");
@@ -256,7 +303,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude >= 0.1f)
+        if (direction.magnitude >= 0.1f && GameManager.Instance.doNothing == false)
         {
             animator.SetBool("Moving", true);
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
@@ -321,7 +368,7 @@ public class ThirdPersonMovement : MonoBehaviour
         //lock on
         if (lockOn.target)
         {
-            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*3)
+            if  (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) < lockOn.attackRange*4)
             {
 
                 if (lockOn.target == null){
@@ -337,7 +384,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
                 
             }
-            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 10)
+            if (lockOn.direction && Vector3.Distance(lockOn.target.transform.position, transform.position) > lockOn.attackRange * 4)
             {
                 lockOn.LockOff();
             }
@@ -405,7 +452,6 @@ public class ThirdPersonMovement : MonoBehaviour
         }
         if(!lastraygrounded && rayGround == true)
         {
-            Debug.Log("Land no play");
              gameObject.GetComponentInChildren<ParticleSystem>().Play();
              AudioManager.instance.PlayLandingSound();
         }
