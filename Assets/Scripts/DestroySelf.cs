@@ -8,6 +8,7 @@ public class DestroySelf : MonoBehaviour
 {
     public Timer timer;
     public float duration = 10;
+    public bool onStart = true;
 
     private void Start()
     {
@@ -17,11 +18,16 @@ public class DestroySelf : MonoBehaviour
 
         timer.countDownTime = duration;
         timer.autoRestart = true;
-        timer.autoStart = true;
+        timer.autoStart = onStart;
         timer.timeout.AddListener(End);
     }
     public void End()
     {
         Destroy(gameObject);
+    }
+
+    public void Activate()
+    {
+        timer.StartTimer();
     }
 }

@@ -36,6 +36,7 @@ public class SoundData
     [Tooltip("The higher this number, the more frequency change will happen based on the audio's relative motion to those hearing it")]
     public float dopplerLevel = 1f;
 
+    
 
     [HideInInspector]
     public AudioSource audioSource;

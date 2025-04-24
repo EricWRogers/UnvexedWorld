@@ -11,6 +11,7 @@ public class TargetingSystem : MonoBehaviour
     public bool targetPriority = false;
     public GameObject FindTarget()
     {
+        
         GameObject target = null;
 
         List<GameObject> posibleTargets = GameObject.FindGameObjectsWithTag(targetTag).ToList<GameObject>();
@@ -19,16 +20,44 @@ public class TargetingSystem : MonoBehaviour
         foreach(GameObject pt in posibleTargets)
         {
             float distance = Vector3.Distance(pt.transform.position, transform.position);
-        if(pt.GetComponent<Health>()){
-            if(distance < range && pt.GetComponent<Health>().currentHealth > 0)
-            {
-                if (distance < closetDistance)
+            if(pt.GetComponent<Health>()){
+                if(distance < range && pt.GetComponent<Health>().currentHealth > 0)
                 {
-                    closetDistance = distance;
-                    target = pt;
+                    if (distance < closetDistance)
+                    {
+                        closetDistance = distance;
+                        target = pt;
+                    }
                 }
             }
         }
+
+        return target;
+    }
+
+    public GameObject TargetExcluding(List<GameObject> excluded, float range = float.MaxValue)
+    {
+        GameObject target = null;
+
+        List<GameObject> posibleTargets = GameObject.FindGameObjectsWithTag(targetTag).ToList<GameObject>();
+
+        float closetDistance = range;
+        foreach(GameObject pt in posibleTargets)
+        {
+            if(!(excluded.Contains(pt)))
+            {
+                float distance = Vector3.Distance(pt.transform.position, transform.position);
+                if(pt.GetComponent<Health>()){
+                    if(distance < range && pt.GetComponent<Health>().currentHealth > 0)
+                    {
+                        if (distance < closetDistance)
+                        {
+                            closetDistance = distance;
+                            target = pt;
+                        }
+                    }
+                }
+            }
         }
 
         return target;

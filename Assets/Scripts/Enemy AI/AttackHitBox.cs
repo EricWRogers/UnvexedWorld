@@ -5,14 +5,20 @@ using UnityEngine;
 public class AttackHitBox : MonoBehaviour
 {
     public GameObject hitBox;
+    public Transform attackArea;
 
-    public void TurnOn()
+    private GameObject box;
+
+    public void Attack()
     {
-        hitBox.SetActive(true);
+        box = Instantiate(hitBox, attackArea.position, attackArea.rotation);
     }
 
-    public void TurnOff()
+    public void DestroyBox()
     {
-        hitBox.SetActive(false);
+        Destroy(box);
     }
+
+
+
 }

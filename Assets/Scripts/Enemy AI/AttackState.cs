@@ -24,18 +24,30 @@ public class AttackState : SimpleState
 
     public override void OnStart()
     {
-        //Debug.Log("Attack State");
         base.OnStart();
+
+        agent = stateMachine.GetComponent<NavMeshAgent>();
+        agent.enabled = true;
+        anim = stateMachine.GetComponentInChildren<Animator>();
+        agent.SetDestination(stateMachine.transform.position);
 
         if (stateMachine is GruntStateMachine gruntStateMachine)
         {
-            agent = gruntStateMachine.GetComponent<NavMeshAgent>();
-            anim = gruntStateMachine.GetComponentInChildren<Animator>();
-            agent.SetDestination(gruntStateMachine.transform.position);
             attackRange = gruntStateMachine.inAttackRange + 0.5f;
         }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            attackRange = agroGruntStateMachine.inAttackRange + 0.5f;
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            attackRange = rangeGruntStateMachine.inAttackRange + 6.0f; //I want more flexbilty with the range
+        }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            attackRange = jumperStateMachine.inAttackRange + 0.5f;
+        }
 
-        //time.StartTimer(2, true);
         if (attack == null)
         {
             attack = new UnityEvent();
@@ -56,23 +68,105 @@ public class AttackState : SimpleState
             attackTimer -= _dt; 
             cooldownTimer -= _dt;
 
-            if (gruntStateMachine.LOS && attackTimer > 0f)
+            if(agent.isOnNavMesh == true)
             {
-                if (cooldownTimer <= 0f)
+                if (gruntStateMachine.LOS && attackTimer > 0f)
                 {
-                    attack.Invoke();
-                    isAttacking = true;
-                    anim.SetBool("isAttacking", true);
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
 
-                    cooldownTimer = 1.0f;
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(RetreatState));
                 }
             }
-            else if(Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) > gruntStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
+        }
+        if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
+        {
+            agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if(agent.isOnNavMesh == true)
             {
-                isAttacking = false;
-                anim.SetBool("isAttacking", false);
-                stopAttacking.Invoke();
-                stateMachine.ChangeState(nameof(RetreatState));
+                if (agroGruntStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) > agroGruntStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+        if (stateMachine is JumperStateMachine jumperStateMachine)
+        {
+            jumperStateMachine.transform.LookAt(jumperStateMachine.target);
+            
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if(agent.isOnNavMesh == true)
+            {
+                if (jumperStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, jumperStateMachine.target.position) > jumperStateMachine.inAttackRange || attackTimer <= 0f)// Run at that bitch of a player again
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+        if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
+        {
+            rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+
+            attackTimer -= _dt; 
+            cooldownTimer -= _dt;
+
+            if (agent.isOnNavMesh)
+            {
+                if (rangeGruntStateMachine.LOS && attackTimer > 0f)
+                {
+                    if (cooldownTimer <= 0f && !isAttacking)
+                    {
+                        attack.Invoke();
+                        isAttacking = true;
+
+                        cooldownTimer = attackDuration;
+                    }
+                }
+                else if(Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > rangeGruntStateMachine.inAttackRange || attackTimer <= 0f)
+                {
+                    isAttacking = false;
+                    stopAttacking.Invoke();
+                    stateMachine.ChangeState(nameof(ChargeState));
+                }
             }
         }
     }
@@ -80,10 +174,5 @@ public class AttackState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
-    }
-
-    public void Message()
-    {
-        Debug.Log("Enemy Attacked?!?");
     }
 }

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1181254987062261773}
   - component: {fileID: 7144930475573998097}
   - component: {fileID: 5806322044752748365}
-  m_Layer: 0
+  - component: {fileID: 7372400855943937718}
+  m_Layer: 8
   m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +87,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &7372400855943937718
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1273421591919116674}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2745519390412981159, guid: 30e6490455a478a4997dd8fc6ddfd43a, type: 3}
 --- !u!1 &1673296028423630609
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +118,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7690950669883845516}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ElevatorDoors
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,13 +153,13 @@ GameObject:
   - component: {fileID: 4046155728584324801}
   - component: {fileID: 6369819548590695254}
   - component: {fileID: 8905770971762396686}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: CloseDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4046155728584324801
 Transform:
   m_ObjectHideFlags: 0
@@ -186,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 4592587754425945535}
-  col: {fileID: 938513796239692199}
 --- !u!1 &4000486778152769567
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +220,8 @@ GameObject:
   - component: {fileID: 5573268448696518244}
   - component: {fileID: 4218990690535255880}
   - component: {fileID: 2149804111697551916}
-  m_Layer: 0
+  - component: {fileID: 7356740204963081748}
+  m_Layer: 8
   m_Name: EvlelatorDoor1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,6 +296,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7356740204963081748
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4000486778152769567}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.4516015, y: 0.5838127, z: 6.451601}
+  m_Center: {x: -0.0000034570694, y: 0.2919088, z: -0.0000013113023}
 --- !u!1 &6211890442781229324
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,9 +326,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2778003750205716590}
-  - component: {fileID: 5041428949118070712}
   - component: {fileID: 7336436240111743167}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: OpenDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -306,27 +349,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 5838690608508270486}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5041428949118070712
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6211890442781229324}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7336436240111743167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -340,7 +362,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 4592587754425945535}
-  col: {fileID: 938513796239692199}
+  enemies: {fileID: 0}
+  openDoorDistance: 6
+  doorCol: {fileID: 0}
 --- !u!1 &6506824604839521580
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,8 +375,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5838690608508270486}
   - component: {fileID: 4592587754425945535}
-  - component: {fileID: 938513796239692199}
-  m_Layer: 0
+  - component: {fileID: 4004589758025497858}
+  m_Layer: 8
   m_Name: Elevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,7 +424,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!65 &938513796239692199
+--- !u!65 &4004589758025497858
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -419,8 +443,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.9999998, y: 5.402276, z: 4.6798797}
-  m_Center: {x: 1.0944593e-15, y: 2.201138, z: -0.281281}
+  m_Size: {x: 0.6293749, y: 5.313742, z: 4.786672}
+  m_Center: {x: -0.18531254, y: 2.1568716, z: -0.28329122}
 --- !u!1 &7027137128520304353
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,7 +456,8 @@ GameObject:
   - component: {fileID: 5732948403913657273}
   - component: {fileID: 7670494177589348204}
   - component: {fileID: 911678801092348241}
-  m_Layer: 0
+  - component: {fileID: 107690347763974344}
+  m_Layer: 8
   m_Name: EvlelatorDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,3 +532,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &107690347763974344
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7027137128520304353}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.4516015, y: 0.5838127, z: 6.4515934}
+  m_Center: {x: -0.0000034570694, y: 0.2919088, z: -0.00003540516}

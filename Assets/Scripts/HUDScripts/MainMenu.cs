@@ -31,16 +31,11 @@ public class MainMenu : MonoBehaviour
 
     void StartGame()
     {
-        Debug.Log("Starting Game...");
         SceneManager.LoadScene(gameSceneName);
     }
 
     void QuitGame()
     {
-        Debug.Log("Quitting Game...");
         Application.Quit();
-
-        // This line is just for debugging in the Unity editor.
-        Debug.Log("Game is exiting");
     }
 }

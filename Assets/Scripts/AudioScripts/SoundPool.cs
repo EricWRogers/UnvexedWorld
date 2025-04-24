@@ -43,7 +43,6 @@ public class SoundPool : MonoBehaviour
             pooledObjects.Add(tmp);
             return tmp;
         }
-        Debug.LogWarning("No available pooled objects!");
         return null;
     }
 }
