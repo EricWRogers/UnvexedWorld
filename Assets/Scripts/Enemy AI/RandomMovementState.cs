@@ -51,7 +51,7 @@
     
                 if(gruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
             }
@@ -75,7 +75,7 @@
     
                 if(agroGruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
@@ -99,7 +99,7 @@
     
                 if(rangeGruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
@@ -123,7 +123,7 @@
     
                 if(jumperStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
