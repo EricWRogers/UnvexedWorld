@@ -164,7 +164,19 @@ public class ChargeState : SimpleState
                 if (hasArrived)
                 {
                     ChoseMeeleAttack();
-                    stateMachine.ChangeState(nameof(BossAttackState));
+                    //Switch to state
+                    switch(bossStateMachine.attackType)
+                    {
+                        case BossStateMachine.AttackType.ArmCharge:
+                            stateMachine.ChangeState(nameof(ArmChargeState));
+                            break;
+                        case BossStateMachine.AttackType.ArmSlam:
+                            stateMachine.ChangeState(nameof(ArmSlamState));
+                            break;
+                        case BossStateMachine.AttackType.LegStomp:
+                            stateMachine.ChangeState(nameof(LegStompState));
+                            break;
+                    }
                 }
             }
         }
@@ -184,7 +196,7 @@ public class ChargeState : SimpleState
 
             if (rand < 0.75f)
             {
-                bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmCharge;
+                bossStateMachine.attackType = BossStateMachine.AttackType.ArmCharge;
             }
             else
             {
@@ -200,13 +212,13 @@ public class ChargeState : SimpleState
                 switch (a)
                 {
                     case 0:
-                        bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmCharge;
+                        bossStateMachine.attackType = BossStateMachine.AttackType.ArmCharge;
                         break;
                     case 1:
-                        bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmSlam;
+                        bossStateMachine.attackType = BossStateMachine.AttackType.ArmSlam;
                         break;
                     case 2:
-                        bossStateMachine.attack.attackType = BossAttackState.AttackType.LegStomp;
+                        bossStateMachine.attackType = BossStateMachine.AttackType.LegStomp;
                         break;
                 }
             }
