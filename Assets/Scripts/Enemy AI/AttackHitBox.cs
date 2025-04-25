@@ -16,8 +16,22 @@ public class AttackHitBox : MonoBehaviour
 
     public void Awake()
     {
-        armSlam = GameObject.Find("BossArmSlam");
-        legStomp = GameObject.Find("BossLegStomp");
+        if(armSlam == null)
+        {
+            armSlam = GameObject.Find("BossArmSlam");
+        }
+        else
+        {
+            return;
+        }
+        if(legStomp)
+        {
+            legStomp = GameObject.Find("BossLegStomp");
+        }
+        else
+        {
+            return;
+        }
         //armCharge.SetActive(false);
         armSlam.SetActive(false);
         legStomp.SetActive(false);
