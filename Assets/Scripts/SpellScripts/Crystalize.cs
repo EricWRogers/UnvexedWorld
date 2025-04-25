@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using SuperPupSystems.Helper;
+using SuperPupSystems.StateMachine;
 using Scripts.HUDScripts.MessageSystem;
 
 public class Crystalize : MonoBehaviour
@@ -58,6 +59,7 @@ public class Crystalize : MonoBehaviour
                 fullCrystal.transform.parent = gameObject.transform;
                 crystalized=true;
                 timer.StartTimer();
+                //gameObject.GetComponent<>.ChangeState(nameof(CrystallizedState));
             }
         }
     }

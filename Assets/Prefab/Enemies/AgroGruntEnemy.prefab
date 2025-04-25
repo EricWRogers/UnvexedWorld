@@ -241,7 +241,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 600458844494697733}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
-        m_MethodName: 
+        m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -297,18 +297,6 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
     stateMachine: {fileID: 0}
-  stunned:
-    stateStart:
-      m_PersistentCalls:
-        m_Calls: []
-    stateExited:
-      m_PersistentCalls:
-        m_Calls: []
-    stateMachine: {fileID: 0}
-    spawnLocation: {fileID: 0}
-    stunPSLocation: 2
-    stunDuration: 2
-    stunCooldown: 5
   knockBack:
     stateStart:
       m_PersistentCalls:
@@ -322,6 +310,15 @@ MonoBehaviour:
     power: 0
     dir: {x: 0, y: 0, z: 0}
     kbType: 0
+  crystallized:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    timeFrozen: 1.25
   charge:
     stateStart:
       m_PersistentCalls:
@@ -412,6 +409,7 @@ MonoBehaviour:
   isAlive: 0
   canStun: 0
   isIdling: 0
+  isCrystalized: 0
   inAttackRange: 1
 --- !u!114 &6953740941116811976
 MonoBehaviour:
@@ -468,6 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MRA: {fileID: 0}
   CL: {fileID: 0}
+  isBoss: 0
 --- !u!1 &2656179423890976774
 GameObject:
   m_ObjectHideFlags: 0
