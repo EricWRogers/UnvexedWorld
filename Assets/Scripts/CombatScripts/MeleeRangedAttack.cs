@@ -326,6 +326,11 @@ public class MeleeRangedAttack : MonoBehaviour
         animator.Play("FingerGun");
     }
 
+    public void PlayModelAttackAnim(string animName)
+    {
+        animator.Play(animName, 1);
+    }
+
     public void LockUp()
     {
         isAttacking=true;
