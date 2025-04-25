@@ -11,7 +11,9 @@ public class BossStateMachine : SimpleStateMachine
     public RoarState roar;
     public StunState stunned;
     public ChargeState charge;
-    public BossAttackState attack;
+    public ArmChargeState armCharge;
+    public ArmSlamState armSlam;
+    public LegStompState legStomp;
     public DeathState dead;
 
     public Transform target;
@@ -33,6 +35,15 @@ public class BossStateMachine : SimpleStateMachine
     public bool isAlive;
     public bool canStun;
     public float inAttackRange = 1.0f;
+
+    public enum AttackType
+    {
+        ArmCharge,
+        ArmSlam,
+        LegStomp
+    }
+
+    public AttackType attackType;
     
     void Awake()
     {
@@ -40,7 +51,9 @@ public class BossStateMachine : SimpleStateMachine
         states.Add(roar);
         states.Add(stunned);
         states.Add(charge);
-        states.Add(attack);
+        states.Add(armCharge);
+        states.Add(armSlam);
+        states.Add(legStomp);
         states.Add(dead);
 
         foreach (SimpleState s in states)
@@ -94,6 +107,6 @@ public class BossStateMachine : SimpleStateMachine
             anim.SetBool("isWalking", false);
         }
 
-        anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
+        //anim.SetFloat("Forward-back", agent.velocity.magnitude * 2);
     }
 }
