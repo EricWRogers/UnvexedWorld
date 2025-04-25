@@ -50,6 +50,7 @@ public class Ricochet : MonoBehaviour
             Instantiate(ParticleManager.Instance.SunderImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
             other.GetComponent<SuperPupSystems.Helper.Health>()?.Damage(damage);
             RicochetBounce(other);
+            Destroy(gameObject);
         }
     }
 
@@ -63,7 +64,6 @@ public class Ricochet : MonoBehaviour
         tempRicochet.GetComponent<Ricochet>().ricochetCount = ricochetCount-1;
         tempRicochet.GetComponent<Ricochet>().hitEnemies = hitEnemies;
         tempRicochet.GetComponent<Ricochet>().hitEnemies.Insert(hitEnemies.Count,other.gameObject);
-        Destroy(gameObject);
     }
 
 }

@@ -180,6 +180,11 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                 particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.sunder)
+            {
+                particle = Instantiate(ParticleManager.Instance.SunderParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle.transform.parent = gameObject.transform;
+            }
         }
         else
         {
