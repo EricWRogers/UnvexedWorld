@@ -82,7 +82,7 @@ public class SpellCraft : MonoBehaviour
             UnlockElement((Aspect)(elementIndex%4));
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftBracket))
+        if(Input.GetKeyDown(KeyCode.F))
         {
             CycleAspect();
         }
