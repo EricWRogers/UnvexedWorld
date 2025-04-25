@@ -7,11 +7,55 @@ public class AttackHitBox : MonoBehaviour
     public GameObject hitBox;
     public Transform attackArea;
 
+    public bool isBoss;
+    //public GameObject armCharge;
+    public GameObject armSlam;
+    public GameObject legStomp;
+
     private GameObject box;
+
+    public void Awake()
+    {
+        armSlam = GameObject.Find("BossArmSlam");
+        legStomp = GameObject.Find("BossLegStomp");
+        //armCharge.SetActive(false);
+        armSlam.SetActive(false);
+        legStomp.SetActive(false);
+    }
 
     public void Attack()
     {
         box = Instantiate(hitBox, attackArea.position, attackArea.rotation);
+    }
+
+    public void BossSlamAttack()
+    {
+        armSlam.SetActive(true);
+    }
+
+    public void TurnOffSlamAttack()
+    {
+        armSlam.SetActive(false);
+    }
+
+    // public void BossChargeAttack()
+    // {
+    //     armCharge.SetActive(true);
+    // }
+
+    // public void TurnOffChargeAttack()
+    // {
+    //     armCharge.SetActive(false);
+    // }
+
+    public void BossStompAttack()
+    {
+        legStomp.SetActive(true);
+    }
+
+    public void TurnOffStompAttack()
+    {
+        legStomp.SetActive(false);
     }
 
     public void DestroyBox()

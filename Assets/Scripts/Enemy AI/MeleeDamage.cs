@@ -25,8 +25,11 @@ public class MeleeDamage : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Player") && Time.time > lastDamageTime + damageCooldown)
         {
-            hit1.Play();
-            hit2.Play();
+            if(hit1 != null && hit2 != null)
+            {
+                hit1.Play();
+                hit2.Play();
+            }
 
             // Calculate the hit direction
             Vector3 hitDir = col.gameObject.transform.position - gameObject.transform.position;

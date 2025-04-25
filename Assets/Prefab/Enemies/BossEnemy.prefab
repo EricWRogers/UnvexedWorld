@@ -420,7 +420,7 @@ MonoBehaviour:
     stateStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
+        - m_Target: {fileID: 3793742766683892256}
           m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
           m_MethodName: Play
           m_Mode: 5
@@ -429,7 +429,7 @@ MonoBehaviour:
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
-            m_StringArgument: Grunt_roar
+            m_StringArgument: BossRoar
             m_BoolArgument: 0
           m_CallState: 2
     stateExited:
@@ -488,7 +488,19 @@ MonoBehaviour:
     stateMachine: {fileID: 0}
     attack:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3793742766683892256}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: ArmSlam
+            m_BoolArgument: 0
+          m_CallState: 2
     stopAttacking:
       m_PersistentCalls:
         m_Calls: []
@@ -505,7 +517,19 @@ MonoBehaviour:
     stateMachine: {fileID: 0}
     attack:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3793742766683892256}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: LegStomp
+            m_BoolArgument: 0
+          m_CallState: 2
     stopAttacking:
       m_PersistentCalls:
         m_Calls: []
@@ -515,7 +539,19 @@ MonoBehaviour:
   dead:
     stateStart:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 3793742766683892256}
+          m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+          m_MethodName: Play
+          m_Mode: 5
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: BossDeath
+            m_BoolArgument: 0
+          m_CallState: 2
     stateExited:
       m_PersistentCalls:
         m_Calls: []
@@ -720,6 +756,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 8181021550007232872}
   m_SourcePrefab: {fileID: 100100000, guid: 19224f7a6f013c94787940cd19d63c37, type: 3}
+--- !u!95 &3793742766683892256 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 19224f7a6f013c94787940cd19d63c37,
+    type: 3}
+  m_PrefabInstance: {fileID: 7335380124187367345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7081409203102511194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 19224f7a6f013c94787940cd19d63c37,
@@ -758,3 +800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 775824409807465637, guid: fcf888b276feff042803dfa936dab8b5, type: 3}
   attackArea: {fileID: 6395533029918026543}
+  isBoss: 0
+  armCharge: {fileID: 0}
+  armSlam: {fileID: 0}
+  legStomp: {fileID: 0}
