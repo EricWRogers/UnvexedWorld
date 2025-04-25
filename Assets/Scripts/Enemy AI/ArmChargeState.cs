@@ -11,10 +11,11 @@ using UnityEngine.Events;
 [System.Serializable]
 public class ArmChargeState : SimpleState
 {
-    public UnityEvent attack;  
+    public UnityEvent attack;
     public UnityEvent stopAttacking;
     private NavMeshAgent agent;
     private Animator anim;
+    public Vector3 chargeDirection;
     private float attackRange;
     public float attackTimer;
     public float cooldownTimer = 3f;
@@ -55,35 +56,49 @@ public class ArmChargeState : SimpleState
         if (stateMachine is BossStateMachine bossStateMachine)
         {
             bossStateMachine.transform.LookAt(bossStateMachine.target);
-            
-            attackTimer -= _dt; 
+
+            attackTimer -= _dt;
             cooldownTimer -= _dt;
 
-            if(agent.isOnNavMesh == true)
+            if (agent.isOnNavMesh == true)
             {
-                if (bossStateMachine.LOS && attackTimer > 0f)
+                if (!isAttacking)
                 {
-                    if (cooldownTimer <= 0f && !isAttacking)
-                    {
-                        attack.Invoke();
-                        isAttacking = true;
 
-                        cooldownTimer = attackDuration;
-                    }
+                    isAttacking = true;
+                    anim.SetBool("isCharging", true);
+                    anim.SetFloat("SpeedMultipler", 3.5f);
+                    attack.Invoke(); // Trigger attack event
                 }
-                else if(Vector3.Distance(agent.transform.position, bossStateMachine.target.position) > bossStateMachine.inAttackRange || attackTimer <= 0f)// Retreat when the attack timer runs out or if the player is out of range
+
+                if (isCharging)
                 {
-                    isAttacking = false;
-                    stopAttacking.Invoke();
-                    stateMachine.ChangeState(nameof(ChargeState));
+                    ChargeMove(_dt);
+                }
+
+                if (chargeDuration <= 0 && !isCharging)
+                {
+                    ChargeAttack();
+                }
+
+                if (Vector3.Distance(agent.transform.position, bossStateMachine.target.position) > bossStateMachine.inAttackRange)
+                {
+                    if (chargeDuration <= 0)
+                    {
+                        isAttacking = false;
+                        stopAttacking.Invoke();
+                        stateMachine.ChangeState(nameof(ChargeState));
+                    }
                 }
             }
         }
     }
-    
+
     public override void OnExit()
     {
         base.OnExit();
+        anim.SetBool("isCharging", false);
+        anim.SetFloat("SpeedMultipler", 1.0f);
     }
 
     public void ChargeAttack()
@@ -93,17 +108,15 @@ public class ArmChargeState : SimpleState
 
         isCharging = true; // Mark lunge as in progress
         chargeTimeElapsed = 0f;
+        chargeDirection = (((BossStateMachine)stateMachine).target.position - agent.transform.position).normalized;
     }
 
     public void ChargeMove(float dt)
     {
         if (agent.isOnNavMesh)
         {
-            Vector3 chargeDirection = ((BossStateMachine)stateMachine).transform.forward;
-
             // Move manually during lunge
             agent.Move(chargeDirection * chargeSpeed * dt);
-            //((WerewolfStateMachine)stateMachine).transform.Translate(lungeDirection * lungeSpeed * dt, Space.World);
 
             chargeTimeElapsed += dt;
 
