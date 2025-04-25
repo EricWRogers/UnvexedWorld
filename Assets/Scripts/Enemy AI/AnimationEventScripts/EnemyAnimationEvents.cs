@@ -18,4 +18,9 @@ public class EnemyAnimationEvents : MonoBehaviour
     {
         ParticleManager.Instance.SpawnEnemySlash(gameObject.transform);
     }
+
+    public void DoTheRoar()
+    {
+        AudioManager.instance.PlayBossRoarSound();
+    }
 }

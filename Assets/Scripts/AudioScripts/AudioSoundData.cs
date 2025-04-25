@@ -8,4 +8,5 @@ public class AudioSoundData
     public float volume = 1f;   // Volume level (0 to 1)
     public float pitch = 1f;    // Pitch level (1 is normal)
     public bool loop = false;   // Whether or not the sound should loop
+    
 }

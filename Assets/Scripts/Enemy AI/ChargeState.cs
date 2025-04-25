@@ -26,18 +26,21 @@ public class ChargeState : SimpleState
 
         if (stateMachine is GruntStateMachine)
         {
+            ((GruntStateMachine)stateMachine).isCrystalized = false;
             target = ((GruntStateMachine)stateMachine).target;
             range = ((GruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is AgroGruntStateMachine)
         {
+            ((AgroGruntStateMachine)stateMachine).isCrystalized = false;
             target = ((AgroGruntStateMachine)stateMachine).target;
             range = ((AgroGruntStateMachine)stateMachine).inAttackRange + 0.5f;
         }
 
         if (stateMachine is RangeGruntStateMachine)
         {
+            ((RangeGruntStateMachine)stateMachine).isCrystalized = false;
             target = ((RangeGruntStateMachine)stateMachine).target;
         }
 
@@ -50,8 +53,11 @@ public class ChargeState : SimpleState
         if (stateMachine is BossStateMachine)
         {
             target = ((BossStateMachine)stateMachine).target;
+            range = ((BossStateMachine)stateMachine).inAttackRange + 1.25f;
             bossDistance = Vector3.Distance(((BossStateMachine)stateMachine).transform.position, target.position);
         }
+
+        agent.SetDestination(target.position);
     }
 
     public override void UpdateState(float dt)
@@ -69,6 +75,8 @@ public class ChargeState : SimpleState
                     gruntStateMachine.transform.LookAt(gruntStateMachine.target);
                     agent.SetDestination(gruntStateMachine.target.position);
 
+                    gruntStateMachine.isCrystalized = false;
+
                     if (Vector3.Distance(agent.transform.position, gruntStateMachine.target.position) < range)
                     {
                         stateMachine.ChangeState(nameof(AttackState));
@@ -84,6 +92,8 @@ public class ChargeState : SimpleState
                 {
                     agroGruntStateMachine.transform.LookAt(agroGruntStateMachine.target);
                     agent.SetDestination(agroGruntStateMachine.target.position);
+
+                    agroGruntStateMachine.isCrystalized = false;
 
                     if (Vector3.Distance(agent.transform.position, agroGruntStateMachine.target.position) < range)
                     {
@@ -117,6 +127,7 @@ public class ChargeState : SimpleState
                 if (agent.isOnNavMesh == true)
                 {
                     rangeGruntStateMachine.transform.LookAt(rangeGruntStateMachine.target);
+                    rangeGruntStateMachine.isCrystalized = false;
 
                     if (Vector3.Distance(agent.transform.position, rangeGruntStateMachine.target.position) > maxRange)
                     {
@@ -136,25 +147,35 @@ public class ChargeState : SimpleState
 
         if (stateMachine is BossStateMachine bossStateMachine)
         {
-            if (bossStateMachine.isAlive && bossStateMachine.LOS)
+            if (bossStateMachine.isAlive && bossStateMachine.LOS && agent.isOnNavMesh)
             {
-                if (agent.isOnNavMesh == true)
-                {
-                    bossStateMachine.transform.LookAt(bossStateMachine.target);
+                bossStateMachine.transform.LookAt(bossStateMachine.target);
+                float distanceToTarget = Vector3.Distance(agent.transform.position, bossStateMachine.target.position);
 
-                    if (bossDistance > 10) //Some Random Number
+                // Keep chasing if far
+                if (distanceToTarget > 10f)
+                {
+                    agent.SetDestination(bossStateMachine.target.position);
+                }
+
+                // Only choose attack if agent is close enough and has arrived
+                bool hasArrived = !agent.pathPending && agent.remainingDistance <= agent.stoppingDistance;
+
+                if (hasArrived)
+                {
+                    ChoseMeeleAttack();
+                    //Switch to state
+                    switch(bossStateMachine.attackType)
                     {
-                        agent.SetDestination(bossStateMachine.target.position);
-                    }
-                    else if (bossDistance > 6 && bossDistance < 10)
-                    {
-                        bossStateMachine.attack.attackType = BossAttackState.AttackType.ArmCharge;
-                        stateMachine.ChangeState(nameof(BossAttackState));
-                    }
-                    else if (bossDistance > 0 && bossDistance < 5)
-                    {
-                        ChoseMeeleAttack();
-                        stateMachine.ChangeState(nameof(BossAttackState));
+                        case BossStateMachine.AttackType.ArmCharge:
+                            stateMachine.ChangeState(nameof(ArmChargeState));
+                            break;
+                        case BossStateMachine.AttackType.ArmSlam:
+                            stateMachine.ChangeState(nameof(ArmSlamState));
+                            break;
+                        case BossStateMachine.AttackType.LegStomp:
+                            stateMachine.ChangeState(nameof(LegStompState));
+                            break;
                     }
                 }
             }
@@ -171,26 +192,35 @@ public class ChargeState : SimpleState
         int a;
         if (stateMachine is BossStateMachine bossStateMachine)
         {
-            if (bossStateMachine.aggroPhase)
+            float rand = Random.value;
+
+            if (rand < 0.75f)
             {
-                a = Random.Range(0, 3);
+                bossStateMachine.attackType = BossStateMachine.AttackType.ArmCharge;
             }
             else
             {
-                a = Random.Range(0, 2);
-            }
+                if (bossStateMachine.aggroPhase)
+                {
+                    a = Random.Range(0, 3);
+                }
+                else
+                {
+                    a = Random.Range(0, 2);
+                }
 
-            switch (a)
-            {
-                case 0:
-                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmCharge;
-                    break;
-                case 1:
-                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.ArmSlam;
-                    break;
-                case 2:
-                    ((BossStateMachine)stateMachine).attack.attackType = BossAttackState.AttackType.LegStomp;
-                    break;
+                switch (a)
+                {
+                    case 0:
+                        bossStateMachine.attackType = BossStateMachine.AttackType.ArmCharge;
+                        break;
+                    case 1:
+                        bossStateMachine.attackType = BossStateMachine.AttackType.ArmSlam;
+                        break;
+                    case 2:
+                        bossStateMachine.attackType = BossStateMachine.AttackType.LegStomp;
+                        break;
+                }
             }
         }
     }
