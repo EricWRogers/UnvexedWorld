@@ -38,6 +38,7 @@ public class OpenDoor : MonoBehaviour
                 {
                     //Debug.Log("Player Unlocks on Door");
                     anim.SetBool("IsOpen", true);
+                    doorCol.enabled = false;
                 }
             }
             else if(openDoor != null)
@@ -52,8 +53,9 @@ public class OpenDoor : MonoBehaviour
             {
                 //Debug.Log("Player Unlocks on Door");
                 anim.SetBool("IsOpen", true);
+                doorCol.enabled = false;
             }
-            doorCol.enabled = false;
+            
         }
     }
 }
