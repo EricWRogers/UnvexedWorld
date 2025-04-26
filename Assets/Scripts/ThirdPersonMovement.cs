@@ -122,6 +122,7 @@ public class ThirdPersonMovement : MonoBehaviour
         audioManager = FindFirstObjectByType<AudioManager>();
         health = GetComponent<Health>();
         health.hurt.AddListener(AudioManager.instance.PlayPlayerHurtSound);
+        
     }
 
     

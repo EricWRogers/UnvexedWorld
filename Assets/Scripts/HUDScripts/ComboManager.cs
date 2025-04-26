@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
+using SuperPupSystems.Helper;
 
 public class ComboManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class ComboManager : MonoBehaviour
     public TMP_Text comboCountText;  // Text to display combo count
     public TMP_Text multiplierText;   // Text to display multiplier
     public RectTransform comboMeterTransform;  // For shaking effect
+
+   public Health health;
 
     // Grading thresholds
     private const int gradeCThreshold = 25;
@@ -37,6 +40,8 @@ public class ComboManager : MonoBehaviour
         gradeBImage.gameObject.SetActive(false);
         gradeAImage.gameObject.SetActive(false);
         gradeSImage.gameObject.SetActive(false);
+       health = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+        health.hurt.AddListener(PlayerHit);
 
         ResetCombo();  // Initialize UI and deactivate all but C
     }
