@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using SuperPupSystems.Helper;
 
 public class ManaTracker : MonoBehaviour
 {
-    public TMP_Text manaText;
+  
 
     public List<Sprite> elementSprites;
+    public List<Color> elementColors;
 
     public GameObject box;
-    
+
     public SpellCraft spellCraft;
+
+    public Slider manaSlider;
+    public Image fillImage; 
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +27,14 @@ public class ManaTracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        manaText.text = spellCraft.CurrentElement+"%"+(int)spellCraft.energy[(int)spellCraft.CurrentElement];
+        int elementIndex = (int)spellCraft.CurrentElement;
+        float currentMana = spellCraft.energy[elementIndex];
+        float manaPercent = currentMana / 100f;
+
+        manaSlider.value = manaPercent;
+        fillImage.color = elementColors[elementIndex];
+
+        
         box.GetComponent<Image>().sprite = elementSprites[(int)spellCraft.CurrentElement];
         
     }
