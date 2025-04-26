@@ -38,6 +38,7 @@ public class AttackState : SimpleState
         if (stateMachine is AgroGruntStateMachine agroGruntStateMachine)
         {
             attackRange = agroGruntStateMachine.inAttackRange + 0.5f;
+            anim.SetFloat("SpeedMultipler", 2.5f);
         }
         if (stateMachine is RangeGruntStateMachine rangeGruntStateMachine)
         {
@@ -180,5 +181,6 @@ public class AttackState : SimpleState
         isAttacking = false;
         attackTimer = attackDuration;
         cooldownTimer = 0f;
+        anim.SetFloat("SpeedMultipler", 1f);
     }
 }
