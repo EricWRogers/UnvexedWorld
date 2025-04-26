@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class EnemyAnimationEvents : MonoBehaviour
 {
+    public Transform slam;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,7 +32,7 @@ public class EnemyAnimationEvents : MonoBehaviour
 
     public void SpawnBossSlam()
     {
-        ParticleManager.Instance.SpawnBossSlam(gameObject.transform);
+        ParticleManager.Instance.SpawnBossSlam(slam);
     }
 
     public void SpawnBossCharge()
