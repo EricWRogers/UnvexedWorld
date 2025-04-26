@@ -18,6 +18,8 @@ public class childChecker : MonoBehaviour
     [SerializeField]
     private AnimationCurve curve;
 
+    public GameObject turnitOn;
+
 
 
     bool callOnce = false;
@@ -32,6 +34,7 @@ public class childChecker : MonoBehaviour
     {
         if(transform.childCount == 0)
         {
+            turnitOn.SetActive(true);
             if (callOnce == false)
             {
                 objCam.CamForEmpty();
