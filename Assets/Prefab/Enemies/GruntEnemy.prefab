@@ -235,7 +235,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Height: 2.5
   m_Direction: 1
   m_Center: {x: 0, y: -0.25, z: 0}
@@ -386,6 +386,15 @@ MonoBehaviour:
     power: 0
     dir: {x: 0, y: 0, z: 0}
     kbType: 0
+  crystallized:
+    stateStart:
+      m_PersistentCalls:
+        m_Calls: []
+    stateExited:
+      m_PersistentCalls:
+        m_Calls: []
+    stateMachine: {fileID: 0}
+    timeFrozen: 1.5
   chase:
     stateStart:
       m_PersistentCalls:
@@ -453,17 +462,6 @@ MonoBehaviour:
     attackTimer: 0
     cooldownTimer: 3
     isAttacking: 0
-  retreat:
-    stateStart:
-      m_PersistentCalls:
-        m_Calls: []
-    stateExited:
-      m_PersistentCalls:
-        m_Calls: []
-    stateMachine: {fileID: 0}
-    enemyTatic: {fileID: 0}
-    attackRange: 0
-    retreatDistance: 8
   dead:
     stateStart:
       m_PersistentCalls:
@@ -504,6 +502,7 @@ MonoBehaviour:
   isAlive: 0
   canStun: 0
   isIdling: 0
+  isCrystalized: 0
   inAttackRange: 1
 --- !u!114 &959047918777663014
 MonoBehaviour:
@@ -577,6 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MRA: {fileID: 0}
   CL: {fileID: 0}
+  isBoss: 0
 --- !u!1 &8263041233677447287
 GameObject:
   m_ObjectHideFlags: 0
@@ -1438,6 +1438,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitBox: {fileID: 775824409807465637, guid: fcf888b276feff042803dfa936dab8b5, type: 3}
   attackArea: {fileID: 5114291951315634449}
+  isBoss: 0
+  armSlam: {fileID: 0}
+  legStomp: {fileID: 0}
 --- !u!4 &4429388467005911536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2b7a8885c7d450241be039ee8bfe9ad0,
