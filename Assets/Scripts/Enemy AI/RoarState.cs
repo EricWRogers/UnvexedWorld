@@ -35,5 +35,6 @@ public class RoarState : SimpleState
     public override void OnExit()
     {
         base.OnExit();
+        ParticleManager.Instance.DestroyBossCharge();
     }
 }
