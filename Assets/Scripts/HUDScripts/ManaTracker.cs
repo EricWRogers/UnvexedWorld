@@ -7,7 +7,7 @@ using SuperPupSystems.Helper;
 
 public class ManaTracker : MonoBehaviour
 {
-    public TMP_Text manaText;
+  
 
     public List<Sprite> elementSprites;
     public List<Color> elementColors;
@@ -34,7 +34,7 @@ public class ManaTracker : MonoBehaviour
         manaSlider.value = manaPercent;
         fillImage.color = elementColors[elementIndex];
 
-        manaText.text = spellCraft.CurrentElement+"%"+(int)spellCraft.energy[(int)spellCraft.CurrentElement];
+        
         box.GetComponent<Image>().sprite = elementSprites[(int)spellCraft.CurrentElement];
         
     }
