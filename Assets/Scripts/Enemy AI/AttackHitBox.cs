@@ -40,7 +40,10 @@ public class AttackHitBox : MonoBehaviour
         {
             return;
         }
+    }
 
+    void Start()
+    {
         armCharge.SetActive(false);
         armSlam.SetActive(false);
         legStomp.SetActive(false);

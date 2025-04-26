@@ -37,7 +37,7 @@ public class MeleeDamage : MonoBehaviour
 
             // Apply damage to the player
             col.gameObject.GetComponent<Health>().Damage(dmg);
-            lastDamageTime = Time.time;
+            lastDamageTime = Time.deltaTime;
 
             // Apply knockback to the player
             PlayerKnockback playerKnockback = col.gameObject.GetComponent<PlayerKnockback>();
