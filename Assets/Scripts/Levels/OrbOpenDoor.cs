@@ -10,6 +10,8 @@ public class OrbOpenDoor : MonoBehaviour
 
     public GameObject theLight;
 
+    public GameObject otherLight;
+
     public Material AltMaterial;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,7 +23,12 @@ public class OrbOpenDoor : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            
             theLight.GetComponent<MeshRenderer> ().material = AltMaterial;
+            if(otherLight != null)
+            {
+                otherLight.GetComponent<MeshRenderer> ().material = AltMaterial;
+            }
             openDoor = true;
             if(textBox != null){
                 textBox.SetActive(true);
