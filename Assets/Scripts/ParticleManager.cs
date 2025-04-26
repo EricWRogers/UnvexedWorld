@@ -95,6 +95,11 @@ public class ParticleManager : MonoBehaviour
         EnSlash = Instantiate(BossCharge, spawnLocation.position, spawnLocation.rotation);
         EnSlash.transform.parent = spawnLocation;
     }
+
+    public void DestroyBossCharge()
+    {
+        Destroy(EnSlash);
+    }
     
 
 

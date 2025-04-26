@@ -38,4 +38,9 @@ public class EnemyAnimationEvents : MonoBehaviour
     {
         ParticleManager.Instance.SpawnBossCharge(gameObject.transform);
     }
+
+    public void DestroyBossCharge()
+    {
+        ParticleManager.Instance.DestroyBossCharge();
+    }
 }
