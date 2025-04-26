@@ -26,6 +26,8 @@ public class PauseMenu : MonoBehaviour
     private bool isMoveSetOpen = false; // Track MoveSet visibility
     public bool isPaused = false;
 
+    public SlideManager slide;
+
     void Awake()
     {
         gamepad = new PlayerGamepad();
@@ -53,6 +55,8 @@ public class PauseMenu : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         quitButton.onClick.AddListener(Quit);
         moveSetButton.onClick.AddListener(ToggleMoveSet); // Add listener
+
+        
     }
 
     void Update()
@@ -110,6 +114,7 @@ public class PauseMenu : MonoBehaviour
         playerAttack.enabled = true;
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Hide MoveSet when resuming
+        slide.OptionsOff();
         manaDisplay.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
