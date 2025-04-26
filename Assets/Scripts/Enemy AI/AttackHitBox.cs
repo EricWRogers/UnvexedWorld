@@ -8,7 +8,7 @@ public class AttackHitBox : MonoBehaviour
     public Transform attackArea;
 
     public bool isBoss;
-    //public GameObject armCharge;
+    public GameObject armCharge;
     public GameObject armSlam;
     public GameObject legStomp;
 
@@ -24,7 +24,7 @@ public class AttackHitBox : MonoBehaviour
         {
             return;
         }
-        if(legStomp)
+        if(legStomp == null)
         {
             legStomp = GameObject.Find("BossLegStomp");
         }
@@ -32,7 +32,16 @@ public class AttackHitBox : MonoBehaviour
         {
             return;
         }
-        //armCharge.SetActive(false);
+        if(armCharge == null)
+        {
+            armCharge = GameObject.Find("BossArmCharge");
+        }
+        else
+        {
+            return;
+        }
+
+        armCharge.SetActive(false);
         armSlam.SetActive(false);
         legStomp.SetActive(false);
     }
@@ -52,15 +61,15 @@ public class AttackHitBox : MonoBehaviour
         armSlam.SetActive(false);
     }
 
-    // public void BossChargeAttack()
-    // {
-    //     armCharge.SetActive(true);
-    // }
+    public void BossChargeAttack()
+    {
+        armCharge.SetActive(true);
+    }
 
-    // public void TurnOffChargeAttack()
-    // {
-    //     armCharge.SetActive(false);
-    // }
+    public void TurnOffChargeAttack()
+    {
+        armCharge.SetActive(false);
+    }
 
     public void BossStompAttack()
     {

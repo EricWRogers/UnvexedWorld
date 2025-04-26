@@ -11,8 +11,6 @@ using UnityEngine.Events;
 [System.Serializable]
 public class ArmChargeState : SimpleState
 {
-    public UnityEvent attack;
-    public UnityEvent stopAttacking;
     private NavMeshAgent agent;
     private Animator anim;
     public Vector3 chargeDirection;
@@ -35,18 +33,19 @@ public class ArmChargeState : SimpleState
         anim = stateMachine.GetComponentInChildren<Animator>();
         agent.SetDestination(stateMachine.transform.position);
 
+        anim.SetBool("isCharging", true);
+        anim.SetFloat("SpeedMultipler", 3.5f);
+
         if (stateMachine is BossStateMachine bossStateMachine)
         {
             attackRange = bossStateMachine.inAttackRange + 0.5f;
-        }
-
-        if (attack == null)
-        {
-            attack = new UnityEvent();
+            bossStateMachine.transform.LookAt(bossStateMachine.target);
         }
 
         attackTimer = attackDuration;
         cooldownTimer = 0f;
+
+        ChargeAttack();
     }
 
     public override void UpdateState(float _dt)
@@ -55,41 +54,18 @@ public class ArmChargeState : SimpleState
 
         if (stateMachine is BossStateMachine bossStateMachine)
         {
-            bossStateMachine.transform.LookAt(bossStateMachine.target);
-
-            attackTimer -= _dt;
-            cooldownTimer -= _dt;
-
-            if (agent.isOnNavMesh == true)
+            if (agent.isOnNavMesh)
             {
-                if (!isAttacking)
-                {
-
-                    isAttacking = true;
-                    anim.SetBool("isCharging", true);
-                    anim.SetFloat("SpeedMultipler", 3.5f);
-                    attack.Invoke(); // Trigger attack event
-                }
-
                 if (isCharging)
                 {
                     ChargeMove(_dt);
                 }
-
-                if (chargeDuration <= 0 && !isCharging)
-                {
-                    ChargeAttack();
-                }
-
-                if (Vector3.Distance(agent.transform.position, bossStateMachine.target.position) > bossStateMachine.inAttackRange)
-                {
-                    if (chargeDuration <= 0)
-                    {
-                        isAttacking = false;
-                        stopAttacking.Invoke();
-                        stateMachine.ChangeState(nameof(ChargeState));
-                    }
-                }
+            }
+            else
+            {
+                Debug.LogWarning("Not on NavMesh");
+                isCharging = false;
+                stateMachine.ChangeState(nameof(ChargeState));
             }
         }
     }
@@ -99,6 +75,8 @@ public class ArmChargeState : SimpleState
         base.OnExit();
         anim.SetBool("isCharging", false);
         anim.SetFloat("SpeedMultipler", 1.0f);
+        agent.velocity = Vector3.zero;
+        agent.SetDestination(agent.transform.position);
     }
 
     public void ChargeAttack()
@@ -106,26 +84,24 @@ public class ArmChargeState : SimpleState
         //agent.enabled = false;
         Debug.Log("The Charge Worked");
 
-        isCharging = true; // Mark lunge as in progress
+        isCharging = true;
         chargeTimeElapsed = 0f;
-        chargeDirection = (((BossStateMachine)stateMachine).target.position - agent.transform.position).normalized;
     }
 
     public void ChargeMove(float dt)
     {
         if (agent.isOnNavMesh)
         {
+            chargeDirection = ((BossStateMachine)stateMachine).transform.forward;
             // Move manually during lunge
             agent.Move(chargeDirection * chargeSpeed * dt);
 
             chargeTimeElapsed += dt;
 
-            if (chargeTimeElapsed >= chargeDuration /*|| Vector3.Distance(((BossStateMachine)stateMachine).transform.position, ((BossStateMachine)stateMachine).target.position) < attackRange*/)
+            if (chargeTimeElapsed >= chargeDuration)
             {
                 isCharging = false;
                 chargeTimeElapsed = 0;
-                stopAttacking.Invoke();
-                attack.Invoke();
                 stateMachine.ChangeState(nameof(ChargeState));
             }
         }
@@ -133,7 +109,6 @@ public class ArmChargeState : SimpleState
         {
             Debug.LogWarning("The AI is not on the NavMesh!");
             isCharging = false;
-            stopAttacking.Invoke();
             stateMachine.ChangeState(nameof(ChargeState));
         }
     }

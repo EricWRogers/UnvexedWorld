@@ -12,6 +12,7 @@ public class MeleeDamage : MonoBehaviour
     public Health playerHealth;
     public ParticleSystem hit1;
     public ParticleSystem hit2;
+    public bool isBoss;
 
     private void Start()
     {
@@ -44,8 +45,10 @@ public class MeleeDamage : MonoBehaviour
             {
                 playerKnockback.ApplyKnockback(hitDir);
             }
-
-            Destroy(gameObject, damageCooldown + 0.25f);
+            if(!isBoss)
+            {
+                Destroy(gameObject, damageCooldown + 0.25f);
+            }
         }
     }
 }
