@@ -38,6 +38,7 @@ public class CorruptionDissolve : MonoBehaviour
 
         yield return new WaitForSeconds(fadeOutDelay);
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
+        Destroy(gameObject);
     }
 }
