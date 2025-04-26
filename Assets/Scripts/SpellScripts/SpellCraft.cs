@@ -125,7 +125,7 @@ public class SpellCraft : MonoBehaviour
     {
         if(subAspect==0)
         {
-            subAspect=1;
+            subAspect = 1;
         }
         else
         {

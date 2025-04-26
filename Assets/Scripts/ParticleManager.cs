@@ -31,6 +31,10 @@ public class ParticleManager : MonoBehaviour
 
     private GameObject stunPS;
     private GameObject EnSlash;
+
+    public GameObject BossStomp;
+    public GameObject BossSlam;
+    public GameObject BossCharge;
     
     // Start is called before the first frame update
 
@@ -72,6 +76,29 @@ public class ParticleManager : MonoBehaviour
     {
         EnSlash = Instantiate(EnemySlashParticle, spawnLocation.position, spawnLocation.rotation);
         EnSlash.transform.parent = spawnLocation;
+    }
+
+    public void SpawnBossStomp(Transform spawnLocation)
+    {
+        EnSlash = Instantiate(BossStomp, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = spawnLocation;
+    }
+
+    public void SpawnBossSlam(Transform spawnLocation)
+    {
+        EnSlash = Instantiate(BossSlam, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = spawnLocation;
+    }
+
+    public void SpawnBossCharge(Transform spawnLocation)
+    {
+        EnSlash = Instantiate(BossCharge, spawnLocation.position, spawnLocation.rotation);
+        EnSlash.transform.parent = spawnLocation;
+    }
+
+    public void DestroyBossCharge()
+    {
+        Destroy(EnSlash);
     }
     
 

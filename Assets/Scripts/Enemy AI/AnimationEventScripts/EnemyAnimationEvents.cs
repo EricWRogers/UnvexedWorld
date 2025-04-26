@@ -23,4 +23,24 @@ public class EnemyAnimationEvents : MonoBehaviour
     {
         AudioManager.instance.PlayBossRoarSound();
     }
+
+    public void SpawnBossStomp()
+    {
+        ParticleManager.Instance.SpawnBossStomp(gameObject.transform);
+    }
+
+    public void SpawnBossSlam()
+    {
+        ParticleManager.Instance.SpawnBossSlam(gameObject.transform);
+    }
+
+    public void SpawnBossCharge()
+    {
+        ParticleManager.Instance.SpawnBossCharge(gameObject.transform);
+    }
+
+    public void DestroyBossCharge()
+    {
+        ParticleManager.Instance.DestroyBossCharge();
+    }
 }
