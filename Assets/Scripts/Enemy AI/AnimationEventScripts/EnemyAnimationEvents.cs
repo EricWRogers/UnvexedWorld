@@ -3,6 +3,7 @@ using UnityEngine;
 public class EnemyAnimationEvents : MonoBehaviour
 {
     public Transform slam;
+    public Transform roar;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -23,6 +24,7 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void DoTheRoar()
     {
         AudioManager.instance.PlayBossRoarSound();
+        ParticleManager.Instance.SpawnBossRoar(roar);
     }
 
     public void SpawnBossStomp()
