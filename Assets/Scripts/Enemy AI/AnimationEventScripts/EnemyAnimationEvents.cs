@@ -1,11 +1,13 @@
 using UnityEngine;
+using SuperPupSystems.Helper;
 
 public class EnemyAnimationEvents : MonoBehaviour
 {
+    public Health health;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        health = GetComponentInParent<Health>();
     }
 
     // Update is called once per frame
@@ -42,5 +44,10 @@ public class EnemyAnimationEvents : MonoBehaviour
     public void DestroyBossCharge()
     {
         ParticleManager.Instance.DestroyBossCharge();
+    }
+
+    public void Houdini()
+    {
+        gameObject.GetComponentInParent<Health>().DestroyGameObject();
     }
 }
