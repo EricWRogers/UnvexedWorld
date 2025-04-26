@@ -11,10 +11,20 @@ public class OpenDoor : MonoBehaviour
     [SerializeField]
     private Collider doorCol;
 
+    public bool manuelDoor;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        doorCol = GetComponentInParent<Collider>();
+       
+        if(manuelDoor)
+        {
+            doorCol = GetComponentInChildren<Collider>();
+        }
+        else
+        {
+            doorCol = GetComponentInParent<Collider>();
+        }
     }
 
     void FixedUpdate()
