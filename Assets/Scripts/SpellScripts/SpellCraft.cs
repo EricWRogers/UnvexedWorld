@@ -82,7 +82,7 @@ public class SpellCraft : MonoBehaviour
             UnlockElement((Aspect)(elementIndex%4));
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftBracket))
+        if(Input.GetKeyDown(KeyCode.F))
         {
             CycleAspect();
         }
@@ -125,7 +125,7 @@ public class SpellCraft : MonoBehaviour
     {
         if(subAspect==0)
         {
-            subAspect=1;
+            subAspect = 1;
         }
         else
         {

@@ -355,6 +355,10 @@ public class MeleeRangedAttack : MonoBehaviour
         }
     }
 
+    public void RangedAttack()
+    {
+        RangedAttack(spellCraft.subAspect);
+    }
     public void RangedAttack(int index)
     {
         if(activeProjectile==null)
