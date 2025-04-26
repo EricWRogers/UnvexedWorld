@@ -42,7 +42,7 @@ public class PortalToNextLevel : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-             
+             GameManager.Instance.hasKeyOrb = true;
             
                 StartCoroutine(LoadLevel());
             
