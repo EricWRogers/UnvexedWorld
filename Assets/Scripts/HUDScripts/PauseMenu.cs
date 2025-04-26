@@ -9,6 +9,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject healthBar;
     public GameObject comboInfo;
     public GameObject moveSet; // MoveSet GameObject
+    public GameObject optionsMenuUI;
     public Button resumeButton;
     public Button quitButton;
     public Button moveSetButton; // Add MoveSet button reference
@@ -87,6 +88,7 @@ public class PauseMenu : MonoBehaviour
         playerAttack.enabled = false;
         pauseMenuUI.SetActive(true);
         moveSet.SetActive(false); // Ensure MoveSet stays hidden on pause
+        optionsMenuUI.SetActive(false); // ensure options is closed
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         healthBar.SetActive(false);
