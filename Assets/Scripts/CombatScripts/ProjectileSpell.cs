@@ -172,7 +172,7 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         {
             if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
-                particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, transform.rotation);
                 particle.transform.parent = gameObject.transform;
             }
             else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
