@@ -16,7 +16,7 @@ public class AttackHitBox : MonoBehaviour
 
     public void Awake()
     {
-        if(armSlam == null)
+        if (armSlam == null)
         {
             armSlam = GameObject.Find("BossArmSlam");
         }
@@ -24,7 +24,7 @@ public class AttackHitBox : MonoBehaviour
         {
             return;
         }
-        if(legStomp == null)
+        if (legStomp == null)
         {
             legStomp = GameObject.Find("BossLegStomp");
         }
@@ -32,7 +32,7 @@ public class AttackHitBox : MonoBehaviour
         {
             return;
         }
-        if(armCharge == null)
+        if (armCharge == null)
         {
             armCharge = GameObject.Find("BossArmCharge");
         }
@@ -44,9 +44,20 @@ public class AttackHitBox : MonoBehaviour
 
     void Start()
     {
-        armCharge.SetActive(false);
-        armSlam.SetActive(false);
-        legStomp.SetActive(false);
+        if (armCharge != null)
+        {
+            armCharge.SetActive(false);
+        }
+        if (armSlam != null)
+        {
+
+            armSlam.SetActive(false);
+        }
+        if (legStomp != null)
+        {
+            legStomp.SetActive(false);
+        }
+
     }
 
     public void Attack()
