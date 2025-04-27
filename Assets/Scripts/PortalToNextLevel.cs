@@ -22,8 +22,9 @@ public class PortalToNextLevel : MonoBehaviour
        public void PlayGame(string sceneName)
     {
         
-        
+         AudioManager.instance.backgroundMusicSource.Stop();
         SceneManager.LoadScene(sceneName);
+        
         
     }
 
@@ -41,7 +42,7 @@ public class PortalToNextLevel : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-             
+             GameManager.Instance.hasKeyOrb = true;
             
                 StartCoroutine(LoadLevel());
             

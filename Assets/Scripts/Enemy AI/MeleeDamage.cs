@@ -12,6 +12,7 @@ public class MeleeDamage : MonoBehaviour
     public Health playerHealth;
     public ParticleSystem hit1;
     public ParticleSystem hit2;
+    public bool isBoss;
 
     private void Start()
     {
@@ -25,15 +26,18 @@ public class MeleeDamage : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Player") && Time.time > lastDamageTime + damageCooldown)
         {
-            hit1.Play();
-            hit2.Play();
+            if(hit1 != null && hit2 != null)
+            {
+                hit1.Play();
+                hit2.Play();
+            }
 
             // Calculate the hit direction
             Vector3 hitDir = col.gameObject.transform.position - gameObject.transform.position;
 
             // Apply damage to the player
             col.gameObject.GetComponent<Health>().Damage(dmg);
-            lastDamageTime = Time.time;
+            lastDamageTime = Time.deltaTime;
 
             // Apply knockback to the player
             PlayerKnockback playerKnockback = col.gameObject.GetComponent<PlayerKnockback>();
@@ -41,8 +45,10 @@ public class MeleeDamage : MonoBehaviour
             {
                 playerKnockback.ApplyKnockback(hitDir);
             }
-
-            Destroy(gameObject, damageCooldown + 0.25f);
+            if(!isBoss)
+            {
+                Destroy(gameObject, damageCooldown + 0.25f);
+            }
         }
     }
 }

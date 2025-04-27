@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SuperPupSystems.Helper;
 using Scripts.HUDScripts.MessageSystem;
+using Unity.Mathematics;
 
 public class Spell : MonoBehaviour, IDamageDealer
 {
@@ -17,6 +18,7 @@ public class Spell : MonoBehaviour, IDamageDealer
     public bool lifeSteal = false;
     public bool overwriteSpell = false;
     public float lifeStealRatio = 1f;
+    public int ricochetCount = 2;
 
     public ComboManager comboManager;
     
@@ -68,6 +70,8 @@ public class Spell : MonoBehaviour, IDamageDealer
     }
     public void ApplyCrystalize(GameObject target)
     {
+        
+        Instantiate(ParticleManager.Instance.SunderImpact, target.transform.position, transform.rotation);
         if(target.GetComponent<Crystalize>() == null)
         {
             target.AddComponent<Crystalize>();
@@ -75,6 +79,19 @@ public class Spell : MonoBehaviour, IDamageDealer
             target.GetComponent<Crystalize>().fullCrystal = ParticleManager.Instance.CrystalizedObject;
         }
         target.GetComponent<Crystalize>().crystalization += crystalDamage;
+    }
+
+    public void Ricochet(GameObject target)
+    {
+        Instantiate(ParticleManager.Instance.SunderImpact, target.transform.position, transform.rotation);
+        GameObject tempRicochet = Instantiate(AttackManager.Instance.sunderCrystalPrefabs[1], target.transform.position + new Vector3(0,2,0),transform.rotation);
+        tempRicochet.GetComponent<Ricochet>().ricochetCount = 2;
+        tempRicochet.GetComponent<Ricochet>().hitEnemies = new List<GameObject>{target};
+    }
+
+    public void CrystalTrap()
+    {
+        Instantiate(AttackManager.Instance.sunderCrystalPrefabs[0],transform.position + new Vector3(0,1,0),quaternion.identity);
     }
 
     public void SpellEffect(GameObject target)
@@ -88,6 +105,10 @@ public class Spell : MonoBehaviour, IDamageDealer
             if (CurrentElement == SpellCraft.Aspect.scavenge)
             {
                 lifeSteal = true;
+            }
+            if (CurrentElement == SpellCraft.Aspect.sunder)
+            {
+                Ricochet(target);
             }
         }
         else if (subAspect == 1)

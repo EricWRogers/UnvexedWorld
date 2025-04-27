@@ -35,6 +35,11 @@ public class IdleState : SimpleState
         {
             anim = jumperStateMachine.GetComponentInChildren<Animator>();
         }
+
+        if (stateMachine is BossStateMachine bossStateMachine)
+        {
+            anim = bossStateMachine.GetComponentInChildren<Animator>();
+        }
     }
 
     public override void UpdateState(float dt)
@@ -45,7 +50,7 @@ public class IdleState : SimpleState
             {   
                 if(gruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
             }
@@ -58,7 +63,7 @@ public class IdleState : SimpleState
             {   
                 if(agroGruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
                 }
             }
@@ -70,7 +75,7 @@ public class IdleState : SimpleState
             {   
                 if(rangeGruntStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(InRangeState));
                 }
             }
@@ -82,8 +87,20 @@ public class IdleState : SimpleState
             {   
                 if(jumperStateMachine.LOS == true)
                 {
-                    anim.SetTrigger("LOS");
+                    //anim.SetTrigger("LOS");
                     stateMachine.ChangeState(nameof(ChargeState));
+                }
+            }
+        }
+
+        if (stateMachine is BossStateMachine bossStateMachine)
+        {    
+            if (bossStateMachine.isAlive == true)
+            {   
+                if(bossStateMachine.LOS == true)
+                {
+                    //anim.SetTrigger("LOS");
+                    stateMachine.ChangeState(nameof(RoarState));
                 }
             }
             

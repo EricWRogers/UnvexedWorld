@@ -153,6 +153,10 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
                     {
                         gameObject.GetComponent<Spell>().SpellEffect(gameObject);
                     }
+                    if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.sunder&& gameObject.GetComponent<Spell>().subAspect==1&&!tags.Contains(m_info.transform.tag))
+                    {
+                        gameObject.GetComponent<Spell>().CrystalTrap();
+                    }
                 }
                 DestroyBullet();
             }
@@ -168,12 +172,17 @@ public class ProjectileSpell : MonoBehaviour, IDamageDealer
         {
             if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.scavenge)
             {
-                particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle = Instantiate(ParticleManager.Instance.ScavengeParticle, transform.position, transform.rotation);
                 particle.transform.parent = gameObject.transform;
             }
             else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.splendor)
             {
                 particle = Instantiate(ParticleManager.Instance.SplendorParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
+                particle.transform.parent = gameObject.transform;
+            }
+            else if(gameObject.GetComponent<Spell>().CurrentElement == SpellCraft.Aspect.sunder)
+            {
+                particle = Instantiate(ParticleManager.Instance.SunderParticle, transform.position, Quaternion.Euler(transform.rotation.x-90,transform.rotation.y,transform.rotation.z));
                 particle.transform.parent = gameObject.transform;
             }
         }

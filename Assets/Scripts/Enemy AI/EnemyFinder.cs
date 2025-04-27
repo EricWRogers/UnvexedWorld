@@ -4,12 +4,15 @@ using UnityEngine;
 using SuperPupSystems.StateMachine;
 using SuperPupSystems.Helper;
 using System;
+using System.Linq;
 
 public class EnemyFinder : MonoBehaviour
 {
     public List<SimpleStateMachine> nearbyEnemies = new List<SimpleStateMachine>();
-    private int totalEnemies; // Track total number of enemies
-    private int defeatedEnemies; // Track number of defeated enemies
+    
+    public int totalEnemies; // Track total number of enemies
+    public int superTotalEnemies;
+    public int defeatedEnemies; // Track number of defeated enemies
     [SerializeField]
     private SlotManager slotManager;
 
@@ -17,10 +20,11 @@ public class EnemyFinder : MonoBehaviour
 
     void Start()
     {
-        totalEnemies = nearbyEnemies.Count; // Set the total number of enemies in the zone
         defeatedEnemies = 0; // Initialize defeated enemies count
 
         slotManager = FindFirstObjectByType<SlotManager>();
+
+        nearbyEnemies = GetComponentsInChildren<SimpleStateMachine>().ToList();
 
         foreach (var enemy in nearbyEnemies)
         {
@@ -35,17 +39,25 @@ public class EnemyFinder : MonoBehaviour
 
     void Update()
     {
-        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null);
+        nearbyEnemies.RemoveAll(enemy => enemy == null || enemy.gameObject == null || enemy.gameObject.GetComponent<Health>().currentHealth <= 0);
+
+        if(defeatedEnemies == superTotalEnemies)
+        {
+            //GameManager.Instance.battleOn = false;
+            //enabled = false;
+        }
 
         if(nearbyEnemies.Count == 0)
         {
             openDoor = true;
+            GameManager.Instance.battleOn = false;
+            enabled = false;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
+        /*if(other.gameObject.CompareTag("GroundEnemy") || other.gameObject.CompareTag("Enemy"))
         {
             var gruntStateMachine = other.GetComponent<GruntStateMachine>();
             if (gruntStateMachine != null && !nearbyEnemies.Contains(gruntStateMachine))
@@ -80,7 +92,9 @@ public class EnemyFinder : MonoBehaviour
                     enemyHealth.outOfHealth.AddListener(() => OnEnemyDefeated(rangeGruntStateMachine));
                 }
             }
-        }
+            totalEnemies = nearbyEnemies.Count;
+            superTotalEnemies = nearbyEnemies.Count;
+        }*/
         if(other.gameObject.CompareTag("Player"))
         {
             if(slotManager != null)

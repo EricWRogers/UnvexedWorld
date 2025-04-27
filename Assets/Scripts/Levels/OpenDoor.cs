@@ -11,15 +11,25 @@ public class OpenDoor : MonoBehaviour
     [SerializeField]
     private Collider doorCol;
 
+    public bool manuelDoor;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        doorCol = GetComponentInParent<Collider>();
+       
+        if(manuelDoor)
+        {
+            doorCol = GetComponentInChildren<Collider>();
+        }
+        else
+        {
+            doorCol = GetComponentInParent<Collider>();
+        }
     }
 
     void FixedUpdate()
     {
-        if(Vector3.Distance(transform.position, player.position) < openDoorDistance && openDoor == null)
+        if(Vector3.Distance(transform.position, player.position) < openDoorDistance)
         {
             if(enemies != null)
             {
@@ -28,22 +38,24 @@ public class OpenDoor : MonoBehaviour
                 {
                     //Debug.Log("Player Unlocks on Door");
                     anim.SetBool("IsOpen", true);
+                    doorCol.enabled = false;
                 }
+            }
+            else if(openDoor != null)
+            {
+                if(openDoor.openDoor == true)
+                {
+                    anim.SetBool("IsOpen", true);
+                    doorCol.enabled = false;
+                }    
             }
             else
             {
                 //Debug.Log("Player Unlocks on Door");
                 anim.SetBool("IsOpen", true);
-            }
-            doorCol.enabled = false;
-        }
-        else if(openDoor != null)
-        {
-            if(openDoor.openDoor == true)
-            {
-                anim.SetBool("IsOpen", true);
                 doorCol.enabled = false;
-            }    
+            }
+            
         }
     }
 }

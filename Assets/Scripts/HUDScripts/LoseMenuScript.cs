@@ -67,6 +67,7 @@ public class LoseMenuScript : MonoBehaviour
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.battleOn = false;
     }
 
     public void MainMenu()
@@ -74,6 +75,7 @@ public class LoseMenuScript : MonoBehaviour
         Time.timeScale = 1.0f;
         pauseMenu.enabled = true;
         SceneManager.LoadScene("BlightsGraspMenu");
+        GameManager.Instance.battleOn = false;
     }
 
     public void QuitGame()
