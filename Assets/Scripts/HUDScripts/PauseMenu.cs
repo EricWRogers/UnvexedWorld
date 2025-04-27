@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -129,7 +130,13 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("BlightsGraspMenu");
+        #if(UNITY_EDITOR)
+        Debug.Log("Quiting Play Mode");
+        EditorApplication.ExitPlaymode();
+        #else
+        Debug.Log("Quitting Build");
+        Application.Quit();
+        #endif
     }
 
     // **Function to Toggle MoveSet UI**
