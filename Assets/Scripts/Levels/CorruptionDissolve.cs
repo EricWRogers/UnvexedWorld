@@ -20,6 +20,7 @@ public class CorruptionDissolve : MonoBehaviour
         if(enemies.nearbyEnemies.Count == 0)
         {
             StartCoroutine(FadeOut());
+            gameObject.GetComponent<Collider>().enabled = false;
         }
     }
 
@@ -29,7 +30,7 @@ public class CorruptionDissolve : MonoBehaviour
 
         float time = 0;
         float cv = gameObject.GetComponent<Renderer>().material.GetFloat("_Clipping_Value");
-        while (time < 3)
+        while (time < 1.85f)
         {
             gameObject.GetComponent<Renderer>().material.SetFloat("_Clipping_Value", cv + Time.deltaTime);
             time += Time.deltaTime;
