@@ -19,6 +19,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioMixerGroup musicMixerGroup;
     public AudioMixerGroup sfxMixerGroup;
+    public float targetBattleVolume;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        targetBattleVolume = battleMusicSource.volume;
         if(IsBackgroundMusicPlaying()&&IsBattleMusicPlaying())
         {
             battleMusicSource.Stop();
@@ -140,7 +142,7 @@ public class AudioManager : MonoBehaviour
             backgroundMusicSource.Play();
             if(IsBattleMusicPlaying())
             {
-                battleMusicSource.Stop();
+                //battleMusicSource.Stop();
             }
         }
     }
@@ -150,6 +152,7 @@ public class AudioManager : MonoBehaviour
         if (IsBackgroundMusicPlaying())
         {
             Debug.Log("Battle Music");
+            battleMusicSource.volume = targetBattleVolume;
             battleMusicSource.Play();
             if(IsBackgroundMusicPlaying())
             {
@@ -160,7 +163,7 @@ public class AudioManager : MonoBehaviour
 
     public bool IsBattleMusicPlaying()
     {
-        return battleMusicSource != null && battleMusicSource.isPlaying;
+        return battleMusicSource != null && battleMusicSource.isPlaying && battleMusicSource.volume == targetBattleVolume;
     }
 
     public bool IsBackgroundMusicPlaying()
@@ -209,6 +212,14 @@ public class AudioManager : MonoBehaviour
         if(GameManager.Instance.battleOn == true)
         {
             PlayBattleMusic();
+        }
+
+        if (IsBackgroundMusicPlaying())
+        {
+            if (battleMusicSource.volume > 0.0f)
+            {
+                battleMusicSource.volume -= Time.deltaTime * 0.5f;
+            }
         }
     }
 
