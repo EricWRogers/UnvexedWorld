@@ -12,18 +12,6 @@ public class Introduction : MonoBehaviour
     public bool secondPress;
     private bool gabbaGoo;
 
-    PlayerGamepad gamepad;
-
-    void Awake()
-    {
-        Time.timeScale = 20.0f;
-        //gamepad = new PlayerGamepad();
-
-        //gamepad.GamePlay.Enable();
-
-        //gamepad.GamePlay.Jump.performed += ctx => SkipScene();
-    }
-
     void OnDestroy()
     {
         Time.timeScale = 1.0f;
@@ -35,6 +23,7 @@ public class Introduction : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire"))
         {
+            Debug.Log("Button Pressed");
             SkipScene();
         }
     }
