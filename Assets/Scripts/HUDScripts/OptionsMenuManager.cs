@@ -109,7 +109,7 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void Update()
     {
-        ApplyCameraSensitivity();
-        SetCameraSensitivity();
+        //ApplyCameraSensitivity();
+        //SetCameraSensitivity();
     }
 }
