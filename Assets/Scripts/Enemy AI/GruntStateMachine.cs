@@ -33,6 +33,7 @@ public class GruntStateMachine : SimpleStateMachine
     public bool LOS;
     public bool isAlive;
     public bool canStun;
+    public bool skipSurround;
     public bool isIdling;
     public bool isCrystalized;
     public float inAttackRange = 1.0f;

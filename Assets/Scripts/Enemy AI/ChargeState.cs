@@ -55,6 +55,7 @@ public class ChargeState : SimpleState
             target = ((BossStateMachine)stateMachine).target;
             range = ((BossStateMachine)stateMachine).inAttackRange + 1.25f;
             bossDistance = Vector3.Distance(((BossStateMachine)stateMachine).transform.position, target.position);
+            ParticleManager.Instance.DestroyBossCharge();
         }
 
         agent.SetDestination(target.position);

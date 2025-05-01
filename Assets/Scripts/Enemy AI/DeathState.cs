@@ -10,7 +10,10 @@ public class DeathState : SimpleState
     public override void OnStart()
     {
         base.OnStart();
-        
+        if(stateMachine is BossStateMachine bossStateMachine)
+        {
+            bossStateMachine.GetComponentInChildren<Animator>().SetBool("isDead", true);
+        }
     }
 
     public override void UpdateState(float dt)

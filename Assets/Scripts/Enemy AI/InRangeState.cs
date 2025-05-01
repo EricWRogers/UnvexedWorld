@@ -45,7 +45,14 @@ public class InRangeState : SimpleState
                     
                     if (distanceToTarget <= buffer)
                     {
-                        stateMachine.ChangeState(nameof(SurroundState));
+                        if(!gruntStateMachine.skipSurround)
+                        {
+                            stateMachine.ChangeState(nameof(SurroundState));
+                        }
+                        else
+                        {
+                            stateMachine.ChangeState(nameof(ChargeState));
+                        }
                     }
                 }
             }
