@@ -326,6 +326,11 @@ public class MeleeRangedAttack : MonoBehaviour
         animator.Play("FingerGun");
     }
 
+    public void PlayModelAttackAnim(string animName)
+    {
+        animator.Play(animName, 1);
+    }
+
     public void LockUp()
     {
         isAttacking=true;
@@ -350,6 +355,10 @@ public class MeleeRangedAttack : MonoBehaviour
         }
     }
 
+    public void RangedAttack()
+    {
+        RangedAttack(spellCraft.subAspect);
+    }
     public void RangedAttack(int index)
     {
         if(activeProjectile==null)

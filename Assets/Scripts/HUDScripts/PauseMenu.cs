@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject healthBar;
     public GameObject comboInfo;
     public GameObject moveSet; // MoveSet GameObject
+    public GameObject manaDisplay;
     public Button resumeButton;
     public Button quitButton;
     public Button moveSetButton; // Add MoveSet button reference
@@ -24,6 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     private bool isMoveSetOpen = false; // Track MoveSet visibility
     public bool isPaused = false;
+
+    public SlideManager slide;
 
     void Awake()
     {
@@ -52,13 +56,20 @@ public class PauseMenu : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         quitButton.onClick.AddListener(Quit);
         moveSetButton.onClick.AddListener(ToggleMoveSet); // Add listener
+
+        
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && win.didWin != true)
         {
-            if (isPaused)
+            if (isMoveSetOpen)
+            {
+                isMoveSetOpen = false;
+                moveSet.SetActive(false);
+            }
+            else if (isPaused)
             {
                 Resume();
             }
@@ -87,6 +98,7 @@ public class PauseMenu : MonoBehaviour
         playerAttack.enabled = false;
         pauseMenuUI.SetActive(true);
         moveSet.SetActive(false); // Ensure MoveSet stays hidden on pause
+        manaDisplay.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         healthBar.SetActive(false);
@@ -103,6 +115,8 @@ public class PauseMenu : MonoBehaviour
         playerAttack.enabled = true;
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Hide MoveSet when resuming
+        slide.OptionsOff();
+        manaDisplay.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         healthBar.SetActive(true);
@@ -116,7 +130,13 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("BlightsGraspMenu");
+        #if(UNITY_EDITOR)
+        Debug.Log("Quiting Play Mode");
+        EditorApplication.ExitPlaymode();
+        #else
+        Debug.Log("Quitting Build");
+        Application.Quit();
+        #endif
     }
 
     // **Function to Toggle MoveSet UI**
