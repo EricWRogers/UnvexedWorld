@@ -6,26 +6,28 @@ public class PortalToNextLevel : MonoBehaviour
 {
     public string nextScene;
     [SerializeField] Animator transitionAnim;
-    
+
+    public bool giveOrb;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-       public void PlayGame(string sceneName)
+    public void PlayGame(string sceneName)
     {
-        
-         AudioManager.instance.backgroundMusicSource.Stop();
+
+        AudioManager.instance.backgroundMusicSource.Stop();
         SceneManager.LoadScene(sceneName);
-        
-        
+
+
     }
 
     IEnumerator LoadLevel()
@@ -36,24 +38,27 @@ public class PortalToNextLevel : MonoBehaviour
         transitionAnim.SetTrigger("Start");
     }
 
-    
+
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
         {
-             
-            
-                StartCoroutine(LoadLevel());
-            
-              
-              
-                
-              
-        }   
+            if (giveOrb == true)
+            {
+                GameManager.Instance.hasKeyOrb = true;
+            }
+
+            StartCoroutine(LoadLevel());
+
+
+
+
+
+        }
 
 
     }
 
-  
+
 }

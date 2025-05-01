@@ -16,6 +16,7 @@ public class GruntStateMachine : SimpleStateMachine
     public SurroundState surround;
     public ChargeState charge;
     public AttackState melee;
+    public RetreatState retreat;
     public DeathState dead;
 
     public Transform target;
@@ -32,6 +33,7 @@ public class GruntStateMachine : SimpleStateMachine
     public bool LOS;
     public bool isAlive;
     public bool canStun;
+    public bool skipSurround;
     public bool isIdling;
     public bool isCrystalized;
     public float inAttackRange = 1.0f;
@@ -47,6 +49,7 @@ public class GruntStateMachine : SimpleStateMachine
         states.Add(surround);
         states.Add(charge);
         states.Add(melee);
+        states.Add(retreat);
         states.Add(dead);
 
         foreach (SimpleState s in states)

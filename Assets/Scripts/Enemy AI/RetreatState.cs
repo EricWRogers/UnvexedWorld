@@ -34,7 +34,7 @@ public class RetreatState : SimpleState
             agent.SetDestination(retreatPosition);
         }
 
-        if(enemyTatic.nearbyEnemies.Count <= 2)
+        if(enemyTatic.nearbyEnemies.Count <= 2 || ((GruntStateMachine)stateMachine).skipSurround)
         {
             stateMachine.ChangeState(nameof(ChargeState));
         }

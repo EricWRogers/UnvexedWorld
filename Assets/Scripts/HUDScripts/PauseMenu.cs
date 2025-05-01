@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,8 @@ public class PauseMenu : MonoBehaviour
 
     private bool isMoveSetOpen = false; // Track MoveSet visibility
     public bool isPaused = false;
+
+    public SlideManager slide;
 
     void Awake()
     {
@@ -53,6 +56,8 @@ public class PauseMenu : MonoBehaviour
         resumeButton.onClick.AddListener(Resume);
         quitButton.onClick.AddListener(Quit);
         moveSetButton.onClick.AddListener(ToggleMoveSet); // Add listener
+
+        
     }
 
     void Update()
@@ -110,6 +115,7 @@ public class PauseMenu : MonoBehaviour
         playerAttack.enabled = true;
         pauseMenuUI.SetActive(false);
         moveSet.SetActive(false); // Hide MoveSet when resuming
+        slide.OptionsOff();
         manaDisplay.SetActive(true);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -124,7 +130,13 @@ public class PauseMenu : MonoBehaviour
     public void Quit()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("BlightsGraspMenu");
+        #if(UNITY_EDITOR)
+        Debug.Log("Quiting Play Mode");
+        EditorApplication.ExitPlaymode();
+        #else
+        Debug.Log("Quitting Build");
+        Application.Quit();
+        #endif
     }
 
     // **Function to Toggle MoveSet UI**

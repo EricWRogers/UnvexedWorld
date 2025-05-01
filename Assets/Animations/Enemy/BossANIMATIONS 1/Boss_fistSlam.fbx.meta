@@ -17,7 +17,24 @@ ModelImporter:
     removeConstantScaleCurves: 0
     motionNodeName: 
     animationImportErrors: 
-    animationImportWarnings: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar
+      to improve retargeting quality.\n\t'spine_01_JNT' has translation animation
+      that will be discarded.\n\t'mole_JNT' has scale animation that will be discarded.\n\t'l_thumb_01_JNT'
+      has translation animation that will be discarded.\n\t'l_thumb_02_JNT' has translation
+      animation that will be discarded.\n\t'r_pinkie_01_JNT' has translation animation
+      that will be discarded.\n\t'r_pinkie_02_JNT' has translation animation that
+      will be discarded.\n\t'r_pinkie_03_JNT' has translation animation that will
+      be discarded.\n\t'r_middle_01_JNT' has translation animation that will be discarded.\n\t'r_middle_02_JNT'
+      has translation animation that will be discarded.\n\t'r_middle_03_JNT' has
+      translation animation that will be discarded.\n\t'r_index_01_JNT' has translation
+      animation that will be discarded.\n\t'r_index_02_JNT' has translation animation
+      that will be discarded.\n\t'r_index_03_JNT' has translation animation that
+      will be discarded.\n\t'r_thumb_01_JNT' has translation animation that will
+      be discarded.\n\t'r_thumb_02_JNT' has translation animation that will be discarded.\n\t'r_thumb_03_JNT'
+      has translation animation that will be discarded.\n\t'l_foot_01_JNT2' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'r_foot_01_JNT2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -54,7 +71,31 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events: []
+      events:
+      - time: 0.4701804
+        functionName: BossSlamAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.70319015
+        functionName: TurnOffSlamAttack
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: 03af82729cd4b92b2a086738f0fa2467,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.42493653
+        functionName: SpawnBossSlam
+        data: 
+        objectReferenceParameter: {fileID: 11500000, guid: a2808417005efdc4980a8c4ffe843c22,
+          type: 3}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
