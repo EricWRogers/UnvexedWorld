@@ -218,7 +218,7 @@ public class AudioManager : MonoBehaviour
         {
             if (battleMusicSource.volume > 0.0f)
             {
-                battleMusicSource.volume -= Time.deltaTime * 0.5f;
+                battleMusicSource.volume -= Time.deltaTime * 0.5f;// fade time function
             }
         }
     }
