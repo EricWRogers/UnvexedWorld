@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Audio;  // For AudioMixers
-using Cinemachine;  // For Cinemachine Camera Control
+using UnityEngine.Audio;
+using Cinemachine;
 
 public class OptionsMenuManager : MonoBehaviour
 {
@@ -11,78 +11,38 @@ public class OptionsMenuManager : MonoBehaviour
     public Slider sfxVolumeSlider;
 
     [Header("Camera Sliders")]
-    public Slider cameraSensitivitySliderX;  // Slider for controlling camera sensitivity X
-    public Slider cameraSensitivitySliderY;  // Slider for controlling camera sensitivity Y
+    public Slider cameraSensitivitySliderX;
+    public Slider cameraSensitivitySliderY;
 
     [Header("Cinemachine Cameras")]
     public CinemachineFreeLook mainView;
     public CinemachineFreeLook dashView;
     public CinemachineFreeLook meleeView;
 
-    // References to AudioMixers
     public AudioMixer masterMixer;
     public AudioMixer musicMixer;
     public AudioMixer sfxMixer;
 
     private void Start()
     {
-        // Load saved settings (if any)
-        masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
-        sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
-        cameraSensitivitySliderX.value = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
-        cameraSensitivitySliderY.value = PlayerPrefs.GetFloat("CameraSensitivity", 1f);
-
+        LoadSettings();
         ApplyVolumeSettings();
         ApplyCameraSensitivity();
 
-        // Add listeners for UI changes
-        masterVolumeSlider.onValueChanged.AddListener(delegate { SetMasterVolume(); });
-        musicVolumeSlider.onValueChanged.AddListener(delegate { SetMusicVolume(); });
-        sfxVolumeSlider.onValueChanged.AddListener(delegate { SetSFXVolume(); });
-        cameraSensitivitySliderX.onValueChanged.AddListener(delegate { SetCameraSensitivity(); });
-        cameraSensitivitySliderY.onValueChanged.AddListener(delegate { SetCameraSensitivity(); });
+        masterVolumeSlider.onValueChanged.AddListener(_ => SetMasterVolume());
+        musicVolumeSlider.onValueChanged.AddListener(_ => SetMusicVolume());
+        sfxVolumeSlider.onValueChanged.AddListener(_ => SetSFXVolume());
+        cameraSensitivitySliderX.onValueChanged.AddListener(_ => SetCameraSensitivity());
+        cameraSensitivitySliderY.onValueChanged.AddListener(_ => SetCameraSensitivity());
     }
 
-    // Master Volume
-    public void SetMasterVolume()
+    private void LoadSettings()
     {
-        AudioManager.instance.SetMasterVolume(masterVolumeSlider.value);
-        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
-    }
-
-    // Music Volume
-    public void SetMusicVolume()
-    {
-        AudioManager.instance.SetMusicVolume(musicVolumeSlider.value);
-        PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
-    }
-
-    // SFX Volume
-    public void SetSFXVolume()
-    {
-        AudioManager.instance.SetSFXVolume(sfxVolumeSlider.value);
-        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
-    }
-
-    // Camera Sensitivity
-    public void SetCameraSensitivity()
-    {
-        float sensitivityX = cameraSensitivitySliderX.value;
-        float sensitivityY = cameraSensitivitySliderY.value;
-
-        // Set the sensitivity on all the camera views (if they are using Cinemachine)
-        mainView.m_XAxis.m_MaxSpeed = sensitivityX;
-        mainView.m_YAxis.m_MaxSpeed = sensitivityY;
-
-        dashView.m_XAxis.m_MaxSpeed = sensitivityX;
-        dashView.m_YAxis.m_MaxSpeed = sensitivityY;
-
-        meleeView.m_XAxis.m_MaxSpeed = sensitivityX;
-        meleeView.m_YAxis.m_MaxSpeed = sensitivityY;
-
-        PlayerPrefs.SetFloat("CameraSensitivityX", sensitivityX);
-        PlayerPrefs.SetFloat("CameraSensitivityY", sensitivityY);
+        masterVolumeSlider.value = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        musicVolumeSlider.value = PlayerPrefs.GetFloat("MusicVolume", 1f);
+        sfxVolumeSlider.value = PlayerPrefs.GetFloat("SFXVolume", 1f);
+        cameraSensitivitySliderX.value = PlayerPrefs.GetFloat("CameraSensitivityX", 300f);
+        cameraSensitivitySliderY.value = PlayerPrefs.GetFloat("CameraSensitivityY", 8f);
     }
 
     private void ApplyVolumeSettings()
@@ -94,22 +54,58 @@ public class OptionsMenuManager : MonoBehaviour
 
     private void ApplyCameraSensitivity()
     {
-        float sensitivityX = PlayerPrefs.GetFloat("CameraSensitivity", 300f);
-        float sensitivityY = PlayerPrefs.GetFloat("CameraSensitivityY", 8f);
+        float sensitivityX = cameraSensitivitySliderX.value;
+        float sensitivityY = cameraSensitivitySliderY.value;
 
-        mainView.m_XAxis.m_MaxSpeed = sensitivityX;
-        mainView.m_YAxis.m_MaxSpeed = sensitivityY;
-
-        dashView.m_XAxis.m_MaxSpeed = sensitivityX;
-        dashView.m_YAxis.m_MaxSpeed = sensitivityY;
-
-        meleeView.m_XAxis.m_MaxSpeed = sensitivityX;
-        meleeView.m_YAxis.m_MaxSpeed = sensitivityY;
+        SetCameraSpeed(mainView, sensitivityX, sensitivityY);
+        SetCameraSpeed(dashView, sensitivityX, sensitivityY);
+        SetCameraSpeed(meleeView, sensitivityX, sensitivityY);
     }
 
-    private void Update()
+    private void SetCameraSpeed(CinemachineFreeLook cam, float x, float y)
     {
-        //ApplyCameraSensitivity();
-        //SetCameraSensitivity();
+        if (cam == null) return;
+        cam.m_XAxis.m_MaxSpeed = x;
+        cam.m_YAxis.m_MaxSpeed = y;
+    }
+
+    public void SetMasterVolume()
+    {
+        AudioManager.instance.SetMasterVolume(masterVolumeSlider.value);
+    }
+
+    public void SetMusicVolume()
+    {
+        AudioManager.instance.SetMusicVolume(musicVolumeSlider.value);
+    }
+
+    public void SetSFXVolume()
+    {
+        AudioManager.instance.SetSFXVolume(sfxVolumeSlider.value);
+    }
+
+    public void SetCameraSensitivity()
+    {
+        ApplyCameraSensitivity();
+    }
+
+    private void SaveAllSettings()
+    {
+        PlayerPrefs.SetFloat("MasterVolume", masterVolumeSlider.value);
+        PlayerPrefs.SetFloat("MusicVolume", musicVolumeSlider.value);
+        PlayerPrefs.SetFloat("SFXVolume", sfxVolumeSlider.value);
+        PlayerPrefs.SetFloat("CameraSensitivityX", cameraSensitivitySliderX.value);
+        PlayerPrefs.SetFloat("CameraSensitivityY", cameraSensitivitySliderY.value);
+        PlayerPrefs.Save();
+    }
+
+    private void OnDisable()
+    {
+        SaveAllSettings();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveAllSettings();
     }
 }
