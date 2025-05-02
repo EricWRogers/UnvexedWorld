@@ -71,7 +71,7 @@ public class PunchScript : MonoBehaviour, IDamageDealer
             
             hitStop.Stop(duration);
 
-            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, Quaternion.Euler(transform.rotation.x,transform.rotation.y,transform.rotation.z));
+            Instantiate(ParticleManager.Instance.NoSpellImpact, transform.position, transform.rotation);
             //gameObject.GetComponentInParent<SpellCraft>().RegenMana(10);
 
             enemy = other.gameObject;
