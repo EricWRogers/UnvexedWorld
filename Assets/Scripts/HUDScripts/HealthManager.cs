@@ -55,6 +55,9 @@ public class HealthManager : MonoBehaviour
     {
         healthSlider.value = currentHealth;
 
+        if (healthFillImage.gameObject.activeInHierarchy == false)
+            return;
+
         // Check if the health is below 35%, start flashing if necessary
         if (currentHealth / (float)playerHealth.maxHealth < 0.35f && !isFlashing && !hud.stop)
         {
