@@ -133,10 +133,9 @@ public class BossAttackState : SimpleState
     {
         switch (type)
         {
-            case AttackType.ArmCharge: return 3f;
-            case AttackType.ArmSlam: return 2.5f;
-            case AttackType.ArmSwing: return 2f;
-            case AttackType.LegStomp: return 3f;
+            case AttackType.ArmCharge: return 2.0f;
+            case AttackType.ArmSlam: return 1.5f;
+            case AttackType.LegStomp: return 1.5f;
             default: return 2f;
         }
     }

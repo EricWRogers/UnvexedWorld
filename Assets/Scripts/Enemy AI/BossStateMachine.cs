@@ -10,6 +10,7 @@ public class BossStateMachine : SimpleStateMachine
     public IdleState idle;
     public RoarState roar;
     public StunState stunned;
+    public CrystallizedState crystallized;
     public ChargeState charge;
     public ArmChargeState armCharge;
     public ArmSlamState armSlam;
@@ -50,6 +51,7 @@ public class BossStateMachine : SimpleStateMachine
         states.Add(idle);
         states.Add(roar);
         states.Add(stunned);
+        states.Add(crystallized);
         states.Add(charge);
         states.Add(armCharge);
         states.Add(armSlam);

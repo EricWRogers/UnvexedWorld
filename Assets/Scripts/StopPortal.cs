@@ -6,8 +6,7 @@ using SuperPupSystems.Helper;
 public class StopPortal : MonoBehaviour
 {
     public Timer timer;
-    public Animator anim;
-    public GameObject objectPS;
+    public GameObject portal;
 
     public float timeRemaining = 5.0f;
     
@@ -19,7 +18,6 @@ public class StopPortal : MonoBehaviour
 
     public void TurnOffPortal()
     {
-        anim.SetBool("IsOpen", false);
-        objectPS.SetActive(false);
+        portal.SetActive(false);
     }
 }
