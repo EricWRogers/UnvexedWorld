@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 public class ControllerDetectionIntro : MonoBehaviour
 {
     public TextMeshProUGUI skipText;
+
+    public Introduction intro;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,12 +18,12 @@ public class ControllerDetectionIntro : MonoBehaviour
     {
         var controllers = Input.GetJoystickNames();
 
-        if (controllers.Length > 0)
+        if (controllers.Length > 0 && intro.secondPress == false)
         {
             skipText.text = ("Press A");
 
         }
-        else if (controllers.Length == 0)
+        else if (controllers.Length == 0 && intro.secondPress == false)
         {
             skipText.text = ("Space");
         }
