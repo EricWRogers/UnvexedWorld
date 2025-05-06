@@ -30,4 +30,9 @@ public class NewMainMenu : MonoBehaviour
         Application.Quit();
         #endif
     }
+
+    public void Credits(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
 }
