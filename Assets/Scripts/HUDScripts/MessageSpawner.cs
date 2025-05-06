@@ -27,7 +27,7 @@ namespace Scripts.HUDScripts.MessageSystem
         public void ShowFloatingMessage(SuperPupSystems.Helper.HealthChangedObject healthChangedObject)
         {
             int damage = -healthChangedObject.delta;
-            GameObject message = Instantiate(floatingMessagePrefab, transform.position + (Vector3.up * 2f), Quaternion.identity);
+            GameObject message = Instantiate(floatingMessagePrefab, transform.position + (Vector3.up * -0.5f), Quaternion.identity);
             FloatingMessage floatingMsg = message.GetComponent<FloatingMessage>();
             if (floatingMsg != null)
             {
