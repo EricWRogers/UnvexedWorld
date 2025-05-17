@@ -165,16 +165,16 @@ public class ChargeState : SimpleState
                 ChoseMeeleAttack();
                 if (Vector3.Distance(agent.transform.position, bossStateMachine.target.position) < range)
                 {
-                    if(bossStateMachine.attackType == BossStateMachine.AttackType.ArmCharge && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range + 5.0f)
+                    if (bossStateMachine.attackType == BossStateMachine.AttackType.ArmCharge && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range + 5.0f)
                     {
                         agent.SetDestination(bossStateMachine.transform.position);
                         stateMachine.ChangeState(nameof(ArmChargeState));
                     }
-                    else if(bossStateMachine.attackType == BossStateMachine.AttackType.ArmSlam && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range)
+                    else if (bossStateMachine.attackType == BossStateMachine.AttackType.ArmSlam && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range)
                     {
                         stateMachine.ChangeState(nameof(ArmSlamState));
                     }
-                    else if(bossStateMachine.attackType == BossStateMachine.AttackType.LegStomp && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range)
+                    else if (bossStateMachine.attackType == BossStateMachine.AttackType.LegStomp && Vector3.Distance(agent.transform.position, bossStateMachine.target.position) <= range)
                     {
                         stateMachine.ChangeState(nameof(LegStompState));
                     }
@@ -210,31 +210,17 @@ public class ChargeState : SimpleState
         if (stateMachine is BossStateMachine bossStateMachine)
         {
             float rand = Random.value;
-
-            if (rand < 0.25f)
+            if (rand < 0.2f)
             {
                 bossStateMachine.attackType = BossStateMachine.AttackType.ArmCharge;
             }
+            else if (rand < 0.4f)
+            {
+                bossStateMachine.attackType = BossStateMachine.AttackType.LegStomp;
+            }
             else
             {
-                if (bossStateMachine.aggroPhase)
-                {
-                    a = Random.Range(0, 2);
-                }
-                else
-                {
-                    a = Random.Range(0, 2);
-                }
-
-                switch (a)
-                {
-                    case 0:
-                        bossStateMachine.attackType = BossStateMachine.AttackType.LegStomp;
-                        break;
-                    case 1:
-                        bossStateMachine.attackType = BossStateMachine.AttackType.ArmSlam;
-                        break;
-                }
+                bossStateMachine.attackType = BossStateMachine.AttackType.ArmSlam;
             }
         }
     }

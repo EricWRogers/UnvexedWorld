@@ -229,6 +229,16 @@ public class ThirdPersonMovement : MonoBehaviour
     void Update()
     {
 
+        if(GameManager.Instance.doNothing == true)
+        {
+            dashing = false;
+            dashLines.SetActive(false);
+        }
+        if(transform.position.y < -100 && health.currentHealth > 0)
+        {
+            health.Kill();
+        }
+
          if(inText == false)
          {
             GameManager.Instance.doNothing = false;

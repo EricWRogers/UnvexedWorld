@@ -33,6 +33,16 @@ public class LegStompState : SimpleState
         if (stateMachine is BossStateMachine bossStateMachine)
         {
             attackRange = bossStateMachine.inAttackRange + 0.5f;
+            if (bossStateMachine.aggroPhase)
+            {
+                cooldownTimer = 1f;
+                attackDuration = 1f;
+            }
+            else
+            {
+                cooldownTimer = 2f;
+                attackDuration = 2f;
+            }
         }
 
         if (attack == null)

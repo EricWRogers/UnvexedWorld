@@ -40,6 +40,17 @@ public class ArmChargeState : SimpleState
         {
             attackRange = bossStateMachine.inAttackRange + 0.5f;
             bossStateMachine.transform.LookAt(bossStateMachine.target);
+
+            if (bossStateMachine.aggroPhase)
+            {
+                cooldownTimer = 1f; // Half the default
+                attackDuration = 1f;
+            }
+            else
+            {
+                cooldownTimer = 2f;
+                attackDuration = 2f;
+            }
         }
 
         attackTimer = attackDuration;
